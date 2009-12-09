@@ -16,9 +16,10 @@ class Game
 	unsigned int miXBlackKing;
 	unsigned int miYBlackKing;
 	bool mbIsOver;
+	std::string mstrSelection;
 
 	bool bIsCoordsCorrect(unsigned int X, unsigned int Y) const;
-	void CheckStartCoords(unsigned int X, unsigned int Y) const;
+	void CheckCoords(unsigned int X, unsigned int Y) const;
 	void CheckIsMovementCorrect(unsigned int X1, unsigned int Y1, unsigned int X2, unsigned int Y2) const;
 	bool bIsMovementCorrect(unsigned int X1, unsigned int Y1, unsigned int X2, unsigned int Y2) const;
 	bool bIsOver();
