@@ -14,8 +14,13 @@ class Interface
 	virtual std::string strGetEntry() const = 0;
 	virtual void DisplayPossibilities(std::string strPossibilities) const = 0;
 	virtual void DisplayInCheck(unsigned int X, unsigned int Y) const = 0;
-	virtual void DisplaySelection(std::string strSelection) const = 0;
+	virtual void DisplaySelection(unsigned int X, unsigned int Y) const = 0;
 	static Interface * poGetInstance() {}
+	static void FreeInstance()
+	{
+		if(mpoInstance)
+			delete mpoInstance;
+	}
 };
 
 #endif

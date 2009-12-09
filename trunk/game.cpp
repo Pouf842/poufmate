@@ -2,6 +2,7 @@
 #include "board.h"
 #include "piece.h"
 #include "interface_console.h"
+#include "interface_SDL.h"
 #include <iostream>
 #include <string>
 
@@ -27,7 +28,8 @@ bool Game::bIsCoordsCorrect(unsigned int X, unsigned int Y) const
 void Game::Run()
 {
 	string strEntry = "";
-	Interface * poInterface = InterfaceConsole::poGetInstance();
+	//Interface * poInterface = InterfaceConsole::poGetInstance();
+	Interface * poInterface = InterfaceSDL::poGetInstance();
 
 	moBoard.Init();
 
@@ -35,7 +37,7 @@ void Game::Run()
 	{
 		poInterface->DisplayBoard(moBoard);
 		if(mstrSelection != "")
-			poInterface->DisplaySelection(mstrSelection);
+			poInterface->DisplaySelection(mstrSelection[0] - '0', mstrSelection[1] - '0');
 
 		if(bIsInCheck(meCurrentPlayer))
 		{
@@ -53,31 +55,34 @@ void Game::Run()
 			{
 				strEntry = poInterface->strGetEntry();
 			
-				if(strEntry == "x")
+				if(strEntry.size() != 0)
 				{
-					mbIsOver = true;
-					mstrSelection = "";
-				}
-				else if(strEntry == "c")
-				{
-					CancelLastMove();
-					meCurrentPlayer = (meCurrentPlayer == Piece::WHITE ? Piece::BLACK : Piece::WHITE);
-				}
-				else if(strEntry[strEntry.size() - 1] == '?')
-				{
-					string strPossibilities = strGetPossibilities(strEntry[0] - '0', strEntry[1] - '0');
-					poInterface->DisplayPossibilities(strPossibilities);
-				}
-				else
-				{
-					unsigned int X = strEntry[0] - '0';
-					unsigned int Y = strEntry[1] - '0';
+					if(strEntry == "q")
+					{
+						mbIsOver = true;
+						mstrSelection = "";
+					}
+					else if(strEntry == "c")
+					{
+						CancelLastMove();
+						meCurrentPlayer = (meCurrentPlayer == Piece::WHITE ? Piece::BLACK : Piece::WHITE);
+					}
+					else if(strEntry[strEntry.size() - 1] == '?')
+					{
+						string strPossibilities = strGetPossibilities(strEntry[0] - '0', strEntry[1] - '0');
+						poInterface->DisplayPossibilities(strPossibilities);
+					}
+					else
+					{
+						unsigned int X = strEntry[0] - '0';
+						unsigned int Y = strEntry[1] - '0';
 
-					CheckCoords(X, Y);
-					mstrSelection = strEntry;
-				}
+						CheckCoords(X, Y);
+						mstrSelection = strEntry;
+					}
 
-				strEntry = "";
+					strEntry = "";
+				}
 			}
 			
 			if(mstrSelection != "")

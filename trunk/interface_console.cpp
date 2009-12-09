@@ -42,7 +42,7 @@ void InterfaceConsole::DisplayPossibilities(std::string strPossibilities) const
 			cout << endl;
 }
 
-void InterfaceConsole::DisplaySelection(std::string strSelection) const
+void InterfaceConsole::DisplaySelection(unsigned int X, unsigned int Y) const
 {
 }
 
