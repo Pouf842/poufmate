@@ -26,85 +26,102 @@ bool Game::bIsCoordsCorrect(unsigned int X, unsigned int Y) const
 
 void Game::Run()
 {
-	string strPieceCoords;
-	string strDestCoords;
+	string strEntry = "";
 	Interface * poInterface = InterfaceConsole::poGetInstance();
 
 	moBoard.Init();
-	poInterface->DisplayBoard(moBoard);
 
 	while(!bIsOver())
 	{
+		poInterface->DisplayBoard(moBoard);
+		if(mstrSelection != "")
+			poInterface->DisplaySelection(mstrSelection);
+
+		if(bIsInCheck(meCurrentPlayer))
+		{
+			if(meCurrentPlayer == Piece::WHITE)
+				poInterface->DisplayInCheck(miXWhiteKing, miYWhiteKing);
+			else
+				poInterface->DisplayInCheck(miXBlackKing, miYBlackKing);
+		}
+
+		poInterface->DisplayMessage(string("Joueur ") + (meCurrentPlayer == Piece::WHITE ? "Blanc":"Noir"));
+
 		try
 		{
-			poInterface->DisplayMessage(string("Joueur ") + (meCurrentPlayer == Piece::WHITE ? "Blanc":"Noir"));
-			strPieceCoords = poInterface->strGetCommand();
-
-			if(strPieceCoords == "c")
+			if(mstrSelection == "")
 			{
-				CancelLastMove();
-
-				meCurrentPlayer = (meCurrentPlayer == Piece::WHITE ? Piece::BLACK : Piece::WHITE);
-				poInterface->DisplayBoard(moBoard);
-			}
-			else if(strPieceCoords == "x")
-				mbIsOver = true;
-			else if(strPieceCoords != "")
-			{
-				unsigned int X1 = strPieceCoords[0] - '0';
-				unsigned int Y1 = strPieceCoords[1] - '0';
-
-				CheckStartCoords(X1, Y1);
-
-				while(strDestCoords == "")
-				{
-					strDestCoords = poInterface->strGetCommand();
-
-					if(strDestCoords == "?")
-					{
-						string strPossibilities = strGetPossibilities(X1, Y1);
-						poInterface->DisplayPossibilities(strPossibilities);
-						strDestCoords = "";
-					}
-					else
-					{
-						unsigned int X2 = strDestCoords[0] - '0';
-						unsigned int Y2 = strDestCoords[1] - '0';
-
-						if(!bIsCoordsCorrect(X2, Y2))
-							throw exception("Bad destination coords");
-
-						CheckIsMovementCorrect(X1, Y1, X2, Y2);
-						MovePiece(X1, Y1, X2, Y2);
-
-						if(bIsInCheck(meCurrentPlayer))
-						{
-							CancelLastMove();
-							throw exception("That move puts you in check");
-						}
-
-						meCurrentPlayer = (meCurrentPlayer == Piece::WHITE ? Piece::BLACK : Piece::WHITE);
-						mbIsOver = bIsCheckMate(meCurrentPlayer);
-					}
-				}
-				
-				strPieceCoords = "";
-				strDestCoords = "";
+				strEntry = poInterface->strGetEntry();
 			
-				poInterface->DisplayBoard(moBoard);
+				if(strEntry == "x")
+				{
+					mbIsOver = true;
+					mstrSelection = "";
+				}
+				else if(strEntry == "c")
+				{
+					CancelLastMove();
+					meCurrentPlayer = (meCurrentPlayer == Piece::WHITE ? Piece::BLACK : Piece::WHITE);
+				}
+				else if(strEntry[strEntry.size() - 1] == '?')
+				{
+					string strPossibilities = strGetPossibilities(strEntry[0] - '0', strEntry[1] - '1');
+					poInterface->DisplayPossibilities(strPossibilities);
+				}
+				else
+				{
+					unsigned int X = strEntry[0] - '0';
+					unsigned int Y = strEntry[0] - '1';
+
+					CheckCoords(X, Y);
+					mstrSelection = strEntry;
+				}
+
+				strEntry = "";
+			}
+			
+			if(mstrSelection != "")
+			{
+				strEntry = poInterface->strGetEntry();
+				
+				if(strEntry[strEntry.size() - 1] == '?')
+				{
+					string strPossibilities = strGetPossibilities(mstrSelection[0] - '0', mstrSelection[1] - '0');
+					poInterface->DisplayPossibilities(strPossibilities);
+				}
+				else
+				{
+					unsigned int X1 = mstrSelection[0] - '0';
+					unsigned int Y1 = mstrSelection[1] - '0';
+
+					unsigned int X2 = strEntry[0] - '0';
+					unsigned int Y2 = strEntry[1] - '0';
+
+					CheckIsMovementCorrect(X1, Y1, X2, Y2);
+				
+					MovePiece(X1, Y2, X2, Y2);
+					meCurrentPlayer = (meCurrentPlayer == Piece::WHITE ? Piece::BLACK : Piece::WHITE);
+
+					if(bIsCheckMate(meCurrentPlayer))
+					{
+						poInterface->DisplayBoard(moBoard);
+						mbIsOver = true;
+					}
+
+					mstrSelection = "";
+					strEntry = "";
+				}
 			}
 		}
 		catch(exception & e)
 		{
 			poInterface->DisplayMessage(e.what());
-			strPieceCoords = "";
-			strDestCoords = "";
+			mstrSelection = "";
+			strEntry = "";
 		}
 	}
 
-	char pause;
-	cout << "FINI" << endl;
-	cin >> pause;
+	poInterface->DisplayMessage("Fin de partie");
 }
 
 string Game::strGetPossibilities(unsigned int X, unsigned int Y)
@@ -210,7 +227,7 @@ void Game::MovePiece(unsigned int X1, unsigned int Y1, unsigned int X2, unsigned
 	moBoard.MovePiece(X1, Y1, X2, Y2);
 }
 
-void Game::CheckStartCoords(unsigned int X, unsigned int Y) const
+void Game::CheckCoords(unsigned int X, unsigned int Y) const
 {
 	if(!bIsCoordsCorrect(X, Y))
 		throw exception("Invalid start coordinates");
