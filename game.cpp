@@ -43,7 +43,9 @@ void Game::Run()
 			if(strPieceCoords == "c")
 			{
 				CancelLastMove();
+
 				meCurrentPlayer = (meCurrentPlayer == Piece::WHITE ? Piece::BLACK : Piece::WHITE);
+				poInterface->DisplayBoard(moBoard);
 			}
 			else if(strPieceCoords == "x")
 				mbIsOver = true;
@@ -88,9 +90,9 @@ void Game::Run()
 				
 				strPieceCoords = "";
 				strDestCoords = "";
-			}
 			
-			poInterface->DisplayBoard(moBoard);
+				poInterface->DisplayBoard(moBoard);
+			}
 		}
 		catch(exception & e)
 		{
