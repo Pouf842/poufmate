@@ -65,13 +65,13 @@ void Game::Run()
 				}
 				else if(strEntry[strEntry.size() - 1] == '?')
 				{
-					string strPossibilities = strGetPossibilities(strEntry[0] - '0', strEntry[1] - '1');
+					string strPossibilities = strGetPossibilities(strEntry[0] - '0', strEntry[1] - '0');
 					poInterface->DisplayPossibilities(strPossibilities);
 				}
 				else
 				{
 					unsigned int X = strEntry[0] - '0';
-					unsigned int Y = strEntry[0] - '1';
+					unsigned int Y = strEntry[1] - '0';
 
 					CheckCoords(X, Y);
 					mstrSelection = strEntry;
@@ -99,7 +99,7 @@ void Game::Run()
 
 					CheckIsMovementCorrect(X1, Y1, X2, Y2);
 				
-					MovePiece(X1, Y2, X2, Y2);
+					MovePiece(X1, Y1, X2, Y2);
 					meCurrentPlayer = (meCurrentPlayer == Piece::WHITE ? Piece::BLACK : Piece::WHITE);
 
 					if(bIsCheckMate(meCurrentPlayer))
