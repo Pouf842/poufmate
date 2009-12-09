@@ -10,8 +10,10 @@ class InterfaceConsole : public Interface
   public :
 	virtual void DisplayBoard(const Board &) const;
 	virtual void DisplayMessage(std::string strMessage) const;
-	virtual std::string strGetCommand() const;
+	virtual std::string strGetEntry() const;
 	virtual void DisplayPossibilities(std::string strPossibilities) const;
+	virtual void DisplayInCheck(unsigned int X, unsigned int Y) const;
+	virtual void DisplaySelection(std::string strSelection) const;
 	static Interface * poGetInstance();
 };
 
