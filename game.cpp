@@ -97,16 +97,27 @@ void Game::Run()
 					unsigned int X2 = strEntry[0] - '0';
 					unsigned int Y2 = strEntry[1] - '0';
 
-					CheckIsMovementCorrect(X1, Y1, X2, Y2);
-				
-					MovePiece(X1, Y1, X2, Y2);
-					meCurrentPlayer = (meCurrentPlayer == Piece::WHITE ? Piece::BLACK : Piece::WHITE);
-
-					if(bIsCheckMate(meCurrentPlayer))
+					/*if(bIsCastling(X1, Y1, X2, Y2))
 					{
-						poInterface->DisplayBoard(moBoard);
-						mbIsOver = true;
+						if(bIsInCheck(meCurrentPlayer))
+							throw exception("Castling is forbidden if you're in check");
+
+						CheckIsMovementCorrect(X1, Y1, X2, Y2);
 					}
+					else
+					{*/
+						CheckIsMovementCorrect(X1, Y1, X2, Y2);
+					
+						MovePiece(X1, Y1, X2, Y2);
+						meCurrentPlayer = (meCurrentPlayer == Piece::WHITE ? Piece::BLACK : Piece::WHITE);
+
+						if(bIsCheckMate(meCurrentPlayer))
+						{
+							poInterface->DisplayBoard(moBoard);
+							poInterface->DisplayMessage(string(meCurrentPlayer == Piece::WHITE ? "White" : "Black") + " player is checkmate !");
+							mbIsOver = true;
+						}
+					//}
 
 					mstrSelection = "";
 					strEntry = "";
@@ -122,7 +133,9 @@ void Game::Run()
 	}
 
 	poInterface->DisplayMessage("Fin de partie");
+	poInterface->strGetEntry();
 }
+
 
 string Game::strGetPossibilities(unsigned int X, unsigned int Y)
 {
