@@ -51,9 +51,10 @@ void Game::Run()
 
 		try
 		{
+			strEntry = poInterface->strGetEntry();
+
 			if(moSelection.bIsEmpty())
 			{
-				strEntry = poInterface->strGetEntry();
 			
 				if(strEntry.size() != 0)
 				{
@@ -83,10 +84,8 @@ void Game::Run()
 			}
 			
 			if(!moSelection.bIsEmpty())
-			{
-				strEntry = poInterface->strGetEntry();
-				
-				if(strEntry[strEntry.size() - 1] == '?')
+			{				
+				if(strEntry == "?")
 				{
 					string strPossibilities = strGetPossibilities(moSelection);
 					poInterface->DisplayPossibilities(strPossibilities);
