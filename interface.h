@@ -15,7 +15,7 @@ class Interface
 	virtual std::string strGetEntry() const = 0;
 	virtual void DisplayPossibilities(std::string strPossibilities) const = 0;
 	virtual void DisplayInCheck(Coordinates) const = 0;
-	virtual void DisplayCurrentPlayer(Piece::Color) = 0;
+	virtual void DisplayCurrentPlayer(Piece::Color) const = 0;
 	virtual void DisplaySelection(Coordinates) const = 0;
 	static Interface * poGetInstance() {}
 	static void FreeInstance()

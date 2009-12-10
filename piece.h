@@ -8,8 +8,8 @@ class Board;
 class Piece
 {
   public :
-	enum Color {BLACK, WHITE};
-	enum PieceType {PAWN, TOWER, KNIGHT, BISHOP, QUEEN, KING, NONE};
+	enum Color {BLACK = 0, WHITE = 1};
+	enum PieceType {PAWN = 0, TOWER = 1, KNIGHT = 2, BISHOP = 3, QUEEN = 4, KING = 5, NONE = 6};
 
 	virtual char cGetChar() const = 0;
 	virtual Color eGetColor() const;
