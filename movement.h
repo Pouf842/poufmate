@@ -2,23 +2,23 @@
 #define __MOVEMENT_H_
 
 #include "piece.h"
-#include "coordinates.h"
+#include "position.h"
 
 class Movement
 {
   protected :
-	Coordinates moCoords1;
-	Coordinates moCoords2;
+	Position moPos1;
+	Position moPos2;
 
 	Piece * mpoMovingPiece;
 	Piece * mpoCapturedPiece;
 
   public :
-	Movement(Coordinates oCoords1,
-			 Coordinates oCoords2,
+	Movement(Position oPos1,
+			 Position oPos2,
 			 Piece * poMovingPiece, Piece * poCapturedPiece = 0);
-	Coordinates oGetCoords1() const;
-	Coordinates oGetCoords2() const;
+	Position oGetCoords1() const;
+	Position oGetCoords2() const;
 	virtual void CancelMovement(Board &) const;
 
 	Piece * poGetMovingPiece() const;

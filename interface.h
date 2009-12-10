@@ -2,7 +2,7 @@
 #define __INTERFACE_H_
 
 #include "board.h"
-#include "coordinates.h"
+#include "position.h"
 #include <string>
 
 class Interface
@@ -14,9 +14,9 @@ class Interface
 	virtual void DisplayMessage(std::string strMessage) const = 0;
 	virtual std::string strGetEntry() const = 0;
 	virtual void DisplayPossibilities(std::string strPossibilities) const = 0;
-	virtual void DisplayInCheck(Coordinates) const = 0;
+	virtual void DisplayInCheck(Position) const = 0;
 	virtual void DisplayCurrentPlayer(Piece::Color) const = 0;
-	virtual void DisplaySelection(Coordinates) const = 0;
+	virtual void DisplaySelection(Position) const = 0;
 	static Interface * poGetInstance() {}
 	static void FreeInstance()
 	{

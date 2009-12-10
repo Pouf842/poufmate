@@ -1,7 +1,7 @@
 #include "castling_move.h"
 #include "board.h"
 
-CastlingMove::CastlingMove(Coordinates oCoords1, Coordinates oCoords2, Piece * poMovingPiece) : Movement(oCoords1, oCoords2, poMovingPiece, 0)
+CastlingMove::CastlingMove(Position oPos1, Position oPos2, Piece * poMovingPiece) : Movement(oPos1, oPos2, poMovingPiece, 0)
 {
 }
 
@@ -18,15 +18,15 @@ void CastlingMove::CancelMovement(Board & oBoard) const
 	switch(oGetCoords2().mY)
 	{
 	  case 2 :
-		poTower = oBoard.poGetPiece(Coordinates(iXKing, 3));
-		oBoard.SetPiece(Coordinates(iXKing, 3), 0);
-		oBoard.SetPiece(Coordinates(iXKing, 7), poTower);
+		poTower = oBoard.poGetPiece(Position(iXKing, 3));
+		oBoard.SetPiece(Position(iXKing, 3), 0);
+		oBoard.SetPiece(Position(iXKing, 7), poTower);
 		poTower->SetFirstMove(true);
 		break;
 	  case 6 :
-		poTower = oBoard.poGetPiece(Coordinates(iXKing, 5));
-		oBoard.SetPiece(Coordinates(iXKing, 5), 0);
-		oBoard.SetPiece(Coordinates(iXKing, 7), poTower);
+		poTower = oBoard.poGetPiece(Position(iXKing, 5));
+		oBoard.SetPiece(Position(iXKing, 5), 0);
+		oBoard.SetPiece(Position(iXKing, 7), poTower);
 		poTower->SetFirstMove(true);
 		break;
 	}

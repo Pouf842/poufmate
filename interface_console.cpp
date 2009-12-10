@@ -49,12 +49,12 @@ void InterfaceConsole::DisplayCurrentPlayer(Piece::Color eCurrentPlayer) const
 	cout << "Joueur " << (eCurrentPlayer == Piece::WHITE ? "Blanc":"Noir") << endl;
 }
 
-void InterfaceConsole::DisplaySelection(Coordinates oCoords) const
+void InterfaceConsole::DisplaySelection(Position oPos) const
 {
-	cout << oCoords.mX << oCoords.mY << endl;
+	cout << oPos.mX << oPos.mY << endl;
 }
 
-void InterfaceConsole::DisplayInCheck(Coordinates oCoords) const
+void InterfaceConsole::DisplayInCheck(Position oPos) const
 {
-	cout << "The king in " << oCoords.mX << oCoords.mY << " is in check" << endl;
+	cout << "The king in " << oPos.mX << oPos.mY << " is in check" << endl;
 }

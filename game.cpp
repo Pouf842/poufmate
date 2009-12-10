@@ -92,7 +92,7 @@ void Game::Run()
 				}
 				else
 				{
-					Coordinates oEntry(strEntry);
+					Position oEntry(strEntry);
 					if(bIsCastling(moSelection, oEntry))
 					{
 						if(bIsInCheck(meCurrentPlayer))
@@ -151,10 +151,10 @@ void Game::Run()
 
 void Game::Castling(Piece::Color ePlayer, Game::CastlingSide eSide)
 {
-	Coordinates & oKing = (ePlayer == Piece::WHITE ? moWhiteKing : moBlackKing);
-	Coordinates oKingNewPos(oKing.mX, (eSide == Game::RIGHT ? 6 : 2));
-	Coordinates oTower((ePlayer == Piece::WHITE ? moWhiteKing.mX : moBlackKing.mX), (eSide == Game::RIGHT ? 7 : 0));
-	Coordinates oTowerNewPos(oTower.mX, (eSide == Game::RIGHT ? 5 : 3));
+	Position & oKing = (ePlayer == Piece::WHITE ? moWhiteKing : moBlackKing);
+	Position oKingNewPos(oKing.mX, (eSide == Game::RIGHT ? 6 : 2));
+	Position oTower((ePlayer == Piece::WHITE ? moWhiteKing.mX : moBlackKing.mX), (eSide == Game::RIGHT ? 7 : 0));
+	Position oTowerNewPos(oTower.mX, (eSide == Game::RIGHT ? 5 : 3));
 
 	moHistory.push_back(new CastlingMove(oKing, oKingNewPos, moBoard.poGetPiece(oKing)));
 
@@ -162,13 +162,13 @@ void Game::Castling(Piece::Color ePlayer, Game::CastlingSide eSide)
 	moBoard.MovePiece(oTower, oTowerNewPos);
 }
 
-bool Game::bIsCastling(Coordinates oCoords1, Coordinates oCoords2)
+bool Game::bIsCastling(Position oPos1, Position oPos2)
 {
-	Coordinates oKing = (meCurrentPlayer == Piece::WHITE ? Coordinates(7, 4) : Coordinates(0, 4));
+	Position oKing = (meCurrentPlayer == Piece::WHITE ? Position(7, 4) : Position(0, 4));
 
-	if(oCoords1 == oKing
-	&& oCoords1.mX == oCoords2.mX
-	&& (oCoords2.mY == oCoords1.mY - 2 || oCoords2.mY == oCoords1.mY + 2))
+	if(oPos1 == oKing
+	&& oPos1.mX == oPos2.mX
+	&& (oPos2.mY == oPos1.mY - 2 || oPos2.mY == oPos1.mY + 2))
 		return true;
 
 	return false;
@@ -176,7 +176,7 @@ bool Game::bIsCastling(Coordinates oCoords1, Coordinates oCoords2)
 
 void Game::CheckIsCastlingOk(Piece::Color ePlayer, Game::CastlingSide eSide)
 {
-	Coordinates oKing = (ePlayer == Piece::WHITE ? moWhiteKing : moBlackKing);
+	Position oKing = (ePlayer == Piece::WHITE ? moWhiteKing : moBlackKing);
 
 	if(moBoard.poGetPiece(oKing)->bHasAlreadyMoved())
 		throw exception("Your king has already moved and therefore cannot castling");
@@ -184,7 +184,7 @@ void Game::CheckIsCastlingOk(Piece::Color ePlayer, Game::CastlingSide eSide)
 	switch(eSide)
 	{
 	  case Game::RIGHT :
-		if(moBoard.poGetPiece(Coordinates(oKing.mX, 7))->bHasAlreadyMoved())
+		if(moBoard.poGetPiece(Position(oKing.mX, 7))->bHasAlreadyMoved())
 			throw exception("Your tower has already moved, and therefore cannot castling");
 
 		for(unsigned int j = oKing.mY + 1; j <= 6; ++j)
@@ -195,7 +195,7 @@ void Game::CheckIsCastlingOk(Piece::Color ePlayer, Game::CastlingSide eSide)
 
 		break;
 	  case Game::LEFT :
-		if(moBoard.poGetPiece(Coordinates(oKing.mX, 0))->bHasAlreadyMoved())
+		if(moBoard.poGetPiece(Position(oKing.mX, 0))->bHasAlreadyMoved())
 			throw exception("Your tower has already moved, and therefore cannot castling");
 
 		for(unsigned int j = oKing.mY - 1; j >= 2; --j)
@@ -210,18 +210,18 @@ void Game::CheckIsCastlingOk(Piece::Color ePlayer, Game::CastlingSide eSide)
 	}
 }
 
-string Game::strGetPossibilities(Coordinates oCoords)
+string Game::strGetPossibilities(Position oPos)
 {
 	string strPossibilities = "";
 	for(unsigned int i = 0; i < 8; ++i)
 	{
 		for(unsigned int j = 0; j < 8; ++j)
 		{
-			Coordinates oCoords2(i, j);
+			Position oPos2(i, j);
 
-			if(Game::bIsMovementCorrect(oCoords, oCoords2))
+			if(Game::bIsMovementCorrect(oPos, oPos2))
 			{
-				MovePiece(oCoords, oCoords2);
+				MovePiece(oPos, oPos2);
 				if(!bIsInCheck(meCurrentPlayer))
 				{
 					strPossibilities += i + '0';
@@ -239,16 +239,16 @@ string Game::strGetPossibilities(Coordinates oCoords)
 
 bool Game::bIsInCheck(Piece::Color eColor) const
 {
-	Coordinates oKing(eColor == Piece::WHITE ? moWhiteKing : moBlackKing);
+	Position oKing(eColor == Piece::WHITE ? moWhiteKing : moBlackKing);
 
 	for(unsigned int i = 0; i < 8; ++i)
 	{
 		for(unsigned int j = 0; j < 8; ++j)
 		{
-			Coordinates oCoords(i, j);
-			if(!moBoard.bIsSquareEmpty(oCoords) && moBoard.eGetSquareColor(oCoords) != eColor)
+			Position oPos(i, j);
+			if(!moBoard.bIsSquareEmpty(oPos) && moBoard.eGetSquareColor(oPos) != eColor)
 			{
-				if(bIsMovementCorrect(oCoords, oKing))
+				if(bIsMovementCorrect(oPos, oKing))
 					return true;
 			}
 		}
@@ -268,19 +268,19 @@ bool Game::bIsCheckMate(Piece::Color ePlayer)
 	{
 		for(unsigned int j = 0; j < 8; ++j)
 		{
-			Coordinates oCoords1(i, j);
+			Position oPos1(i, j);
 
-			if(!moBoard.bIsSquareEmpty(oCoords1) && moBoard.eGetSquareColor(oCoords1) == ePlayer)
+			if(!moBoard.bIsSquareEmpty(oPos1) && moBoard.eGetSquareColor(oPos1) == ePlayer)
 			{
 				for(unsigned int k = 0; k < 8; ++k)
 				{
 					for(unsigned int l = 0; l < 8; ++l)
 					{
-						Coordinates oCoords2(k, l);
+						Position oPos2(k, l);
 
-						if(bIsMovementCorrect(oCoords1, oCoords2))
+						if(bIsMovementCorrect(oPos1, oPos2))
 						{
-							MovePiece(oCoords1, oCoords2);
+							MovePiece(oPos1, oPos2);
 
 							if(!bIsInCheck(ePlayer))
 							{
@@ -298,54 +298,54 @@ bool Game::bIsCheckMate(Piece::Color ePlayer)
 	return bMate;
 }
 
-void Game::MovePiece(Coordinates oCoords1, Coordinates oCoords2)
+void Game::MovePiece(Position oPos1, Position oPos2)
 {
-	if(moBoard.poGetPiece(oCoords1)->bIsFirstMove())
-		moHistory.push_back(new FirstMove(oCoords1, oCoords2, moBoard.poGetPiece(oCoords1), moBoard.poGetPiece(oCoords2)));
+	if(moBoard.poGetPiece(oPos1)->bIsFirstMove())
+		moHistory.push_back(new FirstMove(oPos1, oPos2, moBoard.poGetPiece(oPos1), moBoard.poGetPiece(oPos2)));
 	else
-		moHistory.push_back(new Movement(oCoords1, oCoords2, moBoard.poGetPiece(oCoords1), moBoard.poGetPiece(oCoords2)));
+		moHistory.push_back(new Movement(oPos1, oPos2, moBoard.poGetPiece(oPos1), moBoard.poGetPiece(oPos2)));
 
-	if(moBoard.poGetPiece(oCoords1)->eGetType() == Piece::KING)
+	if(moBoard.poGetPiece(oPos1)->eGetType() == Piece::KING)
 	{
-		if(moBoard.eGetSquareColor(oCoords1) == Piece::WHITE)
-			moWhiteKing = oCoords2;
+		if(moBoard.eGetSquareColor(oPos1) == Piece::WHITE)
+			moWhiteKing = oPos2;
 		else
-			moBlackKing = oCoords2;
+			moBlackKing = oPos2;
 	}
 
-	moBoard.MovePiece(oCoords1, oCoords2);
+	moBoard.MovePiece(oPos1, oPos2);
 }
 
-void Game::CheckSelectionCoords(Coordinates oCoords) const
+void Game::CheckSelectionCoords(Position oPos) const
 {	
-	if(moBoard.bIsSquareEmpty(oCoords))
+	if(moBoard.bIsSquareEmpty(oPos))
 		throw exception("There is no piece on this square");
 
-	if(moBoard.eGetSquareColor(oCoords) != meCurrentPlayer)
+	if(moBoard.eGetSquareColor(oPos) != meCurrentPlayer)
 		throw exception("This piece does not belong to you");
 }
 
-void Game::CheckIsMovementCorrect(Coordinates oCoords1, Coordinates oCoords2) const
+void Game::CheckIsMovementCorrect(Position oPos1, Position oPos2) const
 {
-	if(oCoords1 == oCoords2)
+	if(oPos1 == oPos2)
 		throw exception("No movement");
 
-	if(moBoard.bIsSquareEmpty(oCoords1))
+	if(moBoard.bIsSquareEmpty(oPos1))
 		throw exception("There is no piece on the starting square");
 
-	if(!moBoard.bIsSquareEmpty(oCoords2) && moBoard.eGetSquareColor(oCoords1) == moBoard.eGetSquareColor(oCoords2))
+	if(!moBoard.bIsSquareEmpty(oPos2) && moBoard.eGetSquareColor(oPos1) == moBoard.eGetSquareColor(oPos2))
 		throw exception("The two pieces are on the same side");
 
-	if(!moBoard.poGetPiece(oCoords1)->bIsMovementCorrect(oCoords1, oCoords2, moBoard))
+	if(!moBoard.poGetPiece(oPos1)->bIsMovementCorrect(oPos1, oPos2, moBoard))
 		throw exception("Invalid move");
 }
 
-bool Game::bIsMovementCorrect(Coordinates oCoords1, Coordinates oCoords2) const
+bool Game::bIsMovementCorrect(Position oPos1, Position oPos2) const
 {
-	if((oCoords1 == oCoords2)
-	|| (moBoard.bIsSquareEmpty(oCoords1))
-	|| (!moBoard.bIsSquareEmpty(oCoords2) && moBoard.eGetSquareColor(oCoords1) == moBoard.eGetSquareColor(oCoords2))
-	|| (!moBoard.poGetPiece(oCoords1)->bIsMovementCorrect(oCoords1, oCoords2, moBoard)))
+	if((oPos1 == oPos2)
+	|| (moBoard.bIsSquareEmpty(oPos1))
+	|| (!moBoard.bIsSquareEmpty(oPos2) && moBoard.eGetSquareColor(oPos1) == moBoard.eGetSquareColor(oPos2))
+	|| (!moBoard.poGetPiece(oPos1)->bIsMovementCorrect(oPos1, oPos2, moBoard)))
 		return false;
 
 	return true;

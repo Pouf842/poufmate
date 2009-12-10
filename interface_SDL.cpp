@@ -73,11 +73,11 @@ void InterfaceSDL::DisplayBoard(const Board & oBoard) const
 			position.x = i * 87;
 			position.y = j * 87;
 
-			Coordinates oCoords(j, i);
+			Position oPos(j, i);
 
-			if(!oBoard.bIsSquareEmpty(oCoords))
+			if(!oBoard.bIsSquareEmpty(oPos))
 			{
-				SDL_BlitSurface(mpoPieces[oBoard.eGetSquareColor(oCoords)][oBoard.poGetPiece(oCoords)->eGetType()], NULL, mpoGame[SCREEN], &position);
+				SDL_BlitSurface(mpoPieces[oBoard.eGetSquareColor(oPos)][oBoard.poGetPiece(oPos)->eGetType()], NULL, mpoGame[SCREEN], &position);
 			}
 		}
 
@@ -120,21 +120,21 @@ void InterfaceSDL::DisplayPossibilities(std::string strPossibilities) const
 	SDL_Flip(mpoGame[SCREEN]);
 }
 
-void InterfaceSDL::DisplayInCheck(Coordinates oCoords) const
+void InterfaceSDL::DisplayInCheck(Position oPos) const
 {
 	SDL_Rect position;
-	position.x = oCoords.mX * 87;
-	position.y = oCoords.mY * 87;
+	position.x = oPos.mX * 87;
+	position.y = oPos.mY * 87;
 
 	SDL_BlitSurface(mpoGame[CHESS], NULL, mpoGame[SCREEN], &position);
 	SDL_Flip(mpoGame[SCREEN]);
 }
 
-void InterfaceSDL::DisplaySelection(Coordinates oCoords) const
+void InterfaceSDL::DisplaySelection(Position oPos) const
 {
 	SDL_Rect position;
-	position.x = oCoords.mX * 87;
-	position.y = oCoords.mY * 87;
+	position.x = oPos.mX * 87;
+	position.y = oPos.mY * 87;
 
 	SDL_BlitSurface(mpoGame[SELECTION], NULL, mpoGame[SCREEN], &position);
 	SDL_Flip(mpoGame[SCREEN]);

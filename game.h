@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "board.h"
-#include "coordinates.h"
+#include "position.h"
 #include "movement.h"
 
 class Game
@@ -13,26 +13,26 @@ class Game
 	Board moBoard;
 	vector<Movement*> moHistory;
 	Piece::Color meCurrentPlayer;
-	Coordinates miXWhiteKing;
-	Coordinates moWhiteKing;
-	Coordinates moBlackKing;
+	Position miXWhiteKing;
+	Position moWhiteKing;
+	Position moBlackKing;
 
 	bool mbIsOver;
-	Coordinates moSelection;
+	Position moSelection;
 
-	bool bIsCoordsCorrect(Coordinates) const;
-	void CheckSelectionCoords(Coordinates) const;
-	void CheckIsMovementCorrect(Coordinates, Coordinates) const;
-	bool bIsMovementCorrect(Coordinates, Coordinates) const;
+	bool bIsCoordsCorrect(Position) const;
+	void CheckSelectionCoords(Position) const;
+	void CheckIsMovementCorrect(Position, Position) const;
+	bool bIsMovementCorrect(Position, Position) const;
 	bool bIsOver();
 	void CancelLastMove();
-	void MovePiece(Coordinates, Coordinates);
-	bool bIsCastling(Coordinates, Coordinates);
+	void MovePiece(Position, Position);
+	bool bIsCastling(Position, Position);
 	void CheckIsCastlingOk(Piece::Color ePlayer, Game::CastlingSide);
 	void Castling(Piece::Color ePlayer, CastlingSide);
 	bool bIsInCheck(Piece::Color) const;
 	bool bIsCheckMate(Piece::Color);
-	std::string strGetPossibilities(Coordinates);
+	std::string strGetPossibilities(Position);
   public :
 	Game();
 	void Run();

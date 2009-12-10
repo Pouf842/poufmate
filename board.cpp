@@ -6,7 +6,7 @@
 #include "bishop.h"
 #include "queen.h"
 #include "king.h"
-#include "coordinates.h"
+#include "position.h"
 
 using namespace std;
 
@@ -60,25 +60,25 @@ void Board::Init()
 
 bool Board::bIsSquareEmpty(unsigned int X, unsigned int Y) const
 {
-	return bIsSquareEmpty(Coordinates(X, Y));
+	return bIsSquareEmpty(Position(X, Y));
 }
 
-bool Board::bIsSquareEmpty(Coordinates oCoords) const
+bool Board::bIsSquareEmpty(Position oPos) const
 {
-	return moSquares[oCoords.mX][oCoords.mY].bIsEmpty();
+	return moSquares[oPos.mX][oPos.mY].bIsEmpty();
 }
 
-Piece::Color Board::eGetSquareColor(Coordinates oCoords) const
+Piece::Color Board::eGetSquareColor(Position oPos) const
 {
-	return moSquares[oCoords.mX][oCoords.mY].eGetPieceColor();
+	return moSquares[oPos.mX][oPos.mY].eGetPieceColor();
 }
 
-void Board::MovePiece(Coordinates oCoords1, Coordinates oCoords2)
+void Board::MovePiece(Position oPos1, Position oPos2)
 {
-	unsigned int X1 = oCoords1.mX;
-	unsigned int Y1 = oCoords1.mY;
-	unsigned int X2 = oCoords2.mX;
-	unsigned int Y2 = oCoords2.mY;
+	unsigned int X1 = oPos1.mX;
+	unsigned int Y1 = oPos1.mY;
+	unsigned int X2 = oPos2.mX;
+	unsigned int Y2 = oPos2.mY;
 
 	Square & oPieceSquare = moSquares[X1][Y1];
 	Square & oDestSquare = moSquares[X2][Y2];
@@ -107,12 +107,12 @@ ostream & operator<<(ostream & os, const Board & b)
 	return os;
 }
 
-Piece * Board::poGetPiece(Coordinates oCoords) const
+Piece * Board::poGetPiece(Position oPos) const
 {
-	return moSquares[oCoords.mX][oCoords.mY].poGetPiece();
+	return moSquares[oPos.mX][oPos.mY].poGetPiece();
 }
 
-void Board::SetPiece(Coordinates oCoords, Piece * poNewPiece)
+void Board::SetPiece(Position oPos, Piece * poNewPiece)
 {
-	moSquares[oCoords.mX][oCoords.mY].SetPiece(poNewPiece);
+	moSquares[oPos.mX][oPos.mY].SetPiece(poNewPiece);
 }

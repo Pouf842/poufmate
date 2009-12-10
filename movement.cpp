@@ -1,21 +1,21 @@
 #include "movement.h"
 #include "board.h"
 
-Movement::Movement(Coordinates oCoords1, Coordinates oCoords2,
-				   Piece * poMovingPiece, Piece * poCapturedPiece) : moCoords1(oCoords1), moCoords2(oCoords2)
+Movement::Movement(Position oPos1, Position oPos2,
+				   Piece * poMovingPiece, Piece * poCapturedPiece) : moPos1(oPos1), moPos2(oPos2)
 {
 	mpoMovingPiece = poMovingPiece;
 	mpoCapturedPiece = poCapturedPiece;
 }
 
-Coordinates Movement::oGetCoords1() const
+Position Movement::oGetCoords1() const
 {
-	return moCoords1;
+	return moPos1;
 }
 
-Coordinates Movement::oGetCoords2() const
+Position Movement::oGetCoords2() const
 {
-	return moCoords2;
+	return moPos2;
 }
 
 Piece * Movement::poGetMovingPiece() const
