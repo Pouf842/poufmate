@@ -2,13 +2,14 @@
 #define __BISHOP_H_
 
 #include "piece.h"
+#include "coordinates.h"
 
 class Bishop : public Piece
 {
   public :
 	Bishop(Piece::Color);
 	virtual char cGetChar() const;
-	virtual bool bIsmovementCorrect(int X1, int Y1, int X2, int Y2, const Board & oBoard) const;
+	virtual bool bIsmovementCorrect(Coordinates, Coordinates, const Board & oBoard) const;
 };
 
 #endif

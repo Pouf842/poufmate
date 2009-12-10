@@ -42,11 +42,11 @@ void InterfaceConsole::DisplayPossibilities(std::string strPossibilities) const
 			cout << endl;
 }
 
-void InterfaceConsole::DisplaySelection(unsigned int X, unsigned int Y) const
+void InterfaceConsole::DisplaySelection(Coordinates oCoords) const
 {
 }
 
-void InterfaceConsole::DisplayInCheck(unsigned int X, unsigned int Y) const
+void InterfaceConsole::DisplayInCheck(Coordinates oCoords) const
 {
-	cout << "The king in " << X << Y << " is in check" << endl;
+	cout << "The king in " << oCoords.mX << oCoords.mY << " is in check" << endl;
 }

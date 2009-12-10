@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "square.h"
+#include "coordinates.h"
 
 using namespace std;
 
@@ -15,11 +16,12 @@ class Board
   public :
 	void InterfaceOnStream(ostream &) const;
 	void Init();
-	bool bIsSquareEmpty(unsigned int X, unsigned int Y) const;
-	void MovePiece(unsigned int X1, unsigned int Y1, unsigned int X2, unsigned int Y2);
-	Piece::Color eGetSquareColor(unsigned int X, unsigned int Y) const;
-	Piece * poGetPiece(unsigned int X, unsigned int Y) const;
-	void SetPiece(unsigned int X, unsigned int Y, Piece * poNewPiece);
+	bool bIsSquareEmpty(unsigned int, unsigned int) const;
+	bool bIsSquareEmpty(Coordinates) const;
+	void MovePiece(Coordinates, Coordinates);
+	Piece::Color eGetSquareColor(Coordinates) const;
+	Piece * poGetPiece(Coordinates) const;
+	void SetPiece(Coordinates, Piece * poNewPiece);
 };
 
 ostream & operator<<(ostream & os, const Board & b);

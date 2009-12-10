@@ -1,5 +1,6 @@
 #include "King.h"
 #include "board.h"
+#include "coordinates.h"
 
 King::King(Piece::Color eNewColor)
 {
@@ -16,13 +17,15 @@ char King::cGetChar() const
 		return 'k';
 }
 
-bool King::bIsmovementCorrect(int X1, int Y1, int X2, int Y2, const Board & oBoard) const
+bool King::bIsmovementCorrect(Coordinates oCoords1, Coordinates oCoords2, const Board & oBoard) const
 {
-	if(X1 == X2 && Y1 == Y2)
+	if(oCoords1 == oCoords2)
 		return true;
 
-	if(!oBoard.bIsSquareEmpty(X2, Y2) && oBoard.eGetSquareColor(X2, Y2) == eGetColor())
-		return false;
+	int X1 = oCoords1.mX;
+	int Y1 = oCoords1.mY;
+	int X2 = oCoords2.mX;
+	int Y2 = oCoords2.mY;
 
 	if(abs(X2 - X1) > 1
 	|| abs(Y2 - Y1) > 1)

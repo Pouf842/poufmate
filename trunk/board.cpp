@@ -6,6 +6,7 @@
 #include "bishop.h"
 #include "queen.h"
 #include "king.h"
+#include "coordinates.h"
 
 using namespace std;
 
@@ -57,20 +58,28 @@ void Board::Init()
 	moSquares[7][4].SetPiece(new King(Piece::WHITE));
 }
 
-
-
 bool Board::bIsSquareEmpty(unsigned int X, unsigned int Y) const
 {
-	return moSquares[X][Y].bIsEmpty();
+	return bIsSquareEmpty(Coordinates(X, Y));
 }
 
-Piece::Color Board::eGetSquareColor(unsigned int X, unsigned int Y) const
+bool Board::bIsSquareEmpty(Coordinates oCoords) const
 {
-	return moSquares[X][Y].eGetPieceColor();
+	return moSquares[oCoords.mX][oCoords.mY].bIsEmpty();
 }
 
-void Board::MovePiece(unsigned int X1, unsigned int Y1, unsigned int X2, unsigned int Y2)
+Piece::Color Board::eGetSquareColor(Coordinates oCoords) const
 {
+	return moSquares[oCoords.mX][oCoords.mY].eGetPieceColor();
+}
+
+void Board::MovePiece(Coordinates oCoords1, Coordinates oCoords2)
+{
+	unsigned int X1 = oCoords1.mX;
+	unsigned int Y1 = oCoords1.mY;
+	unsigned int X2 = oCoords2.mX;
+	unsigned int Y2 = oCoords2.mY;
+
 	Square & oPieceSquare = moSquares[X1][Y1];
 	Square & oDestSquare = moSquares[X2][Y2];
 
@@ -98,15 +107,12 @@ ostream & operator<<(ostream & os, const Board & b)
 	return os;
 }
 
-Piece * Board::poGetPiece(unsigned int X, unsigned int Y) const
+Piece * Board::poGetPiece(Coordinates oCoords) const
 {
-	return moSquares[X][Y].poGetPiece();
+	return moSquares[oCoords.mX][oCoords.mY].poGetPiece();
 }
 
-void Board::SetPiece(unsigned int X, unsigned int Y, Piece * poNewPiece)
+void Board::SetPiece(Coordinates oCoords, Piece * poNewPiece)
 {
-	if(X < 0 || X > 7 || Y < 0 || Y > 7)
-		throw exception("Invalid coordinates");
-
-	moSquares[X][Y].SetPiece(poNewPiece);
+	moSquares[oCoords.mX][oCoords.mY].SetPiece(poNewPiece);
 }

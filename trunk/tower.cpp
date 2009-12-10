@@ -1,5 +1,6 @@
 #include "tower.h"
 #include "board.h"
+#include "coordinates.h"
 
 Tower::Tower(Piece::Color eNewColor)
 {
@@ -16,13 +17,15 @@ char Tower::cGetChar() const
 		return 't';
 }
 
-bool Tower::bIsmovementCorrect(int X1, int Y1, int X2, int Y2, const Board & oBoard) const
+bool Tower::bIsmovementCorrect(Coordinates oCoords1, Coordinates oCoords2, const Board & oBoard) const
 {
-	if(X1 == X2 && Y1 == Y2)
+	if(oCoords1 == oCoords2)
 		return true;
 
-	if(!oBoard.bIsSquareEmpty(X2, Y2) && oBoard.eGetSquareColor(X2, Y2) == eGetColor())
-		return false;
+	int X1 = oCoords1.mX;
+	int Y1 = oCoords1.mY;
+	int X2 = oCoords2.mX;
+	int Y2 = oCoords2.mY;
 
 	if(X1 != X2 && Y1 != Y2)
 		return false;

@@ -1,16 +1,11 @@
 #include "movement.h"
 
 Movement::Movement(Piece::Color ePlayer,
-				   unsigned int X1, unsigned int Y1,
-				   unsigned int X2, unsigned int Y2,
+				   Coordinates oCoords1, Coordinates oCoords2,
 				   Piece * poMovingPiece, Piece * poCapturedPiece,
-				   bool bIsFirstMove, bool bIsCastling)
+				   bool bIsFirstMove, bool bIsCastling) : moCoords1(oCoords1), moCoords2(oCoords2)
 {
 	mePlayerColor = ePlayer;
-	mX1 = X1;
-	mX2 = X2;
-	mY1 = Y1;
-	mY2 = Y2;
 
 	mpoMovingPiece = poMovingPiece;
 	mpoCapturedPiece = poCapturedPiece;
@@ -19,24 +14,14 @@ Movement::Movement(Piece::Color ePlayer,
 	mbIsCastling = bIsCastling;
 }
 
-unsigned int Movement::iGetX1()
+Coordinates Movement::oGetCoords1()
 {
-	return mX1;
+	return moCoords1;
 }
 
-unsigned int Movement::iGetX2()
+Coordinates Movement::oGetCoords2()
 {
-	return mX2;
-}
-
-unsigned int Movement::iGetY1()
-{
-	return mY1;
-}
-
-unsigned int Movement::iGetY2()
-{
-	return mY2;
+	return moCoords2;
 }
 
 Piece * Movement::poGetMovingPiece()
