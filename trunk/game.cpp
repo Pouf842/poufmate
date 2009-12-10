@@ -1,7 +1,6 @@
 #include "game.h"
 #include "board.h"
 #include "piece.h"
-#include "interface_console.h"
 #include "first_move.h"
 #include "castling_move.h"
 
@@ -9,6 +8,7 @@
 	#include "interface_SDL.h"
 	#define DISPLAY InterfaceSDL
 #else
+	#include "interface_console.h"
 	#define DISPLAY InterfaceConsole
 #endif
 
