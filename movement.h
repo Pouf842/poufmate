@@ -2,14 +2,13 @@
 #define __MOVEMENT_H_
 
 #include "piece.h"
+#include "coordinates.h"
 
 class Movement
 {
   protected :
-	unsigned int mX1;
-	unsigned int mY1;
-	unsigned int mX2;
-	unsigned int mY2;
+	Coordinates moCoords1;
+	Coordinates moCoords2;
 
 	bool mbIsFirstMove;
 	bool mbIsCastling;
@@ -20,14 +19,12 @@ class Movement
 	Piece::Color mePlayerColor;
 
   public :
-	Movement(Piece::Color, unsigned int X1, unsigned int Y1,
-			 unsigned int X2, unsigned int Y2,
+	Movement(Piece::Color, Coordinates oCoords1,
+			 Coordinates oCoords2,
 			 Piece * poMovingPiece, Piece * poCapturedPiece = 0,
 			 bool bIsFirstMove = false, bool bIsCastling = false);
-	unsigned int iGetX1();
-	unsigned int iGetX2();
-	unsigned int iGetY1();
-	unsigned int iGetY2();
+	Coordinates oGetCoords1();
+	Coordinates oGetCoords2();
 
 	bool IsFirstMove();
 	bool IsCastling();

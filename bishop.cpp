@@ -1,6 +1,7 @@
 #include "Bishop.h"
 #include "math.h"
 #include "board.h"
+#include "coordinates.h"
 
 Bishop::Bishop(Piece::Color eNewColor)
 {
@@ -17,17 +18,17 @@ char Bishop::cGetChar() const
 		return 'b';
 }
 
-bool Bishop::bIsmovementCorrect(int X1, int Y1, int X2, int Y2, const Board & oBoard) const
+bool Bishop::bIsmovementCorrect(Coordinates oCoords1, Coordinates oCoords2, const Board & oBoard) const
 {
-	if(X1 == X2 && Y1 == Y2)
+	if(oCoords1 == oCoords2)
 		return true;
 
-	if(!oBoard.bIsSquareEmpty(X2, Y2) && oBoard.eGetSquareColor(X2, Y2) == eGetColor())
-		return false;
+	int X1 = oCoords1.mX;
+	int Y1 = oCoords1.mY;
+	int X2 = oCoords2.mX;
+	int Y2 = oCoords2.mY;
 
-	if(X1 == X2 && Y1 == Y2)
-		return true;
-	else if(abs(X2 - X1) == abs(Y2 - Y1))
+	if(abs(X2 - X1) == abs(Y2 - Y1))
 	{
 		int iStep = (X2 > X1 ? 1 : -1);
 		int jStep = (Y2 > Y1 ? 1 : -1);

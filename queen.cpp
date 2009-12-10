@@ -2,6 +2,7 @@
 #include <math.h>
 #include "board.h"
 #include <exception>
+#include "coordinates.h"
 
 using namespace std;
 
@@ -20,14 +21,17 @@ char Queen::cGetChar() const
 		return 'q';
 }
 
-bool Queen::bIsmovementCorrect(int X1, int Y1, int X2, int Y2, const Board & oBoard) const
+bool Queen::bIsmovementCorrect(Coordinates oCoords1, Coordinates oCoords2, const Board & oBoard) const
 {
-	if(!oBoard.bIsSquareEmpty(X2, Y2) && oBoard.eGetSquareColor(X2, Y2) == eGetColor())
-		return false;
-
-	if(X1 == X2 && Y1 == Y2)
+	if(oCoords1 == oCoords2)
 		return true;
-	else if(X1 == X2)
+
+	int X1 = oCoords1.mX;
+	int Y1 = oCoords1.mY;
+	int X2 = oCoords2.mX;
+	int Y2 = oCoords2.mY;
+
+	if(X1 == X2)
 	{
 		int iStep = (Y2 > Y1 ? 1 : -1);
 		for(unsigned int i = Y1 + iStep; i != Y2; i += iStep)

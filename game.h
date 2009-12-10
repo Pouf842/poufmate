@@ -4,6 +4,7 @@
 #include "board.h"
 #include "movement.h"
 #include <vector>
+#include "coordinates.h"
 
 class Game
 {
@@ -11,23 +12,23 @@ class Game
     Board moBoard;
 	vector<Movement> moHistory;
 	Piece::Color meCurrentPlayer;
-	unsigned int miXWhiteKing;
-	unsigned int miYWhiteKing;
-	unsigned int miXBlackKing;
-	unsigned int miYBlackKing;
-	bool mbIsOver;
-	std::string mstrSelection;
+	Coordinates miXWhiteKing;
+	Coordinates moWhiteKing;
+	Coordinates moBlackKing;
 
-	bool bIsCoordsCorrect(unsigned int X, unsigned int Y) const;
-	void CheckCoords(unsigned int X, unsigned int Y) const;
-	void CheckIsMovementCorrect(unsigned int X1, unsigned int Y1, unsigned int X2, unsigned int Y2) const;
-	bool bIsMovementCorrect(unsigned int X1, unsigned int Y1, unsigned int X2, unsigned int Y2) const;
+	bool mbIsOver;
+	Coordinates moSelection;
+
+	bool bIsCoordsCorrect(Coordinates) const;
+	void CheckSelectionCoords(Coordinates) const;
+	void CheckIsMovementCorrect(Coordinates, Coordinates) const;
+	bool bIsMovementCorrect(Coordinates, Coordinates) const;
 	bool bIsOver();
 	void CancelLastMove();
-	void MovePiece(unsigned int X1, unsigned int Y1, unsigned int X2, unsigned int Y2);
+	void MovePiece(Coordinates, Coordinates);
 	bool bIsInCheck(Piece::Color) const;
 	bool bIsCheckMate(Piece::Color);
-	std::string strGetPossibilities(unsigned int X, unsigned int Y);
+	std::string strGetPossibilities(Coordinates);
   public :
 	Game();
 	void Run();

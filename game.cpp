@@ -2,7 +2,14 @@
 #include "board.h"
 #include "piece.h"
 #include "interface_console.h"
-#include "interface_SDL.h"
+
+#ifdef __SDL_
+	#include "interface_SDL.h"
+	#define DISPLAY InterfaceSDL
+#else
+	#define DISPLAY InterfaceConsole
+#endif
+
 #include <iostream>
 #include <string>
 
@@ -10,48 +17,38 @@ using namespace std;
 
 ostream & operator<<(ostream & os, const Board & b);
 
-Game::Game()
+Game::Game() : moWhiteKing(7, 4), moBlackKing(0, 4)
 {
 	meCurrentPlayer = Piece::WHITE;
-	miXWhiteKing = 7;
-	miYWhiteKing = 4;
-	miXBlackKing = 0;
-	miYBlackKing = 4;
 	mbIsOver = false;
-}
-
-bool Game::bIsCoordsCorrect(unsigned int X, unsigned int Y) const
-{
-	return (X < 8 && Y < 8);
 }
 
 void Game::Run()
 {
 	string strEntry = "";
-	//Interface * poInterface = InterfaceConsole::poGetInstance();
-	Interface * poInterface = InterfaceSDL::poGetInstance();
+	Interface * poInterface = DISPLAY::poGetInstance();
 
 	moBoard.Init();
 
 	while(!bIsOver())
 	{
 		poInterface->DisplayBoard(moBoard);
-		if(mstrSelection != "")
-			poInterface->DisplaySelection(mstrSelection[0] - '0', mstrSelection[1] - '0');
+		if(moSelection.bIsEmpty())
+			poInterface->DisplaySelection(moSelection);
 
 		if(bIsInCheck(meCurrentPlayer))
 		{
 			if(meCurrentPlayer == Piece::WHITE)
-				poInterface->DisplayInCheck(miXWhiteKing, miYWhiteKing);
+				poInterface->DisplayInCheck(moWhiteKing);
 			else
-				poInterface->DisplayInCheck(miXBlackKing, miYBlackKing);
+				poInterface->DisplayInCheck(moBlackKing);
 		}
 
 		poInterface->DisplayMessage(string("Joueur ") + (meCurrentPlayer == Piece::WHITE ? "Blanc":"Noir"));
 
 		try
 		{
-			if(mstrSelection == "")
+			if(moSelection.bIsEmpty())
 			{
 				strEntry = poInterface->strGetEntry();
 			
@@ -60,7 +57,7 @@ void Game::Run()
 					if(strEntry == "q")
 					{
 						mbIsOver = true;
-						mstrSelection = "";
+						moSelection.Empty();
 					}
 					else if(strEntry == "c")
 					{
@@ -69,39 +66,30 @@ void Game::Run()
 					}
 					else if(strEntry[strEntry.size() - 1] == '?')
 					{
-						string strPossibilities = strGetPossibilities(strEntry[0] - '0', strEntry[1] - '0');
+						string strPossibilities = strGetPossibilities(strEntry);
 						poInterface->DisplayPossibilities(strPossibilities);
 					}
 					else
 					{
-						unsigned int X = strEntry[0] - '0';
-						unsigned int Y = strEntry[1] - '0';
-
-						CheckCoords(X, Y);
-						mstrSelection = strEntry;
+						CheckSelectionCoords(strEntry);
+						moSelection = strEntry;
 					}
 
 					strEntry = "";
 				}
 			}
 			
-			if(mstrSelection != "")
+			if(!moSelection.bIsEmpty())
 			{
 				strEntry = poInterface->strGetEntry();
 				
 				if(strEntry[strEntry.size() - 1] == '?')
 				{
-					string strPossibilities = strGetPossibilities(mstrSelection[0] - '0', mstrSelection[1] - '0');
+					string strPossibilities = strGetPossibilities(moSelection);
 					poInterface->DisplayPossibilities(strPossibilities);
 				}
 				else
 				{
-					unsigned int X1 = mstrSelection[0] - '0';
-					unsigned int Y1 = mstrSelection[1] - '0';
-
-					unsigned int X2 = strEntry[0] - '0';
-					unsigned int Y2 = strEntry[1] - '0';
-
 					/*if(bIsCastling(X1, Y1, X2, Y2))
 					{
 						if(bIsInCheck(meCurrentPlayer))
@@ -111,9 +99,9 @@ void Game::Run()
 					}
 					else
 					{*/
-						CheckIsMovementCorrect(X1, Y1, X2, Y2);
+						CheckIsMovementCorrect(moSelection, strEntry);
 					
-						MovePiece(X1, Y1, X2, Y2);
+						MovePiece(moSelection, strEntry);
 						meCurrentPlayer = (meCurrentPlayer == Piece::WHITE ? Piece::BLACK : Piece::WHITE);
 
 						if(bIsCheckMate(meCurrentPlayer))
@@ -124,7 +112,7 @@ void Game::Run()
 						}
 					//}
 
-					mstrSelection = "";
+					moSelection.Empty();
 					strEntry = "";
 				}
 			}
@@ -132,7 +120,7 @@ void Game::Run()
 		catch(exception & e)
 		{
 			poInterface->DisplayMessage(e.what());
-			mstrSelection = "";
+			moSelection.Empty();
 			strEntry = "";
 		}
 	}
@@ -142,16 +130,18 @@ void Game::Run()
 }
 
 
-string Game::strGetPossibilities(unsigned int X, unsigned int Y)
+string Game::strGetPossibilities(Coordinates oCoords)
 {
 	string strPossibilities = "";
 	for(unsigned int i = 0; i < 8; ++i)
 	{
 		for(unsigned int j = 0; j < 8; ++j)
 		{
-			if(Game::bIsMovementCorrect(X, Y, i, j))
+			Coordinates oCoords2(i, j);
+
+			if(Game::bIsMovementCorrect(oCoords, oCoords2))
 			{
-				MovePiece(X, Y, i, j);
+				MovePiece(oCoords, oCoords2);
 				if(!bIsInCheck(meCurrentPlayer))
 				{
 					strPossibilities += i + '0';
@@ -169,16 +159,16 @@ string Game::strGetPossibilities(unsigned int X, unsigned int Y)
 
 bool Game::bIsInCheck(Piece::Color eColor) const
 {
-	unsigned int iXKing = (eColor == Piece::WHITE ? miXWhiteKing : miXBlackKing);
-	unsigned int iYKing = (eColor == Piece::WHITE ? miYWhiteKing : miYBlackKing);
+	Coordinates oKing(eColor == Piece::WHITE ? moWhiteKing : moBlackKing);
 
 	for(unsigned int i = 0; i < 8; ++i)
 	{
 		for(unsigned int j = 0; j < 8; ++j)
 		{
-			if(!moBoard.bIsSquareEmpty(i, j) && moBoard.eGetSquareColor(i, j) != eColor)
+			Coordinates oCoords(i, j);
+			if(!moBoard.bIsSquareEmpty(oCoords) && moBoard.eGetSquareColor(oCoords) != eColor)
 			{
-				if(bIsMovementCorrect(i, j, iXKing, iYKing))
+				if(bIsMovementCorrect(oCoords, oKing))
 					return true;
 			}
 		}
@@ -198,15 +188,19 @@ bool Game::bIsCheckMate(Piece::Color ePlayer)
 	{
 		for(unsigned int j = 0; j < 8; ++j)
 		{
-			if(!moBoard.bIsSquareEmpty(i, j) && moBoard.eGetSquareColor(i, j) == ePlayer)
+			Coordinates oCoords1(i, j);
+
+			if(!moBoard.bIsSquareEmpty(oCoords1) && moBoard.eGetSquareColor(oCoords1) == ePlayer)
 			{
 				for(unsigned int k = 0; k < 8; ++k)
 				{
 					for(unsigned int l = 0; l < 8; ++l)
 					{
-						if(bIsMovementCorrect(i, j, k, l))
+						Coordinates oCoords2(k, l);
+
+						if(bIsMovementCorrect(oCoords1, oCoords2))
 						{
-							MovePiece(i, j, k, l);
+							MovePiece(oCoords1, oCoords2);
 
 							if(!bIsInCheck(ePlayer))
 							{
@@ -224,64 +218,51 @@ bool Game::bIsCheckMate(Piece::Color ePlayer)
 	return bMate;
 }
 
-void Game::MovePiece(unsigned int X1, unsigned int Y1, unsigned int X2, unsigned int Y2)
+void Game::MovePiece(Coordinates oCoords1, Coordinates oCoords2)
 {
-	moHistory.push_back(Movement(meCurrentPlayer, X1, Y1, X2, Y2, moBoard.poGetPiece(X1, Y1), moBoard.poGetPiece(X2, Y2)));
+	moHistory.push_back(Movement(meCurrentPlayer, oCoords1, oCoords2, moBoard.poGetPiece(oCoords1), moBoard.poGetPiece(oCoords2)));
 
-	if(moBoard.poGetPiece(X1, Y1)->eGetType() == Piece::KING)
+	if(moBoard.poGetPiece(oCoords1)->eGetType() == Piece::KING)
 	{
-		if(moBoard.eGetSquareColor(X1, Y2) == Piece::WHITE)
-		{
-			miXWhiteKing = X2;
-			miYWhiteKing = Y2;
-		}
+		if(moBoard.eGetSquareColor(oCoords1) == Piece::WHITE)
+			moWhiteKing = oCoords2;
 		else
-		{
-			miXBlackKing = X2;
-			miYBlackKing = Y2;
-		}
+			moBlackKing = oCoords2;
 	}
 
-	moBoard.MovePiece(X1, Y1, X2, Y2);
+	moBoard.MovePiece(oCoords1, oCoords2);
 }
 
-void Game::CheckCoords(unsigned int X, unsigned int Y) const
-{
-	if(!bIsCoordsCorrect(X, Y))
-		throw exception("Invalid start coordinates");
-	
-	if(moBoard.bIsSquareEmpty(X, Y))
+void Game::CheckSelectionCoords(Coordinates oCoords) const
+{	
+	if(moBoard.bIsSquareEmpty(oCoords))
 		throw exception("There is no piece on this square");
 
-	if(moBoard.eGetSquareColor(X, Y) != meCurrentPlayer)
+	if(moBoard.eGetSquareColor(oCoords) != meCurrentPlayer)
 		throw exception("This piece does not belong to you");
 }
 
-void Game::CheckIsMovementCorrect(unsigned int X1, unsigned int Y1, unsigned int X2, unsigned int Y2) const
+void Game::CheckIsMovementCorrect(Coordinates oCoords1, Coordinates oCoords2) const
 {
-	if(X1 == X2 && Y1 == Y2)
+	if(oCoords1 == oCoords2)
 		throw exception("No movement");
 
-	if(!bIsCoordsCorrect(X1, Y1) || ! bIsCoordsCorrect(X2, Y2))
-		throw exception("Invalid coordinates");
-
-	if(moBoard.bIsSquareEmpty(X1, Y1))
+	if(moBoard.bIsSquareEmpty(oCoords1))
 		throw exception("There is no piece on the starting square");
 
-	if(!moBoard.bIsSquareEmpty(X2, Y2) && moBoard.eGetSquareColor(X1, Y1) == moBoard.eGetSquareColor(X2, Y2))
+	if(!moBoard.bIsSquareEmpty(oCoords2) && moBoard.eGetSquareColor(oCoords1) == moBoard.eGetSquareColor(oCoords2))
 		throw exception("The two pieces are on the same side");
 
-	if(!moBoard.poGetPiece(X1, Y1)->bIsmovementCorrect(X1, Y1, X2, Y2, moBoard))
+	if(!moBoard.poGetPiece(oCoords1)->bIsmovementCorrect(oCoords1, oCoords2, moBoard))
 		throw exception("Invalid move");
 }
 
-bool Game::bIsMovementCorrect(unsigned int X1, unsigned int Y1, unsigned int X2, unsigned int Y2) const
+bool Game::bIsMovementCorrect(Coordinates oCoords1, Coordinates oCoords2) const
 {
-	if((X1 == X2 && Y1 == Y2)
-	|| (!bIsCoordsCorrect(X1, Y1) || ! bIsCoordsCorrect(X2, Y2))
-	|| (moBoard.bIsSquareEmpty(X1, Y1))
-	|| (!moBoard.bIsSquareEmpty(X2, Y2) && moBoard.eGetSquareColor(X1, Y1) == moBoard.eGetSquareColor(X2, Y2))
-	|| (!moBoard.poGetPiece(X1, Y1)->bIsmovementCorrect(X1, Y1, X2, Y2, moBoard)))
+	if((oCoords1 == oCoords2)
+	|| (moBoard.bIsSquareEmpty(oCoords1))
+	|| (!moBoard.bIsSquareEmpty(oCoords2) && moBoard.eGetSquareColor(oCoords1) == moBoard.eGetSquareColor(oCoords2))
+	|| (!moBoard.poGetPiece(oCoords1)->bIsmovementCorrect(oCoords1, oCoords2, moBoard)))
 		return false;
 
 	return true;
@@ -298,21 +279,15 @@ void Game::CancelLastMove()
 		throw exception("Empty history");
 
 	Movement oLastMovement = moHistory.back();
-	moBoard.SetPiece(oLastMovement.iGetX1(), oLastMovement.iGetY1(), oLastMovement.poGetMovingPiece());
-	moBoard.SetPiece(oLastMovement.iGetX2(), oLastMovement.iGetY2(), oLastMovement.poGetCapturedPiece());
+	moBoard.SetPiece(oLastMovement.oGetCoords1(), oLastMovement.poGetMovingPiece());
+	moBoard.SetPiece(oLastMovement.oGetCoords2(), oLastMovement.poGetCapturedPiece());
 
 	if(oLastMovement.poGetMovingPiece()->eGetType() == Piece::KING)
 	{
 		if(oLastMovement.eGetPlayerColor() == Piece::WHITE)
-		{
-			miXWhiteKing = oLastMovement.iGetX1();
-			miYWhiteKing = oLastMovement.iGetY1();
-		}
+			moWhiteKing = oLastMovement.oGetCoords1();
 		else
-		{
-			miXBlackKing = oLastMovement.iGetX1();
-			miYBlackKing = oLastMovement.iGetY1();
-		}
+			moBlackKing = oLastMovement.oGetCoords1();
 	}
 
 	moHistory.pop_back();

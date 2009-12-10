@@ -12,8 +12,8 @@ class InterfaceConsole : public Interface
 	virtual void DisplayMessage(std::string strMessage) const;
 	virtual std::string strGetEntry() const;
 	virtual void DisplayPossibilities(std::string strPossibilities) const;
-	virtual void DisplayInCheck(unsigned int X, unsigned int Y) const;
-	virtual void DisplaySelection(unsigned int X, unsigned int Y) const;
+	virtual void DisplayInCheck(Coordinates) const;
+	virtual void DisplaySelection(Coordinates) const;
 	static Interface * poGetInstance();
 };
 
