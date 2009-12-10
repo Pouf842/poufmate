@@ -18,7 +18,7 @@ char Bishop::cGetChar() const
 		return 'b';
 }
 
-bool Bishop::bIsmovementCorrect(Coordinates oCoords1, Coordinates oCoords2, const Board & oBoard) const
+bool Bishop::bIsMovementCorrect(Coordinates oCoords1, Coordinates oCoords2, const Board & oBoard) const
 {
 	if(oCoords1 == oCoords2)
 		return true;

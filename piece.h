@@ -13,13 +13,14 @@ class Piece
 
 	virtual char cGetChar() const = 0;
 	virtual Color eGetColor() const;
-	virtual bool bIsmovementCorrect(Coordinates, Coordinates, const Board & oBoard) const = 0;
+	virtual bool bIsMovementCorrect(Coordinates, Coordinates, const Board & oBoard) const = 0;
 	void SetFirstMove(bool);
-	bool bHasAlreadyMoved();
+	bool bHasAlreadyMoved() const;
+	bool bIsFirstMove() const;
 	PieceType eGetType();
 
   protected :
-    bool mbFirstMove;
+	bool mbFirstMove;
 	Color meColor;
 	PieceType meType;
 };

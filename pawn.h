@@ -9,7 +9,7 @@ class Pawn : public Piece
   public :
 	Pawn(Piece::Color);
 	virtual char cGetChar() const;
-	virtual bool bIsmovementCorrect(Coordinates, Coordinates, const Board & oBoard) const;
+	virtual bool bIsMovementCorrect(Coordinates, Coordinates, const Board & oBoard) const;
 };
 
 #endif

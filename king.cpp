@@ -17,7 +17,7 @@ char King::cGetChar() const
 		return 'k';
 }
 
-bool King::bIsmovementCorrect(Coordinates oCoords1, Coordinates oCoords2, const Board & oBoard) const
+bool King::bIsMovementCorrect(Coordinates oCoords1, Coordinates oCoords2, const Board & oBoard) const
 {
 	if(oCoords1 == oCoords2)
 		return true;

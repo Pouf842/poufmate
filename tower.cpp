@@ -17,7 +17,7 @@ char Tower::cGetChar() const
 		return 't';
 }
 
-bool Tower::bIsmovementCorrect(Coordinates oCoords1, Coordinates oCoords2, const Board & oBoard) const
+bool Tower::bIsMovementCorrect(Coordinates oCoords1, Coordinates oCoords2, const Board & oBoard) const
 {
 	if(oCoords1 == oCoords2)
 		return true;
@@ -46,5 +46,5 @@ bool Tower::bIsmovementCorrect(Coordinates oCoords1, Coordinates oCoords2, const
 				return false;
 	}
 
-	return false;
+	return true;
 }

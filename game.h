@@ -1,16 +1,17 @@
 #ifndef __GAME_H_
 #define __GAME_H_
 
-#include "board.h"
-#include "movement.h"
 #include <vector>
+#include "board.h"
 #include "coordinates.h"
+#include "movement.h"
 
 class Game
 {
   protected :
-    Board moBoard;
-	vector<Movement> moHistory;
+	enum CastlingSide {LEFT, RIGHT};
+	Board moBoard;
+	vector<Movement*> moHistory;
 	Piece::Color meCurrentPlayer;
 	Coordinates miXWhiteKing;
 	Coordinates moWhiteKing;
@@ -26,6 +27,9 @@ class Game
 	bool bIsOver();
 	void CancelLastMove();
 	void MovePiece(Coordinates, Coordinates);
+	bool bIsCastling(Coordinates, Coordinates);
+	void CheckIsCastlingOk(Piece::Color ePlayer, Game::CastlingSide);
+	void Castling(Piece::Color ePlayer, CastlingSide);
 	bool bIsInCheck(Piece::Color) const;
 	bool bIsCheckMate(Piece::Color);
 	std::string strGetPossibilities(Coordinates);

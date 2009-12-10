@@ -1,40 +1,40 @@
 #include "movement.h"
+#include "board.h"
 
-Movement::Movement(Piece::Color ePlayer,
-				   Coordinates oCoords1, Coordinates oCoords2,
-				   Piece * poMovingPiece, Piece * poCapturedPiece,
-				   bool bIsFirstMove, bool bIsCastling) : moCoords1(oCoords1), moCoords2(oCoords2)
+Movement::Movement(Coordinates oCoords1, Coordinates oCoords2,
+				   Piece * poMovingPiece, Piece * poCapturedPiece) : moCoords1(oCoords1), moCoords2(oCoords2)
 {
-	mePlayerColor = ePlayer;
-
 	mpoMovingPiece = poMovingPiece;
 	mpoCapturedPiece = poCapturedPiece;
-
-	mbIsFirstMove = bIsFirstMove;
-	mbIsCastling = bIsCastling;
 }
 
-Coordinates Movement::oGetCoords1()
+Coordinates Movement::oGetCoords1() const
 {
 	return moCoords1;
 }
 
-Coordinates Movement::oGetCoords2()
+Coordinates Movement::oGetCoords2() const
 {
 	return moCoords2;
 }
 
-Piece * Movement::poGetMovingPiece()
+Piece * Movement::poGetMovingPiece() const
 {
 	return mpoMovingPiece;
 }
 
-Piece * Movement::poGetCapturedPiece()
+Piece * Movement::poGetCapturedPiece() const
 {
 	return mpoCapturedPiece;
 }
 
-Piece::Color Movement::eGetPlayerColor()
+Piece::Color Movement::eGetPlayerColor() const
 {
-	return mePlayerColor;
+	return poGetMovingPiece()->eGetColor();
+}
+
+void Movement::CancelMovement(Board & oBoard) const
+{
+	oBoard.SetPiece(oGetCoords1(), poGetMovingPiece());
+	oBoard.SetPiece(oGetCoords2(), poGetCapturedPiece());
 }

@@ -10,7 +10,12 @@ void Piece::SetFirstMove(bool bFirstMove)
 	mbFirstMove = bFirstMove;
 }
 
-bool Piece::bHasAlreadyMoved()
+bool Piece::bHasAlreadyMoved() const
+{
+	return !bIsFirstMove();
+}
+
+bool Piece::bIsFirstMove() const
 {
 	return mbFirstMove;
 }

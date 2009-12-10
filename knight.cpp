@@ -18,7 +18,7 @@ char Knight::cGetChar() const
 		return 'n';
 }
 
-bool Knight::bIsmovementCorrect(Coordinates oCoords1, Coordinates oCoords2, const Board & oBoard) const
+bool Knight::bIsMovementCorrect(Coordinates oCoords1, Coordinates oCoords2, const Board & oBoard) const
 {
 	if(oCoords1 == oCoords2)
 		return true;
