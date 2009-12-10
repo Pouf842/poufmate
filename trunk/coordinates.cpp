@@ -23,6 +23,7 @@ Coordinates::Coordinates(const Coordinates & oCoords)
 {
 	mX = oCoords.mX;
 	mY = oCoords.mY;
+	mbEmpty = oCoords.mbEmpty;
 }
 
 bool Coordinates::bIsEmpty()

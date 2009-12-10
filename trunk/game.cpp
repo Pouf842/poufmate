@@ -2,6 +2,8 @@
 #include "board.h"
 #include "piece.h"
 #include "interface_console.h"
+#include "first_move.h"
+#include "castling_move.h"
 
 #ifdef __SDL_
 	#include "interface_SDL.h"
@@ -33,8 +35,6 @@ void Game::Run()
 	while(!bIsOver())
 	{
 		poInterface->DisplayBoard(moBoard);
-		if(moSelection.bIsEmpty())
-			poInterface->DisplaySelection(moSelection);
 
 		if(bIsInCheck(meCurrentPlayer))
 		{
@@ -45,6 +45,9 @@ void Game::Run()
 		}
 
 		poInterface->DisplayMessage(string("Joueur ") + (meCurrentPlayer == Piece::WHITE ? "Blanc":"Noir"));
+
+		if(!moSelection.bIsEmpty())
+			poInterface->DisplaySelection(moSelection);
 
 		try
 		{
@@ -90,18 +93,36 @@ void Game::Run()
 				}
 				else
 				{
-					/*if(bIsCastling(X1, Y1, X2, Y2))
+					Coordinates oEntry(strEntry);
+					if(bIsCastling(moSelection, oEntry))
 					{
 						if(bIsInCheck(meCurrentPlayer))
 							throw exception("Castling is forbidden if you're in check");
 
-						CheckIsMovementCorrect(X1, Y1, X2, Y2);
+						Game::CastlingSide eSide = (oEntry.mY > moSelection.mY ? Game::RIGHT : Game::LEFT);
+						CheckIsCastlingOk(meCurrentPlayer, eSide);
+						Castling(meCurrentPlayer, eSide);
+
+						if(bIsInCheck(meCurrentPlayer))
+						{
+							CancelLastMove();
+							throw exception("That move puts you in check");
+						}
+
+						meCurrentPlayer = (meCurrentPlayer == Piece::WHITE ? Piece::BLACK : Piece::WHITE);
 					}
 					else
-					{*/
-						CheckIsMovementCorrect(moSelection, strEntry);
+					{
+						CheckIsMovementCorrect(moSelection, oEntry);
 					
-						MovePiece(moSelection, strEntry);
+						MovePiece(moSelection, oEntry);
+
+						if(bIsInCheck(meCurrentPlayer))
+						{
+							CancelLastMove();
+							throw exception("That move puts you in check");
+						}
+
 						meCurrentPlayer = (meCurrentPlayer == Piece::WHITE ? Piece::BLACK : Piece::WHITE);
 
 						if(bIsCheckMate(meCurrentPlayer))
@@ -110,7 +131,7 @@ void Game::Run()
 							poInterface->DisplayMessage(string(meCurrentPlayer == Piece::WHITE ? "White" : "Black") + " player is checkmate !");
 							mbIsOver = true;
 						}
-					//}
+					}
 
 					moSelection.Empty();
 					strEntry = "";
@@ -129,6 +150,66 @@ void Game::Run()
 	poInterface->strGetEntry();
 }
 
+void Game::Castling(Piece::Color ePlayer, Game::CastlingSide eSide)
+{
+	Coordinates & oKing = (ePlayer == Piece::WHITE ? moWhiteKing : moBlackKing);
+	Coordinates oKingNewPos(oKing.mX, (eSide == Game::RIGHT ? 6 : 2));
+	Coordinates oTower((ePlayer == Piece::WHITE ? moWhiteKing.mX : moBlackKing.mX), (eSide == Game::RIGHT ? 7 : 0));
+	Coordinates oTowerNewPos(oTower.mX, (eSide == Game::RIGHT ? 5 : 3));
+
+	moHistory.push_back(new CastlingMove(oKing, oKingNewPos, moBoard.poGetPiece(oKing)));
+
+	moBoard.MovePiece(oKing, oKingNewPos);
+	moBoard.MovePiece(oTower, oTowerNewPos);
+}
+
+bool Game::bIsCastling(Coordinates oCoords1, Coordinates oCoords2)
+{
+	Coordinates oKing = (meCurrentPlayer == Piece::WHITE ? Coordinates(7, 4) : Coordinates(0, 4));
+
+	if(oCoords1 == oKing
+	&& oCoords1.mX == oCoords2.mX
+	&& (oCoords2.mY == oCoords1.mY - 2 || oCoords2.mY == oCoords1.mY + 2))
+		return true;
+
+	return false;
+}
+
+void Game::CheckIsCastlingOk(Piece::Color ePlayer, Game::CastlingSide eSide)
+{
+	Coordinates oKing = (ePlayer == Piece::WHITE ? moWhiteKing : moBlackKing);
+
+	if(moBoard.poGetPiece(oKing)->bHasAlreadyMoved())
+		throw exception("Your king has already moved and therefore cannot castling");
+
+	switch(eSide)
+	{
+	  case Game::RIGHT :
+		if(moBoard.poGetPiece(Coordinates(oKing.mX, 7))->bHasAlreadyMoved())
+			throw exception("Your tower has already moved, and therefore cannot castling");
+
+		for(unsigned int j = oKing.mY + 1; j <= 6; ++j)
+		{
+			if(!moBoard.bIsSquareEmpty(oKing.mX, j))
+				throw exception("The pass is obstructed");
+		}
+
+		break;
+	  case Game::LEFT :
+		if(moBoard.poGetPiece(Coordinates(oKing.mX, 0))->bHasAlreadyMoved())
+			throw exception("Your tower has already moved, and therefore cannot castling");
+
+		for(unsigned int j = oKing.mY - 1; j >= 2; --j)
+		{
+			if(!moBoard.bIsSquareEmpty(oKing.mX, j))
+				throw exception("The pass is obstructed");
+		}
+
+		break;
+	  default :
+		break;
+	}
+}
 
 string Game::strGetPossibilities(Coordinates oCoords)
 {
@@ -220,7 +301,10 @@ bool Game::bIsCheckMate(Piece::Color ePlayer)
 
 void Game::MovePiece(Coordinates oCoords1, Coordinates oCoords2)
 {
-	moHistory.push_back(Movement(meCurrentPlayer, oCoords1, oCoords2, moBoard.poGetPiece(oCoords1), moBoard.poGetPiece(oCoords2)));
+	if(moBoard.poGetPiece(oCoords1)->bIsFirstMove())
+		moHistory.push_back(new FirstMove(oCoords1, oCoords2, moBoard.poGetPiece(oCoords1), moBoard.poGetPiece(oCoords2)));
+	else
+		moHistory.push_back(new Movement(oCoords1, oCoords2, moBoard.poGetPiece(oCoords1), moBoard.poGetPiece(oCoords2)));
 
 	if(moBoard.poGetPiece(oCoords1)->eGetType() == Piece::KING)
 	{
@@ -253,7 +337,7 @@ void Game::CheckIsMovementCorrect(Coordinates oCoords1, Coordinates oCoords2) co
 	if(!moBoard.bIsSquareEmpty(oCoords2) && moBoard.eGetSquareColor(oCoords1) == moBoard.eGetSquareColor(oCoords2))
 		throw exception("The two pieces are on the same side");
 
-	if(!moBoard.poGetPiece(oCoords1)->bIsmovementCorrect(oCoords1, oCoords2, moBoard))
+	if(!moBoard.poGetPiece(oCoords1)->bIsMovementCorrect(oCoords1, oCoords2, moBoard))
 		throw exception("Invalid move");
 }
 
@@ -262,7 +346,7 @@ bool Game::bIsMovementCorrect(Coordinates oCoords1, Coordinates oCoords2) const
 	if((oCoords1 == oCoords2)
 	|| (moBoard.bIsSquareEmpty(oCoords1))
 	|| (!moBoard.bIsSquareEmpty(oCoords2) && moBoard.eGetSquareColor(oCoords1) == moBoard.eGetSquareColor(oCoords2))
-	|| (!moBoard.poGetPiece(oCoords1)->bIsmovementCorrect(oCoords1, oCoords2, moBoard)))
+	|| (!moBoard.poGetPiece(oCoords1)->bIsMovementCorrect(oCoords1, oCoords2, moBoard)))
 		return false;
 
 	return true;
@@ -278,16 +362,15 @@ void Game::CancelLastMove()
 	if(moHistory.size() == 0)
 		throw exception("Empty history");
 
-	Movement oLastMovement = moHistory.back();
-	moBoard.SetPiece(oLastMovement.oGetCoords1(), oLastMovement.poGetMovingPiece());
-	moBoard.SetPiece(oLastMovement.oGetCoords2(), oLastMovement.poGetCapturedPiece());
+	Movement * oLastMovement = moHistory.back();
+	oLastMovement->CancelMovement(moBoard);
 
-	if(oLastMovement.poGetMovingPiece()->eGetType() == Piece::KING)
+	if(oLastMovement->poGetMovingPiece()->eGetType() == Piece::KING)
 	{
-		if(oLastMovement.eGetPlayerColor() == Piece::WHITE)
-			moWhiteKing = oLastMovement.oGetCoords1();
+		if(oLastMovement->eGetPlayerColor() == Piece::WHITE)
+			moWhiteKing = oLastMovement->oGetCoords1();
 		else
-			moBlackKing = oLastMovement.oGetCoords1();
+			moBlackKing = oLastMovement->oGetCoords1();
 	}
 
 	moHistory.pop_back();

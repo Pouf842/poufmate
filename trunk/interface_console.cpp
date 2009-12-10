@@ -44,6 +44,7 @@ void InterfaceConsole::DisplayPossibilities(std::string strPossibilities) const
 
 void InterfaceConsole::DisplaySelection(Coordinates oCoords) const
 {
+	cout << oCoords.mX << oCoords.mY << endl;
 }
 
 void InterfaceConsole::DisplayInCheck(Coordinates oCoords) const

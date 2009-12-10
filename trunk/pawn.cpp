@@ -21,7 +21,7 @@ char Pawn::cGetChar() const
 		return 'p';
 }
 
-bool Pawn::bIsmovementCorrect(Coordinates oCoords1, Coordinates oCoords2, const Board & oBoard) const
+bool Pawn::bIsMovementCorrect(Coordinates oCoords1, Coordinates oCoords2, const Board & oBoard) const
 {
 	if(oCoords1 == oCoords2)
 		return true;
@@ -35,6 +35,9 @@ bool Pawn::bIsmovementCorrect(Coordinates oCoords1, Coordinates oCoords2, const 
 
 	if((X2 - X1) * iFactor == 2 && Y2 == Y1)
 	{
+		if(bHasAlreadyMoved())
+			return false;
+
 		if(oBoard.bIsSquareEmpty(X1 + iFactor, Y1) && oBoard.bIsSquareEmpty(X1 + 2 * iFactor, Y1))
 			return true;
 	}

@@ -1,4 +1,4 @@
-#ifndef __MOVEMENT_H
+#ifndef __MOVEMENT_H_
 #define __MOVEMENT_H_
 
 #include "piece.h"
@@ -10,29 +10,21 @@ class Movement
 	Coordinates moCoords1;
 	Coordinates moCoords2;
 
-	bool mbIsFirstMove;
-	bool mbIsCastling;
-
 	Piece * mpoMovingPiece;
 	Piece * mpoCapturedPiece;
 
-	Piece::Color mePlayerColor;
-
   public :
-	Movement(Piece::Color, Coordinates oCoords1,
+	Movement(Coordinates oCoords1,
 			 Coordinates oCoords2,
-			 Piece * poMovingPiece, Piece * poCapturedPiece = 0,
-			 bool bIsFirstMove = false, bool bIsCastling = false);
-	Coordinates oGetCoords1();
-	Coordinates oGetCoords2();
+			 Piece * poMovingPiece, Piece * poCapturedPiece = 0);
+	Coordinates oGetCoords1() const;
+	Coordinates oGetCoords2() const;
+	virtual void CancelMovement(Board &) const;
 
-	bool IsFirstMove();
-	bool IsCastling();
+	Piece * poGetMovingPiece() const;
+	Piece * poGetCapturedPiece() const;
 
-	Piece * poGetMovingPiece();
-	Piece * poGetCapturedPiece();
-
-	Piece::Color eGetPlayerColor();
+	Piece::Color eGetPlayerColor() const;
 };
 
 #endif
