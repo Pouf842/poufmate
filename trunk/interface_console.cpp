@@ -44,6 +44,11 @@ void InterfaceConsole::DisplayPossibilities(std::string strPossibilities) const
 	cout << endl;
 }
 
+void InterfaceConsole::DisplayCurrentPlayer(Piece::Color eCurrentPlayer)
+{
+	cout << "Joueur " << (eCurrentPlayer == Piece::WHITE ? "Blanc":"Noir") << endl;
+}
+
 void InterfaceConsole::DisplaySelection(Coordinates oCoords) const
 {
 	cout << oCoords.mX << oCoords.mY << endl;

@@ -44,7 +44,7 @@ void Game::Run()
 				poInterface->DisplayInCheck(moBlackKing);
 		}
 
-		poInterface->DisplayMessage(string("Joueur ") + (meCurrentPlayer == Piece::WHITE ? "Blanc":"Noir"));
+		poInterface->DisplayCurrentPlayer(meCurrentPlayer);
 
 		if(!moSelection.bIsEmpty())
 			poInterface->DisplaySelection(moSelection);
