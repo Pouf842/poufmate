@@ -7,25 +7,10 @@
 class InterfaceSDL : public Interface
 {
   protected :
-	SDL_Surface * mpoScreen;
-	SDL_Surface * mpoBoard;
-	SDL_Surface * mpoSelection;
-	SDL_Surface * mpoChess;
-	SDL_Surface * mpoPossibleMove;
+	SDL_Surface * mpoGame[5];
+	SDL_Surface * mpoPieces[2][6];
 
-	SDL_Surface * mpoWhitePawn;
-	SDL_Surface * mpoWhiteTower;
-	SDL_Surface * mpoWhiteKnight;
-	SDL_Surface * mpoWhiteBishop;
-	SDL_Surface * mpoWhiteQueen;
-	SDL_Surface * mpoWhiteKing;
-
-	SDL_Surface * mpoBlackPawn;
-	SDL_Surface * mpoBlackTower;
-	SDL_Surface * mpoBlackKnight;
-	SDL_Surface * mpoBlackBishop;
-	SDL_Surface * mpoBlackQueen;
-	SDL_Surface * mpoBlackKing;
+	enum eGameImages {SCREEN = 0, BOARD = 1, SELECTION = 2, CHESS = 3, POSSIBLE = 4};
 
 	InterfaceSDL();
 	~InterfaceSDL();
@@ -34,8 +19,9 @@ class InterfaceSDL : public Interface
 	virtual void DisplayMessage(std::string strMessage) const;
 	virtual std::string strGetEntry() const;
 	virtual void DisplayPossibilities(std::string strPossibilities) const;
-	virtual void DisplayInCheck(unsigned int X, unsigned int Y) const;
-	virtual void DisplaySelection(unsigned int X, unsigned int Y) const;
+	virtual void DisplayInCheck(Coordinates) const;
+	virtual void DisplaySelection(Coordinates) const;
+	virtual void DisplayCurrentPlayer(Piece::Color) const;
 	static Interface * poGetInstance();
 };
 

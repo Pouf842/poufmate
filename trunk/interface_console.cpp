@@ -44,7 +44,7 @@ void InterfaceConsole::DisplayPossibilities(std::string strPossibilities) const
 	cout << endl;
 }
 
-void InterfaceConsole::DisplayCurrentPlayer(Piece::Color eCurrentPlayer)
+void InterfaceConsole::DisplayCurrentPlayer(Piece::Color eCurrentPlayer) const
 {
 	cout << "Joueur " << (eCurrentPlayer == Piece::WHITE ? "Blanc":"Noir") << endl;
 }

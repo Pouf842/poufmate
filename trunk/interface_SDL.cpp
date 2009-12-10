@@ -9,55 +9,79 @@ InterfaceSDL::InterfaceSDL()
 	if(SDL_Init(SDL_INIT_VIDEO) == -1)
 		throw exception("SDL initialisation failed");
 
-	if(!(mpoScreen = SDL_SetVideoMode(698, 698, 32, /*SDL_FULLSCREEN |*/ SDL_HWSURFACE | SDL_DOUBLEBUF)))
+	if(!(mpoGame[SCREEN] = SDL_SetVideoMode(698, 698, 32, /*SDL_FULLSCREEN |*/ SDL_HWSURFACE | SDL_DOUBLEBUF)))
 		throw exception("SDL video mode initialisation failed");
 
 	SDL_WM_SetCaption("PoufMate", NULL);
 
-	mpoBoard = SDL_LoadBMP("Images/Echiquier.bmp");
+	mpoGame[BOARD] = SDL_LoadBMP("Images/Echiquier.bmp");
 
-	mpoSelection = SDL_LoadBMP("Images/Selection.bmp");
-	SDL_SetColorKey(mpoSelection, SDL_SRCCOLORKEY, SDL_MapRGB(mpoSelection->format, 255, 0, 0));
+	mpoGame[SELECTION] = SDL_LoadBMP("Images/Selection.bmp");
+	mpoGame[CHESS] = SDL_LoadBMP("Images/Echec.bmp");
+	mpoGame[POSSIBLE] = SDL_LoadBMP("Images/Possible.bmp");
 
-	mpoChess = SDL_LoadBMP("Images/Echec.bmp");
-	SDL_SetColorKey(mpoChess, SDL_SRCCOLORKEY, SDL_MapRGB(mpoChess->format, 255, 0, 0));
+	mpoPieces[Piece::WHITE][Piece::PAWN] = SDL_LoadBMP("Images/Pion blanc.bmp");
+	mpoPieces[Piece::WHITE][Piece::TOWER] = SDL_LoadBMP("Images/Tour blanche.bmp");
+	mpoPieces[Piece::WHITE][Piece::KNIGHT] = SDL_LoadBMP("Images/Cavalier blanc.bmp");
+	mpoPieces[Piece::WHITE][Piece::BISHOP] = SDL_LoadBMP("Images/Fou blanc.bmp");
+	mpoPieces[Piece::WHITE][Piece::QUEEN] = SDL_LoadBMP("Images/Reine blanche.bmp");
+	mpoPieces[Piece::WHITE][Piece::KING] = SDL_LoadBMP("Images/Roi blanc.bmp");
 
-	mpoPossibleMove = SDL_LoadBMP("Images/Possible.bmp");
-	SDL_SetColorKey(mpoPossibleMove, SDL_SRCCOLORKEY, SDL_MapRGB(mpoPossibleMove->format, 255, 0, 0));
+	mpoPieces[Piece::BLACK][Piece::PAWN] = SDL_LoadBMP("Images/Pion noir.bmp");
+	mpoPieces[Piece::BLACK][Piece::TOWER] = SDL_LoadBMP("Images/Tour noire.bmp");
+	mpoPieces[Piece::BLACK][Piece::KNIGHT] = SDL_LoadBMP("Images/Cavalier noir.bmp");
+	mpoPieces[Piece::BLACK][Piece::BISHOP] = SDL_LoadBMP("Images/Fou noir.bmp");
+	mpoPieces[Piece::BLACK][Piece::QUEEN] = SDL_LoadBMP("Images/Reine noire.bmp");
+	mpoPieces[Piece::BLACK][Piece::KING] = SDL_LoadBMP("Images/Roi noir.bmp");
 
-	mpoWhitePawn = SDL_LoadBMP("Images/Pion blanc.bmp");
-	mpoWhiteTower = SDL_LoadBMP("Images/Tour blanche.bmp");
-	mpoWhiteKnight = SDL_LoadBMP("Images/Cavalier blanc.bmp");
-	mpoWhiteBishop = SDL_LoadBMP("Images/Fou blanc.bmp");
-	mpoWhiteQueen = SDL_LoadBMP("Images/Reine blanche.bmp");
-	mpoWhiteKing = SDL_LoadBMP("Images/Roi blanc.bmp");
+	for(unsigned int i = 0; i < 5; ++i)	
+		SDL_SetColorKey(mpoGame[i], SDL_SRCCOLORKEY, SDL_MapRGB(mpoGame[i]->format, 255, 0, 0));
 
-	mpoBlackPawn = SDL_LoadBMP("Images/Pion noir.bmp");
-	mpoBlackTower = SDL_LoadBMP("Images/Tour noire.bmp");
-	mpoBlackKnight = SDL_LoadBMP("Images/Cavalier noir.bmp");
-	mpoBlackBishop = SDL_LoadBMP("Images/Fou noir.bmp");
-	mpoBlackQueen = SDL_LoadBMP("Images/Reine noire.bmp");
-	mpoBlackKing = SDL_LoadBMP("Images/Roi noir.bmp");
+	for(unsigned int i = 0; i < 6; ++i)
+	{
+		SDL_SetColorKey(mpoPieces[Piece::WHITE][i], SDL_SRCCOLORKEY, SDL_MapRGB(mpoPieces[Piece::WHITE][i]->format, 255, 0, 0));
+		SDL_SetColorKey(mpoPieces[Piece::BLACK][i], SDL_SRCCOLORKEY, SDL_MapRGB(mpoPieces[Piece::BLACK][i]->format, 255, 0, 0));
+	}
 }
 
 InterfaceSDL::~InterfaceSDL()
 {
-	SDL_free(mpoBoard);
-	SDL_free(mpoSelection);
-	SDL_free(mpoChess);
-	SDL_free(mpoPossibleMove);
+	for(unsigned int i = 0; i < 5; ++i)
+		SDL_free(mpoGame[i]);
+
+	for(unsigned int i = 0; i < 6; ++i)
+	{
+		SDL_free(mpoPieces[Piece::WHITE][i]);
+		SDL_free(mpoPieces[Piece::BLACK][i]);
+	}
 
 	SDL_Quit();
 }
 
-void InterfaceSDL::DisplayBoard(const Board &) const
+void InterfaceSDL::DisplayBoard(const Board & oBoard) const
 {
 	SDL_Rect position;
 	position.x = 0;
 	position.y = 0;
 
-	SDL_BlitSurface(mpoBoard, NULL, mpoScreen, &position);
-	SDL_Flip(mpoScreen);
+	SDL_BlitSurface(mpoGame[BOARD], NULL, mpoGame[SCREEN], &position);
+
+	for(unsigned int i = 0; i < 8; ++i)
+		for(unsigned int j = 0; j < 8; ++j)
+		{
+			SDL_Rect position;
+			position.x = i * 87;
+			position.y = j * 87;
+
+			Coordinates oCoords(j, i);
+
+			if(!oBoard.bIsSquareEmpty(oCoords))
+			{
+				SDL_BlitSurface(mpoPieces[oBoard.eGetSquareColor(oCoords)][oBoard.poGetPiece(oCoords)->eGetType()], NULL, mpoGame[SCREEN], &position);
+			}
+		}
+
+	SDL_Flip(mpoGame[SCREEN]);
 }
 
 void InterfaceSDL::DisplayMessage(std::string strMessage) const
@@ -93,27 +117,27 @@ std::string InterfaceSDL::strGetEntry() const
 void InterfaceSDL::DisplayPossibilities(std::string strPossibilities) const
 {
 	//SDL_BlitSurface(mpoPossibleMove, NULL, mpoScreen, );
-	SDL_Flip(mpoScreen);
+	SDL_Flip(mpoGame[SCREEN]);
 }
 
-void InterfaceSDL::DisplayInCheck(unsigned int X, unsigned int Y) const
+void InterfaceSDL::DisplayInCheck(Coordinates oCoords) const
 {
 	SDL_Rect position;
-	position.x = X * 87;
-	position.y = Y * 87;
+	position.x = oCoords.mX * 87;
+	position.y = oCoords.mY * 87;
 
-	SDL_BlitSurface(mpoChess, NULL, mpoScreen, &position);
-	SDL_Flip(mpoScreen);
+	SDL_BlitSurface(mpoGame[CHESS], NULL, mpoGame[SCREEN], &position);
+	SDL_Flip(mpoGame[SCREEN]);
 }
 
-void InterfaceSDL::DisplaySelection(unsigned int X, unsigned int Y) const
+void InterfaceSDL::DisplaySelection(Coordinates oCoords) const
 {
 	SDL_Rect position;
-	position.x = X * 87;
-	position.y = Y * 87;
+	position.x = oCoords.mX * 87;
+	position.y = oCoords.mY * 87;
 
-	SDL_BlitSurface(mpoSelection, NULL, mpoScreen, &position);
-	SDL_Flip(mpoScreen);
+	SDL_BlitSurface(mpoGame[SELECTION], NULL, mpoGame[SCREEN], &position);
+	SDL_Flip(mpoGame[SCREEN]);
 }
 
 Interface * InterfaceSDL::poGetInstance()
@@ -122,4 +146,8 @@ Interface * InterfaceSDL::poGetInstance()
 		mpoInstance = new InterfaceSDL;
 
 	return mpoInstance;
+}
+
+void InterfaceSDL::DisplayCurrentPlayer(Piece::Color) const
+{
 }
