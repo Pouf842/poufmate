@@ -19,8 +19,8 @@ class InterfaceSDL : public Interface
 	virtual void DisplayMessage(std::string strMessage) const;
 	virtual std::string strGetEntry() const;
 	virtual void DisplayPossibilities(std::string strPossibilities) const;
-	virtual void DisplayInCheck(Coordinates) const;
-	virtual void DisplaySelection(Coordinates) const;
+	virtual void DisplayInCheck(Position) const;
+	virtual void DisplaySelection(Position) const;
 	virtual void DisplayCurrentPlayer(Piece::Color) const;
 	static Interface * poGetInstance();
 };

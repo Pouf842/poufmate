@@ -6,7 +6,7 @@
 class CastlingMove : public Movement
 {
   public :
-	CastlingMove(Coordinates oCoords1, Coordinates oCoords2, Piece * poMovingPiece);
+	CastlingMove(Position oPos1, Position oPos2, Piece * poMovingPiece);
 	virtual void CancelMovement(Board &) const;
 };
 

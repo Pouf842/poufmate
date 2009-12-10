@@ -1,8 +1,8 @@
 #include "first_move.h"
 #include "board.h"
 
-FirstMove::FirstMove(Coordinates oCoords1, Coordinates oCoords2,
-					 Piece * poMovingPiece, Piece * poCapturedPiece) : Movement(oCoords1, oCoords2, poMovingPiece, poCapturedPiece)
+FirstMove::FirstMove(Position oPos1, Position oPos2,
+					 Piece * poMovingPiece, Piece * poCapturedPiece) : Movement(oPos1, oPos2, poMovingPiece, poCapturedPiece)
 {
 }
 

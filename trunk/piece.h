@@ -1,7 +1,7 @@
 #ifndef __PIECE_H_
 #define __PIECE_H_
 
-#include "coordinates.h"
+#include "position.h"
 
 class Board;
 
@@ -13,7 +13,7 @@ class Piece
 
 	virtual char cGetChar() const = 0;
 	virtual Color eGetColor() const;
-	virtual bool bIsMovementCorrect(Coordinates, Coordinates, const Board & oBoard) const = 0;
+	virtual bool bIsMovementCorrect(Position, Position, const Board & oBoard) const = 0;
 	void SetFirstMove(bool);
 	bool bHasAlreadyMoved() const;
 	bool bIsFirstMove() const;

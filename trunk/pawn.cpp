@@ -2,7 +2,7 @@
 #include <math.h>
 #include <algorithm>
 #include "board.h"
-#include "coordinates.h"
+#include "position.h"
 
 using namespace std;
 
@@ -21,15 +21,15 @@ char Pawn::cGetChar() const
 		return 'p';
 }
 
-bool Pawn::bIsMovementCorrect(Coordinates oCoords1, Coordinates oCoords2, const Board & oBoard) const
+bool Pawn::bIsMovementCorrect(Position oPos1, Position oPos2, const Board & oBoard) const
 {
-	if(oCoords1 == oCoords2)
+	if(oPos1 == oPos2)
 		return true;
 
-	int X1 = oCoords1.mX;
-	int Y1 = oCoords1.mY;
-	int X2 = oCoords2.mX;
-	int Y2 = oCoords2.mY;
+	int X1 = oPos1.mX;
+	int Y1 = oPos1.mY;
+	int X2 = oPos2.mX;
+	int Y2 = oPos2.mY;
 
 	int iFactor = (eGetColor() == Piece::WHITE ? -1 : 1);
 
@@ -47,7 +47,7 @@ bool Pawn::bIsMovementCorrect(Coordinates oCoords1, Coordinates oCoords2, const 
 			return true;
 	}
 	else if((X2 - X1) * iFactor == 1 && abs(Y2 - Y1) == 1)
-		if(!oBoard.bIsSquareEmpty(oCoords2) && oBoard.eGetSquareColor(oCoords2) != eGetColor())
+		if(!oBoard.bIsSquareEmpty(oPos2) && oBoard.eGetSquareColor(oPos2) != eGetColor())
 			return true;
 
 	return false;

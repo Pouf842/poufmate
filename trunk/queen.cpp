@@ -2,7 +2,7 @@
 #include <math.h>
 #include "board.h"
 #include <exception>
-#include "coordinates.h"
+#include "position.h"
 
 using namespace std;
 
@@ -21,15 +21,15 @@ char Queen::cGetChar() const
 		return 'q';
 }
 
-bool Queen::bIsMovementCorrect(Coordinates oCoords1, Coordinates oCoords2, const Board & oBoard) const
+bool Queen::bIsMovementCorrect(Position oPos1, Position oPos2, const Board & oBoard) const
 {
-	if(oCoords1 == oCoords2)
+	if(oPos1 == oPos2)
 		return true;
 
-	int X1 = oCoords1.mX;
-	int Y1 = oCoords1.mY;
-	int X2 = oCoords2.mX;
-	int Y2 = oCoords2.mY;
+	int X1 = oPos1.mX;
+	int Y1 = oPos1.mY;
+	int X2 = oPos2.mX;
+	int Y2 = oPos2.mY;
 
 	if(X1 == X2)
 	{

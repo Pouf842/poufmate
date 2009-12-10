@@ -2,7 +2,7 @@
 #define __TOWER_H_
 
 #include "piece.h"
-#include "coordinates.h"
+#include "position.h"
 
 class Tower : public Piece
 {
@@ -10,7 +10,7 @@ class Tower : public Piece
   public :
 	Tower(Piece::Color);
 	virtual char cGetChar() const;
-	virtual bool bIsMovementCorrect(Coordinates, Coordinates, const Board & oBoard) const;
+	virtual bool bIsMovementCorrect(Position, Position, const Board & oBoard) const;
 };
 
 #endif
