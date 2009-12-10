@@ -69,7 +69,7 @@ void Game::Run()
 					}
 					else if(strEntry[strEntry.size() - 1] == '?')
 					{
-						string strPossibilities = strGetPossibilities(strEntry);
+						string strPossibilities = strGetPossibilities(strEntry.substr(0, 2));
 						poInterface->DisplayPossibilities(strPossibilities);
 					}
 					else

@@ -40,6 +40,8 @@ void InterfaceConsole::DisplayPossibilities(std::string strPossibilities) const
 			cout << strPossibilities[i];
 		else
 			cout << endl;
+
+	cout << endl;
 }
 
 void InterfaceConsole::DisplaySelection(Coordinates oCoords) const
