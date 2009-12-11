@@ -1,0 +1,59 @@
+	poInterface->DisplayBoard(moBoard);
+	poInterface->DisplayCurrentPlayer(meCurrentPlayer);
+	poInterface->CommitDisplay();
+	
+	while(!bIsOver())
+	{
+		strEntry = poInterface->strGetEntry();
+		
+		if(strEntry == "x")
+			mbIsOver = true;
+		else if(strEntry == "c")
+		{
+			CancelLastMove();
+			moSelection.Empty();
+			SwitchPlayer;
+		}
+		else if(!strEntry.end_with("?")
+		{
+			 && bIsCoordsCorrect(strEntry))
+			if(moSelection.bIsEmpty())
+				moSelection = strEntry;
+			else
+			{
+				if(moSelection != Position(strEntry))
+				{
+					// Verification and play move
+					SwitchPlayer();
+				}
+				
+				moSelection.Empty();
+			}
+		}
+		
+		poInterface->DisplayBoard();
+		
+		if(bIsInCheck(meCurrentPlayer))
+			poInterface->DisplayInCheck(moKings[meCurrentPlayer]);
+			
+		if(strEntry.end_with("?"))
+			poInterface->DisplayPossibilities(strEntry.substr(0, 2));
+
+		if(!moSelection.bIsEmpty())
+			poInterface->DisplaySelection(moSelection);
+
+		if(bIsCheckMate(meCurrentPlayer))
+		{
+			mbIsOver = true;
+			poInterface->DisplayMessage("The " + "meCurrentPlayer == Piece::WHITE ? "white" : "black") + " player is checkmate !");
+			poInterface->DisplayMessage("Game over !");
+		}
+		else if(strEntry == "x")
+			poInterface->DisplayMessage("Game over !");
+		else		
+			poInterface->DisplayCurrentPlayer(meCurrentPlayer);
+			
+		poInterface->CommitDisplay();
+	}
+	
+	strEntry = poInterface->strGetEntry();

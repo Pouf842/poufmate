@@ -1,54 +1,48 @@
-Boucle principale :
+SDL :		
+	Blitter le plateau
+	Blitter le joueur en cours
+	Flipper
 
-Tant que la partie n'est pas fini
-	Afficher le plateau
-	Afficher la sélection si besoin
-	Afficher les rois en échec
-	Afficher le joueur en cours
+	Boucle
+		Attendre une commande
 
-	Essai
-		Si les coordonnées sont vides
-			Demander la commande
+		Si la commande est x
+			Arrêter la partie
 		
-			Si x
-				La partie est finie
-				Vider les coordonnées
-			Si c
-				Annuler le dernier coup
-				Changer le joueur courant
-			Si ?
-				Afficher les possibilités
-			Si autre
-				Si coordonnées sont bonnes
-					Enregistrer coordonnées					
-		
-			Vider la commande
+		Si la commande est c
+			Annuler le coup
+			Vider la sélection
 
-		Si les coordonnées ne sont pas vides
-			Demander la commande
+		Si la commande est des coordonnées
+			Si les coordonnées sont vides
+				Enregistrer les coordonnées
+			Sinon
+				Si les coordonnées sont différentes de la sélection
+					Jouer le coup
+
+				Vider la sélection
+
+		Blitter le plateau
+		
+		Si le roi est en échec
+			Blitter le roi en échec
 			
-			Si ?
-				Afficher les possibilités
-			Si autre
-				Si coordonnées sont bonnes
-					Tester le mouvement
-					
-					Si le mouvement est bon
-						Bouger la pièce
-						Changer le joueur
-						Si le joueur en cours est mat
-							Afficher le plateau
-							La partie est finie
-							
-						Vider les coordonnées
-					Sinon
-						Afficher un message
-				Sinon
-					Afficher un message
-					
-			Vider la commande
-	Si échoue
-		Afficher le message d'erreur
+		Si la commande est ?
+			Blitter les possibilités
+			
+		Si la sélection n'est pas vide
+			Blitter la sélection
+
+		Si le joueur en cours est mat
+			Finir la partie
+			Afficher que le joueur est mat
+		Sinon, Si la commande est x
+			Afficher "Game over"
+		Sinon
+			Blitter le joueur en cours
+
 		
-				
-Afficher fin de partie
+
+		Flipper
+		
+	Attendre confirmation de fin de partie

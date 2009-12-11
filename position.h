@@ -17,6 +17,7 @@ class Position
 	void Empty();
 	Position & operator=(std::string strCoords);
 	bool operator==(const Position & oPos);
+	bool operator!=(const Position & oPos);
 };
 
 #endif

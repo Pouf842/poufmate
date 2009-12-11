@@ -3,7 +3,7 @@
 
 using namespace std;
 
-InterfaceConsole::InterfaceConsole()
+InterfaceConsole::InterfaceConsole() : mOs("")
 {
 }
 
@@ -15,17 +15,17 @@ Interface * InterfaceConsole::poGetInstance()
 	return mpoInstance;
 }
 
-void InterfaceConsole::DisplayBoard(const Board & oBoard) const
+void InterfaceConsole::DisplayBoard(const Board & oBoard)
 {
-	cout << oBoard << endl;
+	mOs << oBoard << endl;
 }
 
-void InterfaceConsole::DisplayMessage(string strMessage) const
+void InterfaceConsole::DisplayMessage(string strMessage)
 {
-	cout << strMessage << endl;
+	mOs << strMessage << endl;
 }
 
-string InterfaceConsole::strGetEntry() const
+string InterfaceConsole::strGetEntry()
 {
 	string strCommand;
 	cin >> strCommand;
@@ -33,28 +33,35 @@ string InterfaceConsole::strGetEntry() const
 	return strCommand;
 }
 
-void InterfaceConsole::DisplayPossibilities(std::string strPossibilities) const
+void InterfaceConsole::DisplayPossibilities(std::string strPossibilities)
 {
+	mOs << "Possibilities : " << endl;
 	for(unsigned int i = 0; i < strPossibilities.size(); ++i)
 		if(strPossibilities[i] != ';')
-			cout << strPossibilities[i];
+			mOs << strPossibilities[i];
 		else
-			cout << endl;
+			mOs << endl;
 
-	cout << endl;
+	mOs << endl;
 }
 
-void InterfaceConsole::DisplayCurrentPlayer(Piece::Color eCurrentPlayer) const
+void InterfaceConsole::DisplayCurrentPlayer(Piece::Color eCurrentPlayer)
 {
-	cout << "Joueur " << (eCurrentPlayer == Piece::WHITE ? "Blanc":"Noir") << endl;
+	mOs << "Joueur " << (eCurrentPlayer == Piece::WHITE ? "Blanc":"Noir") << endl;
 }
 
-void InterfaceConsole::DisplaySelection(Position oPos) const
+void InterfaceConsole::DisplaySelection(Position oPos)
 {
-	cout << oPos.mX << oPos.mY << endl;
+	mOs << "Selected piece : " << oPos.mX << oPos.mY << endl;
 }
 
-void InterfaceConsole::DisplayInCheck(Position oPos) const
+void InterfaceConsole::DisplayInCheck(Position oPos)
 {
-	cout << "The king in " << oPos.mX << oPos.mY << " is in check" << endl;
+	mOs << "The king in " << oPos.mX << oPos.mY << " is in check" << endl;
+}
+
+void InterfaceConsole::CommitDisplay()
+{
+	cout << mOs.str();
+	mOs.str("");
 }

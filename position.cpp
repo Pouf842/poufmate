@@ -60,3 +60,8 @@ bool Position::operator==(const Position & oPos)
 {
 	return (mX == oPos.mX && mY == oPos.mY);
 }
+
+bool Position::operator!=(const Position & oPos)
+{
+	return !(*this == oPos);
+}
