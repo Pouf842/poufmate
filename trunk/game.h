@@ -13,14 +13,11 @@ class Game
 	Board moBoard;
 	vector<Movement*> moHistory;
 	Piece::Color meCurrentPlayer;
-	Position miXWhiteKing;
-	Position moWhiteKing;
-	Position moBlackKing;
+	Position moKings[2];
 
 	bool mbIsOver;
 	Position moSelection;
 
-	bool bIsCoordsCorrect(Position) const;
 	void CheckSelectionCoords(Position) const;
 	void CheckIsMovementCorrect(Position, Position) const;
 	bool bIsMovementCorrect(Position, Position) const;
@@ -33,6 +30,7 @@ class Game
 	bool bIsInCheck(Piece::Color) const;
 	bool bIsCheckMate(Piece::Color);
 	std::string strGetPossibilities(Position);
+	void SwitchPlayer();
   public :
 	Game();
 	void Run();
