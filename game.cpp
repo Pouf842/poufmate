@@ -82,15 +82,15 @@ void Game::Run()
 					strEntry = "";
 				}
 			}
-			
 			if(!moSelection.bIsEmpty())
-			{				
+			{
+				poInterface->DisplaySelection(moSelection);
 				if(strEntry == "?")
 				{
 					string strPossibilities = strGetPossibilities(moSelection);
 					poInterface->DisplayPossibilities(strPossibilities);
 				}
-				else
+				else if(strEntry != "")
 				{
 					Position oEntry(strEntry);
 					if(bIsCastling(moSelection, oEntry))

@@ -100,8 +100,8 @@ std::string InterfaceSDL::strGetEntry() const
       case SDL_QUIT :
 		strEntry = "q";
 		break;
-	  case SDL_MOUSEBUTTONUP :
-		//strEntry = 
+	  case SDL_MOUSEBUTTONDOWN :
+		strEntry = "74";
 		break;
 	  case SDL_KEYUP  :
 		  switch(event.key.keysym.sym)
