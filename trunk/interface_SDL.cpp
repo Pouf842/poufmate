@@ -2,6 +2,9 @@
 
 #include <iostream>
 #include <string>
+#define CASE_WIDTH 87
+#define CASE_HEIGHT 87
+
 using namespace std;
 
 InterfaceSDL::InterfaceSDL()
@@ -37,6 +40,8 @@ InterfaceSDL::InterfaceSDL()
 	for(unsigned int i = 0; i < 5; ++i)	
 		SDL_SetColorKey(mpoGame[i], SDL_SRCCOLORKEY, SDL_MapRGB(mpoGame[i]->format, 255, 0, 0));
 
+	SDL_SetColorKey(mpoGame[CHESS], SDL_SRCCOLORKEY, SDL_MapRGB(mpoGame[CHESS]->format, 0, 255, 0));
+
 	for(unsigned int i = 0; i < 6; ++i)
 	{
 		SDL_SetColorKey(mpoPieces[Piece::WHITE][i], SDL_SRCCOLORKEY, SDL_MapRGB(mpoPieces[Piece::WHITE][i]->format, 255, 0, 0));
@@ -58,7 +63,7 @@ InterfaceSDL::~InterfaceSDL()
 	SDL_Quit();
 }
 
-void InterfaceSDL::DisplayBoard(const Board & oBoard) const
+void InterfaceSDL::DisplayBoard(const Board & oBoard)
 {
 	SDL_Rect position;
 	position.x = 0;
@@ -70,8 +75,8 @@ void InterfaceSDL::DisplayBoard(const Board & oBoard) const
 		for(unsigned int j = 0; j < 8; ++j)
 		{
 			SDL_Rect position;
-			position.x = i * 87;
-			position.y = j * 87;
+			position.x = i * CASE_WIDTH;
+			position.y = j * CASE_HEIGHT;
 
 			Position oPos(j, i);
 
@@ -80,64 +85,85 @@ void InterfaceSDL::DisplayBoard(const Board & oBoard) const
 				SDL_BlitSurface(mpoPieces[oBoard.eGetSquareColor(oPos)][oBoard.poGetPiece(oPos)->eGetType()], NULL, mpoGame[SCREEN], &position);
 			}
 		}
-
-	SDL_Flip(mpoGame[SCREEN]);
 }
 
-void InterfaceSDL::DisplayMessage(std::string strMessage) const
+void InterfaceSDL::DisplayMessage(std::string strMessage)
 {
 }
 
-std::string InterfaceSDL::strGetEntry() const
+std::string InterfaceSDL::strGetEntry()
 {
 	string strEntry = "";
 
 	SDL_Event event;
-    SDL_WaitEvent(&event);
 
-    switch(event.type)
-    {
-      case SDL_QUIT :
-		strEntry = "q";
-		break;
-	  case SDL_MOUSEBUTTONDOWN :
-		strEntry = "74";
-		break;
-	  case SDL_KEYUP  :
-		  switch(event.key.keysym.sym)
-		  {
-			case SDLK_q :
-			strEntry = "q";
-		  }
-    }
+	while(strEntry == "")
+	{
+		SDL_WaitEvent(&event);
 
-	return strEntry;
+		switch(event.type)
+		{
+		  case SDL_QUIT :
+			return "x";
+			break;
+		  case SDL_MOUSEBUTTONDOWN :
+			strEntry += '0' + event.button.y / CASE_WIDTH;
+			strEntry += '0' + event.button.x / CASE_HEIGHT;
+			if(event.button.button == SDL_BUTTON_RIGHT)
+				strEntry += "?";
+
+			return strEntry;
+			break;
+		  case SDL_KEYUP  :
+			switch(event.key.keysym.sym)
+			{
+			  case SDLK_x :
+				return "x";
+				break;
+			  case SDLK_c :
+			    return "c";
+				break;
+			}
+		  case SDL_MOUSEBUTTONUP :
+			if(event.button.button == SDL_BUTTON_RIGHT)
+				return "";
+
+		  default :
+			break;
+		}
+	}
 }
 
-void InterfaceSDL::DisplayPossibilities(std::string strPossibilities) const
-{
-	//SDL_BlitSurface(mpoPossibleMove, NULL, mpoScreen, );
-	SDL_Flip(mpoGame[SCREEN]);
-}
-
-void InterfaceSDL::DisplayInCheck(Position oPos) const
+void InterfaceSDL::DisplayPossibilities(std::string strPossibilities)
 {
 	SDL_Rect position;
-	position.x = oPos.mX * 87;
-	position.y = oPos.mY * 87;
+	unsigned int iIndex = 0;
+
+	while((iIndex = strPossibilities.find(';', iIndex + 1)) != string::npos)
+	{
+		position.y = (strPossibilities[iIndex - 2] - '0') * CASE_HEIGHT;
+		position.x = (strPossibilities[iIndex - 1] - '0') * CASE_WIDTH;
+
+		SDL_BlitSurface(mpoGame[POSSIBLE], NULL, mpoGame[SCREEN], &position);
+	}
+}
+
+void InterfaceSDL::DisplayInCheck(Position oPos)
+{
+	SDL_Rect position;
+	position.y = oPos.mX * CASE_HEIGHT;
+	position.x = oPos.mY * CASE_WIDTH;
 
 	SDL_BlitSurface(mpoGame[CHESS], NULL, mpoGame[SCREEN], &position);
-	SDL_Flip(mpoGame[SCREEN]);
 }
 
-void InterfaceSDL::DisplaySelection(Position oPos) const
+void InterfaceSDL::DisplaySelection(Position oPos)
 {
 	SDL_Rect position;
-	position.x = oPos.mX * 87;
-	position.y = oPos.mY * 87;
+	position.x = oPos.mY * CASE_HEIGHT;
+	position.y = oPos.mX * CASE_WIDTH;
 
 	SDL_BlitSurface(mpoGame[SELECTION], NULL, mpoGame[SCREEN], &position);
-	SDL_Flip(mpoGame[SCREEN]);
 }
 
 Interface * InterfaceSDL::poGetInstance()
@@ -148,6 +174,11 @@ Interface * InterfaceSDL::poGetInstance()
 	return mpoInstance;
 }
 
-void InterfaceSDL::DisplayCurrentPlayer(Piece::Color) const
+void InterfaceSDL::DisplayCurrentPlayer(Piece::Color)
 {
+}
+
+void InterfaceSDL::CommitDisplay()
+{
+	SDL_Flip(mpoGame[SCREEN]);
 }
