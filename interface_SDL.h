@@ -15,13 +15,14 @@ class InterfaceSDL : public Interface
 	InterfaceSDL();
 	~InterfaceSDL();
   public :
-	virtual void DisplayBoard(const Board &) const;
-	virtual void DisplayMessage(std::string strMessage) const;
-	virtual std::string strGetEntry() const;
-	virtual void DisplayPossibilities(std::string strPossibilities) const;
-	virtual void DisplayInCheck(Position) const;
-	virtual void DisplaySelection(Position) const;
-	virtual void DisplayCurrentPlayer(Piece::Color) const;
+	virtual void DisplayBoard(const Board &);
+	virtual void DisplayMessage(std::string strMessage);
+	virtual std::string strGetEntry();
+	virtual void DisplayPossibilities(std::string strPossibilities);
+	virtual void DisplayInCheck(Position);
+	virtual void DisplayCurrentPlayer(Piece::Color);
+	virtual void DisplaySelection(Position);
+	virtual void CommitDisplay();
 	static Interface * poGetInstance();
 };
 

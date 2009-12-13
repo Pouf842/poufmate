@@ -58,12 +58,16 @@ void Game::Run()
 				moSelection.Empty();
 				SwitchPlayer();
 			}
-			else if(strEntry[strEntry.size() - 1] != '?')
+			else if(strEntry.size() != 0
+			&& strEntry[strEntry.size() - 1] != '?')
 			{
 				Position oEntry(strEntry);
 
 				if(moSelection.bIsEmpty())
+				{
+					CheckSelectionCoords(oEntry);
 					moSelection = oEntry;
+				}
 				else
 				{
 					if(moSelection != oEntry)
@@ -94,8 +98,6 @@ void Game::Run()
 								CancelLastMove();
 								throw exception("That move puts you in check");
 							}
-
-							meCurrentPlayer = (meCurrentPlayer == Piece::WHITE ? Piece::BLACK : Piece::WHITE);
 
 							if(bIsCheckMate(meCurrentPlayer))
 							{
@@ -128,12 +130,13 @@ void Game::Run()
 				poInterface->DisplayMessage("Game over !");
 			else		
 				poInterface->DisplayCurrentPlayer(meCurrentPlayer);
+	
+			if(strEntry.size() != 0
+			&& strEntry[strEntry.size() - 1] == '?')
+				poInterface->DisplayPossibilities(strGetPossibilities(strEntry.substr(0, 2)));
 
 			if(bIsInCheck(meCurrentPlayer))
 				poInterface->DisplayInCheck(moKings[meCurrentPlayer]);
-				
-			if(strEntry[strEntry.size() - 1] == '?')
-				poInterface->DisplayPossibilities(strGetPossibilities(strEntry.substr(0, 2)));
 
 			if(!moSelection.bIsEmpty())
 				poInterface->DisplaySelection(moSelection);
@@ -323,6 +326,10 @@ void Game::CheckIsCastlingOk(Piece::Color ePlayer, Game::CastlingSide eSide)
 string Game::strGetPossibilities(Position oPos)
 {
 	string strPossibilities = "";
+	strPossibilities += (oPos.mX + '0');
+	strPossibilities += oPos.mY + '0';
+	strPossibilities += ';';
+
 	for(unsigned int i = 0; i < 8; ++i)
 	{
 		for(unsigned int j = 0; j < 8; ++j)
@@ -336,7 +343,7 @@ string Game::strGetPossibilities(Position oPos)
 				{
 					strPossibilities += i + '0';
 					strPossibilities += j + '0';
-					strPossibilities += "\n";
+					strPossibilities += ";";
 				}
 
 				CancelLastMove();
