@@ -1,6 +1,6 @@
 #include <iostream>
 #include "board.h"
-#include "tower.h"
+#include "rook.h"
 #include "pawn.h"
 #include "knight.h"
 #include "bishop.h"
@@ -36,10 +36,10 @@ void Board::Init()
 		moSquares[6][i].SetPiece(new Pawn(Piece::WHITE));
 	}
 
-	moSquares[0][0].SetPiece(new Tower(Piece::BLACK));
-	moSquares[0][7].SetPiece(new Tower(Piece::BLACK));
-	moSquares[7][0].SetPiece(new Tower(Piece::WHITE));
-	moSquares[7][7].SetPiece(new Tower(Piece::WHITE));
+	moSquares[0][0].SetPiece(new Rook(Piece::BLACK));
+	moSquares[0][7].SetPiece(new Rook(Piece::BLACK));
+	moSquares[7][0].SetPiece(new Rook(Piece::WHITE));
+	moSquares[7][7].SetPiece(new Rook(Piece::WHITE));
 
 	moSquares[0][1].SetPiece(new Knight(Piece::BLACK));
 	moSquares[0][6].SetPiece(new Knight(Piece::BLACK));
