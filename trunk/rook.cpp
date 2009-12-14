@@ -1,15 +1,15 @@
-#include "tower.h"
+#include "rook.h"
 #include "board.h"
 #include "position.h"
 
-Tower::Tower(Piece::Color eNewColor)
+Rook::Rook(Piece::Color eNewColor)
 {
 	meColor = eNewColor;
 	mbFirstMove = true;
-	meType = Piece::TOWER;
+	meType = Piece::ROOK;
 }
 
-char Tower::cGetChar() const
+char Rook::cGetChar() const
 {
 	if(eGetColor() == WHITE)
 		return 'T';
@@ -17,7 +17,7 @@ char Tower::cGetChar() const
 		return 't';
 }
 
-bool Tower::bIsMovementCorrect(Position oPos1, Position oPos2, const Board & oBoard) const
+bool Rook::bIsMovementCorrect(Position oPos1, Position oPos2, const Board & oBoard) const
 {
 	if(oPos1 == oPos2)
 		return true;

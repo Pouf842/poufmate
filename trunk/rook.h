@@ -1,14 +1,14 @@
-#ifndef __TOWER_H_
-#define __TOWER_H_
+#ifndef __ROOK_H_
+#define __ROOK_H_
 
 #include "piece.h"
 #include "position.h"
 
-class Tower : public Piece
+class Rook : public Piece
 {
   protected :
   public :
-	Tower(Piece::Color);
+	Rook(Piece::Color);
 	virtual char cGetChar() const;
 	virtual bool bIsMovementCorrect(Position, Position, const Board & oBoard) const;
 };

@@ -140,139 +140,31 @@ void Game::Run()
 
 			if(!moSelection.bIsEmpty())
 				poInterface->DisplaySelection(moSelection);
-
-			poInterface->CommitDisplay();
 		}
 		catch(exception & e)
 		{
 			poInterface->DisplayMessage(e.what());
 		}
+
+		poInterface->CommitDisplay();
 	}
 	
 	strEntry = poInterface->strGetEntry();
 
-	/*while(!bIsOver())
-	{
-		poInterface->DisplayBoard(moBoard);
-
-		if(bIsInCheck(meCurrentPlayer))
-			poInterface->DisplayInCheck(moKings[meCurrentPlayer]);
-		poInterface->DisplayCurrentPlayer(meCurrentPlayer);
-
-		if(!moSelection.bIsEmpty())
-			poInterface->DisplaySelection(moSelection);
-
-		try
-		{
-			strEntry = poInterface->strGetEntry();
-
-			if(moSelection.bIsEmpty())
-			{
-				if(strEntry.size() != 0)
-				{
-					if(strEntry == "q")
-					{
-						mbIsOver = true;
-						moSelection.Empty();
-					}
-					else if(strEntry == "c")
-					{
-						CancelLastMove();
-						meCurrentPlayer = (meCurrentPlayer == Piece::WHITE ? Piece::BLACK : Piece::WHITE);
-					}
-					else if(strEntry[strEntry.size() - 1] == '?')
-					{
-						string strPossibilities = strGetPossibilities(strEntry.substr(0, 2));
-						poInterface->DisplayPossibilities(strPossibilities);
-					}
-					else
-					{
-						CheckSelectionCoords(strEntry);
-						moSelection = strEntry;
-					}
-
-					strEntry = "";
-				}
-			}
-
-			if(!moSelection.bIsEmpty())
-			{
-				poInterface->DisplaySelection(moSelection);
-				if(strEntry == "?")
-				{
-					string strPossibilities = strGetPossibilities(moSelection);
-					poInterface->DisplayPossibilities(strPossibilities);
-				}
-				else if(strEntry != "")
-				{
-					Position oEntry(strEntry);
-					if(bIsCastling(moSelection, oEntry))
-					{
-						if(bIsInCheck(meCurrentPlayer))
-							throw exception("Castling is forbidden if you're in check");
-
-						Game::CastlingSide eSide = (oEntry.mY > moSelection.mY ? Game::RIGHT : Game::LEFT);
-						CheckIsCastlingOk(meCurrentPlayer, eSide);
-						Castling(meCurrentPlayer, eSide);
-
-						if(bIsInCheck(meCurrentPlayer))
-						{
-							CancelLastMove();
-							throw exception("That move puts you in check");
-						}
-
-						meCurrentPlayer = (meCurrentPlayer == Piece::WHITE ? Piece::BLACK : Piece::WHITE);
-					}
-					else
-					{
-						CheckIsMovementCorrect(moSelection, oEntry);
-					
-						MovePiece(moSelection, oEntry);
-
-						if(bIsInCheck(meCurrentPlayer))
-						{
-							CancelLastMove();
-							throw exception("That move puts you in check");
-						}
-
-						meCurrentPlayer = (meCurrentPlayer == Piece::WHITE ? Piece::BLACK : Piece::WHITE);
-
-						if(bIsCheckMate(meCurrentPlayer))
-						{
-							poInterface->DisplayBoard(moBoard);
-							poInterface->DisplayMessage(string(meCurrentPlayer == Piece::WHITE ? "White" : "Black") + " player is checkmate !");
-							mbIsOver = true;
-						}
-					}
-
-					moSelection.Empty();
-					strEntry = "";
-				}
-			}
-		}
-		catch(exception & e)
-		{
-			poInterface->DisplayMessage(e.what());
-			moSelection.Empty();
-			strEntry = "";
-		}
-	}
-
-	poInterface->DisplayMessage("Fin de partie");
-	poInterface->strGetEntry();*/
+	return;
 }
 
 void Game::Castling(Piece::Color ePlayer, Game::CastlingSide eSide)
 {
 	Position & oKing = moKings[ePlayer];
 	Position oKingNewPos(oKing.mX, (eSide == Game::RIGHT ? 6 : 2));
-	Position oTower(moKings[ePlayer].mX, (eSide == Game::RIGHT ? 7 : 0));
-	Position oTowerNewPos(oTower.mX, (eSide == Game::RIGHT ? 5 : 3));
+	Position oRook(moKings[ePlayer].mX, (eSide == Game::RIGHT ? 7 : 0));
+	Position oRookNewPos(oRook.mX, (eSide == Game::RIGHT ? 5 : 3));
 
 	moHistory.push_back(new CastlingMove(oKing, oKingNewPos, moBoard.poGetPiece(oKing)));
 
 	moBoard.MovePiece(oKing, oKingNewPos);
-	moBoard.MovePiece(oTower, oTowerNewPos);
+	moBoard.MovePiece(oRook, oRookNewPos);
 }
 
 bool Game::bIsCastling(Position oPos1, Position oPos2)
@@ -298,7 +190,7 @@ void Game::CheckIsCastlingOk(Piece::Color ePlayer, Game::CastlingSide eSide)
 	{
 	  case Game::RIGHT :
 		if(moBoard.poGetPiece(Position(oKing.mX, 7))->bHasAlreadyMoved())
-			throw exception("Your tower has already moved, and therefore cannot castling");
+			throw exception("Your rook has already moved, and therefore cannot castling");
 
 		for(unsigned int j = oKing.mY + 1; j <= 6; ++j)
 		{
@@ -309,7 +201,7 @@ void Game::CheckIsCastlingOk(Piece::Color ePlayer, Game::CastlingSide eSide)
 		break;
 	  case Game::LEFT :
 		if(moBoard.poGetPiece(Position(oKing.mX, 0))->bHasAlreadyMoved())
-			throw exception("Your tower has already moved, and therefore cannot castling");
+			throw exception("Your rook has already moved, and therefore cannot castling");
 
 		for(unsigned int j = oKing.mY - 1; j >= 2; --j)
 		{
