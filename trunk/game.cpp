@@ -27,6 +27,7 @@ Game::Game()
 
 	meCurrentPlayer = Piece::WHITE;
 	mbIsOver = false;
+	mbIsCurrentPlayerCheckMate = false;
 }
 
 void Game::SwitchPlayer()
@@ -54,7 +55,8 @@ void Game::Run()
 		{
 			strEntry = poInterface->strGetEntry();
 			
-			if(strEntry == "x")
+			if(strEntry == "");
+			else if(strEntry == "x")
 				mbIsOver = true;
 			else if(strEntry == "c")
 			{
@@ -127,8 +129,8 @@ void Game::Run()
 						moHistory.push_back(poNextMove);
 						poNextMove->Execute();
 
-						if(moBoard.poGetPiece(moSelection)->eGetType() == Piece::KING)
-							moKings[moBoard.eGetSquareColor(moSelection)] = oEntry;
+						if(moBoard.poGetPiece(oEntry)->eGetType() == Piece::KING)
+							moKings[moBoard.eGetSquareColor(oEntry)] = oEntry;
 
 						if(bIsInCheck(meCurrentPlayer))
 						{
@@ -136,10 +138,7 @@ void Game::Run()
 							throw exception("That move puts you in check");
 						}
 
-						if(bIsCheckMate(meCurrentPlayer))
-							mbIsCurrentPlayerCheckMate = true;
-						else
-							SwitchPlayer();
+						SwitchPlayer();
 					}
 					
 					moSelection.Empty();
@@ -148,7 +147,7 @@ void Game::Run()
 
 			poInterface->DisplayBoard(moBoard);
 			
-			if(mbIsCurrentPlayerCheckMate)
+			if(bIsCheckMate(meCurrentPlayer))
 			{
 				mbIsOver = true;
 				string strMessage = "The ";
@@ -278,8 +277,12 @@ string Game::strGetPossibilities(Position oPos)
 			if(Game::bIsMovementCorrect(oPos, oPos2))
 			{
 				//MovePiece(oPos, oPos2);
-				Movement oMove(oPos, oPos2);
-				oMove.Execute();
+				Movement * oMove = new Movement(oPos, oPos2);
+				moHistory.push_back(oMove);
+				if(moBoard.poGetPiece(oPos)->eGetType() == Piece::KING)
+					moKings[meCurrentPlayer] = oPos2;
+
+				oMove->Execute();
 
 				if(!bIsInCheck(meCurrentPlayer))
 				{
@@ -339,8 +342,13 @@ bool Game::bIsCheckMate(Piece::Color ePlayer)
 
 						if(bIsMovementCorrect(oPos1, oPos2))
 						{
-							Movement oMove(oPos1, oPos2);
-							oMove.Execute();
+							Movement * oMove = new Movement(oPos1, oPos2);
+							moHistory.push_back(oMove);
+
+							if(moBoard.poGetPiece(oPos1)->eGetType() == Piece::KING)
+								moKings[meCurrentPlayer] = oPos2;
+
+							oMove->Execute();
 
 							if(!bIsInCheck(ePlayer))
 							{

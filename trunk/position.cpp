@@ -40,7 +40,7 @@ void Position::Empty()
 
 Position & Position::operator=(std::string strCoords)
 {
-	if(strCoords.size() != 2
+	if(strCoords.size() < 2
 	|| !isdigit(strCoords[0])
 	|| !isdigit(strCoords[1]))
 		throw exception(("Invalid Position string : " + strCoords).c_str());

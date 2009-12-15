@@ -104,34 +104,38 @@ std::string InterfaceSDL::strGetEntry()
 		switch(event.type)
 		{
 		  case SDL_QUIT :
-			return "x";
+			strEntry = "x";
 			break;
 		  case SDL_MOUSEBUTTONDOWN :
 			strEntry += '0' + event.button.y / CASE_WIDTH;
 			strEntry += '0' + event.button.x / CASE_HEIGHT;
 			if(event.button.button == SDL_BUTTON_RIGHT)
 				strEntry += "?";
-
-			return strEntry;
 			break;
 		  case SDL_KEYUP  :
 			switch(event.key.keysym.sym)
 			{
 			  case SDLK_x :
-				return "x";
+				strEntry = "x";
 				break;
 			  case SDLK_c :
-			    return "c";
+			    strEntry = "c";
 				break;
 			}
+			break;
 		  case SDL_MOUSEBUTTONUP :
-			if(event.button.button == SDL_BUTTON_RIGHT)
-				return "";
-
+/*			if(event.button.button == SDL_BUTTON_RIGHT)
+				strEntry += '0' + event.button.y / CASE_WIDTH;
+				strEntry += '0' + event.button.x / CASE_HEIGHT;*/
+			  return "";
+				break;
 		  default :
+			strEntry = "";
 			break;
 		}
 	}
+
+	return strEntry;
 }
 
 void InterfaceSDL::DisplayPossibilities(std::string strPossibilities)
@@ -181,4 +185,20 @@ void InterfaceSDL::DisplayCurrentPlayer(Piece::Color)
 void InterfaceSDL::CommitDisplay()
 {
 	SDL_Flip(mpoGame[SCREEN]);
+}
+
+char InterfaceSDL::cGetNewPieceType()
+{
+	SDL_Surface * poBackGround = SDL_CreateRGBSurface(SDL_HWSURFACE, 200, 50, 32, 0, 0, 0, 0);
+	SDL_Event event;
+	SDL_Rect position;
+
+	position.x = 50;
+	position.y = 50;
+
+	SDL_BlitSurface(poBackGround, NULL, mpoGame[SCREEN], &position);
+
+	SDL_WaitEvent(&event);
+
+	return 'Q';
 }
