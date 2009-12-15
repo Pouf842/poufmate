@@ -31,6 +31,8 @@ class Game
 	bool bIsCheckMate(Piece::Color);
 	std::string strGetPossibilities(Position);
 	void SwitchPlayer();
+	bool bIsPromotion(Position oPos1, Position oPos2) const;
+	void PromotePawn(Position, char);
   public :
 	Game();
 	void Run();

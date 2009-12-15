@@ -18,6 +18,7 @@ class Interface
 	virtual void DisplayCurrentPlayer(Piece::Color) = 0;
 	virtual void DisplaySelection(Position) = 0;
 	virtual void CommitDisplay() = 0;
+	virtual char cGetNewPieceType() = 0;
 	static Interface * poGetInstance() {}
 	static void FreeInstance()
 	{

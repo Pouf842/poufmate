@@ -116,3 +116,26 @@ void Board::SetPiece(Position oPos, Piece * poNewPiece)
 {
 	moSquares[oPos.mX][oPos.mY].SetPiece(poNewPiece);
 }
+
+void Board::PromotePawn(Position oPos, char cNewType)
+{
+	Piece::Color ePlayerColor = eGetSquareColor(oPos);
+
+	switch(cNewType)
+	{
+	  case 'R':
+		SetPiece(oPos, new Rook(ePlayerColor));
+		break;
+	  case 'N':
+		SetPiece(oPos, new Knight(ePlayerColor));
+		break;
+	  case 'B':
+		SetPiece(oPos, new Bishop(ePlayerColor));
+		break;
+	  case 'Q':
+		SetPiece(oPos, new Queen(ePlayerColor));
+		break;
+	  default :
+		break;
+	}
+}

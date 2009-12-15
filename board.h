@@ -22,6 +22,7 @@ class Board
 	Piece::Color eGetSquareColor(Position) const;
 	Piece * poGetPiece(Position) const;
 	void SetPiece(Position, Piece * poNewPiece);
+	void PromotePawn(Position, char);
 };
 
 ostream & operator<<(ostream & os, const Board & b);

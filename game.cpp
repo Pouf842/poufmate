@@ -3,6 +3,7 @@
 #include "piece.h"
 #include "first_move.h"
 #include "castling_move.h"
+#include "promotion.h"
 
 #ifdef __SDL_
 	#include "interface_SDL.h"
@@ -90,7 +91,8 @@ void Game::Run()
 						else
 						{
 							CheckIsMovementCorrect(moSelection, oEntry);
-						
+
+							bool bIsPawnProm = bIsPromotion(moSelection, oEntry);
 							MovePiece(moSelection, oEntry);
 
 							if(bIsInCheck(meCurrentPlayer))
@@ -98,6 +100,9 @@ void Game::Run()
 								CancelLastMove();
 								throw exception("That move puts you in check");
 							}
+
+							if(bIsPawnProm)
+								PromotePawn(oEntry, poInterface->cGetNewPieceType());
 
 							if(bIsCheckMate(meCurrentPlayer))
 							{
@@ -152,6 +157,21 @@ void Game::Run()
 	strEntry = poInterface->strGetEntry();
 
 	return;
+}
+
+void Game::PromotePawn(Position oPos, char cNewType)
+{
+	moBoard.PromotePawn(oPos, cNewType);
+}
+
+bool Game::bIsPromotion(Position oPos1, Position oPos2) const
+{
+	Piece * oPiece = moBoard.poGetPiece(oPos1);
+	if(oPiece->eGetType() == Piece::PAWN
+	&& oPos2.mX == (oPiece->eGetColor() == Piece::WHITE ? 0 : 7))
+		return true;
+	else
+		return false;
 }
 
 void Game::Castling(Piece::Color ePlayer, Game::CastlingSide eSide)
@@ -311,6 +331,8 @@ void Game::MovePiece(Position oPos1, Position oPos2)
 {
 	if(moBoard.poGetPiece(oPos1)->bIsFirstMove())
 		moHistory.push_back(new FirstMove(oPos1, oPos2, moBoard.poGetPiece(oPos1), moBoard.poGetPiece(oPos2)));
+	else if(bIsPromotion(oPos1, oPos2))
+		moHistory.push_back(new Promotion(oPos1, oPos2, moBoard.poGetPiece(oPos1), moBoard.poGetPiece(oPos2)));
 	else
 		moHistory.push_back(new Movement(oPos1, oPos2, moBoard.poGetPiece(oPos1), moBoard.poGetPiece(oPos2)));
 
