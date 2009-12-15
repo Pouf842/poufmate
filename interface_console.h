@@ -18,6 +18,7 @@ class InterfaceConsole : public Interface
 	virtual void DisplayCurrentPlayer(Piece::Color);
 	virtual void DisplaySelection(Position);
 	virtual void CommitDisplay();
+	virtual char cGetNewPieceType();
 	static Interface * poGetInstance();
 	static void FreeInstance();
 };

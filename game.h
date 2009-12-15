@@ -16,6 +16,7 @@ class Game
 	Position moKings[2];
 
 	bool mbIsOver;
+	bool mbIsCurrentPlayerCheckMate;
 	Position moSelection;
 
 	void CheckSelectionCoords(Position) const;
@@ -31,6 +32,8 @@ class Game
 	bool bIsCheckMate(Piece::Color);
 	std::string strGetPossibilities(Position);
 	void SwitchPlayer();
+	bool bIsPromotion(Position oPos1, Position oPos2) const;
+	void PromotePawn(Position, char);
   public :
 	Game();
 	void Run();

@@ -1,11 +1,20 @@
 #include "movement.h"
 #include "board.h"
 
-Movement::Movement(Position oPos1, Position oPos2,
-				   Piece * poMovingPiece, Piece * poCapturedPiece) : moPos1(oPos1), moPos2(oPos2)
+Board * Movement::spoBoard = NULL;
+
+Movement::Movement(Position oPos1, Position oPos2) : moPos1(oPos1), moPos2(oPos2)
 {
-	mpoMovingPiece = poMovingPiece;
-	mpoCapturedPiece = poCapturedPiece;
+	if(!spoBoard)
+		throw exception("Board is not defined. Call SetBoard before");
+
+	mpoMovingPiece = spoBoard->poGetPiece(moPos1);
+	mpoCapturedPiece = spoBoard->poGetPiece(moPos2);
+}
+
+void Movement::SetBoard(Board * oNewBoard)
+{
+	spoBoard = oNewBoard;
 }
 
 Position Movement::oGetCoords1() const
@@ -37,4 +46,9 @@ void Movement::CancelMovement(Board & oBoard) const
 {
 	oBoard.SetPiece(oGetCoords1(), poGetMovingPiece());
 	oBoard.SetPiece(oGetCoords2(), poGetCapturedPiece());
+}
+
+void Movement::Execute()
+{
+
 }

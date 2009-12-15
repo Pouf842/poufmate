@@ -65,3 +65,25 @@ void InterfaceConsole::CommitDisplay()
 	cout << mOs.str();
 	mOs.str("");
 }
+
+char InterfaceConsole::cGetNewPieceType()
+{
+	char cNewType = ' ';
+
+	while(1)
+	{
+		mOs << "Enter the type of the new piece : " << endl;
+		mOs << "\tR = Rook" << endl;
+		mOs << "\tN = Knight" << endl;
+		mOs << "\tB = Bishop" << endl;
+		mOs << "\tQ = Queen" << endl;
+		mOs << "\tP = Pawn" << endl;
+
+		CommitDisplay();
+
+		cin >> cNewType;
+
+		if(string("RNBQP").find(toupper(cNewType) != string::npos))
+			return toupper(cNewType);
+	}
+}

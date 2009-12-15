@@ -3,6 +3,7 @@
 #include "piece.h"
 #include "first_move.h"
 #include "castling_move.h"
+#include "promotion.h"
 
 #ifdef __SDL_
 	#include "interface_SDL.h"
@@ -39,11 +40,14 @@ void Game::Run()
 	Interface * poInterface = DISPLAY::poGetInstance();
 
 	moBoard.Init();
+	Movement::SetBoard(&moBoard);
 
 	poInterface->DisplayBoard(moBoard);
 	poInterface->DisplayCurrentPlayer(meCurrentPlayer);
 	poInterface->CommitDisplay();
 	
+	Movement * poNextMove = 0;
+
 	while(!bIsOver())
 	{
 		try
@@ -72,7 +76,7 @@ void Game::Run()
 				{
 					if(moSelection != oEntry)
 					{
-						if(bIsCastling(moSelection, oEntry))
+						/*if(bIsCastling(moSelection, oEntry))
 						{
 							if(bIsInCheck(meCurrentPlayer))
 								throw exception("Castling is forbidden if you're in check");
@@ -90,7 +94,8 @@ void Game::Run()
 						else
 						{
 							CheckIsMovementCorrect(moSelection, oEntry);
-						
+
+							bool bIsPawnProm = bIsPromotion(moSelection, oEntry);
 							MovePiece(moSelection, oEntry);
 
 							if(bIsInCheck(meCurrentPlayer))
@@ -99,15 +104,42 @@ void Game::Run()
 								throw exception("That move puts you in check");
 							}
 
+							if(bIsPawnProm)
+								PromotePawn(oEntry, poInterface->cGetNewPieceType());
+
 							if(bIsCheckMate(meCurrentPlayer))
 							{
 								poInterface->DisplayBoard(moBoard);
 								poInterface->DisplayMessage(string(meCurrentPlayer == Piece::WHITE ? "White" : "Black") + " player is checkmate !");
 								mbIsOver = true;
 							}
+						}*/
+
+						if(bIsCastling(moSelection, oEntry))
+							poNextMove = new CastlingMove(moSelection, oEntry);
+						else if(bIsPromotion(moSelection, oEntry))
+							poNextMove = new Promotion(moSelection, oEntry);
+						else if(moBoard.poGetPiece(moSelection)->bIsFirstMove())
+							poNextMove = new FirstMove(moSelection, oEntry);
+						else
+							poNextMove = new Movement(moSelection, oEntry);
+
+						moHistory.push_back(poNextMove);
+						poNextMove->Execute();
+
+						if(moBoard.poGetPiece(moSelection)->eGetType() == Piece::KING)
+							moKings[moBoard.eGetSquareColor(moSelection)] = oEntry;
+
+						if(bIsInCheck(meCurrentPlayer))
+						{
+							CancelLastMove();
+							throw exception("That move puts you in check");
 						}
 
-						SwitchPlayer();
+						if(bIsCheckMate(meCurrentPlayer))
+							mbIsCurrentPlayerCheckMate = true;
+						else
+							SwitchPlayer();
 					}
 					
 					moSelection.Empty();
@@ -116,7 +148,7 @@ void Game::Run()
 
 			poInterface->DisplayBoard(moBoard);
 			
-			if(bIsCheckMate(meCurrentPlayer))
+			if(mbIsCurrentPlayerCheckMate)
 			{
 				mbIsOver = true;
 				string strMessage = "The ";
@@ -154,7 +186,22 @@ void Game::Run()
 	return;
 }
 
-void Game::Castling(Piece::Color ePlayer, Game::CastlingSide eSide)
+void Game::PromotePawn(Position oPos, char cNewType)
+{
+	moBoard.PromotePawn(oPos, cNewType);
+}
+
+bool Game::bIsPromotion(Position oPos1, Position oPos2) const
+{
+	Piece * oPiece = moBoard.poGetPiece(oPos1);
+	if(oPiece->eGetType() == Piece::PAWN
+	&& oPos2.mX == (oPiece->eGetColor() == Piece::WHITE ? 0 : 7))
+		return true;
+	else
+		return false;
+}
+
+/*void Game::Castling(Piece::Color ePlayer, Game::CastlingSide eSide)
 {
 	Position & oKing = moKings[ePlayer];
 	Position oKingNewPos(oKing.mX, (eSide == Game::RIGHT ? 6 : 2));
@@ -165,7 +212,7 @@ void Game::Castling(Piece::Color ePlayer, Game::CastlingSide eSide)
 
 	moBoard.MovePiece(oKing, oKingNewPos);
 	moBoard.MovePiece(oRook, oRookNewPos);
-}
+}*/
 
 bool Game::bIsCastling(Position oPos1, Position oPos2)
 {
@@ -179,7 +226,7 @@ bool Game::bIsCastling(Position oPos1, Position oPos2)
 	return false;
 }
 
-void Game::CheckIsCastlingOk(Piece::Color ePlayer, Game::CastlingSide eSide)
+/*void Game::CheckIsCastlingOk(Piece::Color ePlayer, Game::CastlingSide eSide)
 {
 	Position oKing = moKings[ePlayer];
 
@@ -213,7 +260,7 @@ void Game::CheckIsCastlingOk(Piece::Color ePlayer, Game::CastlingSide eSide)
 	  default :
 		break;
 	}
-}
+}*/
 
 string Game::strGetPossibilities(Position oPos)
 {
@@ -230,7 +277,10 @@ string Game::strGetPossibilities(Position oPos)
 
 			if(Game::bIsMovementCorrect(oPos, oPos2))
 			{
-				MovePiece(oPos, oPos2);
+				//MovePiece(oPos, oPos2);
+				Movement oMove(oPos, oPos2);
+				oMove.Execute();
+
 				if(!bIsInCheck(meCurrentPlayer))
 				{
 					strPossibilities += i + '0';
@@ -289,13 +339,15 @@ bool Game::bIsCheckMate(Piece::Color ePlayer)
 
 						if(bIsMovementCorrect(oPos1, oPos2))
 						{
-							MovePiece(oPos1, oPos2);
+							Movement oMove(oPos1, oPos2);
+							oMove.Execute();
 
 							if(!bIsInCheck(ePlayer))
 							{
 								CancelLastMove();
 								return false;
 							}
+
 							CancelLastMove();
 						}
 					}
@@ -307,10 +359,12 @@ bool Game::bIsCheckMate(Piece::Color ePlayer)
 	return bMate;
 }
 
-void Game::MovePiece(Position oPos1, Position oPos2)
+/*void Game::MovePiece(Position oPos1, Position oPos2)
 {
 	if(moBoard.poGetPiece(oPos1)->bIsFirstMove())
 		moHistory.push_back(new FirstMove(oPos1, oPos2, moBoard.poGetPiece(oPos1), moBoard.poGetPiece(oPos2)));
+	else if(bIsPromotion(oPos1, oPos2))
+		moHistory.push_back(new Promotion(oPos1, oPos2, moBoard.poGetPiece(oPos1), moBoard.poGetPiece(oPos2)));
 	else
 		moHistory.push_back(new Movement(oPos1, oPos2, moBoard.poGetPiece(oPos1), moBoard.poGetPiece(oPos2)));
 
@@ -318,7 +372,7 @@ void Game::MovePiece(Position oPos1, Position oPos2)
 		moKings[moBoard.eGetSquareColor(oPos1)] = oPos2;
 
 	moBoard.MovePiece(oPos1, oPos2);
-}
+}*/
 
 void Game::CheckSelectionCoords(Position oPos) const
 {	
