@@ -6,10 +6,12 @@
 class CastlingMove : public Movement
 {
   protected :
-	enum CastlingSize {LEFT, RIGHT};
-	CastlingSize meSize;
+	Piece * mpoRook;
+	enum CastlingSide {LEFT, RIGHT};
+	CastlingSide meSide;
   public :
-	CastlingMove(Position oPos1, Position oPos2, Piece * poMovingPiece);
+	CastlingMove(Position oPos1, Position oPos2);
+	virtual void Execute();
 	virtual void CancelMovement(Board &) const;
 };
 

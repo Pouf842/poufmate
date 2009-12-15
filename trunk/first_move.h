@@ -7,8 +7,7 @@ class FirstMove : public Movement
 {
   public :
 	FirstMove(Position oPos1,
-			 Position oPos2,
-			 Piece * poMovingPiece, Piece * poCapturedPiece = 0);
+			 Position oPos2);
 	virtual void CancelMovement(Board &) const;
 };
 
