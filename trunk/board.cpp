@@ -83,15 +83,8 @@ void Board::MovePiece(Position oPos1, Position oPos2)
 	Square & oPieceSquare = moSquares[X1][Y1];
 	Square & oDestSquare = moSquares[X2][Y2];
 
-	if(oDestSquare.bIsEmpty())
-		SwitchPieces(oPieceSquare, oDestSquare);
-	else
-	{
-		oDestSquare.SetPiece(oPieceSquare.poGetPiece());
-		oPieceSquare.SetPiece(NULL);
-	}
-
-	oDestSquare.poGetPiece()->SetFirstMove(false);
+	oDestSquare.SetPiece(oPieceSquare.poGetPiece());
+	oPieceSquare.SetPiece(NULL);
 }
 
 void Board::SwitchPieces(Square & oFirstSquare, Square & oSecondSquare) const

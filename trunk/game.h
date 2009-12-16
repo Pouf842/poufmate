@@ -9,7 +9,6 @@
 class Game
 {
   protected :
-	enum CastlingSide {LEFT, RIGHT};
 	Board moBoard;
 	vector<Movement*> moHistory;
 	Piece::Color meCurrentPlayer;
@@ -19,21 +18,16 @@ class Game
 	bool mbIsCurrentPlayerCheckMate;
 	Position moSelection;
 
-	void CheckSelectionCoords(Position) const;
-	void CheckIsMovementCorrect(Position, Position) const;
-	bool bIsMovementCorrect(Position, Position) const;
+	void SwitchPlayer();
 	bool bIsOver();
 	void CancelLastMove();
-	void MovePiece(Position, Position);
+	void CheckSelectionCoords(Position) const;
 	bool bIsCastling(Position, Position);
-	void CheckIsCastlingOk(Piece::Color ePlayer, Game::CastlingSide);
-	void Castling(Piece::Color ePlayer, CastlingSide);
+	bool bIsMovementCorrect(Position, Position) const;
 	bool bIsInCheck(Piece::Color) const;
 	bool bIsCheckMate(Piece::Color);
-	std::string strGetPossibilities(Position);
-	void SwitchPlayer();
 	bool bIsPromotion(Position oPos1, Position oPos2) const;
-	void PromotePawn(Position, char);
+	std::string strGetPossibilities(Position);
   public :
 	Game();
 	void Run();
