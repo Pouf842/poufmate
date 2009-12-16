@@ -63,4 +63,5 @@ void Movement::CancelMovement(Board & oBoard) const
 void Movement::Execute()
 {
 	spoBoard->MovePiece(moPos1, moPos2);
+	mpoMovingPiece->SetFirstMove(false);
 }

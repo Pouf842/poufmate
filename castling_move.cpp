@@ -18,7 +18,7 @@ CastlingMove::CastlingMove(Position oPos1, Position oPos2) : Movement(oPos1, oPo
 	if(!mpoRook
 	|| mpoRook->eGetType() != Piece::ROOK
 	|| mpoRook->bHasAlreadyMoved())
-		throw exception("Your rook has already moved and therefore cannot caslting");
+		throw exception("Your rook has already moved and therefore cannot castling");
 
 	if(poGetMovingPiece()->bHasAlreadyMoved())
 		throw exception("Your king has already moved and therefore cannot castling");
@@ -46,17 +46,17 @@ CastlingMove::CastlingMove(Position oPos1, Position oPos2) : Movement(oPos1, oPo
 
 void CastlingMove::Execute()
 {
+	Movement::Execute();
+
 	Position oRook(moPos1.mX, (meSide == RIGHT ? 7 : 0));
 	Position oRookNewPos(moPos1.mX, (meSide == RIGHT ? 5 : 3));
 
-	spoBoard->MovePiece(moPos1, moPos2);
 	spoBoard->MovePiece(oRook, oRookNewPos);
 }
 
 void CastlingMove::CancelMovement(Board & oBoard) const
 {
-	oBoard.SetPiece(oGetCoords1(), poGetMovingPiece());
-	oBoard.SetPiece(oGetCoords2(), 0);
+	Movement::CancelMovement(oBoard);
 
 	poGetMovingPiece()->SetFirstMove(true);
 

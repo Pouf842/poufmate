@@ -27,9 +27,10 @@ bool King::bIsMovementCorrect(Position oPos1, Position oPos2, const Board & oBoa
 	int X2 = oPos2.mX;
 	int Y2 = oPos2.mY;
 
-	if(abs(X2 - X1) > 1
-	|| abs(Y2 - Y1) > 1)
-		return false;
+	if((abs(X2 - X1) <= 1
+	&& abs(Y2 - Y1) <= 1)
+	|| ((X1 == X2) && (Y1 == 4 && (Y2 == 2 || Y2 == 6))))
+		return true;
 
-	return true;
+	return false;
 }
