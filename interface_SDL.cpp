@@ -52,12 +52,12 @@ InterfaceSDL::InterfaceSDL()
 InterfaceSDL::~InterfaceSDL()
 {
 	for(unsigned int i = 0; i < 5; ++i)
-		SDL_free(mpoGame[i]);
+		SDL_FreeSurface(mpoGame[i]);
 
 	for(unsigned int i = 0; i < 6; ++i)
 	{
-		SDL_free(mpoPieces[Piece::WHITE][i]);
-		SDL_free(mpoPieces[Piece::BLACK][i]);
+		SDL_FreeSurface(mpoPieces[Piece::WHITE][i]);
+		SDL_FreeSurface(mpoPieces[Piece::BLACK][i]);
 	}
 
 	SDL_Quit();
@@ -138,15 +138,15 @@ std::string InterfaceSDL::strGetEntry()
 	return strEntry;
 }
 
-void InterfaceSDL::DisplayPossibilities(std::string strPossibilities)
+void InterfaceSDL::DisplayPossibilities(vector<Position> oPossibilities)
 {
 	SDL_Rect position;
 	unsigned int iIndex = 0;
 
-	while((iIndex = strPossibilities.find(';', iIndex + 1)) != string::npos)
+	for(unsigned int i = 0; i < oPossibilities.size(); ++i)
 	{
-		position.y = (strPossibilities[iIndex - 2] - '0') * CASE_HEIGHT;
-		position.x = (strPossibilities[iIndex - 1] - '0') * CASE_WIDTH;
+		position.y = (oPossibilities[i].mX) * CASE_HEIGHT;
+		position.x = (oPossibilities[i].mY) * CASE_WIDTH;
 
 		SDL_BlitSurface(mpoGame[POSSIBLE], NULL, mpoGame[SCREEN], &position);
 	}

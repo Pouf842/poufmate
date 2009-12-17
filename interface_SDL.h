@@ -13,12 +13,12 @@ class InterfaceSDL : public Interface
 	enum eGameImages {SCREEN = 0, BOARD = 1, SELECTION = 2, CHESS = 3, POSSIBLE = 4};
 
 	InterfaceSDL();
-	~InterfaceSDL();
+	virtual ~InterfaceSDL();
   public :
 	virtual void DisplayBoard(const Board &);
 	virtual void DisplayMessage(std::string strMessage);
 	virtual std::string strGetEntry();
-	virtual void DisplayPossibilities(std::string strPossibilities);
+	virtual void DisplayPossibilities(vector<Position>);
 	virtual void DisplayInCheck(Position);
 	virtual void DisplayCurrentPlayer(Piece::Color);
 	virtual void DisplaySelection(Position);

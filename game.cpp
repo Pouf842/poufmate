@@ -225,7 +225,7 @@ vector<Position> Game::oGetPossibilities(Position oPos)
 {
 	vector<Position> oPossibilites;
 
-	oPossibilites.push_back(oPos);	// The square itself is a possibility
+//	oPossibilites.push_back(oPos);	// The square itself is a possibility
 
 	/* For each squares of the board */
 	for(unsigned int i = 0; i < 8; ++i)
