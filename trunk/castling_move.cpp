@@ -3,17 +3,17 @@
 
 CastlingMove::CastlingMove(Position oPos1, Position oPos2) : Movement(oPos1, oPos2)
 {
-	if(oPos1.mY == 4 && oPos2.mY == 2)
-		meSide = LEFT;
-	else if(oPos1.mY == 4 && oPos2.mY == 6)
-		meSide = RIGHT;
+	if(oPos1.mY == 4 && oPos2.mY == 2)		// If the king is moving from 4 to 2 horizontally
+		meSide = LEFT;						// It's a left castling
+	else if(oPos1.mY == 4 && oPos2.mY == 6)	// Same with 4 to 6
+		meSide = RIGHT;						// Right side
 	else
 		throw exception("This move is not a castling move");
 
-	unsigned int iRookX = (poGetMovingPiece()->eGetColor() == Piece::WHITE ? 7 : 0);
-	unsigned int iRookY = (meSide == RIGHT ? 7 : 0);
+	unsigned int iRookX = (poGetMovingPiece()->eGetColor() == Piece::WHITE ? 7 : 0);	// Castling Rook x coordinate
+	unsigned int iRookY = (meSide == RIGHT ? 7 : 0);									// Castling Rook y coordinate
 
-	mpoRook = spoBoard->poGetPiece(Position(iRookX, iRookY));
+	mpoRook = spoBoard->poGetPiece(Position(iRookX, iRookY));	// The castling rook
 
 	if(!mpoRook
 	|| mpoRook->eGetType() != Piece::ROOK
@@ -23,6 +23,9 @@ CastlingMove::CastlingMove(Position oPos1, Position oPos2) : Movement(oPos1, oPo
 	if(poGetMovingPiece()->bHasAlreadyMoved())
 		throw exception("Your king has already moved and therefore cannot castling");
 
+	/* Check if the path is cleared
+	 * (each squares between the king and the finishing one) is empty
+	 */
 	switch(meSide)
 	{
 	  case RIGHT :
@@ -46,38 +49,25 @@ CastlingMove::CastlingMove(Position oPos1, Position oPos2) : Movement(oPos1, oPo
 
 void CastlingMove::Execute()
 {
-	Movement::Execute();
+	Movement::Execute();	// Execute the movement (move the king only)
 
-	Position oRook(moPos1.mX, (meSide == RIGHT ? 7 : 0));
-	Position oRookNewPos(moPos1.mX, (meSide == RIGHT ? 5 : 3));
+	/* Move the rook */
+	Position oRook(moPos1.mX, (meSide == RIGHT ? 7 : 0));		// Old position of the rook
+	Position oRookNewPos(moPos1.mX, (meSide == RIGHT ? 5 : 3));	// New position of the rook (depends on the caslting side)
 
 	spoBoard->MovePiece(oRook, oRookNewPos);
 }
 
-void CastlingMove::CancelMovement(Board & oBoard) const
+void CastlingMove::CancelMovement() const
 {
-	Movement::CancelMovement(oBoard);
+	Movement::CancelMovement();	// Cancel the castling (move the king only)
 
-	poGetMovingPiece()->SetFirstMove(true);
+	poGetMovingPiece()->SetFirstMove(true);	// The castling is inevitably the first move of the king (see constructor)
 
-	unsigned int iXKing = (eGetPlayerColor() == Piece::WHITE ? 7 : 0);
+	/* Move the rook */
+	Position oRook(moPos1.mX, (meSide == RIGHT ? 5 : 3));		// Position of the rook
+	Position oRookOldPos(moPos1.mX, (meSide == RIGHT ? 7 : 0));	// Old position of the rook (depends on the caslting side)
 
-	unsigned int iRookOldY = 0;
-	unsigned int iRookNewY = 0;
-
-	switch(meSide)
-	{
-	  case LEFT :
-		iRookOldY = 3;
-		iRookNewY = 0;
-		break;
-	  case RIGHT :
-		iRookOldY = 5;
-		iRookNewY = 7;
-		break;
-	}
-
-	oBoard.SetPiece(Position(iXKing, iRookOldY), 0);
-	oBoard.SetPiece(Position(iXKing, iRookNewY), mpoRook);
-	mpoRook->SetFirstMove(true);
+	spoBoard->MovePiece(oRook, oRookOldPos);
+	mpoRook->SetFirstMove(true);	// The castling is inevitably the first move of the rook (see constructor)
 }

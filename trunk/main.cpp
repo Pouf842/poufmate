@@ -4,8 +4,8 @@ int main()
 {
 	try
 	{
-		Game oNewGame;
-		oNewGame.Run();
+		Game oNewGame;	// Create a new game
+		oNewGame.Run();	// Run the new game
 	}
 	catch(exception & e)
 	{

@@ -19,11 +19,8 @@ Position::Position(std::string strCoords)
 	*this = strCoords;
 }
 
-Position::Position(const Position & oPos)
+Position::Position(const Position & oPos) :	mX(oPos.mX), mY(oPos.mY), mbEmpty(oPos.mbEmpty)
 {
-	mX = oPos.mX;
-	mY = oPos.mY;
-	mbEmpty = oPos.mbEmpty;
 }
 
 bool Position::bIsEmpty()
@@ -45,7 +42,7 @@ Position & Position::operator=(std::string strCoords)
 	|| !isdigit(strCoords[1]))
 		throw exception(("Invalid Position string : " + strCoords).c_str());
 
-	mX = strCoords[0] - '0';
+	mX = strCoords[0] - '0';	// Convert a character to a digit
 	mY = strCoords[1] - '0';
 
 	if(mX > 7 || mY > 7)

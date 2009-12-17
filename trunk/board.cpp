@@ -10,50 +10,38 @@
 
 using namespace std;
 
-void Board::InterfaceOnStream(ostream & os) const
-{
-	os << "    0   1   2   3   4   5   6   7" << endl;
-
-	for(unsigned int i = 0; i < 8; ++i)
-	{
-		os << "   -------------------------------" << endl;
-		os << i << " ";
-
-		for(unsigned int j = 0; j < 8; ++j)
-			os << "| " << moSquares[i][j].cGetChar() << " ";
-
-		os << "|" << endl;
-	}
-
-	os << "   -------------------------------" << endl;
-}
-
 void Board::Init()
 {
+	/* Creating pawns */
 	for(unsigned int i = 0; i < 8; ++i)
 	{
 		moSquares[1][i].SetPiece(new Pawn(Piece::BLACK));
 		moSquares[6][i].SetPiece(new Pawn(Piece::WHITE));
 	}
 
+	/* Creating rooks */
 	moSquares[0][0].SetPiece(new Rook(Piece::BLACK));
 	moSquares[0][7].SetPiece(new Rook(Piece::BLACK));
 	moSquares[7][0].SetPiece(new Rook(Piece::WHITE));
 	moSquares[7][7].SetPiece(new Rook(Piece::WHITE));
 
+	/* Creating knights */
 	moSquares[0][1].SetPiece(new Knight(Piece::BLACK));
 	moSquares[0][6].SetPiece(new Knight(Piece::BLACK));
 	moSquares[7][1].SetPiece(new Knight(Piece::WHITE));
 	moSquares[7][6].SetPiece(new Knight(Piece::WHITE));
 
+	/* Creating bishops */
 	moSquares[0][2].SetPiece(new Bishop(Piece::BLACK));
 	moSquares[0][5].SetPiece(new Bishop(Piece::BLACK));
 	moSquares[7][2].SetPiece(new Bishop(Piece::WHITE));
 	moSquares[7][5].SetPiece(new Bishop(Piece::WHITE));
 
+	/* Creating queens */
 	moSquares[0][3].SetPiece(new Queen(Piece::BLACK));
 	moSquares[7][3].SetPiece(new Queen(Piece::WHITE));
 
+	/* Creating kings */
 	moSquares[0][4].SetPiece(new King(Piece::BLACK));
 	moSquares[7][4].SetPiece(new King(Piece::WHITE));
 }
@@ -87,19 +75,6 @@ void Board::MovePiece(Position oPos1, Position oPos2)
 	oPieceSquare.SetPiece(NULL);
 }
 
-void Board::SwitchPieces(Square & oFirstSquare, Square & oSecondSquare) const
-{
-	Piece * poSwap = oFirstSquare.poGetPiece();
-	oFirstSquare.SetPiece(oSecondSquare.poGetPiece());
-	oSecondSquare.SetPiece(poSwap);
-}
-
-ostream & operator<<(ostream & os, const Board & b)
-{
-	b.InterfaceOnStream(os);
-	return os;
-}
-
 Piece * Board::poGetPiece(Position oPos) const
 {
 	return moSquares[oPos.mX][oPos.mY].poGetPiece();
@@ -108,27 +83,4 @@ Piece * Board::poGetPiece(Position oPos) const
 void Board::SetPiece(Position oPos, Piece * poNewPiece)
 {
 	moSquares[oPos.mX][oPos.mY].SetPiece(poNewPiece);
-}
-
-void Board::PromotePawn(Position oPos, char cNewType)
-{
-	Piece::Color ePlayerColor = eGetSquareColor(oPos);
-
-	switch(cNewType)
-	{
-	  case 'R':
-		SetPiece(oPos, new Rook(ePlayerColor));
-		break;
-	  case 'N':
-		SetPiece(oPos, new Knight(ePlayerColor));
-		break;
-	  case 'B':
-		SetPiece(oPos, new Bishop(ePlayerColor));
-		break;
-	  case 'Q':
-		SetPiece(oPos, new Queen(ePlayerColor));
-		break;
-	  default :
-		break;
-	}
 }

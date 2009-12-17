@@ -54,14 +54,14 @@ Piece::Color Movement::eGetPlayerColor() const
 	return poGetMovingPiece()->eGetColor();
 }
 
-void Movement::CancelMovement(Board & oBoard) const
+void Movement::CancelMovement() const
 {
-	oBoard.SetPiece(oGetCoords1(), poGetMovingPiece());
-	oBoard.SetPiece(oGetCoords2(), poGetCapturedPiece());
+	spoBoard->MovePiece(oGetCoords2(), oGetCoords1());
+	spoBoard->SetPiece(oGetCoords2(), poGetCapturedPiece());
 }
 
 void Movement::Execute()
 {
-	spoBoard->MovePiece(moPos1, moPos2);
-	mpoMovingPiece->SetFirstMove(false);
+	spoBoard->MovePiece(oGetCoords1(), oGetCoords2());
+	poGetMovingPiece()->SetFirstMove(false);
 }
