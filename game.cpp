@@ -192,34 +192,40 @@ string Game::strGetPossibilities(Position oPos)
 
 			if(Game::bIsMovementCorrect(oPos, oPos2))
 			{
-				Movement * poMove = 0;
-
-				if(bIsCastling(oPos, oPos2))
+				try
 				{
-					if(bIsInCheck(moBoard.eGetSquareColor(oPos2)))
-						continue;
+					Movement * poMove = 0;
 
-					poMove = new CastlingMove(oPos, oPos2);
+					if(bIsCastling(oPos, oPos2))
+					{
+						if(bIsInCheck(moBoard.eGetSquareColor(oPos)))
+							continue;
+
+						poMove = new CastlingMove(oPos, oPos2);
+					}
+					else if(moBoard.poGetPiece(oPos)->bIsFirstMove())
+						poMove = new FirstMove(oPos, oPos2);
+					else
+						poMove = new Movement(oPos, oPos2);
+
+					moHistory.push_back(poMove);
+					if(moBoard.poGetPiece(oPos)->eGetType() == Piece::KING)
+						moKings[meCurrentPlayer] = oPos2;
+
+					poMove->Execute();
+
+					if(!bIsInCheck(moBoard.eGetSquareColor(oPos2)))
+					{
+						strPossibilities += i + '0';
+						strPossibilities += j + '0';
+						strPossibilities += ";";
+					}
+
+					CancelLastMove();
 				}
-				else if(moBoard.poGetPiece(oPos)->bIsFirstMove())
-					poMove = new FirstMove(oPos, oPos2);
-				else
-					poMove = new Movement(oPos, oPos2);
-
-				moHistory.push_back(poMove);
-				if(moBoard.poGetPiece(oPos)->eGetType() == Piece::KING)
-					moKings[meCurrentPlayer] = oPos2;
-
-				poMove->Execute();
-
-				if(!bIsInCheck(moBoard.eGetSquareColor(oPos2)))
+				catch(exception & e)
 				{
-					strPossibilities += i + '0';
-					strPossibilities += j + '0';
-					strPossibilities += ";";
 				}
-
-				CancelLastMove();
 			}
 		}
 	}
@@ -270,34 +276,40 @@ bool Game::bIsCheckMate(Piece::Color ePlayer)
 
 						if(bIsMovementCorrect(oPos1, oPos2))
 						{
-							Movement * poMove = 0;
-							
-							if(bIsCastling(oPos1, oPos2))
+							try
 							{
-								if(bIsInCheck(ePlayer))
-									throw exception("Castling is not allowed if you're in check");
+								Movement * poMove = 0;
+								
+								if(bIsCastling(oPos1, oPos2))
+								{
+									if(bIsInCheck(ePlayer))
+										throw exception("Castling is not allowed if you're in check");
 
-								poMove = new CastlingMove(oPos1, oPos2);
-							}
-							else if(moBoard.poGetPiece(oPos1)->bIsFirstMove())
-								poMove = new FirstMove(oPos1, oPos2);
-							else
-								poMove = new Movement(oPos1, oPos2);
+									poMove = new CastlingMove(oPos1, oPos2);
+								}
+								else if(moBoard.poGetPiece(oPos1)->bIsFirstMove())
+									poMove = new FirstMove(oPos1, oPos2);
+								else
+									poMove = new Movement(oPos1, oPos2);
 
-							moHistory.push_back(poMove);
+								moHistory.push_back(poMove);
 
-							if(moBoard.poGetPiece(oPos1)->eGetType() == Piece::KING)
-								moKings[meCurrentPlayer] = oPos2;
+								if(moBoard.poGetPiece(oPos1)->eGetType() == Piece::KING)
+									moKings[meCurrentPlayer] = oPos2;
 
-							poMove->Execute();
+								poMove->Execute();
 
-							if(!bIsInCheck(ePlayer))
-							{
+								if(!bIsInCheck(ePlayer))
+								{
+									CancelLastMove();
+									return false;
+								}
+
 								CancelLastMove();
-								return false;
 							}
-
-							CancelLastMove();
+							catch(exception & e)
+							{
+							}
 						}
 					}
 				}
