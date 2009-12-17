@@ -7,6 +7,10 @@ InterfaceConsole::InterfaceConsole() : mOs("")
 {
 }
 
+InterfaceConsole::~InterfaceConsole()
+{
+}
+
 Interface * InterfaceConsole::poGetInstance()
 {
 	if(!mpoInstance)
@@ -17,7 +21,58 @@ Interface * InterfaceConsole::poGetInstance()
 
 void InterfaceConsole::DisplayBoard(const Board & oBoard)
 {
-	mOs << oBoard << endl;
+	mOs << "    0   1   2   3   4   5   6   7" << endl;	// Display coordinates
+
+	for(unsigned int i = 0; i < 8; ++i)
+	{
+		mOs << "   -------------------------------" << endl;	// Separator
+		mOs << i << " ";	// Display coordinate
+
+		/* For each square of the board */
+		for(unsigned int j = 0; j < 8; ++j)
+		{
+			Position oPos(i, j);
+			mOs << "| ";	// Separator
+
+			char cPieceChar = ' ';	// Empty square (default value)
+
+			/* Check the piece type */
+			if(!oBoard.bIsSquareEmpty(oPos))
+			{
+				switch(oBoard.poGetPiece(oPos)->eGetType())
+				{
+				  case Piece::ROOK :
+					cPieceChar = 'R';
+					break;
+				  case Piece::BISHOP :
+					cPieceChar = 'B';
+					break;
+				  case Piece::KNIGHT :
+					cPieceChar = 'N';
+					break;
+				  case Piece::QUEEN :
+					cPieceChar = 'Q';
+					break;
+				  case Piece::KING :
+					cPieceChar = 'K';
+					break;
+				  case Piece::PAWN :
+					cPieceChar = 'P';
+					break;
+				}
+
+				/* Black pieces ar in lower case */
+				if(oBoard.poGetPiece(oPos)->eGetColor() == Piece::BLACK)
+					cPieceChar = tolower(cPieceChar);
+			}
+
+			 mOs << cPieceChar << " ";
+		}
+
+		mOs << "|" << endl;	// End-of-line separator
+	}
+
+	mOs << "   -------------------------------" << endl;	// Last separator (bottom of the board)
 }
 
 void InterfaceConsole::DisplayMessage(string strMessage)
@@ -33,21 +88,18 @@ string InterfaceConsole::strGetEntry()
 	return strCommand;
 }
 
-void InterfaceConsole::DisplayPossibilities(std::string strPossibilities)
+void InterfaceConsole::DisplayPossibilities(vector<Position> oPossibilities)
 {
 	mOs << "Possibilities : " << endl;
-	for(unsigned int i = 0; i < strPossibilities.size(); ++i)
-		if(strPossibilities[i] != ';')
-			mOs << strPossibilities[i];
-		else
-			mOs << endl;
+	for(unsigned int i = 0; i < oPossibilities.size(); ++i)
+		mOs << "\t" << oPossibilities[i].mX << oPossibilities[i].mY << endl;
 
 	mOs << endl;
 }
 
 void InterfaceConsole::DisplayCurrentPlayer(Piece::Color eCurrentPlayer)
 {
-	mOs << "Joueur " << (eCurrentPlayer == Piece::WHITE ? "Blanc":"Noir") << endl;
+	mOs << (eCurrentPlayer == Piece::WHITE ? "White":"Black") << " player" << endl;
 }
 
 void InterfaceConsole::DisplaySelection(Position oPos)
@@ -77,13 +129,12 @@ char InterfaceConsole::cGetNewPieceType()
 		mOs << "\tN = Knight" << endl;
 		mOs << "\tB = Bishop" << endl;
 		mOs << "\tQ = Queen" << endl;
-		mOs << "\tP = Pawn" << endl;
 
 		CommitDisplay();
 
 		cin >> cNewType;
 
-		if(string("RNBQP").find(toupper(cNewType) != string::npos))
+		if(string("RNBQrnbq").find(toupper(cNewType) != string::npos))
 			return toupper(cNewType);
 	}
 }

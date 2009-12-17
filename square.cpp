@@ -5,17 +5,9 @@ Square::Square() : mpoPiece(0)
 {
 }
 
-char Square::cGetChar() const
-{
-	if(mpoPiece)
-		return mpoPiece->cGetChar();
-	else
-		return ' ';
-}
-
 bool Square::bIsEmpty() const
 {
-	return (mpoPiece == 0);
+	return (mpoPiece == NULL);
 }
 
 void Square::SetPiece(Piece * poNewPiece)
@@ -25,7 +17,7 @@ void Square::SetPiece(Piece * poNewPiece)
 
 Piece::Color Square::eGetPieceColor() const
 {
-	if(mpoPiece)
+	if(!bIsEmpty())
 		return mpoPiece->eGetColor();
 	else
 		throw std::exception("Empty square");

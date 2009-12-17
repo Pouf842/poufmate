@@ -10,14 +10,6 @@ Knight::Knight(Piece::Color eNewColor)
 	meType = Piece::KNIGHT;
 }
 
-char Knight::cGetChar() const
-{
-	if(eGetColor() == Piece::WHITE)
-		return 'N';
-	else
-		return 'n';
-}
-
 bool Knight::bIsMovementCorrect(Position oPos1, Position oPos2, const Board & oBoard) const
 {
 	if(oPos1 == oPos2)
@@ -28,9 +20,9 @@ bool Knight::bIsMovementCorrect(Position oPos1, Position oPos2, const Board & oB
 	int X2 = oPos2.mX;
 	int Y2 = oPos2.mY;
 
-	if(abs(X2 - X1) == 1 && abs(Y2 - Y1) == 2
+	if(abs(X2 - X1) == 1 && abs(Y2 - Y1) == 2	// If the move is of two squares on an axe, and one on the other
 	|| abs(X2 - X1) == 2 && abs(Y2 - Y1) == 1)
-		return true;
+		return true;		// The movement is correct
 
 	return false;
 }

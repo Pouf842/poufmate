@@ -1,3 +1,7 @@
 #include "interface.h"
 
-Interface * Interface::mpoInstance = 0;
+Interface * Interface::mpoInstance = NULL;
+
+Interface::~Interface()
+{
+}

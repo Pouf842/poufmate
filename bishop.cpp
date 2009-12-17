@@ -10,14 +10,6 @@ Bishop::Bishop(Piece::Color eNewColor)
 	meType = Piece::BISHOP;
 }
 
-char Bishop::cGetChar() const
-{
-	if(eGetColor() == Piece::WHITE)
-		return 'B';
-	else
-		return 'b';
-}
-
 bool Bishop::bIsMovementCorrect(Position oPos1, Position oPos2, const Board & oBoard) const
 {
 	if(oPos1 == oPos2)
@@ -28,16 +20,18 @@ bool Bishop::bIsMovementCorrect(Position oPos1, Position oPos2, const Board & oB
 	int X2 = oPos2.mX;
 	int Y2 = oPos2.mY;
 
-	if(abs(X2 - X1) == abs(Y2 - Y1))
+	if(abs(X2 - X1) == abs(Y2 - Y1))	// If the move is a diagonal
 	{
-		int iStep = (X2 > X1 ? 1 : -1);
-		int jStep = (Y2 > Y1 ? 1 : -1);
+		int iStep = (X2 > X1 ? 1 : -1);	// Forward or backward
+		int jStep = (Y2 > Y1 ? 1 : -1);	// Left or right
+
+		/* For each squares on the path */
 		for(unsigned int i = X1 + iStep, j = Y1 + jStep; i != X2 && j != Y2; i += iStep, j += jStep)
-			if(!oBoard.bIsSquareEmpty(i, j))
-				return false;
+			if(!oBoard.bIsSquareEmpty(i, j))	// If the square is not empty
+				return false;					// The movement is not correct
 
 		return true;
 	}
 
-	return false;
+	return false;	// If the move is not a diagonal, it's note valid
 }
