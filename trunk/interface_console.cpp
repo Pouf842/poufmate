@@ -138,3 +138,17 @@ char InterfaceConsole::cGetNewPieceType()
 			return toupper(cNewType);
 	}
 }
+
+char InterfaceConsole::iGetMenuEntry()
+{
+	char i = 0;
+	cin >> i;
+
+	return i;
+}
+
+void InterfaceConsole::DisplayMenu(const Menu & oMenu)
+{
+	for(unsigned int i = 0; i < oMenu.size(); ++i)
+		mOs << oMenu.strGetOptions()[i] << endl;
+}

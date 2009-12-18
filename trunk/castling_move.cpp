@@ -1,6 +1,8 @@
 #include "castling_move.h"
 #include "board.h"
 
+using namespace std;
+
 CastlingMove::CastlingMove(Position oPos1, Position oPos2) : Movement(oPos1, oPos2)
 {
 	if(oPos1.mY == 4 && oPos2.mY == 2)		// If the king is moving from 4 to 2 horizontally

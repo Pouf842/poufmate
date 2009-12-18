@@ -5,6 +5,8 @@
 #include "queen.h"
 #include "pawn.h"
 
+using namespace std;
+
 Promotion::Promotion(Position oPos1, Position oPos2, Piece::PieceType eNewPieceType) : Movement(oPos1, oPos2)
 {
 	switch(eNewPieceType)
