@@ -11,8 +11,11 @@
 
 #include "board.h"
 #include "position.h"
+#include "menu.h"
 #include <string>
 #include <vector>
+
+class Menu;
 
 class Interface
 {
@@ -43,7 +46,7 @@ class Interface
 	/**
 	 * Display all the possibilities of move contained in the vector
 	 */
-	virtual void DisplayPossibilities(vector<Position>) = 0;
+	virtual void DisplayPossibilities(std::vector<Position>) = 0;
 
 	/**
 	 * Display a square as a piece in check
@@ -75,6 +78,16 @@ class Interface
 	 * P or p for a pawn
 	 */
 	virtual char cGetNewPieceType() = 0;
+
+	/**
+	 * Display the main menu of the game
+	 */
+	virtual void DisplayMenu(const Menu &) = 0;
+
+	/**
+	 * Return an entry of the main menu
+	 */
+	virtual char iGetMenuEntry() = 0;
 
 	/**
 	 * Return the unique instance of the class

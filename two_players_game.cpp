@@ -1,41 +1,41 @@
-#include "game.h"
+#include "two_players_game.h"
 #include "board.h"
 #include "piece.h"
 #include "first_move.h"
 #include "castling_move.h"
 #include "promotion.h"
-
-#ifdef __SDL_
-	#include "interface_SDL.h"
-	#define DISPLAY InterfaceSDL
-#else
-	#include "interface_console.h"
-	#define DISPLAY InterfaceConsole
-#endif
+#include "interface.h"
 
 #include <iostream>
 #include <string>
 
 using namespace std;
 
-Game::Game()
+TwoPlayersGame::TwoPlayersGame()
 {
-	moKings[Piece::WHITE] = Position(7, 4);
-	moKings[Piece::BLACK] = Position(0, 4);
+	/* Initialise the positions of the kings */
+	moKings[Piece::WHITE] = Position(7, 4);	
+	moKings[Piece::BLACK] = Position(0, 4);	
 
-	meCurrentPlayer = Piece::WHITE;
+	meCurrentPlayer = Piece::WHITE;	// White moves first
 	mbIsOver = false;
 }
 
-void Game::SwitchPlayer()
+TwoPlayersGame::~TwoPlayersGame()
+{
+}
+
+void TwoPlayersGame::SwitchPlayer()
 {
 	meCurrentPlayer = (meCurrentPlayer == Piece::WHITE ? Piece::BLACK : Piece::WHITE);
 }
 
-void Game::Run()
+void TwoPlayersGame::Run(Interface * poInterface)
 {
-	string strEntry = "";
-	Interface * poInterface = DISPLAY::poGetInstance();
+	if(!poInterface)
+		throw exception("The interface is not defined");
+
+	string strEntry = "";	// The command the player will entry
 
 	moBoard.Init();
 	Movement::SetBoard(&moBoard);
@@ -44,38 +44,42 @@ void Game::Run()
 	poInterface->DisplayCurrentPlayer(meCurrentPlayer);
 	poInterface->CommitDisplay();
 	
-	Movement * poNextMove = NULL;
+	Movement * poNextMove = NULL;	// The next move
 
 	while(!bIsOver())
 	{
 		try
 		{
-			strEntry = poInterface->strGetEntry();
+			strEntry = poInterface->strGetEntry();	// Getting the next command
 			
-			if(strEntry == "");
+			if(strEntry == "");			// Do nothing
 			else if(strEntry == "x")
-				mbIsOver = true;
+				mbIsOver = true;		// Stop the game
+			/* Cancel last move */
 			else if(strEntry == "c")
 			{
 				CancelLastMove();
 				moSelection.Empty();
 				SwitchPlayer();
 			}
-			else if(strEntry.size() != 0
-			&& strEntry[strEntry.size() - 1] != '?')
+			/* Select a piece or make a move */
+			else if(strEntry[strEntry.size() - 1] != '?')
 			{
 				Position oEntry(strEntry);
 
+				/* Select a piece */
 				if(moSelection.bIsEmpty())
 				{
 					CheckSelectionCoords(oEntry);
 					moSelection = oEntry;
 				}
+				/* Try to make a move */
 				else
 				{
-					if(moSelection != oEntry)
+					if(moSelection != oEntry)	// Same square --> no move
 					{
-						if(bIsCastling(moSelection, oEntry))
+						/* Determinate the movement's type and update poNextMove */
+						if(bIsCastling(moSelection, oEntry))	// Castling
 						{
 							if(bIsInCheck(meCurrentPlayer))
 								throw exception("Castling is not allowed if you're in check");
@@ -85,36 +89,39 @@ void Game::Run()
 
 							poNextMove = new CastlingMove(moSelection, oEntry);
 						}
-						else if(bIsPromotion(moSelection, oEntry))
-						{
+						else if(bIsPromotion(moSelection, oEntry))	// Promotion
 							poNextMove = new Promotion(moSelection, oEntry, Piece::QUEEN);
-						}
-						else if(moBoard.poGetPiece(moSelection)->bIsFirstMove())
+						else if(moBoard.poGetPiece(moSelection)->bIsFirstMove())	// First move
 							poNextMove = new FirstMove(moSelection, oEntry);
 						else
-							poNextMove = new Movement(moSelection, oEntry);
+							poNextMove = new Movement(moSelection, oEntry);	// Other move
 
+						/* Execute the move */
 						moHistory.push_back(poNextMove);
 						poNextMove->Execute();
 
+						/* Update the king position if necessary */
 						if(moBoard.poGetPiece(oEntry)->eGetType() == Piece::KING)
 							moKings[moBoard.eGetSquareColor(oEntry)] = oEntry;
 
+						/* If the move puts the player in check, it is not valid */
 						if(bIsInCheck(meCurrentPlayer))
 						{
 							CancelLastMove();
 							throw exception("That move puts you in check");
 						}
 
-						SwitchPlayer();
+						SwitchPlayer();	// Next player
 					}
 					
-					moSelection.Empty();
+					moSelection.Empty();	// No selection
 				}
 			}
 
+			/* Display the game */
 			poInterface->DisplayBoard(moBoard);
 
+			/* If the player is checkmate, display a message and stop the game */
 			if(bIsCheckMate(meCurrentPlayer))
 			{
 				mbIsOver = true;
@@ -125,9 +132,9 @@ void Game::Run()
 				poInterface->DisplayMessage(strMessage);
 				poInterface->DisplayMessage("Game over !");
 			}
-			else if(strEntry == "x")
+			else if(strEntry == "x")	// Display a message
 				poInterface->DisplayMessage("Game over !");
-			else if(bIsInCheck(meCurrentPlayer))
+			else if(bIsInCheck(meCurrentPlayer))	// Display the current player as in check
 			{
 				poInterface->DisplayInCheck(moKings[meCurrentPlayer]);
 				poInterface->DisplayCurrentPlayer(meCurrentPlayer);
@@ -135,35 +142,34 @@ void Game::Run()
 			else
 				poInterface->DisplayCurrentPlayer(meCurrentPlayer);
 	
+			/* If asked (strEntry ends with '?'), display the possibilities for a specified piece */
 			if(strEntry.size() != 0
 			&& strEntry[strEntry.size() - 1] == '?')
 				poInterface->DisplayPossibilities(oGetPossibilities(strEntry.substr(0, 2)));
 
-
+			/* If there is a selected piece, display it */
 			if(!moSelection.bIsEmpty())
 				poInterface->DisplaySelection(moSelection);
 		}
 		catch(exception & e)
 		{
-			poInterface->DisplayMessage(e.what());
+			poInterface->DisplayMessage(e.what());	// Display the error message
 		}
 
-		poInterface->CommitDisplay();
+		poInterface->CommitDisplay();	// Commit the displays
 	}
 	
-	strEntry = poInterface->strGetEntry();
-
-	Interface::FreeInstance();
+	strEntry = poInterface->strGetEntry();	// Wait for the player to read the message before quiting
 	return;
 }
 
-void Game::MovePiece(Position oPos1, Position oPos2)
+void TwoPlayersGame::MovePiece(Position oPos1, Position oPos2)
 {
 	moBoard.SetPiece(oPos2, moBoard.poGetPiece(oPos1));
 	moBoard.SetPiece(oPos1, 0);
 }
 
-bool Game::bIsCastlingPathOk(Position oPos1, Position oPos2)
+bool TwoPlayersGame::bIsCastlingPathOk(Position oPos1, Position oPos2)
 {
 	Piece::Color eColor = moBoard.eGetSquareColor(oPos1);	// Color of the castling player
 	bool bFirstMove = moBoard.poGetPiece(oPos1)->bIsFirstMove();	// Keeping it to restore it after the check
@@ -198,7 +204,7 @@ bool Game::bIsCastlingPathOk(Position oPos1, Position oPos2)
 	return true;	// The castling path is clear
 }
 
-bool Game::bIsPromotion(Position oPos1, Position oPos2) const
+bool TwoPlayersGame::bIsPromotion(Position oPos1, Position oPos2) const
 {
 	Piece * oPiece = moBoard.poGetPiece(oPos1);	// Moving piece
 
@@ -209,7 +215,7 @@ bool Game::bIsPromotion(Position oPos1, Position oPos2) const
 		return false;	// else, it's not
 }
 
-bool Game::bIsCastling(Position oPos1, Position oPos2)
+bool TwoPlayersGame::bIsCastling(Position oPos1, Position oPos2)
 {
 	Position oKing = (meCurrentPlayer == Piece::WHITE ? Position(7, 4) : Position(0, 4));	// Side of the board (0 for blacks, 7 for whites)
 
@@ -221,7 +227,7 @@ bool Game::bIsCastling(Position oPos1, Position oPos2)
 		return false;	// else, it isn't
 }
 
-vector<Position> Game::oGetPossibilities(Position oPos)
+vector<Position> TwoPlayersGame::oGetPossibilities(Position oPos)
 {
 	vector<Position> oPossibilites;
 
@@ -278,7 +284,7 @@ vector<Position> Game::oGetPossibilities(Position oPos)
 	return oPossibilites;
 }
 
-bool Game::bIsInCheck(Piece::Color eColor) const
+bool TwoPlayersGame::bIsInCheck(Piece::Color eColor) const
 {
 	Position oKing(moKings[eColor]);	// Position of the player's king
 
@@ -301,7 +307,7 @@ bool Game::bIsInCheck(Piece::Color eColor) const
 	return false;
 }
 
-bool Game::bIsCheckMate(Piece::Color ePlayer)
+bool TwoPlayersGame::bIsCheckMate(Piece::Color ePlayer)
 {
 	if(!bIsInCheck(ePlayer))	// If the player is not in check, he can't be checkmate
 		return false;
@@ -374,7 +380,7 @@ bool Game::bIsCheckMate(Piece::Color ePlayer)
 	return true;	// If no moves turn the player in a non-in-check state, the player is checkmate
 }
 
-void Game::CheckSelectionCoords(Position oPos) const
+void TwoPlayersGame::CheckSelectionCoords(Position oPos) const
 {	
 	if(moBoard.bIsSquareEmpty(oPos))
 		throw exception("There is no piece on this square");
@@ -383,7 +389,7 @@ void Game::CheckSelectionCoords(Position oPos) const
 		throw exception("This piece does not belong to you");
 }
 
-bool Game::bIsMovementCorrect(Position oPos1, Position oPos2) const
+bool TwoPlayersGame::bIsMovementCorrect(Position oPos1, Position oPos2) const
 {
 	if((oPos1 == oPos2)	// No move
 	|| (moBoard.bIsSquareEmpty(oPos1))	// No piece to move
@@ -394,12 +400,12 @@ bool Game::bIsMovementCorrect(Position oPos1, Position oPos2) const
 	return true;	// If none of the precedent verifications failed, the movement is correct
 }
 
-bool Game::bIsOver()
+bool TwoPlayersGame::bIsOver()
 {
 	return mbIsOver;
 }
 
-void Game::CancelLastMove()
+void TwoPlayersGame::CancelLastMove()
 {
 	if(moHistory.size() == 0)
 		throw exception("Empty history");
@@ -413,4 +419,22 @@ void Game::CancelLastMove()
 
 	delete moHistory.back();	// Destroy the last move
 	moHistory.pop_back();		// Supress the pointer from the list
+}
+
+bool TwoPlayersGame::bIsGameInStaleMate()
+{
+	/* For each squares of the board */
+	for(unsigned int i = 0; i < 8; ++i)
+		for(unsigned int j = 0; j < 8; ++j)
+		{
+			Position oPos(i, j);
+
+			if(!moBoard.bIsSquareEmpty(oPos))
+			{
+				if(oGetPossibilities(oPos).size() != 0)
+					return false;
+			}
+		}
+
+	return true;
 }

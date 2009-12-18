@@ -7,18 +7,21 @@
  * the actions of the players, interact with
  * them via an Interface object, and transmit
  * their choices of action to the board
+ * @see class Module
  */
 
 #include <vector>
+#include "module.h"
 #include "board.h"
 #include "position.h"
 #include "movement.h"
+#include "interface.h"
 
-class Game
+class TwoPlayersGame : public Module
 {
   protected :
 	Board moBoard;					// The board of the game
-	vector<Movement*> moHistory;	// History of moves
+	std::vector<Movement*> moHistory;	// History of moves
 	Piece::Color meCurrentPlayer;	// Current playing player
 	Position moKings[2];			// Positions of the two kings (usefull for check and checkmate verification)
 
@@ -28,79 +31,91 @@ class Game
 	/**
 	 * Change the current player
 	 */
-	void SwitchPlayer();
+	virtual void SwitchPlayer();
 
 	/**
 	 * Return mbIsOver
 	 */
-	bool bIsOver();
+	virtual bool bIsOver();
 
 	/**
 	 * Cancel the last recorded move
 	 */
-	void CancelLastMove();
+	virtual void CancelLastMove();
 
 	/**
 	 * Check if the given position is a valid selection. Throw an exception otherwise
 	 */
-	void CheckSelectionCoords(Position) const;
+	virtual void CheckSelectionCoords(Position) const;
 
 	/**
 	 * Check if the given movement (described by two position) is a castling move
 	 */
-	bool bIsCastling(Position, Position);
+	virtual bool bIsCastling(Position, Position);
 
 	/**
 	 * Check if the given movement is correct
 	 */
-	bool bIsMovementCorrect(Position, Position) const;
+	virtual bool bIsMovementCorrect(Position, Position) const;
 
 	/**
 	 * Check if the player of the given color is in check
 	 */
-	bool bIsInCheck(Piece::Color) const;
+	virtual bool bIsInCheck(Piece::Color) const;
 
 	/**
 	 * Check if the player of the given color is mate
 	 */
-	bool bIsCheckMate(Piece::Color);
+	virtual bool bIsCheckMate(Piece::Color);
 
 	/**
 	 * Check if the game is in a stalemate situation
 	 */
-	bool bIsGameInStaleMate();
+	virtual bool bIsGameInStaleMate();
 
 	/**
 	 * Check if the given move is a pawn's promotion
 	 */
-	bool bIsPromotion(Position oPos1, Position oPos2) const;
+	virtual bool bIsPromotion(Position oPos1, Position oPos2) const;
 
 	/**
 	 * Return all the possibilities of movement for the piece on the given square
 	 */
-	vector<Position> oGetPossibilities(Position);
+	virtual std::vector<Position> oGetPossibilities(Position);
 
 	/**
 	 * Check if the path of the castling described 
 	 */
-	bool bIsCastlingPathOk(Position, Position);
+	virtual bool bIsCastlingPathOk(Position, Position);
 
 	/**
 	 * Move a piece from the first given position, to the second
 	 */
-	void MovePiece(Position oPos1, Position oPos2);
+	virtual void MovePiece(Position oPos1, Position oPos2);
   public :
-	  
+	/**
+	 * Destructor
+	 */
+	virtual ~TwoPlayersGame();
+
 	/**
 	 * Constructor
 	 */
-	Game();
-	
+	TwoPlayersGame();
+
 	/**
+	 * Constructor to start a game
+	 * with a predefined board
+	 */
+	TwoPlayersGame(Board &);
+
+	/**
+	 * Implement of Module::Run()
 	 * Launch the game, interact with the players via an interface,
 	 * controls their movements, and transmit them to the board
+	 * @see Module::Run()
 	 */
-	void Run();
+	virtual void Run(Interface *);
 };
 
 #endif

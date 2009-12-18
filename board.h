@@ -11,8 +11,6 @@
 #include "square.h"
 #include "position.h"
 
-using namespace std;
-
 class Board
 {
   protected :

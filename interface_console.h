@@ -46,7 +46,7 @@ class InterfaceConsole : public Interface
 	 * Displays a list of coordinates contained in the vector
 	 * @see Interface::DisplayPossibilities(vector<Position>)
 	 */
-	virtual void DisplayPossibilities(vector<Position>);
+	virtual void DisplayPossibilities(std::vector<Position>);
 
 	/**
 	 * Implement of Interface::DisplayInCheck(Position)
@@ -82,6 +82,20 @@ class InterfaceConsole : public Interface
 	 * @see Interface::cGetNewPieceType()
 	 */
 	virtual char cGetNewPieceType();
+
+	/**
+	 * Implement of Interface::DisplayMenu()
+	 * Display the given menu
+	 * @see Interface::DisplayMenu()
+	 */
+	virtual void DisplayMenu(const Menu &);
+
+	/**
+	 * Implement of Interface::iGetMenuEntry()
+	 * Return an entry of the main menu
+	 * @see Interface::iGetMenuEntry()
+	 */
+	virtual char iGetMenuEntry();
 
 	/**
 	 * Implement of Interface::poGetInstance()

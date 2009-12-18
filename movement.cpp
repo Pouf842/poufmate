@@ -1,6 +1,8 @@
 #include "movement.h"
 #include "board.h"
 
+using namespace std;
+
 Board * Movement::spoBoard = NULL;
 
 Movement::Movement(Position oPos1, Position oPos2) : moPos1(oPos1), moPos2(oPos2)
