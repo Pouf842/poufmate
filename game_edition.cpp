@@ -1,4 +1,5 @@
 #include "game_edition.h"
+#include "two_players_game.h"
 #include <string>
 #include "pawn.h"
 #include "rook.h"
@@ -31,66 +32,76 @@ void GameEdition::Run(Interface * poInterface)
 
 		if(strEntry.size() == 1)
 		{
-			mbNewPieceSelected = true;
-
-			switch(strEntry[0])
+			if(strEntry == "x")
+				bQuit = true;
+			else if(strEntry == "r")
 			{
-			  case 'P' :
-				meNewPieceType = Piece::PAWN;
-				meNewPieceColor = Piece::WHITE;
-				break;
-			  case 'R' :
-				meNewPieceType = Piece::ROOK;
-				meNewPieceColor = Piece::WHITE;
-				break;
-			  case 'N' :
-				meNewPieceType = Piece::KNIGHT;
-				meNewPieceColor = Piece::WHITE;
-				break;
-			  case 'B' :
-				meNewPieceType = Piece::BISHOP;
-				meNewPieceColor = Piece::WHITE;
-				break;
-			  case 'Q' :
-				meNewPieceType = Piece::QUEEN;
-				meNewPieceColor = Piece::WHITE;
-				break;
-			  case 'K' :
-				meNewPieceType = Piece::KING;
-				meNewPieceColor = Piece::WHITE;
-				break;
-			  case 'p' :
-				meNewPieceType = Piece::PAWN;
-				meNewPieceColor = Piece::BLACK;
-				break;
-			  case 'r' :
-				meNewPieceType = Piece::ROOK;
-				meNewPieceColor = Piece::BLACK;
-				break;
-			  case 'n' :
-				meNewPieceType = Piece::KNIGHT;
-				meNewPieceColor = Piece::BLACK;
-				break;
-			  case 'b' :
-				meNewPieceType = Piece::BISHOP;
-				meNewPieceColor = Piece::BLACK;
-				break;
-			  case 'q' :
-				meNewPieceType = Piece::QUEEN;
-				meNewPieceColor = Piece::BLACK;
-				break;
-			  case 'k' :
-				meNewPieceType = Piece::KING;
-				meNewPieceColor = Piece::BLACK;
-				break;
-			  case 'x' :
-			  case 'X' :
-			  default :
-				mbNewPieceSelected = false;
+				TwoPlayersGame oGame(moBoard);
+				oGame.Run(poInterface);
 			}
+			else
+			{
+				mbNewPieceSelected = true;
 
-			if(mbNewPieceSelected)
-				moSelection.Empty();
+				switch(strEntry[0])
+				{
+				  case 'P' :
+					meNewPieceType = Piece::PAWN;
+					meNewPieceColor = Piece::WHITE;
+					break;
+				  case 'R' :
+					meNewPieceType = Piece::ROOK;
+					meNewPieceColor = Piece::WHITE;
+					break;
+				  case 'N' :
+					meNewPieceType = Piece::KNIGHT;
+					meNewPieceColor = Piece::WHITE;
+					break;
+				  case 'B' :
+					meNewPieceType = Piece::BISHOP;
+					meNewPieceColor = Piece::WHITE;
+					break;
+				  case 'Q' :
+					meNewPieceType = Piece::QUEEN;
+					meNewPieceColor = Piece::WHITE;
+					break;
+				  case 'K' :
+					meNewPieceType = Piece::KING;
+					meNewPieceColor = Piece::WHITE;
+					break;
+				  case 'p' :
+					meNewPieceType = Piece::PAWN;
+					meNewPieceColor = Piece::BLACK;
+					break;
+				  case 'r' :
+					meNewPieceType = Piece::ROOK;
+					meNewPieceColor = Piece::BLACK;
+					break;
+				  case 'n' :
+					meNewPieceType = Piece::KNIGHT;
+					meNewPieceColor = Piece::BLACK;
+					break;
+				  case 'b' :
+					meNewPieceType = Piece::BISHOP;
+					meNewPieceColor = Piece::BLACK;
+					break;
+				  case 'q' :
+					meNewPieceType = Piece::QUEEN;
+					meNewPieceColor = Piece::BLACK;
+					break;
+				  case 'k' :
+					meNewPieceType = Piece::KING;
+					meNewPieceColor = Piece::BLACK;
+					break;
+				  case 'x' :
+				  case 'X' :
+				  default :
+					mbNewPieceSelected = false;
+				}
+
+				if(mbNewPieceSelected)
+					moSelection.Empty();
+			}
 		}
 		else if(strEntry.size() == 2)
 		{
@@ -146,6 +157,7 @@ void GameEdition::Run(Interface * poInterface)
 		}
 
 		poInterface->DisplayBoard(moBoard);
+
 		/* If there is a selected piece, display it */
 		if(!moSelection.bIsEmpty())
 			poInterface->DisplaySelection(moSelection);
