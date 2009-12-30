@@ -1,4 +1,5 @@
 #include "two_players_game.h"
+#include "game_edition.h"
 #include <string>
 
 #ifdef __SDL_
@@ -45,8 +46,10 @@ int main()
 				oChoosenModule->Run(poInterface);	// Run the new game
 				break;
 			  case '3' :
-				poInterface->DisplayMessage("This module has not been implemented yet");
-				poInterface->CommitDisplay();
+				/*poInterface->DisplayMessage("This module has not been implemented yet");
+				poInterface->CommitDisplay();*/
+				oChoosenModule = new GameEdition;
+				oChoosenModule->Run(poInterface);
 				break;
 			  case '4' :
 				bQuit = true;

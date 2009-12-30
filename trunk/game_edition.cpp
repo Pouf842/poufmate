@@ -94,10 +94,12 @@ void GameEdition::Run(Interface * poInterface)
 		}
 		else if(strEntry.size() == 2)
 		{
+			Position oPos = strEntry;
+
 			if(mbNewPieceSelected)
 			{
-				if(moBoard.poGetPiece(moSelection))
-					delete moBoard.poGetPiece(moSelection);
+				if(moBoard.poGetPiece(oPos))
+					delete moBoard.poGetPiece(oPos);
 
 				Piece * poNewPiece = 0;
 
@@ -126,7 +128,7 @@ void GameEdition::Run(Interface * poInterface)
 					break;
 				}
 
-				moBoard.SetPiece(moSelection, poNewPiece);
+				moBoard.SetPiece(oPos, poNewPiece);
 			}
 			else
 			{
@@ -142,5 +144,12 @@ void GameEdition::Run(Interface * poInterface)
 				}
 			}
 		}
+
+		poInterface->DisplayBoard(moBoard);
+		/* If there is a selected piece, display it */
+		if(!moSelection.bIsEmpty())
+			poInterface->DisplaySelection(moSelection);
+
+		poInterface->CommitDisplay();
 	}
 }

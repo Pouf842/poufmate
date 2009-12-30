@@ -104,6 +104,12 @@ class TwoPlayersGame : public Module
 	TwoPlayersGame();
 
 	/**
+	 * Constructor to start a two player game with a specified board
+	 * Note that the board must contain one and only one king for each player
+	 */
+	TwoPlayersGame(const Board & oBoard);
+
+	/**
 	 * Constructor to start a game
 	 * with a predefined board
 	 */

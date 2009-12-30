@@ -75,9 +75,14 @@ void Board::MovePiece(Position oPos1, Position oPos2)
 	oPieceSquare.SetPiece(NULL);
 }
 
+Piece * Board::poGetPiece(unsigned int i, unsigned int j) const
+{
+	return moSquares[i][j].poGetPiece();
+}
+
 Piece * Board::poGetPiece(Position oPos) const
 {
-	return moSquares[oPos.mX][oPos.mY].poGetPiece();
+	return poGetPiece(oPos.mX, oPos.mY);
 }
 
 void Board::SetPiece(Position oPos, Piece * poNewPiece)

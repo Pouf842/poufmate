@@ -17,7 +17,7 @@
 class Promotion : public Movement
 {
   protected :
-	Piece * moNewPiece;	// The piece whereby the pawn is replaced
+	Piece * mpoNewPiece;	// The piece whereby the pawn is replaced
   public :
 	/**
 	 * Constructor. Same as that of Movement, but takes a PieceType
@@ -45,6 +45,7 @@ class Promotion : public Movement
 	 * but also delete the replacement piece (moNewPiece)
 	 */
 	virtual void CancelMovement();
+	virtual void Execute();
 };
 
 #endif

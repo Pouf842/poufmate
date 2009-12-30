@@ -50,6 +50,11 @@ class Board
 	Piece * poGetPiece(Position) const;
 
 	/**
+	 * Return a pointer to the piece of the specified square
+	 */
+	Piece * Board::poGetPiece(unsigned int i, unsigned int j) const;
+
+	/**
 	 * Replace the piece of the specified square
 	 * by the specified piece
 	 */

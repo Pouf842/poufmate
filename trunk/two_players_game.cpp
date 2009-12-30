@@ -21,6 +21,39 @@ TwoPlayersGame::TwoPlayersGame()
 	mbIsOver = false;
 }
 
+TwoPlayersGame::TwoPlayersGame(const Board & oBoard) : moBoard(oBoard)
+{
+	Position oWhiteKing;
+	Position oBlackKing;
+
+	bool bWhiteFounded = false;
+	bool bBlackFounded = false;
+
+	for(unsigned int i = 0; i < 8 && (!bWhiteFounded || !bBlackFounded); ++i)
+	{
+		for(unsigned int j = 0; j < 8 && (!bWhiteFounded || !bBlackFounded); ++j)
+		{
+			if(!moBoard.bIsSquareEmpty(i, j))
+			{
+				Piece * poCurrentPiece = moBoard.poGetPiece(i, j);
+
+				if(poCurrentPiece->eGetType() == Piece::KING)
+				{
+					moKings[poCurrentPiece->eGetColor()] = Position(i, j);
+
+					if(poCurrentPiece->eGetColor() == Piece::WHITE)
+						bWhiteFounded = true;
+					else
+						bBlackFounded = true;
+				}
+			}
+		}
+	}
+
+	meCurrentPlayer = Piece::WHITE;	// White moves first
+	mbIsOver = false;
+}
+
 TwoPlayersGame::~TwoPlayersGame()
 {
 }
@@ -90,7 +123,10 @@ void TwoPlayersGame::Run(Interface * poInterface)
 							poNextMove = new CastlingMove(moSelection, oEntry);
 						}
 						else if(bIsPromotion(moSelection, oEntry))	// Promotion
-							poNextMove = new Promotion(moSelection, oEntry, Piece::QUEEN);
+						{
+							char cNewPieceType = poInterface->cGetNewPieceType();
+							poNextMove = new Promotion(moSelection, oEntry, cNewPieceType);
+						}
 						else if(moBoard.poGetPiece(moSelection)->bIsFirstMove())	// First move
 							poNextMove = new FirstMove(moSelection, oEntry);
 						else
@@ -122,7 +158,9 @@ void TwoPlayersGame::Run(Interface * poInterface)
 			poInterface->DisplayBoard(moBoard);
 
 			/* If the player is checkmate, display a message and stop the game */
-			if(bIsCheckMate(meCurrentPlayer))
+			if(strEntry == "x")	// Display a message
+				poInterface->DisplayMessage("Game over !");
+			else if(bIsCheckMate(meCurrentPlayer))
 			{
 				mbIsOver = true;
 				string strMessage = "The ";
@@ -132,8 +170,11 @@ void TwoPlayersGame::Run(Interface * poInterface)
 				poInterface->DisplayMessage(strMessage);
 				poInterface->DisplayMessage("Game over !");
 			}
-			else if(strEntry == "x")	// Display a message
-				poInterface->DisplayMessage("Game over !");
+			else if(bIsGameInStaleMate())
+			{
+				mbIsOver = true;
+				poInterface->DisplayMessage("This is a stalemate");
+			}
 			else if(bIsInCheck(meCurrentPlayer))	// Display the current player as in check
 			{
 				poInterface->DisplayInCheck(moKings[meCurrentPlayer]);
@@ -429,11 +470,9 @@ bool TwoPlayersGame::bIsGameInStaleMate()
 		{
 			Position oPos(i, j);
 
-			if(!moBoard.bIsSquareEmpty(oPos))
-			{
+			if(!moBoard.bIsSquareEmpty(oPos) && moBoard.eGetSquareColor(oPos) == meCurrentPlayer)
 				if(oGetPossibilities(oPos).size() != 0)
 					return false;
-			}
 		}
 
 	return true;

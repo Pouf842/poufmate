@@ -12,16 +12,16 @@ Promotion::Promotion(Position oPos1, Position oPos2, Piece::PieceType eNewPieceT
 	switch(eNewPieceType)
 	{
 	  case Piece::ROOK :
-		moNewPiece = new Rook(eGetPlayerColor());
+		mpoNewPiece = new Rook(eGetPlayerColor());
 		break;
 	  case Piece::KNIGHT :
-		moNewPiece = new Knight(eGetPlayerColor());
+		mpoNewPiece = new Knight(eGetPlayerColor());
 		break;
 	  case Piece::BISHOP :
-		moNewPiece = new Bishop(eGetPlayerColor());
+		mpoNewPiece = new Bishop(eGetPlayerColor());
 		break;
 	  case Piece::QUEEN :
-		moNewPiece = new Queen(eGetPlayerColor());
+		mpoNewPiece = new Queen(eGetPlayerColor());
 		break;
 	  default :
 		throw exception("Unknown type of piece");
@@ -35,19 +35,19 @@ Promotion::Promotion(Position oPos1, Position oPos2, char cType) : Movement(oPos
 	{
 	  case 'R' :
 	  case 'r' :
-		moNewPiece = new Rook(eGetPlayerColor());
+		mpoNewPiece = new Rook(eGetPlayerColor());
 		break;
 	  case 'N' :
 	  case 'n' :
-		moNewPiece = new Knight(eGetPlayerColor());
+		mpoNewPiece = new Knight(eGetPlayerColor());
 		break;
 	  case 'B' :
 	  case 'b' :
-		moNewPiece = new Bishop(eGetPlayerColor());
+		mpoNewPiece = new Bishop(eGetPlayerColor());
 		break;
 	  case 'Q' :
 	  case 'q' :
-		moNewPiece = new Queen(eGetPlayerColor());
+		mpoNewPiece = new Queen(eGetPlayerColor());
 		break;
 	  default :
 		throw exception((string("Unknown type of piece") + cType).c_str());
@@ -59,9 +59,15 @@ void Promotion::CancelMovement()
 {
 	Movement::CancelMovement();
 
-	if(moNewPiece)	// The new piece doesn't exists yet...anymore... in the past of the future...**hum**
+	if(mpoNewPiece)	// The new piece doesn't exists yet...anymore... in the past of the future...**hum**
 	{
-		delete moNewPiece;
-		moNewPiece = NULL;
+		delete mpoNewPiece;
+		mpoNewPiece = NULL;
 	}
+}
+
+void Promotion::Execute()
+{
+	spoBoard->SetPiece(moPos2, mpoNewPiece);
+	spoBoard->SetPiece(moPos1, NULL);
 }
