@@ -110,12 +110,6 @@ class TwoPlayersGame : public Module
 	TwoPlayersGame(const Board & oBoard);
 
 	/**
-	 * Constructor to start a game
-	 * with a predefined board
-	 */
-	TwoPlayersGame(Board &);
-
-	/**
 	 * Implement of Module::Run()
 	 * Launch the game, interact with the players via an interface,
 	 * controls their movements, and transmit them to the board
