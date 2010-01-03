@@ -81,7 +81,7 @@ class InterfaceConsole : public Interface
 	 * See Interface::cGetNewPieceType() for possible values to return
 	 * @see Interface::cGetNewPieceType()
 	 */
-	virtual char cGetNewPieceType();
+	virtual char cGetNewPieceType(Piece::Color);
 
 	/**
 	 * Implement of Interface::DisplayMenu()
@@ -95,7 +95,7 @@ class InterfaceConsole : public Interface
 	 * Return an entry of the main menu
 	 * @see Interface::iGetMenuEntry()
 	 */
-	virtual char iGetMenuEntry();
+	virtual char cGetMenuEntry();
 
 	/**
 	 * Implement of Interface::poGetInstance()

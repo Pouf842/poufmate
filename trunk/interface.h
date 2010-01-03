@@ -77,7 +77,7 @@ class Interface
 	 * Q or q for a queen
 	 * P or p for a pawn
 	 */
-	virtual char cGetNewPieceType() = 0;
+	virtual char cGetNewPieceType(Piece::Color) = 0;
 
 	/**
 	 * Display the main menu of the game
@@ -87,7 +87,7 @@ class Interface
 	/**
 	 * Return an entry of the main menu
 	 */
-	virtual char iGetMenuEntry() = 0;
+	virtual char cGetMenuEntry() = 0;
 
 	/**
 	 * Return the unique instance of the class

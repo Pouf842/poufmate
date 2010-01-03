@@ -12,10 +12,18 @@ InterfaceSDL::InterfaceSDL()
 	if(SDL_Init(SDL_INIT_VIDEO) == -1)
 		throw exception("SDL initialisation failed");
 
-	if(!(mpoGame[SCREEN] = SDL_SetVideoMode(698, 698, 32, /*SDL_FULLSCREEN |*/ SDL_HWSURFACE | SDL_DOUBLEBUF)))
+	if(!(mpoGame[SCREEN] = SDL_SetVideoMode(1000, 698, 32, /*SDL_FULLSCREEN |*/ SDL_HWSURFACE | SDL_DOUBLEBUF)))
 		throw exception("SDL video mode initialisation failed");
 
 	SDL_WM_SetCaption("PoufMate", NULL);
+	mpoMessagesBG = SDL_CreateRGBSurface(SDL_HWSURFACE, 300, 698, 32, 0, 0, 0, 0);
+	SDL_FillRect(mpoMessagesBG, NULL, SDL_MapRGB(mpoMessagesBG->format, 200, 200, 200));
+
+	SDL_Rect position;
+	position.x = 700;
+	position.y = 0;
+
+	SDL_BlitSurface(mpoMessagesBG, NULL, mpoGame[SCREEN], &position);
 
 	mpoGame[BOARD] = SDL_LoadBMP("Images/Echiquier.bmp");
 
@@ -187,18 +195,82 @@ void InterfaceSDL::CommitDisplay()
 	SDL_Flip(mpoGame[SCREEN]);
 }
 
-char InterfaceSDL::cGetNewPieceType()
+char InterfaceSDL::cGetNewPieceType(Piece::Color eColor)
 {
-	SDL_Surface * poBackGround = SDL_CreateRGBSurface(SDL_HWSURFACE, 200, 50, 32, 0, 0, 0, 0);
+	SDL_Surface * poBackGround = SDL_CreateRGBSurface(SDL_HWSURFACE, 360, 90, 32, 0, 0, 0, 0);
+	SDL_FillRect(poBackGround, NULL, SDL_MapRGB(poBackGround->format, 200, 200, 200));
 	SDL_Event event;
 	SDL_Rect position;
 
-	position.x = 50;
-	position.y = 50;
+	position.x = 200;
+	position.y = 300;
 
 	SDL_BlitSurface(poBackGround, NULL, mpoGame[SCREEN], &position);
 
-	SDL_WaitEvent(&event);
+	position.x += 5;
+	position.y += 5;
+	SDL_BlitSurface(mpoPieces[eColor][Piece::QUEEN], NULL, mpoGame[SCREEN], &position);
 
-	return 'Q';
+	position.x += 90;
+	SDL_BlitSurface(mpoPieces[eColor][Piece::BISHOP], NULL, mpoGame[SCREEN], &position);
+	
+	position.x += 90;
+	SDL_BlitSurface(mpoPieces[eColor][Piece::KNIGHT], NULL, mpoGame[SCREEN], &position);
+	
+	position.x += 90;
+	SDL_BlitSurface(mpoPieces[eColor][Piece::ROOK], NULL, mpoGame[SCREEN], &position);
+
+	SDL_Flip(mpoGame[SCREEN]);
+
+	bool bOk = false;
+	char cReturn = ' ';
+
+	while(!bOk)
+	{
+		SDL_WaitEvent(&event);
+
+		if(event.type == SDL_MOUSEBUTTONDOWN
+		&& event.button.button == SDL_BUTTON_LEFT
+		&& event.button.y > 300
+		&& event.button.y < 400
+		&& event.button.x > 200
+		&& event.button.x < 560)
+		{
+				bOk = true;
+
+				switch((event.button.x - 200) / 90)
+				{
+				  case 0 :
+					cReturn = 'Q';
+					bOk = true;
+					break;
+				  case 1 :
+					cReturn = 'B';
+					bOk = true;
+					break;
+				  case 2 :
+					cReturn = 'N';
+					bOk = true;
+					break;
+				  case 3 :
+					cReturn = 'R';
+					bOk = true;
+					break;
+				  default :
+					break;
+				}
+		}
+	}
+
+	SDL_FreeSurface(poBackGround);
+	return cReturn;
+}
+
+char InterfaceSDL::cGetMenuEntry()
+{
+	return '2';
+}
+
+void InterfaceSDL::DisplayMenu(const Menu & oMenu)
+{
 }
