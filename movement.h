@@ -53,7 +53,7 @@ class Movement
 	/**
 	 * Cancel the movement (execute the inverted movement)
 	 */
-	virtual void CancelMovement() const;
+	virtual void CancelMovement();
 
 	/**
 	 * Return a pointer to the moving piece

@@ -56,7 +56,7 @@ Piece::Color Movement::eGetPlayerColor() const
 	return poGetMovingPiece()->eGetColor();
 }
 
-void Movement::CancelMovement() const
+void Movement::CancelMovement()
 {
 	spoBoard->MovePiece(oGetCoords2(), oGetCoords1());
 	spoBoard->SetPiece(oGetCoords2(), poGetCapturedPiece());

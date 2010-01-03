@@ -118,7 +118,7 @@ void InterfaceConsole::CommitDisplay()
 	mOs.str("");
 }
 
-char InterfaceConsole::cGetNewPieceType()
+char InterfaceConsole::cGetNewPieceType(Piece::Color eColor)
 {
 	char cNewType = ' ';
 
@@ -139,7 +139,7 @@ char InterfaceConsole::cGetNewPieceType()
 	}
 }
 
-char InterfaceConsole::iGetMenuEntry()
+char InterfaceConsole::cGetMenuEntry()
 {
 	char i = 0;
 	cin >> i;

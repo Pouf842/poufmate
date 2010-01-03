@@ -5,7 +5,7 @@ FirstMove::FirstMove(Position oPos1, Position oPos2) : Movement(oPos1, oPos2)
 {
 }
 
-void FirstMove::CancelMovement() const
+void FirstMove::CancelMovement()
 {
 	Movement::CancelMovement();
 

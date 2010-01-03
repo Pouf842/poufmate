@@ -45,7 +45,7 @@ class CastlingMove : public Movement
 	 * to their respectives original positions, and reset
 	 * their bFirstMove to true
 	 */
-	virtual void CancelMovement() const;
+	virtual void CancelMovement();
 };
 
 #endif

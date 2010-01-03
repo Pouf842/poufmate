@@ -124,7 +124,7 @@ void TwoPlayersGame::Run(Interface * poInterface)
 						}
 						else if(bIsPromotion(moSelection, oEntry))	// Promotion
 						{
-							char cNewPieceType = poInterface->cGetNewPieceType();
+							char cNewPieceType = poInterface->cGetNewPieceType(meCurrentPlayer);
 							poNextMove = new Promotion(moSelection, oEntry, cNewPieceType);
 						}
 						else if(moBoard.poGetPiece(moSelection)->bIsFirstMove())	// First move
@@ -213,10 +213,12 @@ void TwoPlayersGame::MovePiece(Position oPos1, Position oPos2)
 bool TwoPlayersGame::bIsCastlingPathOk(Position oPos1, Position oPos2)
 {
 	Piece::Color eColor = moBoard.eGetSquareColor(oPos1);	// Color of the castling player
-	bool bFirstMove = moBoard.poGetPiece(oPos1)->bIsFirstMove();	// Keeping it to restore it after the check
-
+	Piece * poPiece = moBoard.poGetPiece(oPos1);
+	bool bFirstMove = poPiece->bIsFirstMove();	// Keeping it to restore it after the check
+	
+	int iStep = (oPos1.mY > oPos2.mY ? -1 : 1);
 	/* For each squares between the king and the finishing square */
-	for(unsigned int i = oPos1.mY; i != oPos2.mY; i += (oPos1.mY > oPos2.mY ? -1 : 1))
+	for(unsigned int i = oPos1.mY + iStep; i != oPos2.mY; i += iStep)
 	{
 		Position oPosInter(moKings[eColor].mX, i);	// Intermediate position
 
@@ -227,8 +229,8 @@ bool TwoPlayersGame::bIsCastlingPathOk(Position oPos1, Position oPos2)
 
 			if(bIsInCheck(eColor))	// If the king is in check, the castling is not possible
 			{
-				MovePiece(moKings[eColor], oPos1);	// Return the king to its initial position
 				moBoard.poGetPiece(moKings[eColor])->SetFirstMove(bFirstMove);	// Restore the bFirstMove boolean of the king
+				MovePiece(moKings[eColor], oPos1);	// Return the king to its initial position
 				moKings[eColor] = oPos1;			// Restore the king's position
 				return false;
 			}
@@ -258,9 +260,7 @@ bool TwoPlayersGame::bIsPromotion(Position oPos1, Position oPos2) const
 
 bool TwoPlayersGame::bIsCastling(Position oPos1, Position oPos2)
 {
-	Position oKing = (meCurrentPlayer == Piece::WHITE ? Position(7, 4) : Position(0, 4));	// Side of the board (0 for blacks, 7 for whites)
-
-	if(oPos1 == oKing	// If the piece is a king
+	if(moBoard.poGetPiece(oPos1)->eGetType() == Piece::KING	// If the piece is a king
 	&& oPos1.mX == oPos2.mX	// and the movement is horizontal
 	&& (oPos2.mY == oPos1.mY - 2 || oPos2.mY == oPos1.mY + 2))	// and of two squares
 		return true;	// It's a castling move
@@ -306,7 +306,7 @@ vector<Position> TwoPlayersGame::oGetPossibilities(Position oPos)
 					moHistory.push_back(poMove);
 
 					if(moBoard.poGetPiece(oPos)->eGetType() == Piece::KING)
-						moKings[meCurrentPlayer] = oPos2;
+						moKings[moBoard.eGetSquareColor(oPos)] = oPos2;
 
 					poMove->Execute();
 

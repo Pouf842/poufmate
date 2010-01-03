@@ -58,6 +58,7 @@ Promotion::Promotion(Position oPos1, Position oPos2, char cType) : Movement(oPos
 void Promotion::CancelMovement()
 {
 	Movement::CancelMovement();
+	spoBoard->SetPiece(moPos1, mpoMovingPiece);
 
 	if(mpoNewPiece)	// The new piece doesn't exists yet...anymore... in the past of the future...**hum**
 	{

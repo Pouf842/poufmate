@@ -25,7 +25,7 @@ class FirstMove : public Movement
 	 * Cancel the movement, and reset the bFirstMove boolean
 	 * of the moving piece to true
 	 */
-	virtual void CancelMovement() const;
+	virtual void CancelMovement();
 };
 
 #endif

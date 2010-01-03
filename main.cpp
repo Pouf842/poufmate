@@ -12,7 +12,7 @@
 
 using namespace std;
 
-int main()
+int main(int argc, char * argv[])
 {
 	try
 	{
@@ -33,7 +33,7 @@ int main()
 			poInterface->DisplayMenu(oMenu);
 			poInterface->CommitDisplay();
 
-			iMenuEntry = poInterface->iGetMenuEntry();
+			iMenuEntry = poInterface->cGetMenuEntry();
 
 			switch(iMenuEntry)
 			{
@@ -44,6 +44,7 @@ int main()
 			  case '2' :
 				oChoosenModule = new TwoPlayersGame;
 				oChoosenModule->Run(poInterface);	// Run the new game
+				bQuit = true;
 				break;
 			  case '3' :
 				/*poInterface->DisplayMessage("This module has not been implemented yet");
@@ -69,4 +70,6 @@ int main()
 	{
 		cout << "Unknow uncatched exception" << endl;
 	}
+
+	return 0;
 }

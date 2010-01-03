@@ -60,7 +60,7 @@ void CastlingMove::Execute()
 	spoBoard->MovePiece(oRook, oRookNewPos);
 }
 
-void CastlingMove::CancelMovement() const
+void CastlingMove::CancelMovement()
 {
 	Movement::CancelMovement();	// Cancel the castling (move the king only)
 
