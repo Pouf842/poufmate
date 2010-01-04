@@ -1,0 +1,23 @@
+						if(bIsCastling(moSelection, oEntry))	// Castling
+						{
+							if(bIsInCheck(meCurrentPlayer))
+								throw exception("Castling is not allowed if you're in check");
+
+							if(!bIsCastlingPathOk(moSelection, oEntry))
+								throw exception("Your king would be in check during castling");
+
+							poNextMove = new CastlingMove(moSelection, oEntry);
+						}
+						else if(bIsPromotion(moSelection, oEntry))	// Promotion
+						{
+							char cNewPieceType = poInterface->cGetNewPieceType(meCurrentPlayer);
+							poNextMove = new Promotion(moSelection, oEntry, cNewPieceType);
+						}
+						else if(moBoard.poGetPiece(moSelection)->bIsFirstMove())	// First move
+							poNextMove = new FirstMove(moSelection, oEntry);
+						else
+							poNextMove = new Movement(moSelection, oEntry);	// Other move
+
+						/* Execute the move */
+						moHistory.push_back(poNextMove);
+						poNextMove->Execute();

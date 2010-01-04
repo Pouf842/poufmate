@@ -1,0 +1,34 @@
+					if(bIsCastling(oPos, oPos2))
+					{
+						if(!bIsCastlingPathOk(oPos, oPos2))
+							throw exception("Your king would be in check during castling");
+					
+						if(bIsInCheck(moBoard.eGetSquareColor(oPos)))
+							throw exception("Castling is not allowed if you're in check");
+
+						poMove = new CastlingMove(oPos, oPos2);
+					}
+					else if(moBoard.poGetPiece(oPos)->bIsFirstMove())
+						poMove = new FirstMove(oPos, oPos2);
+					else
+						poMove = new Movement(oPos, oPos2);
+
+					/* Executing the movement */
+					moHistory.push_back(poMove);
+
+					if(moBoard.poGetPiece(oPos)->eGetType() == Piece::KING)
+						moKings[moBoard.eGetSquareColor(oPos)] = oPos2;
+
+					poMove->Execute();
+
+					if(!bIsInCheck(moBoard.eGetSquareColor(oPos2)))	// If the player is not in check, the movement is possible
+						oPossibilites.push_back(oPos2);
+
+					CancelLastMove();	// Cancel the movement
+				}
+				catch(exception &)	// Catching exception for impossible movements
+				{
+				}
+			}
+		}
+	}
