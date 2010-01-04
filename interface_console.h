@@ -41,6 +41,8 @@ class InterfaceConsole : public Interface
 	 */
 	virtual std::string strGetEntry();
 
+	virtual std::string strGetEditionEntry();
+
 	/**
 	 * Implement of Interface::DisplayPossibilities(vector<Position>)
 	 * Displays a list of coordinates contained in the vector

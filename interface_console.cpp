@@ -80,6 +80,22 @@ void InterfaceConsole::DisplayMessage(string strMessage)
 	mOs << strMessage << endl;
 }
 
+string InterfaceConsole::strGetEditionEntry()
+{
+	cout << "New piece type : " << endl;
+	cout << "\tR/r : White/Black rook" << endl;
+	cout << "\tR/r : White/Black Knight" << endl;
+	cout << "\tR/r : White/Black Bishop" << endl;
+	cout << "\tR/r : White/Black Queen" << endl;
+	cout << "\tR/r : White/Black King" << endl;
+	cout << "\tR/r : White/Black Pawn" << endl;
+
+	string strCommand;
+	cin >> strCommand;
+
+	return strCommand;
+}
+
 string InterfaceConsole::strGetEntry()
 {
 	string strCommand;

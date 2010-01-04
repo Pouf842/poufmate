@@ -89,6 +89,8 @@ class Interface
 	 */
 	virtual char cGetMenuEntry() = 0;
 
+	virtual std::string strGetEditionEntry() = 0;
+
 	/**
 	 * Return the unique instance of the class
 	 */

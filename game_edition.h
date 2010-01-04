@@ -17,8 +17,7 @@ class GameEdition : public Module
 	Board moBoard;
 	Piece::PieceType meNewPieceType;
 	Piece::Color meNewPieceColor;
-	bool mbNewPieceSelected;
-	Position moSelection;
+	Position moKingAlreadyThere[2];
 
   public :
 	GameEdition();

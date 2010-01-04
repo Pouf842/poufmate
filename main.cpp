@@ -1,5 +1,4 @@
-#include "two_players_game.h"
-#include "game_edition.h"
+#include "include_modules.h"
 #include <string>
 
 #ifdef __SDL_

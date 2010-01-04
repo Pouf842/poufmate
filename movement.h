@@ -75,6 +75,13 @@ class Movement
 	 * Execute the movement on the static board
 	 */
 	virtual void Execute();
+
+	/**
+	 *
+	 */
+	virtual bool bIs2SquaresPawnMove() const;
+
+	Position oGetLastMoveFinishPosition() const;
 };
 
 #endif
