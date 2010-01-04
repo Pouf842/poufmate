@@ -67,3 +67,13 @@ void Movement::Execute()
 	spoBoard->MovePiece(oGetCoords1(), oGetCoords2());
 	poGetMovingPiece()->SetFirstMove(false);
 }
+
+bool Movement::bIs2SquaresPawnMove() const
+{
+	return (mpoMovingPiece->eGetType() == Piece::PAWN && abs(moPos1.mX - moPos2.mX) == 2);
+}
+
+Position Movement::oGetLastMoveFinishPosition() const
+{
+	return moPos2;
+}

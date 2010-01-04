@@ -45,7 +45,8 @@ bool Pawn::bIsMovementCorrect(Position oPos1, Position oPos2, const Board & oBoa
 	}
 	else if((X2 - X1) * iFactor == 1 && abs(Y2 - Y1) == 1)	// If the movement is of one square in diagonal
 	{
-		if(!oBoard.bIsSquareEmpty(oPos2) && oBoard.eGetSquareColor(oPos2) != eGetColor())	// and the move is a capture (there is a piece of a different color on the finishing square)
+		if((!oBoard.bIsSquareEmpty(oPos2) && oBoard.eGetSquareColor(oPos2) != eGetColor())	// and the move is a capture (there is a piece of a different color on the finishing square)
+		|| (!oBoard.bIsSquareEmpty(Position(oPos1.mX, oPos2.mY)) && oBoard.eGetSquareColor(Position(oPos1.mX, oPos2.mY)) != eGetColor()))
 			return true;		// The movement is correct
 	}
 
