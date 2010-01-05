@@ -15,6 +15,9 @@ InterfaceSDL::InterfaceSDL()
 	if(!(mpoGame[SCREEN] = SDL_SetVideoMode(1000, 698, 32, /*SDL_FULLSCREEN |*/ SDL_HWSURFACE | SDL_DOUBLEBUF)))
 		throw exception("SDL video mode initialisation failed");
 
+	if(TTF_Init() == -1)
+		throw exception("SDL ttf module could not be loaded");
+
 	SDL_WM_SetCaption("PoufMate", NULL);
 	mpoMessagesBG = SDL_CreateRGBSurface(SDL_HWSURFACE, 300, 698, 32, 0, 0, 0, 0);
 	SDL_FillRect(mpoMessagesBG, NULL, SDL_MapRGB(mpoMessagesBG->format, 200, 200, 200));
@@ -283,6 +286,19 @@ std::string InterfaceSDL::strGetEditionEntry()
 
 	SDL_BlitSurface(mpoGame[BOARD], &oBoardPiece, mpoGame[SCREEN], &position);
 
+	oBoardPiece.h = 87;
+	oBoardPiece.w = 87;
+	oBoardPiece.x = 87;
+	oBoardPiece.y = 1;
+
+	position.x = 743;
+	position.y = 528;
+
+	SDL_BlitSurface(mpoGame[BOARD], &oBoardPiece, mpoGame[SCREEN], &position);
+
+	position.x = 700;
+	position.y = 0;
+
 	for(unsigned int i = 0; i < 6; ++i)
 	{
 		position.y = 87 * i + 5;
@@ -311,21 +327,27 @@ std::string InterfaceSDL::strGetEditionEntry()
 			if(event.button.x > 879);
 			else if(event.button.x < 700)
 			{
+				strReturn += '0' + event.button.y / CASE_WIDTH;
+				strReturn += '0' + event.button.x / CASE_HEIGHT;
 			}
 			else
 			{
-				if(event.button.y < 92)
-					strReturn += 'R';
-				else if(event.button.y < 179)
-					strReturn += 'K';
-				else if(event.button.y < 266)
-					strReturn += 'B';
-				else if(event.button.y < 353)
-					strReturn += 'Q';
-				else if(event.button.y < 440)
-					strReturn += 'K';
-				else
+				if(event.button.y <= 92)
 					strReturn += 'P';
+				else if(event.button.y <= 179)
+					strReturn += 'R';
+				else if(event.button.y <= 266)
+					strReturn += 'N';
+				else if(event.button.y <= 353)
+					strReturn += 'B';
+				else if(event.button.y <= 440)
+					strReturn += 'Q';
+				else if(event.button.y <= 527)
+					strReturn += 'K';
+				else if(event.button.y <= 614
+					 && event.button.x >= 743
+					 && event.button.x <= 830)
+					 return "#";
 
 				if(event.button.x > 787)
 					strReturn[0] = tolower(strReturn[0]);
@@ -333,7 +355,7 @@ std::string InterfaceSDL::strGetEditionEntry()
 		}
 	}
 
-	return "P";
+	return strReturn;
 }
 
 char InterfaceSDL::cGetMenuEntry()
