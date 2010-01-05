@@ -26,6 +26,7 @@ class InterfaceSDL : public Interface
 	virtual void CommitDisplay();
 	virtual char cGetNewPieceType(Piece::Color);
 	virtual char cGetMenuEntry();
+	virtual std::string strGetEditionEntry();
 	virtual void DisplayMenu(const Menu &);
 	static Interface * poGetInstance();
 };

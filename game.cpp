@@ -288,7 +288,9 @@ bool Game::bIsGameInStaleMate()
 
 bool Game::bIsEnPassantOk(Position oPos1, Position oPos2)
 {
-	if(abs(oPos1.mX - oPos2.mX) != 1 || abs(oPos1.mY - oPos2.mY) != 1
+	if(moBoard.bIsSquareEmpty(oPos1)
+	|| moBoard.poGetPiece(oPos1)->eGetType() != Piece::PAWN
+	|| abs(oPos1.mX - oPos2.mX) != 1 || abs(oPos1.mY - oPos2.mY) != 1
 	|| !moBoard.bIsSquareEmpty(oPos2)
 	|| moBoard.bIsSquareEmpty(Position(oPos1.mX, oPos2.mY))
 	|| moBoard.poGetPiece(Position(oPos1.mX, oPos2.mY))->eGetType() != Piece::PAWN)
