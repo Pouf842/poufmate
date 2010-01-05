@@ -133,10 +133,12 @@ std::string InterfaceSDL::strGetEntry()
 			break;
 		  case SDL_MOUSEBUTTONUP :
 /*			if(event.button.button == SDL_BUTTON_RIGHT)
+			{
 				strEntry += '0' + event.button.y / CASE_WIDTH;
-				strEntry += '0' + event.button.x / CASE_HEIGHT;*/
-			  return "";
-				break;
+				strEntry += '0' + event.button.x / CASE_HEIGHT;
+			}*/
+			return "";
+			break;
 		  default :
 			strEntry = "";
 			break;
@@ -266,9 +268,77 @@ char InterfaceSDL::cGetNewPieceType(Piece::Color eColor)
 	return cReturn;
 }
 
+std::string InterfaceSDL::strGetEditionEntry()
+{
+	SDL_Rect position;
+
+	position.x = 700;
+	position.y = 0;
+
+	SDL_Rect oBoardPiece;
+	oBoardPiece.h = 6 * 87;
+	oBoardPiece.x = 0;
+	oBoardPiece.w = 2 * 87;
+	oBoardPiece.y = 0;
+
+	SDL_BlitSurface(mpoGame[BOARD], &oBoardPiece, mpoGame[SCREEN], &position);
+
+	for(unsigned int i = 0; i < 6; ++i)
+	{
+		position.y = 87 * i + 5;
+		SDL_BlitSurface(mpoPieces[Piece::WHITE][i], NULL, mpoGame[SCREEN], &position);
+	}
+
+	position.x = 792;
+	for(unsigned int i = 0; i < 6; ++i)
+	{
+		position.y = 87 * i + 5;
+		SDL_BlitSurface(mpoPieces[Piece::BLACK][i], NULL, mpoGame[SCREEN], &position);
+	}
+
+	SDL_Flip(mpoGame[SCREEN]);
+
+	string strReturn = "";
+	SDL_Event event;
+
+	while(strReturn == "")
+	{
+		SDL_WaitEvent(&event);
+
+		if(event.type == SDL_MOUSEBUTTONDOWN
+		&& event.button.button == SDL_BUTTON_LEFT)
+		{
+			if(event.button.x > 879);
+			else if(event.button.x < 700)
+			{
+			}
+			else
+			{
+				if(event.button.y < 92)
+					strReturn += 'R';
+				else if(event.button.y < 179)
+					strReturn += 'K';
+				else if(event.button.y < 266)
+					strReturn += 'B';
+				else if(event.button.y < 353)
+					strReturn += 'Q';
+				else if(event.button.y < 440)
+					strReturn += 'K';
+				else
+					strReturn += 'P';
+
+				if(event.button.x > 787)
+					strReturn[0] = tolower(strReturn[0]);
+			}
+		}
+	}
+
+	return "P";
+}
+
 char InterfaceSDL::cGetMenuEntry()
 {
-	return '2';
+	return '3';
 }
 
 void InterfaceSDL::DisplayMenu(const Menu & oMenu)
