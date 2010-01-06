@@ -99,6 +99,7 @@ class InterfaceConsole : public Interface
 	 */
 	virtual char cGetMenuEntry();
 
+	virtual char cGetPlayerColorChoice();
 	/**
 	 * Implement of Interface::poGetInstance()
 	 * @see Interface::poGetInstance()

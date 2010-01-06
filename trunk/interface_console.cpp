@@ -84,11 +84,12 @@ string InterfaceConsole::strGetEditionEntry()
 {
 	cout << "New piece type : " << endl;
 	cout << "\tR/r : White/Black rook" << endl;
-	cout << "\tR/r : White/Black Knight" << endl;
-	cout << "\tR/r : White/Black Bishop" << endl;
-	cout << "\tR/r : White/Black Queen" << endl;
-	cout << "\tR/r : White/Black King" << endl;
-	cout << "\tR/r : White/Black Pawn" << endl;
+	cout << "\tK/k : White/Black knight" << endl;
+	cout << "\tB/b : White/Black bishop" << endl;
+	cout << "\tQ/q : White/Black queen" << endl;
+	cout << "\tK/k : White/Black king" << endl;
+	cout << "\tP/p : White/Black pawn" << endl;
+	cout << "\t# : None" << endl;
 
 	string strCommand;
 	cin >> strCommand;
@@ -167,4 +168,22 @@ void InterfaceConsole::DisplayMenu(const Menu & oMenu)
 {
 	for(unsigned int i = 0; i < oMenu.size(); ++i)
 		mOs << oMenu.strGetOptions()[i] << endl;
+}
+
+char InterfaceConsole::cGetPlayerColorChoice()
+{
+	cout << "Which color would you like to play ?" << endl;
+	cout << "\tW : White" << endl;
+	cout << "\tB : Black" << endl;
+
+	char cColor = ' ';
+	cin >> cColor;
+
+	while(cColor != 'W' && cColor != 'B')
+	{
+		cout << "Your answer has to be W (White) or B (Black)" << endl;
+		cin >> cColor;
+	}
+
+	return cColor;
 }

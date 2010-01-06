@@ -64,6 +64,8 @@ class Game : public Module
 	 */
 	virtual bool bIsGameInStaleMate();
 
+	virtual void ExecuteMovement(Movement * poMove);
+
 	/**
 	 * Checks if the move described by the two position
 	 * is a correct en passant move, and throws an exception

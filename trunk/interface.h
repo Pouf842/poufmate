@@ -91,6 +91,8 @@ class Interface
 
 	virtual std::string strGetEditionEntry() = 0;
 
+	virtual char cGetPlayerColorChoice() = 0;
+
 	/**
 	 * Return the unique instance of the class
 	 */
