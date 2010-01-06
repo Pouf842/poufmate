@@ -1,34 +1,42 @@
-					if(bIsCastling(oPos, oPos2))
-					{
-						if(!bIsCastlingPathOk(oPos, oPos2))
-							throw exception("Your king would be in check during castling");
-					
-						if(bIsInCheck(moBoard.eGetSquareColor(oPos)))
-							throw exception("Castling is not allowed if you're in check");
-
-						poMove = new CastlingMove(oPos, oPos2);
-					}
-					else if(moBoard.poGetPiece(oPos)->bIsFirstMove())
-						poMove = new FirstMove(oPos, oPos2);
-					else
-						poMove = new Movement(oPos, oPos2);
-
-					/* Executing the movement */
-					moHistory.push_back(poMove);
-
-					if(moBoard.poGetPiece(oPos)->eGetType() == Piece::KING)
-						moKings[moBoard.eGetSquareColor(oPos)] = oPos2;
-
-					poMove->Execute();
-
-					if(!bIsInCheck(moBoard.eGetSquareColor(oPos2)))	// If the player is not in check, the movement is possible
-						oPossibilites.push_back(oPos2);
-
-					CancelLastMove();	// Cancel the movement
-				}
-				catch(exception &)	// Catching exception for impossible movements
-				{
-				}
-			}
-		}
-	}
+Negamax :
+	Si la profondeur est de 0
+		Retourner la valeur heuristique du noeud pour le joueur courant
+	Sinon
+		MaValeur = ?
+		MinimumDesFils = 30 000
+		
+		Pour chaque coups possible
+			Jouer le coup
+			ValeurDuCoup = Negamax(profondeur - 1, MinimumDesFils)
+			
+			Si ValeurDuCoup < MinimumDesFils
+				MinimumDesFils = ValeurDuCoup
+		
+			Si ValeurDuCoup < -(MinimumDesFreres)
+				Retourner -ValeurDuCoup
+				
+	Retourner -MinimumDesFils
+		
+		
+					    -------------- 10 ------------
+                       |                              |
+	   ------------- -10 ----------------             -5 <- 5 <- -5 <- 5
+      |		                             |
+  -- 10 --            ------------------ 13  -----------------------
+ |        |		     |                   |                          |
+-10	   	 -5	     -- -2 --		 ------ -13 ----		 --------- ? ----------
+|  |	|  |    |		 |		|		|		|		|		|		|		|
+10 20	5  6	2		 3		13		15		26		?		?		?		?
+		
+		
+		
+		
+					    -------------- ? ------------
+                       |                              |
+	   ------------- ? ----------------             ?		
+      |		                             |
+  -- ? --            ------------------ ?  -----------------------
+ |       |		    |                   |                          |
+ -10   	 ?	     -- ? --		 ------ ? ----		     --------- ? ----------
+|  |	|  |    |		 |		|		|		|		|		|		|		|
+10 20	5  6	2		 3		13		15		26		?		?		?		?

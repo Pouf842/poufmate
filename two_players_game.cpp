@@ -4,7 +4,6 @@
 #include "include_movements.h"
 #include "interface.h"
 
-#include <iostream>
 #include <string>
 
 using namespace std;
@@ -14,6 +13,8 @@ TwoPlayersGame::TwoPlayersGame()
 	/* Initialise the positions of the kings */
 	moKings[Piece::WHITE] = Position(7, 4);	
 	moKings[Piece::BLACK] = Position(0, 4);
+
+	moBoard.Init();
 
 	meCurrentPlayer = Piece::WHITE;	// White moves first
 	mbIsOver = false;
@@ -39,16 +40,29 @@ TwoPlayersGame::TwoPlayersGame(const Board & oBoard)
 
 				if(poCurrentPiece->eGetType() == Piece::KING)
 				{
-					moKings[poCurrentPiece->eGetColor()] = Position(i, j);
-
 					if(poCurrentPiece->eGetColor() == Piece::WHITE)
-						bWhiteFounded = true;
+					{
+						if(bWhiteFounded)
+							throw exception("You can't play a party with more than one king for each player");
+						else
+							bWhiteFounded = true;
+					}
 					else
-						bBlackFounded = true;
+					{
+						if(bBlackFounded)
+							throw exception("You can't play a party with more than one king for each player");
+						else
+							bBlackFounded = true;
+					}
+					
+					moKings[poCurrentPiece->eGetColor()] = Position(i, j);
 				}
 			}
 		}
 	}
+
+	if(!bWhiteFounded || !bBlackFounded)
+		throw exception("You can't play a party without a king for each player");
 
 	meCurrentPlayer = Piece::WHITE;	// White moves first
 	mbIsOver = false;
@@ -65,7 +79,6 @@ void TwoPlayersGame::Run(Interface * poInterface)
 
 	string strEntry = "";	// The command the player will entry
 
-	moBoard.Init();
 	Movement::SetBoard(&moBoard);
 
 	poInterface->DisplayBoard(moBoard);
@@ -130,12 +143,7 @@ void TwoPlayersGame::Run(Interface * poInterface)
 							poNextMove = new Movement(moSelection, oEntry);	// Other move
 
 						/* Execute the move */
-						moHistory.push_back(poNextMove);
-						poNextMove->Execute();
-
-						/* Update the king position if necessary */
-						if(moBoard.poGetPiece(oEntry)->eGetType() == Piece::KING)
-							moKings[moBoard.eGetSquareColor(oEntry)] = oEntry;
+						ExecuteMovement(poNextMove);
 
 						/* If the move puts the player in check, it is not valid */
 						if(bIsInCheck(meCurrentPlayer))

@@ -23,39 +23,46 @@ int main(int argc, char * argv[])
 		oMenu.AddOption("3.Edition mode");
 		oMenu.AddOption("4.Quit");
 
-		Module * oChoosenModule = 0;	// Create a new game
+		Module * poChoosenModule = 0;	// Create a new game
 		bool bQuit = false;
 		char iMenuEntry;
 
 		while(!bQuit)
 		{
-			poInterface->DisplayMenu(oMenu);
-			poInterface->CommitDisplay();
-
-			iMenuEntry = poInterface->cGetMenuEntry();
-
-			switch(iMenuEntry)
+			while(!poChoosenModule && !bQuit)
 			{
-			  case '1' :
-				poInterface->DisplayMessage("This module has not been implemented yet");
+				poInterface->DisplayMenu(oMenu);
 				poInterface->CommitDisplay();
-				break;
-			  case '2' :
-				oChoosenModule = new TwoPlayersGame;
-				oChoosenModule->Run(poInterface);	// Run the new game
-				bQuit = true;
-				break;
-			  case '3' :
-				/*poInterface->DisplayMessage("This module has not been implemented yet");
-				poInterface->CommitDisplay();*/
-				oChoosenModule = new GameEdition;
-				oChoosenModule->Run(poInterface);
-				break;
-			  case '4' :
-				bQuit = true;
-				break;
-			  default :
-				break;
+
+				iMenuEntry = poInterface->cGetMenuEntry();
+
+				switch(iMenuEntry)
+				{
+				  case '1' :
+					poChoosenModule = new OnePlayerGame;
+					break;
+				  case '2' :
+					poChoosenModule = new TwoPlayersGame;
+					bQuit = true;
+					break;
+				  case '3' :
+					/*poInterface->DisplayMessage("This module has not been implemented yet");
+					poInterface->CommitDisplay();*/
+					poChoosenModule = new GameEdition;
+					break;
+				  case '4' :
+					bQuit = true;
+					break;
+				  default :
+					break;
+				}
+			}
+
+			if(!bQuit)
+			{
+				poChoosenModule->Run(poInterface);
+				delete poChoosenModule;
+				poChoosenModule = NULL;
 			}
 		}
 

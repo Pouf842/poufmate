@@ -102,6 +102,11 @@ void GameEdition::Run(Interface * poInterface)
 			}
 			else if(strEntry.size() == 2)
 			{
+				if(meNewPieceType == Piece::NONE
+				&& !moBoard.bIsSquareEmpty(strEntry)
+				&& moBoard.poGetPiece(strEntry)->eGetType() == Piece::KING)
+					moKingAlreadyThere[moBoard.eGetSquareColor(strEntry)].Empty();
+
 				if(moBoard.poGetPiece(strEntry))
 					delete moBoard.poGetPiece(strEntry);
 
@@ -142,11 +147,6 @@ void GameEdition::Run(Interface * poInterface)
 					else
 						moKingAlreadyThere[meNewPieceColor] = strEntry;
 				}
-				
-				if(meNewPieceType == Piece::NONE
-				&& !moBoard.bIsSquareEmpty(strEntry)
-				&& moBoard.poGetPiece(strEntry)->eGetType() == Piece::KING)
-					moKingAlreadyThere[moBoard.eGetSquareColor(strEntry)].Empty();
 
 				moBoard.SetPiece(strEntry, poNewPiece);
 			}

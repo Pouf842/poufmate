@@ -109,12 +109,7 @@ vector<Position> Game::oGetPossibilities(Position oPos)
 						poMove = new Movement(oPos, oPos2);
 
 					/* Executing the movement */
-					moHistory.push_back(poMove);
-
-					if(moBoard.poGetPiece(oPos)->eGetType() == Piece::KING)
-						moKings[moBoard.eGetSquareColor(oPos)] = oPos2;
-
-					poMove->Execute();
+					ExecuteMovement(poMove);
 
 					if(!bIsInCheck(moBoard.eGetSquareColor(oPos2)))	// If the player is not in check, the movement is possible
 						oPossibilites.push_back(oPos2);
@@ -201,12 +196,7 @@ bool Game::bIsCheckMate(Piece::Color ePlayer)
 								else
 									poMove = new Movement(oPos1, oPos2);
 
-								moHistory.push_back(poMove);
-
-								if(moBoard.poGetPiece(oPos1)->eGetType() == Piece::KING)
-									moKings[meCurrentPlayer] = oPos2;
-
-								poMove->Execute();	// Move the piece
+								ExecuteMovement(poMove);	// Move the piece
 
 								if(!bIsInCheck(ePlayer))	// Check if the player is still in check
 								{
@@ -270,6 +260,16 @@ void Game::CancelLastMove()
 	moHistory.pop_back();		// Supress the pointer from the list
 }
 
+void Game::ExecuteMovement(Movement * poMove)
+{
+	if(moBoard.poGetPiece(poMove->oGetCoords1())->eGetType() == Piece::KING)
+		moKings[meCurrentPlayer] = poMove->oGetCoords2();
+
+	poMove->Execute();
+
+	moHistory.push_back(poMove);
+}
+
 bool Game::bIsGameInStaleMate()
 {
 	/* For each squares of the board */
@@ -293,7 +293,8 @@ bool Game::bIsEnPassantOk(Position oPos1, Position oPos2)
 	|| abs(oPos1.mX - oPos2.mX) != 1 || abs(oPos1.mY - oPos2.mY) != 1
 	|| !moBoard.bIsSquareEmpty(oPos2)
 	|| moBoard.bIsSquareEmpty(Position(oPos1.mX, oPos2.mY))
-	|| moBoard.poGetPiece(Position(oPos1.mX, oPos2.mY))->eGetType() != Piece::PAWN)
+	|| moBoard.poGetPiece(Position(oPos1.mX, oPos2.mY))->eGetType() != Piece::PAWN
+	|| moBoard.eGetSquareColor(oPos1) == moBoard.eGetSquareColor(Position(oPos1.mX, oPos2.mY)))
 		return false;
 	else
 		return true;
