@@ -39,7 +39,7 @@ void InterfaceConsole::DisplayBoard(const Board & oBoard)
 			/* Check the piece type */
 			if(!oBoard.bIsSquareEmpty(oPos))
 			{
-				switch(oBoard.poGetPiece(oPos)->eGetType())
+				switch(oBoard.eGetSquareType(oPos))
 				{
 				  case Piece::ROOK :
 					cPieceChar = 'R';

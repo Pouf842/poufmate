@@ -64,12 +64,17 @@ bool Game::bIsPromotion(Position oPos1, Position oPos2) const
 
 bool Game::bIsCastling(Position oPos1, Position oPos2)
 {
-	if(moBoard.poGetPiece(oPos1)->eGetType() == Piece::KING	// If the piece is a king
+	if(moBoard.eGetSquareType(oPos1) == Piece::KING	// If the piece is a king
 	&& oPos1.mX == oPos2.mX	// and the movement is horizontal
 	&& (oPos2.mY == oPos1.mY - 2 || oPos2.mY == oPos1.mY + 2))	// and of two squares
 		return true;	// It's a castling move
 	else
 		return false;	// else, it isn't
+}
+
+vector<Position> Game::oGetPossibilities(unsigned int i, unsigned int j)
+{
+	return oGetPossibilities(Position(i, j));
 }
 
 vector<Position> Game::oGetPossibilities(Position oPos)
@@ -262,8 +267,11 @@ void Game::CancelLastMove()
 
 void Game::ExecuteMovement(Movement * poMove)
 {
-	if(moBoard.poGetPiece(poMove->oGetCoords1())->eGetType() == Piece::KING)
-		moKings[meCurrentPlayer] = poMove->oGetCoords2();
+	int x = poMove->oGetCoords1().mX;
+	int y = poMove->oGetCoords1().mY;
+
+	if(moBoard.eGetSquareType(poMove->oGetCoords1()) == Piece::KING)
+		moKings[poMove->poGetMovingPiece()->eGetColor()] = poMove->oGetCoords2();
 
 	poMove->Execute();
 
@@ -289,11 +297,11 @@ bool Game::bIsGameInStaleMate()
 bool Game::bIsEnPassantOk(Position oPos1, Position oPos2)
 {
 	if(moBoard.bIsSquareEmpty(oPos1)
-	|| moBoard.poGetPiece(oPos1)->eGetType() != Piece::PAWN
+	|| moBoard.eGetSquareType(oPos1) != Piece::PAWN
 	|| abs(oPos1.mX - oPos2.mX) != 1 || abs(oPos1.mY - oPos2.mY) != 1
 	|| !moBoard.bIsSquareEmpty(oPos2)
 	|| moBoard.bIsSquareEmpty(Position(oPos1.mX, oPos2.mY))
-	|| moBoard.poGetPiece(Position(oPos1.mX, oPos2.mY))->eGetType() != Piece::PAWN
+	|| moBoard.eGetSquareType(Position(oPos1.mX, oPos2.mY)) != Piece::PAWN
 	|| moBoard.eGetSquareColor(oPos1) == moBoard.eGetSquareColor(Position(oPos1.mX, oPos2.mY)))
 		return false;
 	else

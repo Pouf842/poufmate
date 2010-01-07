@@ -13,7 +13,7 @@ EnPassant::EnPassant(Position oPos1, Position oPos2, Movement * poLastMovement) 
 	if(spoBoard->bIsSquareEmpty(oPos1.mX, oPos2.mY))
 		throw exception("There is no piece to capture");
 
-	if(spoBoard->poGetPiece(Position(oPos1.mX, oPos2.mY))->eGetType() != Piece::PAWN)
+	if(spoBoard->eGetSquareType(Position(oPos1.mX, oPos2.mY)) != Piece::PAWN)
 		throw exception("The piece to capture must be a pawn");
 
 	if(oPos2.mY != poLastMovement->oGetLastMoveFinishPosition().mY

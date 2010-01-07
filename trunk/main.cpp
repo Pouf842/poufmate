@@ -43,7 +43,6 @@ int main(int argc, char * argv[])
 					break;
 				  case '2' :
 					poChoosenModule = new TwoPlayersGame;
-					bQuit = true;
 					break;
 				  case '3' :
 					/*poInterface->DisplayMessage("This module has not been implemented yet");

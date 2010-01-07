@@ -33,7 +33,7 @@ class Square
 	 * or throws an exception if there isn't any
 	 */
 	Piece::Color eGetPieceColor() const;
-
+	Piece::PieceType eGetPieceType() const;
 	/**
 	 * Return a pointer to the piece on that square
 	 */

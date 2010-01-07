@@ -104,7 +104,7 @@ void GameEdition::Run(Interface * poInterface)
 			{
 				if(meNewPieceType == Piece::NONE
 				&& !moBoard.bIsSquareEmpty(strEntry)
-				&& moBoard.poGetPiece(strEntry)->eGetType() == Piece::KING)
+				&& moBoard.eGetSquareType(strEntry) == Piece::KING)
 					moKingAlreadyThere[moBoard.eGetSquareColor(strEntry)].Empty();
 
 				if(moBoard.poGetPiece(strEntry))

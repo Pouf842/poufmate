@@ -58,7 +58,22 @@ bool Board::bIsSquareEmpty(Position oPos) const
 
 Piece::Color Board::eGetSquareColor(Position oPos) const
 {
-	return moSquares[oPos.mX][oPos.mY].eGetPieceColor();
+	return eGetSquareColor(oPos.mX, oPos.mY);
+}
+
+Piece::Color Board::eGetSquareColor(unsigned int i, unsigned int j) const
+{
+	return moSquares[i][j].eGetPieceColor();
+}
+
+Piece::PieceType Board::eGetSquareType(Position oPos) const
+{
+	return eGetSquareType(oPos.mX, oPos.mY);
+}
+
+Piece::PieceType Board::eGetSquareType(unsigned int i, unsigned int j) const
+{
+	return moSquares[i][j].eGetPieceType();
 }
 
 void Board::MovePiece(Position oPos1, Position oPos2)
