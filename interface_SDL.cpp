@@ -71,6 +71,8 @@ InterfaceSDL::~InterfaceSDL()
 		SDL_FreeSurface(mpoPieces[Piece::BLACK][i]);
 	}
 
+	TTF_CloseFont(mpoFont);
+	TTF_Quit();
 	SDL_Quit();
 }
 
@@ -360,9 +362,30 @@ std::string InterfaceSDL::strGetEditionEntry()
 
 char InterfaceSDL::cGetMenuEntry()
 {
-	return '3';
+	SDL_Event event;
+	SDL_WaitEvent(&event);
+
+	return '1';
 }
 
 void InterfaceSDL::DisplayMenu(const Menu & oMenu)
 {
+	TTF_Font * mpoFont = TTF_OpenFont("angelina.ttf", 65);
+
+	if(!mpoFont)
+		throw exception("Font couldn't be loaded");
+
+	SDL_Color oBlack = {0, 0, 0};
+	SDL_Surface * poFirstLine = TTF_RenderText_Blended(mpoFont, "1.1 Player (Human VS Computer)", oBlack);
+
+	SDL_Rect position;
+
+	position.x = 300;
+	position.y = 300;
+	SDL_BlitSurface(poFirstLine, NULL, mpoGame[SCREEN], &position);
+}
+
+char InterfaceSDL::cGetPlayerColorChoice()
+{
+	return 'W';
 }
