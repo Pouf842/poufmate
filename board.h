@@ -43,7 +43,10 @@ class Board
 	 * Return the color of the specified square
 	 */
 	Piece::Color eGetSquareColor(Position) const;
+	Piece::Color eGetSquareColor(unsigned int, unsigned int) const;
 
+	Piece::PieceType eGetSquareType(Position) const;
+	Piece::PieceType eGetSquareType(unsigned int, unsigned int) const;
 	/**
 	 * Return a pointer to the piece of the specified square
 	 */

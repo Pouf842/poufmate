@@ -82,6 +82,7 @@ class Game : public Module
 	 * Return all the possibilities of movement for the piece on the given square
 	 */
 	virtual std::vector<Position> oGetPossibilities(Position);
+	virtual std::vector<Position> oGetPossibilities(unsigned int, unsigned int);
 
 	/**
 	 * Check if the path of the castling described 

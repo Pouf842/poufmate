@@ -1,6 +1,8 @@
 #include "square.h"
 #include <exception>
 
+using namespace std;
+
 Square::Square() : mpoPiece(0)
 {
 }
@@ -20,7 +22,15 @@ Piece::Color Square::eGetPieceColor() const
 	if(!bIsEmpty())
 		return mpoPiece->eGetColor();
 	else
-		throw std::exception("Empty square");
+		throw exception("Empty square");
+}
+
+Piece::PieceType Square::eGetPieceType() const
+{
+	if(!bIsEmpty())
+		return mpoPiece->eGetType();
+	else
+		throw exception("Empty square");
 }
 
 Piece * Square::poGetPiece() const

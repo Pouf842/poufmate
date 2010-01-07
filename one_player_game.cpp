@@ -105,7 +105,7 @@ void OnePlayerGame::Run(Interface * poInterface)
 							ExecuteMovement(poNextMove);
 
 							/* Update the king position if necessary */
-							if(moBoard.poGetPiece(oEntry)->eGetType() == Piece::KING)
+							if(moBoard.eGetSquareType(oEntry) == Piece::KING)
 								moKings[moBoard.eGetSquareColor(oEntry)] = oEntry;
 
 							/* If the move puts the player in check, it is not valid */
@@ -187,11 +187,17 @@ void OnePlayerGame::PlayComputerMove(unsigned int iDepth)
 	int iMinimumDesFils = 30000;
 	Movement * oBestMove = 0;
 
+	cout << "|";
+	for(unsigned int i = 0; i < oPossibleMovement.size(); ++i)
+		cout << " ";
+
+	cout << "|" << endl << " ";
+
 	for(unsigned int i = 0; i < oPossibleMovement.size(); ++i)
 	{
 		cout << "*" << flush;
 
-		if(moBoard.poGetPiece(oPossibleMovement[i]->oGetCoords1())->eGetType() == Piece::KING)
+		if(moBoard.eGetSquareType(oPossibleMovement[i]->oGetCoords1()) == Piece::KING)
 			moKings[meCurrentPlayer] = oPossibleMovement[i]->oGetCoords2();
 
 		ExecuteMovement(oPossibleMovement[i]);
@@ -228,7 +234,7 @@ vector<Movement*> OnePlayerGame::GenerateMovementsForPlayer(Piece::Color eColor)
 			if(!moBoard.bIsSquareEmpty(Position(i, j))
 			&& moBoard.eGetSquareColor(Position(i, j)) == eColor)
 			{
-				vector<Position> oPossibilities = oGetPossibilities(Position(i, j));
+				vector<Position> oPossibilities = oGetPossibilities(i, j);
 
 				for(unsigned int k = 0; k < oPossibilities.size(); ++k)
 				{
@@ -274,14 +280,77 @@ int OnePlayerGame::HeuristicValue(Piece::Color ePlayer)
 		return -30000;
 
 	if(bIsInCheck(eOpponent))
-		return 100;
+		return 1000;
 
 	if(bIsInCheck(ePlayer))
-		return -100;
+		return -1000;
 
-	int iTest = rand() % 1000;
+	int iScore = 0;
 
-	return iTest;
+	for(unsigned int i = 0; i < 8; ++i)
+	{
+		for(unsigned int j = 0; j < 8; ++j)
+		{
+			if(!moBoard.bIsSquareEmpty(i, j))
+			{
+				int iFactor = (moBoard.eGetSquareColor(i, j) == ePlayer ? 1 : -1);
+
+				switch(moBoard.eGetSquareType(i, j))
+				{
+				  case Piece::ROOK :
+					iScore += iFactor * 5;
+					break;
+				  case Piece::KNIGHT :
+					iScore += iFactor * 3;
+					break;
+				  case Piece::BISHOP :
+					iScore += iFactor * 3;
+					break;
+				  case Piece::QUEEN :
+					iScore += iFactor * 9;
+					break;
+				  case Piece::PAWN :
+				    iScore += iFactor * 1;
+					break;
+				}
+
+				vector<Position> oPossibleMoves = oGetPossibilities(i, j);
+
+				for(unsigned int k = 0; k < oPossibleMoves.size(); ++k)
+				{
+					if(bIsCastling(Position(i, j), oPossibleMoves[k]))
+						iScore += 10;
+					else if(bIsPromotion(Position(i, j), oPossibleMoves[k]))
+						iScore += 20;
+					else if(moBoard.bIsSquareEmpty(oPossibleMoves[k]))
+						iScore += iFactor * 1;
+					else
+					{
+						switch(moBoard.eGetSquareType(oPossibleMoves[k]))
+						{
+						  case Piece::ROOK :
+							iScore += iFactor * (5 + 1);
+							break;
+						  case Piece::KNIGHT :
+							iScore += iFactor * (3 + 1);
+							break;
+						  case Piece::BISHOP :
+							iScore += iFactor * (3 + 1);
+							break;
+						  case Piece::QUEEN :
+							iScore += iFactor * (9 + 1);
+							break;
+						  case Piece::PAWN :
+							iScore += iFactor * (1 + 1);
+							break;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return iScore;
 }
 
 int OnePlayerGame::Alphabeta(unsigned int profondeur, int MinimumDesFreres)
@@ -299,6 +368,7 @@ int OnePlayerGame::Alphabeta(unsigned int profondeur, int MinimumDesFreres)
 			SwitchPlayer();
 
 			int iCurrentValue;
+
 			iCurrentValue = Alphabeta(profondeur - 1, MinimumDesFils);
 
 			if(iCurrentValue < MinimumDesFils)
