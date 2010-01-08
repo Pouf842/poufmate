@@ -8,12 +8,11 @@
 class InterfaceSDL : public Interface
 {
   protected :
-	SDL_Surface * mpoGame[5];
+	SDL_Surface * mpoGame[6];
 	SDL_Surface * mpoPieces[2][6];
-	SDL_Surface * mpoMessagesBG;
 	TTF_Font * mpoFont;
 
-	enum eGameImages {SCREEN = 0, BOARD = 1, SELECTION = 2, CHESS = 3, POSSIBLE = 4};
+	enum eGameImages {SCREEN = 0, BOARD = 1, MESSAGEBOARD = 2, SELECTION = 3, CHESS = 4, POSSIBLE = 5};
 
 	InterfaceSDL();
 	virtual ~InterfaceSDL();
@@ -28,9 +27,8 @@ class InterfaceSDL : public Interface
 	virtual void CommitDisplay();
 	virtual char cGetNewPieceType(Piece::Color);
 	virtual char cGetPlayerColorChoice();
-	virtual char cGetMenuEntry();
+	virtual char cGetMenuEntry(const Menu &);
 	virtual std::string strGetEditionEntry();
-	virtual void DisplayMenu(const Menu &);
 	static Interface * poGetInstance();
 };
 

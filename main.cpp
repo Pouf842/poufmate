@@ -31,10 +31,7 @@ int main(int argc, char * argv[])
 		{
 			while(!poChoosenModule && !bQuit)
 			{
-				poInterface->DisplayMenu(oMenu);
-				poInterface->CommitDisplay();
-
-				iMenuEntry = poInterface->cGetMenuEntry();
+				iMenuEntry = poInterface->cGetMenuEntry(oMenu);
 
 				switch(iMenuEntry)
 				{
