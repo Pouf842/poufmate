@@ -7,17 +7,14 @@
 
 using namespace std;
 
-OnePlayerGame::OnePlayerGame()
+OnePlayerGame::OnePlayerGame() : Game()
 {
-	srand(time(NULL));
-	/* Initialise the positions of the kings */
-	moKings[Piece::WHITE] = Position(7, 4);	
-	moKings[Piece::BLACK] = Position(0, 4);
+	srand((unsigned int) time(NULL));
+}
 
-	moBoard.Init();
-
-	meCurrentPlayer = Piece::WHITE;	// White moves first
-	mbIsOver = false;
+OnePlayerGame::OnePlayerGame(const Board & oBoard) : Game(oBoard)
+{
+	srand((unsigned int) time(NULL));
 }
 
 OnePlayerGame::~OnePlayerGame()
@@ -185,7 +182,7 @@ void OnePlayerGame::PlayComputerMove(unsigned int iDepth)
 	vector<int> oScores;
 
 	int iMinimumDesFils = 30000;
-	Movement * oBestMove = 0;
+	Movement * oBestMove = new Movement(*oPossibleMovement[0]);
 
 	cout << "|";
 	for(unsigned int i = 0; i < oPossibleMovement.size(); ++i)
@@ -259,7 +256,7 @@ vector<Movement*> OnePlayerGame::GenerateMovementsForPlayer(Piece::Color eColor)
 						else
 							oPossibleMovements.push_back(new Movement(oPos1, oPos2));	// Other move
 					}
-					catch(exception & e)
+					catch(exception &)
 					{
 					}
 				}

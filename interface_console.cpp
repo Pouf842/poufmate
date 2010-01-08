@@ -82,7 +82,7 @@ void InterfaceConsole::DisplayMessage(string strMessage)
 
 string InterfaceConsole::strGetEditionEntry()
 {
-	cout << "New piece type : " << endl;
+	cout << "New piece type :" << endl;
 	cout << "\tR/r : White/Black rook" << endl;
 	cout << "\tK/k : White/Black knight" << endl;
 	cout << "\tB/b : White/Black bishop" << endl;
@@ -90,6 +90,11 @@ string InterfaceConsole::strGetEditionEntry()
 	cout << "\tK/k : White/Black king" << endl;
 	cout << "\tP/p : White/Black pawn" << endl;
 	cout << "\t# : None" << endl;
+
+	cout << "Actions :" << endl;
+	cout << "\tx : Quit" << endl;
+	cout << "\t1 : One player game" << endl;
+	cout << "\t2 : Two player game" << endl;
 
 	string strCommand;
 	cin >> strCommand;
@@ -159,7 +164,7 @@ char InterfaceConsole::cGetNewPieceType(Piece::Color eColor)
 char InterfaceConsole::cGetMenuEntry(const Menu & oMenu)
 {
 	for(unsigned int i = 0; i < oMenu.size(); ++i)
-		mOs << oMenu.oGetOptions()[i] << endl;
+		cout << oMenu.oGetOptions()[i] << endl;
 
 	char i = 0;
 	cin >> i;

@@ -93,6 +93,11 @@ class Game : public Module
 	 * Move a piece from the first given position, to the second
 	 */
 	virtual void MovePiece(Position oPos1, Position oPos2);
+
+  public :
+    Game();
+	Game(const Board &);
+	virtual void Run(Interface *) = 0;
 };
 
 #endif

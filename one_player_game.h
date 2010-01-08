@@ -16,7 +16,7 @@ class OnePlayerGame : public Game
 	 * Constructor to start a game
 	 * with a predefined board
 	 */
-	OnePlayerGame(Board & oBoard);
+	OnePlayerGame(const Board &);
 
 	/**
 	 * Destructor
