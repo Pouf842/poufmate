@@ -80,14 +80,9 @@ class Interface
 	virtual char cGetNewPieceType(Piece::Color) = 0;
 
 	/**
-	 * Display the main menu of the game
-	 */
-	virtual void DisplayMenu(const Menu &) = 0;
-
-	/**
 	 * Return an entry of the main menu
 	 */
-	virtual char cGetMenuEntry() = 0;
+	virtual char cGetMenuEntry(const Menu &) = 0;
 
 	virtual std::string strGetEditionEntry() = 0;
 

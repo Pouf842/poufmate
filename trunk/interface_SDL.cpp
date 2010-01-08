@@ -4,6 +4,7 @@
 #include <string>
 #define CASE_WIDTH 87
 #define CASE_HEIGHT 87
+#define SIDE_BOARD_WIDTH 300
 
 using namespace std;
 
@@ -12,21 +13,29 @@ InterfaceSDL::InterfaceSDL()
 	if(SDL_Init(SDL_INIT_VIDEO) == -1)
 		throw exception("SDL initialisation failed");
 
-	if(!(mpoGame[SCREEN] = SDL_SetVideoMode(1000, 698, 32, /*SDL_FULLSCREEN |*/ SDL_HWSURFACE | SDL_DOUBLEBUF)))
+	if(!(mpoGame[SCREEN] = SDL_SetVideoMode(8 * CASE_WIDTH + SIDE_BOARD_WIDTH, 8 * CASE_HEIGHT, 32, /*SDL_FULLSCREEN |*/ SDL_HWSURFACE | SDL_DOUBLEBUF)))
 		throw exception("SDL video mode initialisation failed");
+
+	SDL_FillRect(mpoGame[SCREEN], NULL, SDL_MapRGB(mpoGame[SCREEN]->format, 200, 200, 200));
 
 	if(TTF_Init() == -1)
 		throw exception("SDL ttf module could not be loaded");
 
+	mpoFont = TTF_OpenFont("angelina.ttf", 65);
+
+	if(!mpoFont)
+		throw exception("Font couldn't be loaded");
+
 	SDL_WM_SetCaption("PoufMate", NULL);
-	mpoMessagesBG = SDL_CreateRGBSurface(SDL_HWSURFACE, 300, 698, 32, 0, 0, 0, 0);
-	SDL_FillRect(mpoMessagesBG, NULL, SDL_MapRGB(mpoMessagesBG->format, 200, 200, 200));
+	mpoGame[MESSAGEBOARD] = SDL_CreateRGBSurface(SDL_HWSURFACE, SIDE_BOARD_WIDTH, 8 * CASE_HEIGHT, 32, 0, 0, 0, 0);
+
+	SDL_FillRect(mpoGame[MESSAGEBOARD], NULL, SDL_MapRGB(mpoGame[MESSAGEBOARD]->format, 200, 200, 200));
 
 	SDL_Rect position;
 	position.x = 700;
 	position.y = 0;
 
-	SDL_BlitSurface(mpoMessagesBG, NULL, mpoGame[SCREEN], &position);
+	SDL_BlitSurface(mpoGame[MESSAGEBOARD], NULL, mpoGame[SCREEN], &position);
 
 	mpoGame[BOARD] = SDL_LoadBMP("Images/Echiquier.bmp");
 
@@ -48,7 +57,7 @@ InterfaceSDL::InterfaceSDL()
 	mpoPieces[Piece::BLACK][Piece::QUEEN] = SDL_LoadBMP("Images/Reine noire.bmp");
 	mpoPieces[Piece::BLACK][Piece::KING] = SDL_LoadBMP("Images/Roi noir.bmp");
 
-	for(unsigned int i = 0; i < 5; ++i)	
+	for(unsigned int i = 0; i < 6; ++i)	
 		SDL_SetColorKey(mpoGame[i], SDL_SRCCOLORKEY, SDL_MapRGB(mpoGame[i]->format, 255, 0, 0));
 
 	SDL_SetColorKey(mpoGame[CHESS], SDL_SRCCOLORKEY, SDL_MapRGB(mpoGame[CHESS]->format, 0, 255, 0));
@@ -83,6 +92,9 @@ void InterfaceSDL::DisplayBoard(const Board & oBoard)
 	position.y = 0;
 
 	SDL_BlitSurface(mpoGame[BOARD], NULL, mpoGame[SCREEN], &position);
+
+	position.x = 700;
+	SDL_BlitSurface(mpoGame[MESSAGEBOARD], NULL, mpoGame[SCREEN], &position);
 
 	for(unsigned int i = 0; i < 8; ++i)
 		for(unsigned int j = 0; j < 8; ++j)
@@ -355,34 +367,98 @@ std::string InterfaceSDL::strGetEditionEntry()
 					strReturn[0] = tolower(strReturn[0]);
 			}
 		}
+		else if(event.type == SDL_KEYDOWN)
+		{
+			switch(event.key.keysym.sym)
+			{
+			  case SDLK_x :
+				return "x";
+				break;
+			  case SDLK_l :
+				return "l";
+				break;
+			}
+		}
 	}
 
 	return strReturn;
 }
 
-char InterfaceSDL::cGetMenuEntry()
+char InterfaceSDL::cGetMenuEntry(const Menu & oMenu)
 {
+	SDL_Rect position;
+	position.x = 0;
+	position.y = 0;
+
+	SDL_BlitSurface(mpoGame[BOARD], NULL, mpoGame[SCREEN], &position);
+
+	position.x = 50;
+	position.y = 0;
+
+	SDL_Color oRed = {255, 0, 0};
+	for(unsigned int i = 0; i < oMenu.size(); ++i)
+	{
+		SDL_Surface * poOption = TTF_RenderText_Blended(mpoFont, oMenu[i].c_str(), oRed);
+		
+		position.y += 2 * poOption->h;
+
+		SDL_BlitSurface(poOption, NULL, mpoGame[SCREEN], &position);
+		SDL_FreeSurface(poOption);
+	}
+
+	SDL_Flip(mpoGame[SCREEN]);
+
+	bool bOk = false;
 	SDL_Event event;
-	SDL_WaitEvent(&event);
+
+	while(!bOk)
+	{
+		SDL_WaitEvent(&event);
+
+		if(event.type == SDL_MOUSEMOTION)
+		{
+			if(event.motion.x > 50 && event.motion.x < 500
+			&& event.motion.y > 50 && event.motion.y < 520)
+			{
+				//else if(y
+			}
+		}
+		else if(event.type == SDL_MOUSEBUTTONDOWN
+		&& event.button.button == SDL_BUTTON_LEFT)
+		{
+			if(event.motion.x > 50 && event.motion.x < 500
+			&& event.motion.y > 50 && event.motion.y < 520)
+			{
+				if(event.motion.y < 130)
+					return '1';
+			}
+			//if(x >
+		}
+		else if(event.type == SDL_KEYDOWN)
+		{
+			switch(event.key.keysym.sym)
+			{
+			  case SDLK_KP1 :
+				return '1';
+				break;
+			  case SDLK_KP2 :
+				return '2';
+				break;
+			  case SDLK_KP3 :
+				return '3';
+				break;
+			  case SDLK_KP4 :
+				return '4';
+				break;
+			  default :
+				break;
+			}
+		}
+		else if(event.type == SDL_QUIT)
+			return '4';
+	}
 
 	return '1';
-}
-
-void InterfaceSDL::DisplayMenu(const Menu & oMenu)
-{
-	TTF_Font * mpoFont = TTF_OpenFont("angelina.ttf", 65);
-
-	if(!mpoFont)
-		throw exception("Font couldn't be loaded");
-
-	SDL_Color oBlack = {0, 0, 0};
-	SDL_Surface * poFirstLine = TTF_RenderText_Blended(mpoFont, "1.1 Player (Human VS Computer)", oBlack);
-
-	SDL_Rect position;
-
-	position.x = 300;
-	position.y = 300;
-	SDL_BlitSurface(poFirstLine, NULL, mpoGame[SCREEN], &position);
 }
 
 char InterfaceSDL::cGetPlayerColorChoice()

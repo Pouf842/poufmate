@@ -97,7 +97,7 @@ class InterfaceConsole : public Interface
 	 * Return an entry of the main menu
 	 * @see Interface::iGetMenuEntry()
 	 */
-	virtual char cGetMenuEntry();
+	virtual char cGetMenuEntry(const Menu &);
 
 	virtual char cGetPlayerColorChoice();
 	/**

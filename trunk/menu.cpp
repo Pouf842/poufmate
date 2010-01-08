@@ -13,7 +13,7 @@ void Menu::AddOption(string strOption)
 	moOptions.push_back(strOption);
 }
 
-vector<string> Menu::strGetOptions() const
+vector<string> Menu::oGetOptions() const
 {
 	return moOptions;
 }
@@ -21,4 +21,9 @@ vector<string> Menu::strGetOptions() const
 unsigned int Menu::size() const
 {
 	return moOptions.size();
+}
+
+string Menu::operator[](unsigned int i) const
+{
+	return moOptions[i];
 }

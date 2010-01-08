@@ -156,8 +156,11 @@ char InterfaceConsole::cGetNewPieceType(Piece::Color eColor)
 	}
 }
 
-char InterfaceConsole::cGetMenuEntry()
+char InterfaceConsole::cGetMenuEntry(const Menu & oMenu)
 {
+	for(unsigned int i = 0; i < oMenu.size(); ++i)
+		mOs << oMenu.oGetOptions()[i] << endl;
+
 	char i = 0;
 	cin >> i;
 
@@ -166,8 +169,6 @@ char InterfaceConsole::cGetMenuEntry()
 
 void InterfaceConsole::DisplayMenu(const Menu & oMenu)
 {
-	for(unsigned int i = 0; i < oMenu.size(); ++i)
-		mOs << oMenu.strGetOptions()[i] << endl;
 }
 
 char InterfaceConsole::cGetPlayerColorChoice()
