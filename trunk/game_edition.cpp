@@ -1,5 +1,6 @@
 #include "game_edition.h"
 #include "two_players_game.h"
+#include "one_player_game.h"
 #include <string>
 #include "pawn.h"
 #include "rook.h"
@@ -36,7 +37,12 @@ void GameEdition::Run(Interface * poInterface)
 			{
 				if(strEntry == "x")
 					bQuit = true;
-				else if(strEntry == "l")
+				else if(strEntry == "1")
+				{
+					OnePlayerGame oGame(moBoard);
+					oGame.Run(poInterface);
+				}
+				else if(strEntry == "2")
 				{
 					TwoPlayersGame oGame(moBoard);
 					oGame.Run(poInterface);

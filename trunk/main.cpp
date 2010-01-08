@@ -29,36 +29,45 @@ int main(int argc, char * argv[])
 
 		while(!bQuit)
 		{
-			while(!poChoosenModule && !bQuit)
+			try
 			{
-				iMenuEntry = poInterface->cGetMenuEntry(oMenu);
-
-				switch(iMenuEntry)
+				while(!poChoosenModule && !bQuit)
 				{
-				  case '1' :
-					poChoosenModule = new OnePlayerGame;
-					break;
-				  case '2' :
-					poChoosenModule = new TwoPlayersGame;
-					break;
-				  case '3' :
-					/*poInterface->DisplayMessage("This module has not been implemented yet");
-					poInterface->CommitDisplay();*/
-					poChoosenModule = new GameEdition;
-					break;
-				  case '4' :
-					bQuit = true;
-					break;
-				  default :
-					break;
+					iMenuEntry = poInterface->cGetMenuEntry(oMenu);
+
+					switch(iMenuEntry)
+					{
+					  case '1' :
+						poChoosenModule = new OnePlayerGame;
+						break;
+					  case '2' :
+						poChoosenModule = new TwoPlayersGame;
+						break;
+					  case '3' :
+						/*poInterface->DisplayMessage("This module has not been implemented yet");
+						poInterface->CommitDisplay();*/
+						poChoosenModule = new GameEdition;
+						break;
+					  case '4' :
+					  case 'x' :
+						bQuit = true;
+						break;
+					  default :
+						break;
+					}
+				}
+
+				if(!bQuit)
+				{
+					poChoosenModule->Run(poInterface);
+					delete poChoosenModule;
+					poChoosenModule = NULL;
 				}
 			}
-
-			if(!bQuit)
+			catch(exception & e)
 			{
-				poChoosenModule->Run(poInterface);
-				delete poChoosenModule;
-				poChoosenModule = NULL;
+				poInterface->DisplayMessage(e.what());
+				poInterface->CommitDisplay();
 			}
 		}
 

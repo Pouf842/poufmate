@@ -3,69 +3,16 @@
 #include "piece.h"
 #include "include_movements.h"
 #include "interface.h"
-
 #include <string>
 
 using namespace std;
 
-TwoPlayersGame::TwoPlayersGame()
+TwoPlayersGame::TwoPlayersGame() : Game()
 {
-	/* Initialise the positions of the kings */
-	moKings[Piece::WHITE] = Position(7, 4);	
-	moKings[Piece::BLACK] = Position(0, 4);
-
-	moBoard.Init();
-
-	meCurrentPlayer = Piece::WHITE;	// White moves first
-	mbIsOver = false;
 }
 
-TwoPlayersGame::TwoPlayersGame(const Board & oBoard)
+TwoPlayersGame::TwoPlayersGame(const Board & oBoard) : Game(oBoard)
 {
-	moBoard = oBoard;
-
-	Position oWhiteKing;
-	Position oBlackKing;
-
-	bool bWhiteFounded = false;
-	bool bBlackFounded = false;
-
-	for(unsigned int i = 0; i < 8 && (!bWhiteFounded || !bBlackFounded); ++i)
-	{
-		for(unsigned int j = 0; j < 8 && (!bWhiteFounded || !bBlackFounded); ++j)
-		{
-			if(!moBoard.bIsSquareEmpty(i, j))
-			{
-				Piece * poCurrentPiece = moBoard.poGetPiece(i, j);
-
-				if(poCurrentPiece->eGetType() == Piece::KING)
-				{
-					if(poCurrentPiece->eGetColor() == Piece::WHITE)
-					{
-						if(bWhiteFounded)
-							throw exception("You can't play a party with more than one king for each player");
-						else
-							bWhiteFounded = true;
-					}
-					else
-					{
-						if(bBlackFounded)
-							throw exception("You can't play a party with more than one king for each player");
-						else
-							bBlackFounded = true;
-					}
-					
-					moKings[poCurrentPiece->eGetColor()] = Position(i, j);
-				}
-			}
-		}
-	}
-
-	if(!bWhiteFounded || !bBlackFounded)
-		throw exception("You can't play a party without a king for each player");
-
-	meCurrentPlayer = Piece::WHITE;	// White moves first
-	mbIsOver = false;
 }
 
 TwoPlayersGame::~TwoPlayersGame()
@@ -204,7 +151,6 @@ void TwoPlayersGame::Run(Interface * poInterface)
 
 		poInterface->CommitDisplay();	// Commit the displays
 	}
-	
-	strEntry = poInterface->strGetEntry();	// Wait for the player to read the message before quiting
+
 	return;
 }

@@ -3,6 +3,66 @@
 
 using namespace std;
 
+Game::Game()
+{
+	/* Initialise the positions of the kings */
+	moKings[Piece::WHITE] = Position(7, 4);	
+	moKings[Piece::BLACK] = Position(0, 4);
+
+	moBoard.Init();
+
+	meCurrentPlayer = Piece::WHITE;	// White moves first
+	mbIsOver = false;
+}
+
+Game::Game(const Board & oBoard)
+{
+	moBoard = oBoard;
+
+	Position oWhiteKing;
+	Position oBlackKing;
+
+	bool bWhiteFounded = false;
+	bool bBlackFounded = false;
+
+	for(unsigned int i = 0; i < 8 && (!bWhiteFounded || !bBlackFounded); ++i)
+	{
+		for(unsigned int j = 0; j < 8 && (!bWhiteFounded || !bBlackFounded); ++j)
+		{
+			if(!moBoard.bIsSquareEmpty(i, j))
+			{
+				Piece * poCurrentPiece = moBoard.poGetPiece(i, j);
+
+				if(poCurrentPiece->eGetType() == Piece::KING)
+				{
+					if(poCurrentPiece->eGetColor() == Piece::WHITE)
+					{
+						if(bWhiteFounded)
+							throw exception("You can't play a party with more than one king for each player");
+						else
+							bWhiteFounded = true;
+					}
+					else
+					{
+						if(bBlackFounded)
+							throw exception("You can't play a party with more than one king for each player");
+						else
+							bBlackFounded = true;
+					}
+					
+					moKings[poCurrentPiece->eGetColor()] = Position(i, j);
+				}
+			}
+		}
+	}
+
+	if(!bWhiteFounded || !bBlackFounded)
+		throw exception("You can't play a party without a king for each player");
+
+	meCurrentPlayer = Piece::WHITE;	// White moves first
+	mbIsOver = false;
+}
+
 void Game::SwitchPlayer()
 {
 	meCurrentPlayer = (meCurrentPlayer == Piece::WHITE ? Piece::BLACK : Piece::WHITE);
