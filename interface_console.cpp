@@ -19,6 +19,10 @@ Interface * InterfaceConsole::poGetInstance()
 	return mpoInstance;
 }
 
+void InterfaceConsole::DisplayGameOver(std::string)
+{
+}
+
 void InterfaceConsole::DisplayBoard(const Board & oBoard)
 {
 	mOs << "    0   1   2   3   4   5   6   7" << endl;	// Display coordinates
@@ -161,12 +165,12 @@ char InterfaceConsole::cGetNewPieceType(Piece::Color eColor)
 	}
 }
 
-char InterfaceConsole::cGetMenuEntry(const Menu & oMenu)
+int InterfaceConsole::iGetMenuEntry(const Menu & oMenu)
 {
 	for(unsigned int i = 0; i < oMenu.size(); ++i)
 		cout << oMenu.oGetOptions()[i] << endl;
 
-	char i = 0;
+	int i = 0;
 	cin >> i;
 
 	return i;

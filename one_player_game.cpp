@@ -134,12 +134,7 @@ void OnePlayerGame::Run(Interface * poInterface)
 			else if(bIsCheckMate(meCurrentPlayer))
 			{
 				mbIsOver = true;
-				string strMessage = "The ";
-				strMessage += (meCurrentPlayer == Piece::WHITE ? "white" : "black");
-				strMessage += " player is checkmate !";
-
-				poInterface->DisplayMessage(strMessage);
-				poInterface->DisplayMessage("Game over !");
+				poInterface->DisplayGameOver(string(meCurrentPlayer == Piece::WHITE ? "White " : "Black ") + " player is check mate !");
 			}
 			else if(bIsGameInStaleMate())
 			{
@@ -149,6 +144,7 @@ void OnePlayerGame::Run(Interface * poInterface)
 			else if(bIsInCheck(meCurrentPlayer))	// Display the current player as in check
 			{
 				poInterface->DisplayInCheck(moKings[meCurrentPlayer]);
+				poInterface->DisplayMessage(string("The ") + (meCurrentPlayer == Piece::WHITE ? " white" : " black") + " king is in check");
 				poInterface->DisplayCurrentPlayer(meCurrentPlayer);
 			}
 			else
