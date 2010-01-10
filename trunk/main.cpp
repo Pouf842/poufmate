@@ -25,7 +25,7 @@ int main(int argc, char * argv[])
 
 		Module * poChoosenModule = 0;	// Create a new game
 		bool bQuit = false;
-		char iMenuEntry;
+		int iMenuEntry;
 
 		while(!bQuit)
 		{
@@ -33,23 +33,20 @@ int main(int argc, char * argv[])
 			{
 				while(!poChoosenModule && !bQuit)
 				{
-					iMenuEntry = poInterface->cGetMenuEntry(oMenu);
+					iMenuEntry = poInterface->iGetMenuEntry(oMenu);
 
 					switch(iMenuEntry)
 					{
-					  case '1' :
+					  case 1 :
 						poChoosenModule = new OnePlayerGame;
 						break;
-					  case '2' :
+					  case 2 :
 						poChoosenModule = new TwoPlayersGame;
 						break;
-					  case '3' :
-						/*poInterface->DisplayMessage("This module has not been implemented yet");
-						poInterface->CommitDisplay();*/
+					  case 3 :
 						poChoosenModule = new GameEdition;
 						break;
-					  case '4' :
-					  case 'x' :
+					  case 4 :
 						bQuit = true;
 						break;
 					  default :

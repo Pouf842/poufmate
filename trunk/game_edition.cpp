@@ -164,6 +164,7 @@ void GameEdition::Run(Interface * poInterface)
 		catch(exception & e)
 		{
 			poInterface->DisplayMessage(e.what());
+			poInterface->DisplayBoard(moBoard);
 			poInterface->CommitDisplay();
 		}
 	}

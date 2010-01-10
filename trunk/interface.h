@@ -82,11 +82,13 @@ class Interface
 	/**
 	 * Return an entry of the main menu
 	 */
-	virtual char cGetMenuEntry(const Menu &) = 0;
+	virtual int iGetMenuEntry(const Menu &) = 0;
 
 	virtual std::string strGetEditionEntry() = 0;
 
 	virtual char cGetPlayerColorChoice() = 0;
+
+	virtual void DisplayGameOver(std::string) = 0;
 
 	/**
 	 * Return the unique instance of the class
