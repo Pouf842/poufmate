@@ -3,13 +3,25 @@
 
 #include "game.h"
 #include "interface.h"
+#include <winsock.h>
 
 class LanGame : public Game
 {
+  private :
+	SOCKET moSocket;
+	Piece::Color mePlayerColor;
+	void InitSocket();
+	void ServerSocket(Interface *);
+	void ClientSocket(Interface *);
+	void SendToOpponent(std::string strMessage);
+	std::string ReceiveFromOpponent();
+
   public :
 	LanGame();
 	LanGame(const Board &);
-	void Run(Interface * poInterface);
+	virtual ~LanGame();
+	virtual void Run(Interface * poInterface);
+	void PlayOpponentMove(Interface *);
 };
 
 #endif

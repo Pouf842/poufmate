@@ -86,13 +86,6 @@ class InterfaceConsole : public Interface
 	virtual char cGetNewPieceType(Piece::Color);
 
 	/**
-	 * Implement of Interface::DisplayMenu()
-	 * Display the given menu
-	 * @see Interface::DisplayMenu()
-	 */
-	virtual void DisplayMenu(const Menu &);
-
-	/**
 	 * Implement of Interface::iGetMenuEntry()
 	 * Return an entry of the main menu
 	 * @see Interface::iGetMenuEntry()
@@ -102,6 +95,8 @@ class InterfaceConsole : public Interface
 	virtual char cGetPlayerColorChoice();
 
 	virtual void DisplayGameOver(std::string);
+
+	virtual std::string strKeyboardEntry(std::string strMessage, std::string strDefaultValue = "");
 
 	/**
 	 * Implement of Interface::poGetInstance()

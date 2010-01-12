@@ -13,6 +13,8 @@ Game::Game()
 
 	meCurrentPlayer = Piece::WHITE;	// White moves first
 	mbIsOver = false;
+
+	Movement::SetBoard(&moBoard);
 }
 
 Game::Game(const Board & oBoard)
@@ -61,6 +63,8 @@ Game::Game(const Board & oBoard)
 
 	meCurrentPlayer = Piece::WHITE;	// White moves first
 	mbIsOver = false;
+
+	Movement::SetBoard(&moBoard);
 }
 
 void Game::SwitchPlayer()
