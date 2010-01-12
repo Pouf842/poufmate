@@ -280,32 +280,32 @@ void LanGame::PlayOpponentMove(Interface * poInterface)
 {
 	string strOpponentEntry = ReceiveFromOpponent();
 
-	moSelection = strOpponentEntry.substr(0, 2);
-	Position oEntry = strOpponentEntry.substr(2);
+	Position oSelection = strOpponentEntry.substr(0, 2);
+	Position oEndingPos = strOpponentEntry.substr(2);
 
 	Movement * poNextMove = NULL;
 	/* Determinate the movement's type and update poNextMove */
-	if(bIsCastling(moSelection, oEntry))	// Castling
+	if(bIsCastling(moSelection, oEndingPos))	// Castling
 	{
 		if(bIsInCheck(meCurrentPlayer))
 			throw exception("Castling is not allowed if you're in check");
 
-		if(!bIsCastlingPathOk(moSelection, oEntry))
+		if(!bIsCastlingPathOk(oSelection, oEndingPos))
 			throw exception("Your king would be in check during castling");
 
-		poNextMove = new CastlingMove(moSelection, oEntry);
+		poNextMove = new CastlingMove(oSelection, oEndingPos);
 	}
-	else if(bIsPromotion(moSelection, oEntry))	// Promotion
+	else if(bIsPromotion(oSelection, oEndingPos))	// Promotion
 	{
 		char cNewPieceType = poInterface->cGetNewPieceType(meCurrentPlayer);
-		poNextMove = new Promotion(moSelection, oEntry, cNewPieceType);
+		poNextMove = new Promotion(oSelection, oEndingPos, cNewPieceType);
 	}
-	else if(moBoard.poGetPiece(moSelection)->bIsFirstMove())	// First move
-		poNextMove = new FirstMove(moSelection, oEntry);
-	else if(bIsEnPassantOk(moSelection, oEntry))
-		poNextMove = new EnPassant(moSelection, oEntry, (*moHistory.rbegin()));
+	else if(moBoard.poGetPiece(oSelection)->bIsFirstMove())	// First move
+		poNextMove = new FirstMove(oSelection, oEndingPos);
+	else if(bIsEnPassantOk(oSelection, oEndingPos))
+		poNextMove = new EnPassant(oSelection, oEndingPos, (*moHistory.rbegin()));
 	else
-		poNextMove = new Movement(moSelection, oEntry);	// Other move
+		poNextMove = new Movement(oSelection, oEndingPos);	// Other move
 
 	/* Execute the move */
 	ExecuteMovement(poNextMove);
