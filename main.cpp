@@ -21,7 +21,8 @@ int main(int argc, char * argv[])
 		oMenu.AddOption("1.One player game (human VS computer)");
 		oMenu.AddOption("2.Two player game (human VS human)");
 		oMenu.AddOption("3.Edition mode");
-		oMenu.AddOption("4.Quit");
+		oMenu.AddOption("4.Two player lan game");
+		oMenu.AddOption("5.Quit");
 
 		Module * poChoosenModule = 0;	// Create a new game
 		bool bQuit = false;
@@ -47,6 +48,9 @@ int main(int argc, char * argv[])
 						poChoosenModule = new GameEdition;
 						break;
 					  case 4 :
+						poChoosenModule = new LanGame;
+						break;
+					  case 5 :
 						bQuit = true;
 						break;
 					  default :

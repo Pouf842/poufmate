@@ -26,8 +26,6 @@ void TwoPlayersGame::Run(Interface * poInterface)
 
 	string strEntry = "";	// The command the player will entry
 
-	Movement::SetBoard(&moBoard);
-
 	poInterface->DisplayBoard(moBoard);
 	poInterface->DisplayCurrentPlayer(meCurrentPlayer);
 	poInterface->CommitDisplay();

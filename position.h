@@ -63,6 +63,8 @@ class Position
 	 * Difference comparator
 	 */
 	bool operator!=(const Position & oPos);
+
+	std::string ToString();
 };
 
 #endif

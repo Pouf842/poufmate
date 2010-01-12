@@ -90,6 +90,7 @@ class Interface
 
 	virtual void DisplayGameOver(std::string) = 0;
 
+	virtual std::string strKeyboardEntry(std::string strMessage, std::string strDefaultValue = "") = 0;
 	/**
 	 * Return the unique instance of the class
 	 */

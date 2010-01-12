@@ -28,8 +28,6 @@ void OnePlayerGame::Run(Interface * poInterface)
 
 	string strEntry = "";
 
-	Movement::SetBoard(&moBoard);
-
 	Piece::Color ePlayerColor = Piece::WHITE;
 
 	if(poInterface->cGetPlayerColorChoice() != 'W')

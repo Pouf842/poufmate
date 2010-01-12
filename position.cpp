@@ -62,3 +62,12 @@ bool Position::operator!=(const Position & oPos)
 {
 	return !(*this == oPos);
 }
+
+std::string Position::ToString()
+{
+	string strReturn = "";
+	strReturn += '0' + mX;
+	strReturn += '0' + mY;
+
+	return strReturn;
+}

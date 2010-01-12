@@ -170,14 +170,20 @@ int InterfaceConsole::iGetMenuEntry(const Menu & oMenu)
 	for(unsigned int i = 0; i < oMenu.size(); ++i)
 		cout << oMenu.oGetOptions()[i] << endl;
 
-	int i = 0;
-	cin >> i;
+	char cChoice = '0';
+	bool bOk = false;
 
-	return i;
-}
+	while(1)
+	{
+		cin >> cChoice;
 
-void InterfaceConsole::DisplayMenu(const Menu & oMenu)
-{
+		if(cChoice >= '1' && cChoice <= ('0' + oMenu.size()))
+			return cChoice - '0';
+		else if(cChoice == 'x')
+			return oMenu.size();
+	}
+
+	return cChoice;
 }
 
 char InterfaceConsole::cGetPlayerColorChoice()
@@ -196,4 +202,15 @@ char InterfaceConsole::cGetPlayerColorChoice()
 	}
 
 	return cColor;
+}
+
+std::string InterfaceConsole::strKeyboardEntry(string strMessage, string strDefaultValue)
+{
+	cout << strMessage << " : " << flush;
+
+	string strEntry;
+
+	cin >> strEntry;
+
+	return strEntry;
 }
