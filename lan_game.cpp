@@ -166,9 +166,17 @@ void LanGame::Run(Interface * poInterface)
 				/* Cancel last move */
 				else if(strEntry == "c")
 				{
-					CancelLastMove();
-					CancelLastMove();
-					moSelection.Empty();
+					SendToOpponent("c");
+					bool bOk = (ReceiveFromOpponent() == "Y\n");
+
+					if(bOk)
+					{
+						CancelLastMove();
+						CancelLastMove();
+						moSelection.Empty();
+					}
+					else
+						poInterface->DisplayMessage("The opponent refuse the annulment");
 				}
 				/* Select a piece or make a move */
 				else if(strEntry[strEntry.size() - 1] != '?')
