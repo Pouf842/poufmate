@@ -33,6 +33,7 @@ class InterfaceSDL : public Interface
 	virtual int iGetMenuEntry(const Menu &);
 	virtual std::string strGetEditionEntry();
 	virtual void DisplayGameOver(std::string);
+	virtual std::string strKeyboardEntry(std::string strMessage, std::string strDefaultValue = "");
 	static Interface * poGetInstance();
 };
 

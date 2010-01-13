@@ -604,3 +604,8 @@ char InterfaceSDL::cGetPlayerColorChoice()
 {
 	return 'W';
 }
+
+string InterfaceSDL::strKeyboardEntry(string strMessage, std::string strDefaultValue)
+{
+	return "";
+}
