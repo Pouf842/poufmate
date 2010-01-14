@@ -19,8 +19,12 @@ Interface * InterfaceConsole::poGetInstance()
 	return mpoInstance;
 }
 
-void InterfaceConsole::DisplayGameOver(std::string)
+void InterfaceConsole::DisplayGameOver(std::string strMessage)
 {
+	DisplayMessage("Game over !");
+	DisplayMessage(strMessage);
+
+	CommitDisplay();
 }
 
 void InterfaceConsole::DisplayBoard(const Board & oBoard)
@@ -65,7 +69,7 @@ void InterfaceConsole::DisplayBoard(const Board & oBoard)
 					break;
 				}
 
-				/* Black pieces ar in lower case */
+				/* Black pieces are in lower case */
 				if(oBoard.poGetPiece(oPos)->eGetColor() == Piece::BLACK)
 					cPieceChar = tolower(cPieceChar);
 			}
@@ -117,6 +121,7 @@ string InterfaceConsole::strGetEntry()
 void InterfaceConsole::DisplayPossibilities(vector<Position> oPossibilities)
 {
 	mOs << "Possibilities : " << endl;
+
 	for(unsigned int i = 0; i < oPossibilities.size(); ++i)
 		mOs << "\t" << oPossibilities[i].mX << oPossibilities[i].mY << endl;
 
@@ -148,31 +153,34 @@ char InterfaceConsole::cGetNewPieceType(Piece::Color eColor)
 {
 	char cNewType = ' ';
 
+	// While the user didn't enter a valid entry
 	while(1)
 	{
-		mOs << "Enter the type of the new piece : " << endl;
-		mOs << "\tR = Rook" << endl;
-		mOs << "\tN = Knight" << endl;
-		mOs << "\tB = Bishop" << endl;
-		mOs << "\tQ = Queen" << endl;
-
-		CommitDisplay();
+		cout << "Enter the type of the new piece : " << endl;
+		cout << "\tR = Rook" << endl;
+		cout << "\tN = Knight" << endl;
+		cout << "\tB = Bishop" << endl;
+		cout << "\tQ = Queen" << endl;
 
 		cin >> cNewType;
 
 		if(string("RNBQrnbq").find(toupper(cNewType) != string::npos))
 			return toupper(cNewType);
+
+		cout << "Invalid entry" << endl;
 	}
 }
 
-int InterfaceConsole::iGetMenuEntry(const Menu & oMenu)
+int InterfaceConsole::iGetMenuEntry(const vector<string> & oMenu)
 {
+	/* Display all the options of the menu */
 	for(unsigned int i = 0; i < oMenu.size(); ++i)
-		cout << oMenu.oGetOptions()[i] << endl;
+		cout << oMenu[i] << endl;
 
-	char cChoice = '0';
+	unsigned char cChoice = '0';
 	bool bOk = false;
 
+	/* While the user doesn't entry a valid option */
 	while(1)
 	{
 		cin >> cChoice;
@@ -180,10 +188,8 @@ int InterfaceConsole::iGetMenuEntry(const Menu & oMenu)
 		if(cChoice >= '1' && cChoice <= ('0' + oMenu.size()))
 			return cChoice - '0';
 		else if(cChoice == 'x')
-			return oMenu.size();
+			return oMenu.size();	// The last option of the menu is to quit
 	}
-
-	return cChoice;
 }
 
 char InterfaceConsole::cGetPlayerColorChoice()
@@ -195,6 +201,7 @@ char InterfaceConsole::cGetPlayerColorChoice()
 	char cColor = ' ';
 	cin >> cColor;
 
+	/* While the user doesn't entry W or B */
 	while(cColor != 'W' && cColor != 'B')
 	{
 		cout << "Your answer has to be W (White) or B (Black)" << endl;
@@ -206,7 +213,7 @@ char InterfaceConsole::cGetPlayerColorChoice()
 
 std::string InterfaceConsole::strKeyboardEntry(string strMessage, string strDefaultValue)
 {
-	cout << strMessage << " : " << flush;
+	cout << strMessage << " : " << strDefaultValue << flush;
 
 	string strEntry;
 

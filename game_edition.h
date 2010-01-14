@@ -14,14 +14,26 @@
 
 class GameEdition : public Module
 {
-	Board moBoard;
-	Piece::PieceType meNewPieceType;
-	Piece::Color meNewPieceColor;
-	Position moKingAlreadyThere[2];
+	Board moBoard;						/// Board
+	Piece::PieceType meNewPieceType;	/// The type of the next piece to be placed on the board
+	Piece::Color meNewPieceColor;		/// The color of the next piece to be placed on the board
+	Position moKingAlreadyThere[2];		/// The position of kings
 
   public :
+	/**
+	 * Basic constructor
+	 */
 	GameEdition();
+
+	/**
+	 * Destructor
+	 */
 	virtual ~GameEdition();
+
+	/**
+	 * Implement of Module::Run()
+	 * Run the edition mode
+	 */
 	virtual void Run(Interface *);
 };
 

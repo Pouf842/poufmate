@@ -1,6 +1,7 @@
 #include "lan_game.h"
-#include "menu.h"
 #include "include_movements.h"
+#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -29,8 +30,8 @@ void LanGame::InitSocket()
 
 LanGame::~LanGame()
 {
-	/*if(moSocket)
-		close(moSocket);*/
+	if(moSocket)
+		closesocket(moSocket);
 
 	WSACleanup();
 }
@@ -91,7 +92,8 @@ string LanGame::ReceiveFromOpponent()
 
 	do
 	{*/
-		recv(moSocket, ctOpponentEntry, sizeof(ctOpponentEntry), 0);
+	if(recv(moSocket, ctOpponentEntry, sizeof(ctOpponentEntry), 0) == -1)
+		throw exception("Connection closed by opponent");
 /*		strOpponentEntry += ctOpponentEntry;
 	}
 	while(strOpponentEntry[strOpponentEntry.size() - 1] != '\n');*/
@@ -124,10 +126,10 @@ void LanGame::Run(Interface * poInterface)
 	if(!poInterface)
 		throw exception("The interface is not defined");
 
-	Menu oLanMenu;
+	vector<string> oLanMenu;
 
-	oLanMenu.AddOption("1.Host a game");
-	oLanMenu.AddOption("2.Join a game");
+	oLanMenu.push_back("1.Host a game");
+	oLanMenu.push_back("2.Join a game");
 
 	unsigned int iChoice = poInterface->iGetMenuEntry(oLanMenu);
 

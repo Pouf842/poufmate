@@ -13,7 +13,14 @@ class Interface;
 class Module
 {
   public :
+    /**
+	 * Destructor
+	 */
     virtual ~Module();
+
+	/**
+	 * Run the module.
+	 */
 	virtual void Run(Interface *) = 0;
 };
 

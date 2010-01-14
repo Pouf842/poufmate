@@ -17,7 +17,7 @@ class Bishop : public Piece
 	 */
 	Bishop(Piece::Color);
 
-		/**
+	/**
 	 * Overload of Piece::bIsMovementCorrect()
 	 * Check if the movement is diagonal,
 	 * and if the path is not obstructed

@@ -36,6 +36,7 @@ class CastlingMove : public Movement
 	/**
 	 * Overload of Movement::Execute()
 	 * Executes the castling (move the piece on the static board)
+	 * @see Movement::Execute()
 	 */
 	virtual void Execute();
 
@@ -44,6 +45,7 @@ class CastlingMove : public Movement
 	 * Cancels the movement. Replaces the king and the rook
 	 * to their respectives original positions, and reset
 	 * their bFirstMove to true
+	 * @see Movement::CancelMovement()
 	 */
 	virtual void CancelMovement();
 };

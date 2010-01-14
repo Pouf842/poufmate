@@ -33,21 +33,22 @@ void GameEdition::Run(Interface * poInterface)
 		{
 			strEntry = poInterface->strGetEditionEntry();
 
+			/* If the entry is 1 char long, it's a command */
 			if(strEntry.size() == 1)
 			{
-				if(strEntry == "x")
+				if(strEntry == "x")	// "x" quit the edition mode
 					bQuit = true;
-				else if(strEntry == "1")
+				else if(strEntry == "1")	// "1" launch a one player party with the current board
 				{
 					OnePlayerGame oGame(moBoard);
 					oGame.Run(poInterface);
 				}
-				else if(strEntry == "2")
+				else if(strEntry == "2")	// "2" launch a two player party with the current board
 				{
 					TwoPlayersGame oGame(moBoard);
 					oGame.Run(poInterface);
 				}
-				else
+				else	// Choice of a new piece type
 				{
 					switch(strEntry[0])
 					{
@@ -106,18 +107,20 @@ void GameEdition::Run(Interface * poInterface)
 					}
 				}
 			}
-			else if(strEntry.size() == 2)
+			else if(strEntry.size() == 2)	// The entry is a position
 			{
-				if(meNewPieceType == Piece::NONE
-				&& !moBoard.bIsSquareEmpty(strEntry)
-				&& moBoard.eGetSquareType(strEntry) == Piece::KING)
-					moKingAlreadyThere[moBoard.eGetSquareColor(strEntry)].Empty();
+				/* Deleting a piece : if it is a king, update moKings */
+				if(meNewPieceType == Piece::NONE					// If the new piece type is NONE (empty square)
+				&& !moBoard.bIsSquareEmpty(strEntry)				// and the choosen square is not empty
+				&& moBoard.eGetSquareType(strEntry) == Piece::KING)	// and it contains a king
+					moKingAlreadyThere[moBoard.eGetSquareColor(strEntry)].Empty();	// Update moKings
 
-				if(moBoard.poGetPiece(strEntry))
-					delete moBoard.poGetPiece(strEntry);
+				if(moBoard.poGetPiece(strEntry))			// If the square is not empty
+					delete moBoard.poGetPiece(strEntry);	// Empty it
 
 				Piece * poNewPiece = 0;
 
+				/* Creating the new piece */
 				switch(meNewPieceType)
 				{
 				  case Piece::PAWN :
@@ -143,6 +146,7 @@ void GameEdition::Run(Interface * poInterface)
 					break;
 				}
 
+				/* If it is a king, check the number of kings, and update moKings */
 				if(meNewPieceType == Piece::KING)
 				{
 					if(!moKingAlreadyThere[meNewPieceColor].bIsEmpty())
@@ -151,14 +155,13 @@ void GameEdition::Run(Interface * poInterface)
 						throw exception("You already have a king of that color on the board");
 					}
 					else
-						moKingAlreadyThere[meNewPieceColor] = strEntry;
+						moKingAlreadyThere[meNewPieceColor] = strEntry;	// Update of moKings
 				}
 
-				moBoard.SetPiece(strEntry, poNewPiece);
+				moBoard.SetPiece(strEntry, poNewPiece);	// Place the piece
 			}
 
 			poInterface->DisplayBoard(moBoard);
-
 			poInterface->CommitDisplay();
 		}
 		catch(exception & e)

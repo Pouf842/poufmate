@@ -10,13 +10,23 @@
 #include "interface.h"
 #include <sstream>
 #include <vector>
+#include <string>
 
 class InterfaceConsole : public Interface
 {
   protected :
 	std::stringstream mOs;	// Stream containing the displays
-	InterfaceConsole();		// Constructor
+
+	/**
+	 * Constructor
+	 */
+	InterfaceConsole();
+
+	/**
+	 * Destructor
+	 */
 	virtual ~InterfaceConsole();
+
   public :
 	/**
 	 * Implement of Interface::DisplayBoard(const Board &)
@@ -41,6 +51,12 @@ class InterfaceConsole : public Interface
 	 */
 	virtual std::string strGetEntry();
 
+	/**
+	 * Implement of Interface::strGetEditionEntry()
+	 * Wait for a keyboard entry from the user in edition mode
+	 * See the description in class Interface for possible values to return
+	 * @see Interface::strGetEntry()
+	 */
 	virtual std::string strGetEditionEntry();
 
 	/**
@@ -90,12 +106,27 @@ class InterfaceConsole : public Interface
 	 * Return an entry of the main menu
 	 * @see Interface::iGetMenuEntry()
 	 */
-	virtual int iGetMenuEntry(const Menu &);
+	virtual int iGetMenuEntry(const std::vector<std::string> &);
 
+	/**
+	 * Implement of Interface::cGetPlayerColorChoice()
+	 * Return a character specifying a color choice from the user
+	 * @see Interface::cGetPlayerColorChoice()
+	 */
 	virtual char cGetPlayerColorChoice();
 
+	/**
+	 * Implement of Interface::DisplayGameOver()
+	 * Display a "Game over" message and a complement
+	 * @see Interface::DisplayGameOver()
+	 */
 	virtual void DisplayGameOver(std::string);
 
+	/**
+	 * Implement of Interface::strKeyBoardEntry()
+	 * Ask the user for a keyboard entry
+	 * @see Interface::strKeyboardEntry()
+	 */
 	virtual std::string strKeyboardEntry(std::string strMessage, std::string strDefaultValue = "");
 
 	/**
