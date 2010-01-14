@@ -77,11 +77,10 @@ class Movement
 	virtual void Execute();
 
 	/**
-	 *
+	 * Return true if the movement is a 2 squares forward
+	 * pawn movement.
 	 */
 	virtual bool bIs2SquaresPawnMove() const;
-
-	Position oGetLastMoveFinishPosition() const;
 };
 
 #endif

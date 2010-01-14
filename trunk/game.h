@@ -64,6 +64,10 @@ class Game : public Module
 	 */
 	virtual bool bIsGameInStaleMate();
 
+	/**
+	 * Execute the given movement, store it in the history
+	 * and update the kings' position if necessary
+	 */
 	virtual void ExecuteMovement(Movement * poMove);
 
 	/**
@@ -71,7 +75,7 @@ class Game : public Module
 	 * is a correct en passant move, and throws an exception
 	 * describing the problem if it's not
 	 */
-	bool bIsEnPassantOk(Position oPos1, Position oPos2);
+	virtual bool bIsEnPassantOk(Position oPos1, Position oPos2);
 
 	/**
 	 * Check if the given move is a pawn's promotion
@@ -82,6 +86,11 @@ class Game : public Module
 	 * Return all the possibilities of movement for the piece on the given square
 	 */
 	virtual std::vector<Position> oGetPossibilities(Position);
+
+	/**
+	 * Overload of oGetPossibilities(Position)
+	 * @see oGetPossibilities(Position)
+	 */
 	virtual std::vector<Position> oGetPossibilities(unsigned int, unsigned int);
 
 	/**
@@ -95,9 +104,18 @@ class Game : public Module
 	virtual void MovePiece(Position oPos1, Position oPos2);
 
   public :
+
+	/**
+	 * Basic constructor
+	 */
     Game();
+
+	/**
+	 * Constructor with a specified board
+	 * Throw exception if there is more or less
+	 * than 1 king for each player
+	 */
 	Game(const Board &);
-	virtual void Run(Interface *) = 0;
 };
 
 #endif

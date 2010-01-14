@@ -45,6 +45,14 @@ class Promotion : public Movement
 	 * but also delete the replacement piece (moNewPiece)
 	 */
 	virtual void CancelMovement();
+
+	/**
+	 * Overload of Movement::Execute()
+	 * Execute a promotion move : transform the moving piece
+	 * to a new one of given type (mpoNewPiece) and place it
+	 * on the finishing square
+	 * @see Movement::Execute()
+	 */
 	virtual void Execute();
 };
 

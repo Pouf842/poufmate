@@ -14,7 +14,7 @@ Game::Game()
 	meCurrentPlayer = Piece::WHITE;	// White moves first
 	mbIsOver = false;
 
-	Movement::SetBoard(&moBoard);
+	Movement::SetBoard(&moBoard);	// Set the board for movements (@see Movement::spoBoard)
 }
 
 Game::Game(const Board & oBoard)
@@ -24,11 +24,14 @@ Game::Game(const Board & oBoard)
 	Position oWhiteKing;
 	Position oBlackKing;
 
+	/* Searching for the two kings to initialize moKings */
 	bool bWhiteFounded = false;
 	bool bBlackFounded = false;
 
+	/* For each line */
 	for(unsigned int i = 0; i < 8 && (!bWhiteFounded || !bBlackFounded); ++i)
 	{
+		/* For each column */
 		for(unsigned int j = 0; j < 8 && (!bWhiteFounded || !bBlackFounded); ++j)
 		{
 			if(!moBoard.bIsSquareEmpty(i, j))
@@ -52,7 +55,7 @@ Game::Game(const Board & oBoard)
 							bBlackFounded = true;
 					}
 					
-					moKings[poCurrentPiece->eGetColor()] = Position(i, j);
+					moKings[poCurrentPiece->eGetColor()] = Position(i, j);	// Initialize moKings for the color
 				}
 			}
 		}
@@ -331,10 +334,8 @@ void Game::CancelLastMove()
 
 void Game::ExecuteMovement(Movement * poMove)
 {
-	int x = poMove->oGetCoords1().mX;
-	int y = poMove->oGetCoords1().mY;
-
-	if(moBoard.eGetSquareType(poMove->oGetCoords1()) == Piece::KING)
+	/* Update kings position if necessary */
+	if(poMove->poGetMovingPiece()->eGetType() == Piece::KING)	// If the moving piece is a king
 		moKings[poMove->poGetMovingPiece()->eGetColor()] = poMove->oGetCoords2();
 
 	poMove->Execute();
@@ -351,7 +352,7 @@ bool Game::bIsGameInStaleMate()
 			Position oPos(i, j);
 
 			if(!moBoard.bIsSquareEmpty(oPos) && moBoard.eGetSquareColor(oPos) == meCurrentPlayer)
-				if(oGetPossibilities(oPos).size() != 0)
+				if(oGetPossibilities(oPos).size() != 0)	// If a move is possible for the current player
 					return false;
 		}
 
@@ -360,15 +361,14 @@ bool Game::bIsGameInStaleMate()
 
 bool Game::bIsEnPassantOk(Position oPos1, Position oPos2)
 {
-	if(moBoard.bIsSquareEmpty(oPos1)
-	|| moBoard.eGetSquareType(oPos1) != Piece::PAWN
-	|| abs(oPos1.mX - oPos2.mX) != 1 || abs(oPos1.mY - oPos2.mY) != 1
-	|| !moBoard.bIsSquareEmpty(oPos2)
-	|| moBoard.bIsSquareEmpty(Position(oPos1.mX, oPos2.mY))
-	|| moBoard.eGetSquareType(Position(oPos1.mX, oPos2.mY)) != Piece::PAWN
-	|| moBoard.eGetSquareColor(oPos1) == moBoard.eGetSquareColor(Position(oPos1.mX, oPos2.mY)))
-		return false;
+	if(moBoard.bIsSquareEmpty(oPos1)															// If there is no piece to move, or if
+	|| moBoard.eGetSquareType(oPos1) != Piece::PAWN												// the piece to move is not a pawn, or if
+	|| abs(oPos1.mX - oPos2.mX) != 1 || abs(oPos1.mY - oPos2.mY) != 1							// the move is not a diagonal move, or if
+	|| !moBoard.bIsSquareEmpty(oPos2)															// the target square is not empty, or if
+	|| moBoard.bIsSquareEmpty(Position(oPos1.mX, oPos2.mY))										// the captured square is empty, or if
+	|| moBoard.eGetSquareType(Position(oPos1.mX, oPos2.mY)) != Piece::PAWN						// the captured piece is not a pawn, or if
+	|| moBoard.eGetSquareColor(oPos1) == moBoard.eGetSquareColor(Position(oPos1.mX, oPos2.mY)))	// the captured piece is of the same color than the moving piece
+		return false;	// It's not an en passant
 	else
 		return true;
 }
-

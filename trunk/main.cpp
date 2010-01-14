@@ -1,4 +1,5 @@
 #include "include_modules.h"
+#include <vector>
 #include <string>
 
 #ifdef __SDL_
@@ -17,12 +18,12 @@ int main(int argc, char * argv[])
 	{
 		Interface * poInterface = DISPLAY::poGetInstance();
 
-		Menu oMenu;
-		oMenu.AddOption("1.One player game (human VS computer)");
-		oMenu.AddOption("2.Two player game (human VS human)");
-		oMenu.AddOption("3.Edition mode");
-		oMenu.AddOption("4.Two player lan game");
-		oMenu.AddOption("5.Quit");
+		vector<string> oMenu;
+		oMenu.push_back("1.One player game (human VS computer)");
+		oMenu.push_back("2.Two player game (human VS human)");
+		oMenu.push_back("3.Edition mode");
+		oMenu.push_back("4.Two player lan game");
+		oMenu.push_back("5.Quit");
 
 		Module * poChoosenModule = 0;	// Create a new game
 		bool bQuit = false;

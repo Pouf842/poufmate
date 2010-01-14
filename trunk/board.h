@@ -40,20 +40,35 @@ class Board
 	void MovePiece(Position, Position);
 
 	/**
-	 * Return the color of the specified square
+	 * Return the color of the piece on the specified square
 	 */
 	Piece::Color eGetSquareColor(Position) const;
+
+	/**
+	 * Overload of eGetSquareColor(Position)
+	 * @see eGetSquareColor(Position)
+	 */
 	Piece::Color eGetSquareColor(unsigned int, unsigned int) const;
 
+	/**
+	 * Return the type of the piece on the specified square
+	 */
 	Piece::PieceType eGetSquareType(Position) const;
+
+	/**
+	 * Overload of eGetSquareType(Position)
+	 * @see eGetSquareType(Position)
+	 */
 	Piece::PieceType eGetSquareType(unsigned int, unsigned int) const;
+
 	/**
 	 * Return a pointer to the piece of the specified square
 	 */
 	Piece * poGetPiece(Position) const;
 
 	/**
-	 * Return a pointer to the piece of the specified square
+	 * Overload of poGetPiece(Position)
+	 * @see poGetPiece(Position)
 	 */
 	Piece * Board::poGetPiece(unsigned int i, unsigned int j) const;
 

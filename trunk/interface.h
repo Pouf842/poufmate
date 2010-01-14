@@ -11,18 +11,21 @@
 
 #include "board.h"
 #include "position.h"
-#include "menu.h"
 #include <string>
 #include <vector>
-
-class Menu;
 
 class Interface
 {
   protected :
 	static Interface * mpoInstance;	// The unique instance of the class
+
+	/**
+	 * Destructor
+	 */
 	virtual ~Interface();
+
   public :
+
 	/**
 	 * Display the board
 	 */
@@ -42,6 +45,19 @@ class Interface
 	 * "XY?" to get the possibile moves of the piece in XY on the board
 	 */
 	virtual std::string strGetEntry() = 0;
+
+	/**
+	 * Return the command given by the user in edition module.
+	 * Those are the possibles value to return :
+	 * "x" to quit the edition mode
+	 * "1" to launch a one player party
+	 * "2" to launch a two player party
+	 * "3" to launch a two player lan party
+	 * "R", "N", "B", "Q", "K", "P", and the same in lower case
+	 * to choose the type of the next piece to put on board
+	 * "XY" the coordinates of a square, where to put a piece of the choosen type
+	 */
+	virtual std::string strGetEditionEntry() = 0;
 
 	/**
 	 * Display all the possibilities of move contained in the vector
@@ -69,7 +85,7 @@ class Interface
 	virtual void CommitDisplay() = 0;
 
 	/**
-	 * Return a type of piece (for pawn promotion, or game edition, for instance)
+	 * Return a type of piece (for pawn promotion)
 	 * Possible values to return are :
 	 * R or r for a rook
 	 * N or n for a knight
@@ -82,15 +98,25 @@ class Interface
 	/**
 	 * Return an entry of the main menu
 	 */
-	virtual int iGetMenuEntry(const Menu &) = 0;
+	virtual int iGetMenuEntry(const std::vector<std::string> &) = 0;
 
-	virtual std::string strGetEditionEntry() = 0;
-
+	/**
+	 * Return player color as a character
+	 * ('W', or 'w' for white, and 'B' or 'b' for black)
+	 */
 	virtual char cGetPlayerColorChoice() = 0;
 
+	/**
+	 * Display a "Game over" message, followed by a specified complement
+	 */
 	virtual void DisplayGameOver(std::string) = 0;
 
+	/**
+	 * Ask the user for a keyboard entry with the specified message (strMessage)
+	 * and eventually a default value
+	 */
 	virtual std::string strKeyboardEntry(std::string strMessage, std::string strDefaultValue = "") = 0;
+
 	/**
 	 * Return the unique instance of the class
 	 */

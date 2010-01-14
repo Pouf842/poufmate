@@ -64,6 +64,10 @@ class Position
 	 */
 	bool operator!=(const Position & oPos);
 
+	/**
+	 * Return a string describing the position as
+	 * "XY"
+	 */
 	std::string ToString();
 };
 

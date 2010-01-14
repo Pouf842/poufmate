@@ -16,7 +16,7 @@ EnPassant::EnPassant(Position oPos1, Position oPos2, Movement * poLastMovement) 
 	if(spoBoard->eGetSquareType(Position(oPos1.mX, oPos2.mY)) != Piece::PAWN)
 		throw exception("The piece to capture must be a pawn");
 
-	if(oPos2.mY != poLastMovement->oGetLastMoveFinishPosition().mY
+	if(oPos2.mY != poLastMovement->oGetCoords2().mY
 	|| !poLastMovement->bIs2SquaresPawnMove())
 		throw exception("En passant can only be executed directly after a two steps move by the captured pawn");
 

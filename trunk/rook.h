@@ -11,7 +11,6 @@
 
 class Rook : public Piece
 {
-  protected :
   public :
 	/**
 	 * Constructor
