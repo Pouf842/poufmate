@@ -38,6 +38,7 @@ LanGame::~LanGame()
 
 void LanGame::ServerSocket(Interface * poInterface)
 {
+	/* Get the port from the user */
 	string strPort = poInterface->strKeyboardEntry("Please enter the port", "85623");
 	int iPort;
 
@@ -57,26 +58,30 @@ void LanGame::ServerSocket(Interface * poInterface)
 	oSockAddr.sin_family		= AF_INET;
 	oSockAddr.sin_port			= htons(iPort);
 
-	int iError;
-
-	if((iError = bind(oBindSocket, (SOCKADDR *) &oSockAddr, sizeof(oSockAddr))) == -1)
+	/* Bind the socket to any address */
+	if(bind(oBindSocket, (SOCKADDR *) &oSockAddr, sizeof(oSockAddr)) == -1)
 		throw exception("Unable to bind the socket");
 
+	/* Wait for the client */
 	poInterface->DisplayMessage("En attente d'une connexion");
+	poInterface->CommitDisplay();
 	listen(oBindSocket, 0);
 
 	SOCKADDR_IN oSockClient;
 
 	int oClientSize = sizeof(oSockClient);
 
+	/* Accept the client */
 	if((moSocket = accept(oBindSocket, (SOCKADDR *) &oSockClient, &oClientSize)) == INVALID_SOCKET)
 		throw exception("Error : invalid socket in acceptance of client connection");
 
 	mePlayerColor = Piece::WHITE;
 
+	/* Choice of the color */
 	if(poInterface->cGetPlayerColorChoice() != 'W')
 		mePlayerColor = Piece::BLACK;
 
+	/* Sending his color to the opponent */
 	SendToOpponent(string("Color : ") + (mePlayerColor == Piece::WHITE ? 'B' : 'W'));
 }
 
@@ -88,21 +93,23 @@ void LanGame::SendToOpponent(string strMessage)
 string LanGame::ReceiveFromOpponent()
 {
 	char ctOpponentEntry[255];
-/*	string strOpponentEntry = "";
+	memset(ctOpponentEntry, 0, 255);
 
-	do
-	{*/
-	if(recv(moSocket, ctOpponentEntry, sizeof(ctOpponentEntry), 0) == -1)
-		throw exception("Connection closed by opponent");
-/*		strOpponentEntry += ctOpponentEntry;
+	int iReturn = recv(moSocket, ctOpponentEntry, sizeof(ctOpponentEntry), 0);
+
+	/* Connection closed */
+	if(iReturn == 0 || iReturn == -1)
+	{
+		mbIsOver = true;
+		throw exception("Connection closed");
 	}
-	while(strOpponentEntry[strOpponentEntry.size() - 1] != '\n');*/
 
 	return ctOpponentEntry;
 }
 
 void LanGame::ClientSocket(Interface * poInterface)
 {
+	/* Ask server IP and port to the user */
 	string strServerIP		= poInterface->strKeyboardEntry("Enter the server's adress");
 	string strServerPort	= poInterface->strKeyboardEntry("Enter the server's port", "85623");
 
@@ -111,12 +118,20 @@ void LanGame::ClientSocket(Interface * poInterface)
 	oServerAdress.sin_family		= AF_INET;
 	oServerAdress.sin_port		= htons(atoi(strServerPort.c_str()));
 
-	connect(moSocket, (SOCKADDR *) &oServerAdress, sizeof(oServerAdress));
+	/* Connection to the server */
+	if(connect(moSocket, (SOCKADDR *) &oServerAdress, sizeof(oServerAdress)) == SOCKET_ERROR)
+	{
+		mbIsOver = true;
+		throw exception("Connection failed");
+	}
 
-	string strColor = ReceiveFromOpponent();
+	string strColor = ReceiveFromOpponent();	// Wait for the player color (server player choose his own, and send his to the client)
 
 	if(strColor.size() < 9 && strColor.substr(0, 8) != "Color : ")
-		throw exception(("Error : waiting for color, getting \"" + strColor).c_str());
+	{
+		mbIsOver = true;
+		throw exception(("Error : waiting for color, getting \"" + strColor + "\"").c_str());
+	}
 
 	mePlayerColor = (strColor[8] == 'W' ? Piece::WHITE : Piece::BLACK);
 }

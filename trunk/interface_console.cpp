@@ -213,7 +213,7 @@ char InterfaceConsole::cGetPlayerColorChoice()
 
 std::string InterfaceConsole::strKeyboardEntry(string strMessage, string strDefaultValue)
 {
-	cout << strMessage << " : " << strDefaultValue << flush;
+	cout << strMessage << " : " << flush;
 
 	string strEntry;
 
