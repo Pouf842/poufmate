@@ -466,7 +466,7 @@ std::string InterfaceSDL::strGetEditionEntry()
 	return strReturn;
 }
 
-int InterfaceSDL::iGetMenuEntry(const Menu & oMenu)
+int InterfaceSDL::iGetMenuEntry(const std::vector<std::string> & oMenu)
 {
 	SDL_Color oRed = {255, 0, 0};
 	SDL_Color oYellow = {255, 255, 0};
