@@ -5,6 +5,7 @@
 #include "SDL.h"
 #include "SDL_ttf.h"
 #include <queue>
+#include <vector>
 
 class InterfaceSDL : public Interface
 {
@@ -30,7 +31,7 @@ class InterfaceSDL : public Interface
 	virtual void CommitDisplay();
 	virtual char cGetNewPieceType(Piece::Color);
 	virtual char cGetPlayerColorChoice();
-	virtual int iGetMenuEntry(const Menu &);
+	virtual int iGetMenuEntry(const std::vector<std::string> &);
 	virtual std::string strGetEditionEntry();
 	virtual void DisplayGameOver(std::string);
 	virtual std::string strKeyboardEntry(std::string strMessage, std::string strDefaultValue = "");
