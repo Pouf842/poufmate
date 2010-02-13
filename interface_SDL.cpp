@@ -609,3 +609,8 @@ string InterfaceSDL::strKeyboardEntry(string strMessage, std::string strDefaultV
 {
 	return "";
 }
+
+void InterfaceSDL::DisplayGame(const Game * oGame)
+{
+	DisplayBoa
+}
