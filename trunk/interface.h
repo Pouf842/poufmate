@@ -26,6 +26,11 @@ class Interface
 
   public :
 
+    /**
+	 * Display the game in its current state
+	 */
+	virtual void DisplayGame(const Game &) = 0;
+
 	/**
 	 * Display the board
 	 */
