@@ -1,1 +1,54 @@
-wsock32.lib
+Interface :
+
+oGetMovement(Game)
+{
+    Afficher échiquier
+    Attendre sélection
+    Afficher messages
+    Afficher échiquier + sélection
+    Afficher messages
+    Attendre autre sélection (si même, annuler 1ère)
+    Afficher possibilité si nécessaire
+    Renvoyer mouvement
+}
+
+oGetMenuEntry(Menu)
+{
+    Afficher menu
+    Attendre sélection valide
+    Renvoyer sélection
+}
+
+oGetEditionEntry(Edition)
+{
+    Affichier édition (échiquier + pièces à sélectionner + messages)
+    Attendre sélection pièce
+    Attendre sélection case
+    Renvoyer EditionEntry
+}
+
+cGetColorChoice
+{
+    Afficher choix couleur
+    Attendre choix couleur
+    Renvoyer choix couleur
+}
+
+cGetNewPieceType
+{
+    Afficher choix type pièce
+    Attendre choix type pièce
+    Renvoyer choix type pièce
+}
+
+strGetIp
+{
+    Attendre entrée IP
+    Renvoyer entrée IP
+}
+
+strGetPort
+{
+    Attendre entrée port
+    Renvoyer entrée port
+}

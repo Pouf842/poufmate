@@ -6,6 +6,8 @@
 #define SQUARE_HEIGHT 87
 #define SIDE_BOARD_WIDTH 480
 #define FONT_HEIGHT 69
+#define WINDOW_WIDTH (8 * SQUARE_WIDTH + SIDE_BOARD_WIDTH)
+#define WINDOW_HEIGHT (8 * SQUARE_HEIGHT)
 
 using namespace std;
 
@@ -14,7 +16,7 @@ InterfaceSDL::InterfaceSDL()
 	if(SDL_Init(SDL_INIT_VIDEO) == -1)
 		throw exception("SDL initialisation failed");
 
-	if(!(mpoGame[SCREEN] = SDL_SetVideoMode(8 * SQUARE_WIDTH + SIDE_BOARD_WIDTH, 8 * SQUARE_HEIGHT, 32, /*SDL_FULLSCREEN |*/ SDL_HWSURFACE | SDL_DOUBLEBUF)))
+	if(!(mpoGame[SCREEN] = SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32, /*SDL_FULLSCREEN |*/ SDL_HWSURFACE | SDL_DOUBLEBUF)))
 		throw exception("SDL video mode initialisation failed");
 
 	SDL_FillRect(mpoGame[SCREEN], NULL, SDL_MapRGB(mpoGame[SCREEN]->format, 200, 200, 200));
@@ -607,10 +609,112 @@ char InterfaceSDL::cGetPlayerColorChoice()
 
 string InterfaceSDL::strKeyboardEntry(string strMessage, std::string strDefaultValue)
 {
-	return "";
-}
+	SDL_Color oBlack = {0, 0, 0};
+	SDL_Color oWhite = {255, 255, 255};
 
-void InterfaceSDL::DisplayGame(const Game * oGame)
-{
-	DisplayBoa
+	SDL_Event oEvent;
+	bool bContinue = true;
+	string strKeyboardEntry = "   .   .   .   ";
+	unsigned int iIndex = 0;
+	SDL_Rect oPosition = {0, 0};
+
+	SDL_BlitSurface(mpoGame[BOARD], NULL, mpoGame[SCREEN], &oPosition);
+
+	SDL_Surface * poMessageSurface = TTF_RenderText_Solid(mpoMenuFont, strMessage.c_str(), oBlack);
+	SDL_Surface * poEntrySurface = TTF_RenderText_Shaded(mpoMessagesFont, strKeyboardEntry.c_str(), oBlack, oWhite);
+	
+	/* Variation of the entry background size (due to variation of entry size) are visible.
+	   So we add another background to the max size to hide it.*/
+	SDL_Surface * poGetMaxEntryWitdh = TTF_RenderText_Shaded(mpoMessagesFont, "222.222.222.222", oWhite, oWhite);
+	int iMaxEntryWidth = poGetMaxEntryWitdh->w;
+	SDL_FreeSurface(poGetMaxEntryWitdh);
+
+	SDL_Surface * poBackground = SDL_CreateRGBSurface(SDL_HWSURFACE, iMaxEntryWidth, poEntrySurface->h, 32, 0, 0, 0, 0);
+	SDL_FillRect(poBackground, NULL, SDL_MapRGB(poBackground->format, 255, 255, 255));
+	SDL_Rect oBGPosition;
+
+	oPosition.x = WINDOW_WIDTH / 2 - poMessageSurface->w / 2;
+	oPosition.y = 200;
+
+	SDL_BlitSurface(poMessageSurface, NULL, mpoGame[SCREEN], &oPosition);
+
+	oBGPosition.x = WINDOW_WIDTH / 2 - poBackground->w / 2;
+	oBGPosition.y = oPosition.y + poMessageSurface->h + 30;
+
+	SDL_BlitSurface(poBackground, NULL, mpoGame[SCREEN], &oBGPosition);
+
+	oPosition.x = WINDOW_WIDTH / 2 - poEntrySurface->w / 2;
+	oPosition.y = oBGPosition.y;
+
+	SDL_BlitSurface(poEntrySurface, NULL, mpoGame[SCREEN], &oPosition);
+
+	SDL_Flip(mpoGame[SCREEN]);
+
+	do
+	{
+		SDL_WaitEvent(&oEvent);
+
+		if(oEvent.type == SDL_KEYDOWN)
+		{
+			switch(oEvent.key.keysym.sym)
+			{
+			  case SDLK_ESCAPE :
+			    strKeyboardEntry = "Esc";
+				bContinue = false;
+				break;
+			  case SDLK_KP0 :
+			  case SDLK_KP1 :
+			  case SDLK_KP2 :
+			  case SDLK_KP3 :
+			  case SDLK_KP4 :
+			  case SDLK_KP5 :
+			  case SDLK_KP6 :
+			  case SDLK_KP7 :
+			  case SDLK_KP8 :
+			  case SDLK_KP9 :
+				if(iIndex < strKeyboardEntry.size())
+				{
+					strKeyboardEntry[iIndex] = '0' + (oEvent.key.keysym.sym - SDLK_KP0);
+					++iIndex;
+
+					if(iIndex == 3 || iIndex == 7 || iIndex == 11)
+						++iIndex;
+
+					SDL_FreeSurface(poEntrySurface);
+					poEntrySurface = TTF_RenderText_Shaded(mpoMessagesFont, strKeyboardEntry.c_str(), oBlack, oWhite);
+					oPosition.x = WINDOW_WIDTH / 2 - poEntrySurface->w / 2;
+					SDL_BlitSurface(poBackground, NULL, mpoGame[SCREEN], &oBGPosition);
+					SDL_BlitSurface(poEntrySurface, NULL, mpoGame[SCREEN], &oPosition);
+					SDL_Flip(mpoGame[SCREEN]);
+				}
+				break;
+			  case SDLK_BACKSPACE :
+				if(iIndex > 0)
+				{
+					--iIndex;
+					if(iIndex == 3 || iIndex == 7 || iIndex == 11)
+						--iIndex;
+
+					strKeyboardEntry[iIndex] = ' ';
+
+					SDL_FreeSurface(poEntrySurface);
+					poEntrySurface = TTF_RenderText_Shaded(mpoMessagesFont, strKeyboardEntry.c_str(), oBlack, oWhite);
+					oPosition.x = WINDOW_WIDTH / 2 - poEntrySurface->w / 2;
+					SDL_BlitSurface(poBackground, NULL, mpoGame[SCREEN], &oBGPosition);
+					SDL_BlitSurface(poEntrySurface, NULL, mpoGame[SCREEN], &oPosition);
+					SDL_Flip(mpoGame[SCREEN]);
+				}
+			  case SDLK_RIGHT :
+			  case SDLK_TAB :
+			    if(iIndex < 11)
+			    break;
+			}
+		}
+
+	} while(bContinue);
+
+	SDL_FreeSurface(poMessageSurface);
+	SDL_FreeSurface(poEntrySurface);
+
+	return "";
 }

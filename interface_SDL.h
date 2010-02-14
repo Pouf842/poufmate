@@ -21,7 +21,6 @@ class InterfaceSDL : public Interface
 	InterfaceSDL();
 	virtual ~InterfaceSDL();
   public :
-	virtual void DisplayGame(const Game &);
 	virtual void DisplayBoard(const Board &);
 	virtual void DisplayMessage(std::string strMessage);
 	virtual std::string strGetEntry();
