@@ -3,3 +3,8 @@
 Module::~Module()
 {
 }
+
+void Module::SetInterface(Interface * poInterface)
+{
+	mpoInterface = poInterface;
+}

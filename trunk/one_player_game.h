@@ -33,13 +33,13 @@ class OnePlayerGame : public Game
     /**
 	 * Constructor
 	 */
-	OnePlayerGame();
+	OnePlayerGame(Interface * poInterface = NULL);
 
 	/**
 	 * Constructor to start a game
 	 * with a predefined board
 	 */
-	OnePlayerGame(const Board &);
+	OnePlayerGame(const Board &, Interface * poInterface = NULL);
 
 	/**
 	 * Destructor
@@ -50,7 +50,7 @@ class OnePlayerGame : public Game
 	 * Overload of Game::Run()
 	 * @see Game::Run()
 	 */
-	virtual void Run(Interface *);
+	virtual void Run();
 };
 
 #endif

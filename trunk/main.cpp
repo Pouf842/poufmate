@@ -61,7 +61,8 @@ int main(int argc, char * argv[])
 
 				if(!bQuit)
 				{
-					poChoosenModule->Run(poInterface);
+					poChoosenModule->SetInterface(poInterface);
+					poChoosenModule->Run();
 					delete poChoosenModule;
 					poChoosenModule = NULL;
 				}

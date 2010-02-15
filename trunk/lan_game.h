@@ -20,13 +20,13 @@ class LanGame : public Game
 	 * Create a server socket in moSocket, bind it
 	 * wait for a client connection and accept it
 	 */
-	void ServerSocket(Interface *);
+	void ServerSocket();
 
 	/**
 	 * Create a client socket in moSocket,
 	 * and connect it to a specified (by the user) server
 	 */
-	void ClientSocket(Interface *);
+	void ClientSocket();
 
 	/**
 	 * Send a message to the opponent via the socket
@@ -41,18 +41,18 @@ class LanGame : public Game
 	/**
 	 * Wait for the opponent move and play it on the board
 	 */
-	void PlayOpponentMove(Interface *);
+	void PlayOpponentMove();
   public :
 
     /**
 	 * Basic constructor
 	 */
-	LanGame();
+	LanGame(Interface * poInterface = NULL);
 
 	/**
 	 * Constructor with a specified board
 	 */
-	LanGame(const Board &);
+	LanGame(const Board &, Interface * poInterface = NULL);
 
 	/**
 	 * Destructor
@@ -63,7 +63,7 @@ class LanGame : public Game
 	 * Implement of Module::Run()
 	 * Run the lan party
 	 */
-	virtual void Run(Interface * poInterface);
+	virtual void Run();
 };
 
 #endif

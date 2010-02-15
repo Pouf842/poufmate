@@ -108,14 +108,14 @@ class Game : public Module
 	/**
 	 * Basic constructor
 	 */
-    Game();
+    Game(Interface * poInterface = NULL);
 
 	/**
 	 * Constructor with a specified board
 	 * Throw exception if there is more or less
 	 * than 1 king for each player
 	 */
-	Game(const Board &);
+	Game(const Board &, Interface * poInterface = NULL);
 };
 
 #endif

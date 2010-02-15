@@ -11,27 +11,28 @@
 
 using namespace std;
 
-GameEdition::GameEdition() : meNewPieceType(Piece::NONE), meNewPieceColor(Piece::WHITE)
+GameEdition::GameEdition(Interface * poInterface) : meNewPieceType(Piece::NONE), meNewPieceColor(Piece::WHITE)
 {
+	SetInterface(poInterface);
 }
 
 GameEdition::~GameEdition()
 {
 }
 
-void GameEdition::Run(Interface * poInterface)
+void GameEdition::Run()
 {
 	bool bQuit = false;
 	string strEntry = "";
 
-	poInterface->DisplayBoard(moBoard);
-	poInterface->CommitDisplay();
+	mpoInterface->DisplayBoard(moBoard);
+	mpoInterface->CommitDisplay();
 
 	while(!bQuit)
 	{
 		try
 		{
-			strEntry = poInterface->strGetEditionEntry();
+			strEntry = mpoInterface->strGetEditionEntry();
 
 			/* If the entry is 1 char long, it's a command */
 			if(strEntry.size() == 1)
@@ -40,13 +41,13 @@ void GameEdition::Run(Interface * poInterface)
 					bQuit = true;
 				else if(strEntry == "1")	// "1" launch a one player party with the current board
 				{
-					OnePlayerGame oGame(moBoard);
-					oGame.Run(poInterface);
+					OnePlayerGame oGame(moBoard, mpoInterface);
+					oGame.Run();
 				}
 				else if(strEntry == "2")	// "2" launch a two player party with the current board
 				{
-					TwoPlayersGame oGame(moBoard);
-					oGame.Run(poInterface);
+					TwoPlayersGame oGame(moBoard, mpoInterface);
+					oGame.Run();
 				}
 				else	// Choice of a new piece type
 				{
@@ -151,7 +152,7 @@ void GameEdition::Run(Interface * poInterface)
 				{
 					if(!moKingAlreadyThere[meNewPieceColor].bIsEmpty())
 					{
-						poInterface->DisplayInCheck(moKingAlreadyThere[meNewPieceColor]);
+						mpoInterface->DisplayInCheck(moKingAlreadyThere[meNewPieceColor]);
 						throw exception("You already have a king of that color on the board");
 					}
 					else
@@ -161,14 +162,14 @@ void GameEdition::Run(Interface * poInterface)
 				moBoard.SetPiece(strEntry, poNewPiece);	// Place the piece
 			}
 
-			poInterface->DisplayBoard(moBoard);
-			poInterface->CommitDisplay();
+			mpoInterface->DisplayBoard(moBoard);
+			mpoInterface->CommitDisplay();
 		}
 		catch(exception & e)
 		{
-			poInterface->DisplayMessage(e.what());
-			poInterface->DisplayBoard(moBoard);
-			poInterface->CommitDisplay();
+			mpoInterface->DisplayMessage(e.what());
+			mpoInterface->DisplayBoard(moBoard);
+			mpoInterface->CommitDisplay();
 		}
 	}
 }
