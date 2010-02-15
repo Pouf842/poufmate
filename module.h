@@ -12,6 +12,8 @@ class Interface;
 
 class Module
 {
+  protected :
+	Interface * mpoInterface;
   public :
     /**
 	 * Destructor
@@ -21,7 +23,8 @@ class Module
 	/**
 	 * Run the module.
 	 */
-	virtual void Run(Interface *) = 0;
+	virtual void Run() = 0;
+	virtual void SetInterface(Interface *);
 };
 
 #endif

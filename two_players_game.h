@@ -23,13 +23,13 @@ class TwoPlayersGame : public Game
 	/**
 	 * Constructor
 	 */
-	TwoPlayersGame();
+	TwoPlayersGame(Interface * poInterface = NULL);
 
 	/**
 	 * Constructor to start a two player game with a specified board
 	 * Note that the board must contain one and only one king for each player
 	 */
-	TwoPlayersGame(const Board & oBoard);
+	TwoPlayersGame(const Board & oBoard, Interface * poInterface = NULL);
 
 	/**
 	 * Implement of Module::Run()
@@ -37,7 +37,7 @@ class TwoPlayersGame : public Game
 	 * controls their movements, and transmit them to the board
 	 * @see Module::Run()
 	 */
-	virtual void Run(Interface *);
+	virtual void Run();
 };
 
 #endif

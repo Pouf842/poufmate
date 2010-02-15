@@ -23,7 +23,7 @@ class GameEdition : public Module
 	/**
 	 * Basic constructor
 	 */
-	GameEdition();
+	GameEdition(Interface * poInterface = NULL);
 
 	/**
 	 * Destructor
@@ -34,7 +34,7 @@ class GameEdition : public Module
 	 * Implement of Module::Run()
 	 * Run the edition mode
 	 */
-	virtual void Run(Interface *);
+	virtual void Run();
 };
 
 #endif

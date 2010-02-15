@@ -3,8 +3,10 @@
 
 using namespace std;
 
-Game::Game()
+Game::Game(Interface * poInterface)
 {
+	SetInterface(poInterface);
+
 	/* Initialise the positions of the kings */
 	moKings[Piece::WHITE] = Position(7, 4);	
 	moKings[Piece::BLACK] = Position(0, 4);
@@ -17,8 +19,10 @@ Game::Game()
 	Movement::SetBoard(&moBoard);	// Set the board for movements (@see Movement::spoBoard)
 }
 
-Game::Game(const Board & oBoard)
+Game::Game(const Board & oBoard, Interface * poInterface)
 {
+	SetInterface(poInterface);
+
 	moBoard = oBoard;
 
 	Position oWhiteKing;

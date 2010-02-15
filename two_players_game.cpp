@@ -7,11 +7,11 @@
 
 using namespace std;
 
-TwoPlayersGame::TwoPlayersGame() : Game()
+TwoPlayersGame::TwoPlayersGame(Interface * poInterface) : Game(poInterface)
 {
 }
 
-TwoPlayersGame::TwoPlayersGame(const Board & oBoard) : Game(oBoard)
+TwoPlayersGame::TwoPlayersGame(const Board & oBoard, Interface * poInterface) : Game(oBoard, poInterface)
 {
 }
 
@@ -19,16 +19,16 @@ TwoPlayersGame::~TwoPlayersGame()
 {
 }
 
-void TwoPlayersGame::Run(Interface * poInterface)
+void TwoPlayersGame::Run()
 {
-	if(!poInterface)
+	if(!mpoInterface)
 		throw exception("The interface is not defined");
 
 	string strEntry = "";	// The command the player will entry
 
-	poInterface->DisplayBoard(moBoard);
-	poInterface->DisplayCurrentPlayer(meCurrentPlayer);
-	poInterface->CommitDisplay();
+	mpoInterface->DisplayBoard(moBoard);
+	mpoInterface->DisplayCurrentPlayer(meCurrentPlayer);
+	mpoInterface->CommitDisplay();
 	
 	Movement * poNextMove = NULL;	// The next move
 
@@ -36,7 +36,7 @@ void TwoPlayersGame::Run(Interface * poInterface)
 	{
 		try
 		{
-			strEntry = poInterface->strGetEntry();	// Getting the next command
+			strEntry = mpoInterface->strGetEntry();	// Getting the next command
 			
 			if(strEntry == "");			// Do nothing
 			else if(strEntry == "x")
@@ -77,7 +77,7 @@ void TwoPlayersGame::Run(Interface * poInterface)
 						}
 						else if(bIsPromotion(moSelection, oEntry))	// Promotion
 						{
-							char cNewPieceType = poInterface->cGetNewPieceType(meCurrentPlayer);
+							char cNewPieceType = mpoInterface->cGetNewPieceType(meCurrentPlayer);
 							poNextMove = new Promotion(moSelection, oEntry, cNewPieceType);
 						}
 						else if(moBoard.poGetPiece(moSelection)->bIsFirstMove())	// First move
@@ -105,45 +105,45 @@ void TwoPlayersGame::Run(Interface * poInterface)
 			}
 
 			/* Display the game */
-			poInterface->DisplayBoard(moBoard);
+			mpoInterface->DisplayBoard(moBoard);
 
 			/* If the player is checkmate, display a message and stop the game */
 			if(strEntry == "x")	// Display a message
-				poInterface->DisplayMessage("Game over !");
+				mpoInterface->DisplayMessage("Game over !");
 			else if(bIsCheckMate(meCurrentPlayer))
 			{
 				mbIsOver = true;
-				poInterface->DisplayGameOver(string(meCurrentPlayer == Piece::WHITE ? "White " : "Black ") + " player is check mate !");
+				mpoInterface->DisplayGameOver(string(meCurrentPlayer == Piece::WHITE ? "White " : "Black ") + " player is check mate !");
 			}
 			else if(bIsGameInStaleMate())
 			{
 				mbIsOver = true;
-				poInterface->DisplayMessage("This is a stalemate");
+				mpoInterface->DisplayMessage("This is a stalemate");
 			}
 			else if(bIsInCheck(meCurrentPlayer))	// Display the current player as in check
 			{
-				poInterface->DisplayInCheck(moKings[meCurrentPlayer]);
-				poInterface->DisplayMessage(string("The ") + (meCurrentPlayer == Piece::WHITE ? " white" : " black") + " king is in check");
-				poInterface->DisplayCurrentPlayer(meCurrentPlayer);
+				mpoInterface->DisplayInCheck(moKings[meCurrentPlayer]);
+				mpoInterface->DisplayMessage(string("The ") + (meCurrentPlayer == Piece::WHITE ? " white" : " black") + " king is in check");
+				mpoInterface->DisplayCurrentPlayer(meCurrentPlayer);
 			}
 			else
-				poInterface->DisplayCurrentPlayer(meCurrentPlayer);
+				mpoInterface->DisplayCurrentPlayer(meCurrentPlayer);
 	
 			/* If asked (strEntry ends with '?'), display the possibilities for a specified piece */
 			if(strEntry.size() != 0
 			&& strEntry[strEntry.size() - 1] == '?')
-				poInterface->DisplayPossibilities(oGetPossibilities(strEntry.substr(0, 2)));
+				mpoInterface->DisplayPossibilities(oGetPossibilities(strEntry.substr(0, 2)));
 
 			/* If there is a selected piece, display it */
 			if(!moSelection.bIsEmpty())
-				poInterface->DisplaySelection(moSelection);
+				mpoInterface->DisplaySelection(moSelection);
 		}
 		catch(exception & e)
 		{
-			poInterface->DisplayMessage(e.what());	// Display the error message
+			mpoInterface->DisplayMessage(e.what());	// Display the error message
 		}
 
-		poInterface->CommitDisplay();	// Commit the displays
+		mpoInterface->CommitDisplay();	// Commit the displays
 	}
 
 	return;
