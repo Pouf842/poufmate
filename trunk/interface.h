@@ -10,14 +10,24 @@
  */
 
 #include "board.h"
+#include "game.h"
+#include "game_edition.h"
+#include "game_entry.h"
+#include "edition_entry.h"
 #include "position.h"
 #include <string>
 #include <vector>
+
+class Game;
+class GameEdition;
 
 class Interface
 {
   protected :
 	static Interface * mpoInstance;	// The unique instance of the class
+	std::vector<std::string> moMessages;
+
+	virtual void DisplayEditionCommands() = 0;
 
 	/**
 	 * Destructor
@@ -25,64 +35,17 @@ class Interface
 	virtual ~Interface();
 
   public :
-
 	/**
-	 * Display the board
+	 * Pause the program in wait of an entry from the user
+	 * to continue
 	 */
-	virtual void DisplayBoard(const Board &) = 0;
-
-	/**
-	 * Display any message
-	 */
-	virtual void DisplayMessage(std::string strMessage) = 0;
-
-	/**
-	 * Return the command given by the user.
-	 * Those are the possibles values to return :
-	 * "x" to quit the game
-	 * "c" to cancel the last move
-	 * "XY", where X and Y are the coordinates of a piece on the board (X is vertical, Y is horizontal) for a selection
-	 * "XY?" to get the possibile moves of the piece in XY on the board
-	 */
-	virtual std::string strGetEntry() = 0;
-
-	/**
-	 * Return the command given by the user in edition module.
-	 * Those are the possibles value to return :
-	 * "x" to quit the edition mode
-	 * "1" to launch a one player party
-	 * "2" to launch a two player party
-	 * "3" to launch a two player lan party
-	 * "R", "N", "B", "Q", "K", "P", and the same in lower case
-	 * to choose the type of the next piece to put on board
-	 * "XY" the coordinates of a square, where to put a piece of the choosen type
-	 */
-	virtual std::string strGetEditionEntry() = 0;
-
-	/**
-	 * Display all the possibilities of move contained in the vector
-	 */
-	virtual void DisplayPossibilities(std::vector<Position>) = 0;
-
-	/**
-	 * Display a square as a piece in check
-	 */
-	virtual void DisplayInCheck(Position) = 0;
-
-	/**
-	 * Display the color of the current player
-	 */
-	virtual void DisplayCurrentPlayer(Piece::Color) = 0;
-
-	/**
-	 * Display the selected piece
-	 */
-	virtual void DisplaySelection(Position) = 0;
-
-	/**
-	 * Commit all displays pushed since the last commit
-	 */
-	virtual void CommitDisplay() = 0;
+	virtual void GetEmptyEntry() = 0;
+	virtual void DisplayGame(const Game &) = 0;
+	virtual GameEntry oGetGameEntry(const Game &) = 0;
+	virtual void AddMessage(std::string);
+	virtual EditionEntry oGetEditionEntry(const GameEdition &) = 0;
+	virtual std::string strGetIPEntry() = 0;
+	virtual std::string strGetPortEntry() = 0;
 
 	/**
 	 * Return a type of piece (for pawn promotion)
@@ -105,17 +68,6 @@ class Interface
 	 * ('W', or 'w' for white, and 'B' or 'b' for black)
 	 */
 	virtual char cGetPlayerColorChoice() = 0;
-
-	/**
-	 * Display a "Game over" message, followed by a specified complement
-	 */
-	virtual void DisplayGameOver(std::string) = 0;
-
-	/**
-	 * Ask the user for a keyboard entry with the specified message (strMessage)
-	 * and eventually a default value
-	 */
-	virtual std::string strKeyboardEntry(std::string strMessage, std::string strDefaultValue = "") = 0;
 
 	/**
 	 * Return the unique instance of the class

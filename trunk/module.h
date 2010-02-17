@@ -7,7 +7,7 @@
  * It force the derivated class to implement a Run() methods
  */
 
-#include "interface.h"
+//#include "interface.h"
 class Interface;
 
 class Module

@@ -15,8 +15,6 @@
 class GameEdition : public Module
 {
 	Board moBoard;						/// Board
-	Piece::PieceType meNewPieceType;	/// The type of the next piece to be placed on the board
-	Piece::Color meNewPieceColor;		/// The color of the next piece to be placed on the board
 	Position moKingAlreadyThere[2];		/// The position of kings
 
   public :
@@ -35,6 +33,9 @@ class GameEdition : public Module
 	 * Run the edition mode
 	 */
 	virtual void Run();
+
+	bool bIsEntryCorrect(std::string strEntry);
+	Board oGetBoard() const;
 };
 
 #endif

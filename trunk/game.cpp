@@ -15,6 +15,11 @@ Game::Game(Interface * poInterface)
 
 	meCurrentPlayer = Piece::WHITE;	// White moves first
 	mbIsOver = false;
+	mbIsWhiteCheckMate = false;
+	mbIsBlackCheckMate = false;
+	mbIsStaleMate = false;
+	mbIsWhiteInCheck = false;
+	mbIsBlackInCheck = false;
 
 	Movement::SetBoard(&moBoard);	// Set the board for movements (@see Movement::spoBoard)
 }
@@ -70,6 +75,11 @@ Game::Game(const Board & oBoard, Interface * poInterface)
 
 	meCurrentPlayer = Piece::WHITE;	// White moves first
 	mbIsOver = false;
+	mbIsWhiteCheckMate = false;
+	mbIsBlackCheckMate = false;
+	mbIsStaleMate = false;
+	mbIsWhiteInCheck = false;
+	mbIsBlackInCheck = false;
 
 	Movement::SetBoard(&moBoard);
 }
@@ -315,7 +325,7 @@ bool Game::bIsMovementCorrect(Position oPos1, Position oPos2) const
 	return true;	// If none of the precedent verifications failed, the movement is correct
 }
 
-bool Game::bIsOver()
+bool Game::bIsOver() const
 {
 	return mbIsOver;
 }
@@ -375,4 +385,45 @@ bool Game::bIsEnPassantOk(Position oPos1, Position oPos2)
 		return false;	// It's not an en passant
 	else
 		return true;
+}
+
+Board Game::oGetBoard() const
+{
+	return moBoard;
+}
+
+Piece::Color Game::eGetCurrentPlayer() const
+{
+	return meCurrentPlayer;
+}
+
+Position Game::oGetKingPosition(Piece::Color eColor) const
+{
+	return moKings[eColor];
+}
+
+
+bool Game::bIsWhiteInCheck() const
+{
+	return mbIsWhiteInCheck;
+}
+
+bool Game::bIsBlackInCheck() const
+{
+	return mbIsBlackInCheck;
+}
+
+bool Game::bIsWhiteCheckMate() const
+{
+	return mbIsWhiteCheckMate;
+}
+
+bool Game::bIsBlackCheckMate() const
+{
+	return mbIsBlackCheckMate;
+}
+
+bool Game::bIsStaleMate() const
+{
+	return mbIsStaleMate;
 }

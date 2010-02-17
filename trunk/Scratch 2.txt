@@ -6,10 +6,14 @@ oGetMovement(Game)
     Attendre sélection
     Afficher messages
     Afficher échiquier + sélection
-    Afficher messages
+    Afficher messages (membre de l'interface)
     Attendre autre sélection (si même, annuler 1ère)
     Afficher possibilité si nécessaire
     Renvoyer mouvement
+}
+
+AddMessage()
+{
 }
 
 oGetMenuEntry(Menu)

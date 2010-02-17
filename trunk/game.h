@@ -17,7 +17,11 @@ class Game : public Module
 	Position moKings[2];			// Positions of the two kings (usefull for check and checkmate verification)
 
 	bool mbIsOver;					// true if the party is over
-	Position moSelection;			// The selected square. Can be empty if no square has been selected yet
+	bool mbIsWhiteInCheck;
+	bool mbIsBlackInCheck;
+	bool mbIsWhiteCheckMate;
+	bool mbIsBlackCheckMate;
+	bool mbIsStaleMate;
 
 	/**
 	 * Change the current player
@@ -25,19 +29,9 @@ class Game : public Module
 	virtual void SwitchPlayer();
 
 	/**
-	 * Return mbIsOver
-	 */
-	virtual bool bIsOver();
-
-	/**
 	 * Cancel the last recorded move
 	 */
 	virtual void CancelLastMove();
-
-	/**
-	 * Check if the given position is a valid selection. Throw an exception otherwise
-	 */
-	virtual void CheckSelectionCoords(Position) const;
 
 	/**
 	 * Check if the given movement (described by two position) is a castling move
@@ -82,16 +76,6 @@ class Game : public Module
 	 */
 	virtual bool bIsPromotion(Position oPos1, Position oPos2) const;
 
-	/**
-	 * Return all the possibilities of movement for the piece on the given square
-	 */
-	virtual std::vector<Position> oGetPossibilities(Position);
-
-	/**
-	 * Overload of oGetPossibilities(Position)
-	 * @see oGetPossibilities(Position)
-	 */
-	virtual std::vector<Position> oGetPossibilities(unsigned int, unsigned int);
 
 	/**
 	 * Check if the path of the castling described 
@@ -116,6 +100,35 @@ class Game : public Module
 	 * than 1 king for each player
 	 */
 	Game(const Board &, Interface * poInterface = NULL);
+
+	/**
+	 * Check if the given position is a valid selection. Throw an exception otherwise
+	 */
+	virtual void CheckSelectionCoords(Position) const;
+
+	/**
+	 * Return all the possibilities of movement for the piece on the given square
+	 */
+	virtual std::vector<Position> oGetPossibilities(Position);
+
+	/**
+	 * Overload of oGetPossibilities(Position)
+	 * @see oGetPossibilities(Position)
+	 */
+	virtual std::vector<Position> oGetPossibilities(unsigned int, unsigned int);
+	Board oGetBoard() const;
+	Piece::Color eGetCurrentPlayer() const;
+	Position oGetKingPosition(Piece::Color) const;
+	/**
+	 * Return mbIsOver
+	 */
+	virtual bool bIsOver() const;
+	bool bIsWhiteInCheck() const;
+	bool bIsBlackInCheck() const;
+	bool bIsWhiteCheckMate() const;
+	bool bIsBlackCheckMate() const;
+	bool bIsStaleMate() const;
+
 };
 
 #endif
