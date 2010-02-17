@@ -24,126 +24,82 @@ void TwoPlayersGame::Run()
 	if(!mpoInterface)
 		throw exception("The interface is not defined");
 
-	string strEntry = "";	// The command the player will entry
-
-	mpoInterface->DisplayBoard(moBoard);
-	mpoInterface->DisplayCurrentPlayer(meCurrentPlayer);
-	mpoInterface->CommitDisplay();
-	
 	Movement * poNextMove = NULL;	// The next move
 
 	while(!bIsOver())
 	{
 		try
 		{
-			strEntry = mpoInterface->strGetEntry();	// Getting the next command
+			GameEntry oEntry = mpoInterface->oGetGameEntry(*this);
 			
-			if(strEntry == "");			// Do nothing
-			else if(strEntry == "x")
-				mbIsOver = true;		// Stop the game
-			/* Cancel last move */
-			else if(strEntry == "c")
+			if(oEntry.bIsCommand())
 			{
-				CancelLastMove();
-				moSelection.Empty();
-				SwitchPlayer();
+				string strEntry = oEntry.strGetCommand();
+
+				if(strEntry == "");			// Do nothing
+				else if(strEntry == "x")
+					mbIsOver = true;		// Stop the game
+				/* Cancel last move */
+				else if(strEntry == "c")
+				{
+					CancelLastMove();
+					SwitchPlayer();
+				}
 			}
 			/* Select a piece or make a move */
-			else if(strEntry[strEntry.size() - 1] != '?')
+			else
 			{
-				Position oEntry(strEntry);
+				Position oPos1(oEntry.oGetPos1());
+				Position oPos2(oEntry.oGetPos2());
 
-				/* Select a piece */
-				if(moSelection.bIsEmpty())
+				/* Determinate the movement's type and update poNextMove */
+				if(bIsCastling(oPos1, oPos2))	// Castling
 				{
-					CheckSelectionCoords(oEntry);
-					moSelection = oEntry;
+					if(bIsInCheck(meCurrentPlayer))
+						throw exception("Castling is not allowed if you're in check");
+
+					if(!bIsCastlingPathOk(oPos1, oPos2))
+						throw exception("Your king would be in check during castling");
+
+					poNextMove = new CastlingMove(oPos1, oPos2);
 				}
-				/* Try to make a move */
+				else if(bIsPromotion(oPos1, oPos2))	// Promotion
+				{
+					char cNewPieceType = mpoInterface->cGetNewPieceType(meCurrentPlayer);
+					poNextMove = new Promotion(oPos1, oPos2, cNewPieceType);
+				}
+				else if(moBoard.poGetPiece(oPos1)->bIsFirstMove())	// First move
+					poNextMove = new FirstMove(oPos1, oPos2);
+				else if(bIsEnPassantOk(oPos1, oPos2))
+					poNextMove = new EnPassant(oPos1, oPos2, (*moHistory.rbegin()));
 				else
+					poNextMove = new Movement(oPos1, oPos2);	// Other move
+
+				/* Execute the move */
+				ExecuteMovement(poNextMove);
+
+				/* If the move puts the player in check, it is not valid */
+				if(bIsInCheck(meCurrentPlayer))
 				{
-					if(moSelection != oEntry)	// Same square --> no move
-					{
-						/* Determinate the movement's type and update poNextMove */
-						if(bIsCastling(moSelection, oEntry))	// Castling
-						{
-							if(bIsInCheck(meCurrentPlayer))
-								throw exception("Castling is not allowed if you're in check");
-
-							if(!bIsCastlingPathOk(moSelection, oEntry))
-								throw exception("Your king would be in check during castling");
-
-							poNextMove = new CastlingMove(moSelection, oEntry);
-						}
-						else if(bIsPromotion(moSelection, oEntry))	// Promotion
-						{
-							char cNewPieceType = mpoInterface->cGetNewPieceType(meCurrentPlayer);
-							poNextMove = new Promotion(moSelection, oEntry, cNewPieceType);
-						}
-						else if(moBoard.poGetPiece(moSelection)->bIsFirstMove())	// First move
-							poNextMove = new FirstMove(moSelection, oEntry);
-						else if(bIsEnPassantOk(moSelection, oEntry))
-							poNextMove = new EnPassant(moSelection, oEntry, (*moHistory.rbegin()));
-						else
-							poNextMove = new Movement(moSelection, oEntry);	// Other move
-
-						/* Execute the move */
-						ExecuteMovement(poNextMove);
-
-						/* If the move puts the player in check, it is not valid */
-						if(bIsInCheck(meCurrentPlayer))
-						{
-							CancelLastMove();
-							throw exception("That move puts you in check");
-						}
-
-						SwitchPlayer();	// Next player
-					}
-					
-					moSelection.Empty();	// No selection
+					CancelLastMove();
+					throw exception("That move puts you in check");
 				}
-			}
 
-			/* Display the game */
-			mpoInterface->DisplayBoard(moBoard);
+				SwitchPlayer();	// Next player
+			}
 
 			/* If the player is checkmate, display a message and stop the game */
-			if(strEntry == "x")	// Display a message
-				mpoInterface->DisplayMessage("Game over !");
-			else if(bIsCheckMate(meCurrentPlayer))
-			{
-				mbIsOver = true;
-				mpoInterface->DisplayGameOver(string(meCurrentPlayer == Piece::WHITE ? "White " : "Black ") + " player is check mate !");
-			}
+			if(bIsCheckMate(meCurrentPlayer))
+				(meCurrentPlayer == Piece::WHITE ? mbIsWhiteCheckMate : mbIsBlackCheckMate) = true;
 			else if(bIsGameInStaleMate())
-			{
-				mbIsOver = true;
-				mpoInterface->DisplayMessage("This is a stalemate");
-			}
+				mbIsStaleMate = true;
 			else if(bIsInCheck(meCurrentPlayer))	// Display the current player as in check
-			{
-				mpoInterface->DisplayInCheck(moKings[meCurrentPlayer]);
-				mpoInterface->DisplayMessage(string("The ") + (meCurrentPlayer == Piece::WHITE ? " white" : " black") + " king is in check");
-				mpoInterface->DisplayCurrentPlayer(meCurrentPlayer);
-			}
-			else
-				mpoInterface->DisplayCurrentPlayer(meCurrentPlayer);
-	
-			/* If asked (strEntry ends with '?'), display the possibilities for a specified piece */
-			if(strEntry.size() != 0
-			&& strEntry[strEntry.size() - 1] == '?')
-				mpoInterface->DisplayPossibilities(oGetPossibilities(strEntry.substr(0, 2)));
-
-			/* If there is a selected piece, display it */
-			if(!moSelection.bIsEmpty())
-				mpoInterface->DisplaySelection(moSelection);
+				(meCurrentPlayer == Piece::WHITE ? mbIsWhiteInCheck : mbIsBlackInCheck) = true;
 		}
 		catch(exception & e)
 		{
-			mpoInterface->DisplayMessage(e.what());	// Display the error message
+			mpoInterface->AddMessage(e.what());	// Display the error message
 		}
-
-		mpoInterface->CommitDisplay();	// Commit the displays
 	}
 
 	return;

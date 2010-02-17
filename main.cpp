@@ -69,8 +69,7 @@ int main(int argc, char * argv[])
 			}
 			catch(exception & e)
 			{
-				poInterface->DisplayMessage(e.what());
-				poInterface->CommitDisplay();
+				poInterface->AddMessage(e.what());
 			}
 		}
 

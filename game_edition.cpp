@@ -11,7 +11,7 @@
 
 using namespace std;
 
-GameEdition::GameEdition(Interface * poInterface) : meNewPieceType(Piece::NONE), meNewPieceColor(Piece::WHITE)
+GameEdition::GameEdition(Interface * poInterface)
 {
 	SetInterface(poInterface);
 }
@@ -20,23 +20,26 @@ GameEdition::~GameEdition()
 {
 }
 
+Board GameEdition::oGetBoard() const
+{
+	return moBoard;
+}
+
 void GameEdition::Run()
 {
 	bool bQuit = false;
-	string strEntry = "";
-
-	mpoInterface->DisplayBoard(moBoard);
-	mpoInterface->CommitDisplay();
 
 	while(!bQuit)
 	{
 		try
 		{
-			strEntry = mpoInterface->strGetEditionEntry();
+			EditionEntry oEntry = mpoInterface->oGetEditionEntry(*this);
 
 			/* If the entry is 1 char long, it's a command */
-			if(strEntry.size() == 1)
+			if(oEntry.bIsCommand())
 			{
+				string strEntry = oEntry.strGetCommand();
+
 				if(strEntry == "x")	// "x" quit the edition mode
 					bQuit = true;
 				else if(strEntry == "1")	// "1" launch a one player party with the current board
@@ -49,98 +52,42 @@ void GameEdition::Run()
 					TwoPlayersGame oGame(moBoard, mpoInterface);
 					oGame.Run();
 				}
-				else	// Choice of a new piece type
-				{
-					switch(strEntry[0])
-					{
-					  case 'P' :
-						meNewPieceType = Piece::PAWN;
-						meNewPieceColor = Piece::WHITE;
-						break;
-					  case 'R' :
-						meNewPieceType = Piece::ROOK;
-						meNewPieceColor = Piece::WHITE;
-						break;
-					  case 'N' :
-						meNewPieceType = Piece::KNIGHT;
-						meNewPieceColor = Piece::WHITE;
-						break;
-					  case 'B' :
-						meNewPieceType = Piece::BISHOP;
-						meNewPieceColor = Piece::WHITE;
-						break;
-					  case 'Q' :
-						meNewPieceType = Piece::QUEEN;
-						meNewPieceColor = Piece::WHITE;
-						break;
-					  case 'K' :
-						meNewPieceType = Piece::KING;
-						meNewPieceColor = Piece::WHITE;
-						break;
-					  case 'p' :
-						meNewPieceType = Piece::PAWN;
-						meNewPieceColor = Piece::BLACK;
-						break;
-					  case 'r' :
-						meNewPieceType = Piece::ROOK;
-						meNewPieceColor = Piece::BLACK;
-						break;
-					  case 'n' :
-						meNewPieceType = Piece::KNIGHT;
-						meNewPieceColor = Piece::BLACK;
-						break;
-					  case 'b' :
-						meNewPieceType = Piece::BISHOP;
-						meNewPieceColor = Piece::BLACK;
-						break;
-					  case 'q' :
-						meNewPieceType = Piece::QUEEN;
-						meNewPieceColor = Piece::BLACK;
-						break;
-					  case 'k' :
-						meNewPieceType = Piece::KING;
-						meNewPieceColor = Piece::BLACK;
-						break;
-					  case '#' :
-						meNewPieceType = Piece::NONE;
-					  default :
-						break;
-					}
-				}
 			}
-			else if(strEntry.size() == 2)	// The entry is a position
+			else
 			{
-				/* Deleting a piece : if it is a king, update moKings */
-				if(meNewPieceType == Piece::NONE					// If the new piece type is NONE (empty square)
-				&& !moBoard.bIsSquareEmpty(strEntry)				// and the choosen square is not empty
-				&& moBoard.eGetSquareType(strEntry) == Piece::KING)	// and it contains a king
-					moKingAlreadyThere[moBoard.eGetSquareColor(strEntry)].Empty();	// Update moKings
+				Position oPos = oEntry.oGetPosition();
 
-				if(moBoard.poGetPiece(strEntry))			// If the square is not empty
-					delete moBoard.poGetPiece(strEntry);	// Empty it
+				/* Deleting a piece : if it is a king, update moKings */
+				if(oEntry.eGetPieceType() != Piece::KING		// If the new piece type is not KING
+				&& !moBoard.bIsSquareEmpty(oPos)				// and the choosen square is not empty
+				&& moBoard.eGetSquareType(oPos) == Piece::KING)	// and it contains a king
+					moKingAlreadyThere[moBoard.eGetSquareColor(oPos)].Empty();	// Update moKings
+
+				if(moBoard.poGetPiece(oPos))			// If the square is not empty
+					delete moBoard.poGetPiece(oPos);	// Empty it
 
 				Piece * poNewPiece = 0;
 
 				/* Creating the new piece */
-				switch(meNewPieceType)
+				switch(oEntry.eGetPieceType())
 				{
 				  case Piece::PAWN :
-					poNewPiece = new Pawn(meNewPieceColor);
+					  poNewPiece = new Pawn(oEntry.eGetPieceColor());
 					break;
 				  case Piece::ROOK :
-					poNewPiece = new Rook(meNewPieceColor);
+					poNewPiece = new Rook(oEntry.eGetPieceColor());
 					break;
 				  case Piece::KNIGHT :
-					poNewPiece = new Knight(meNewPieceColor);
+					poNewPiece = new Knight(oEntry.eGetPieceColor());
 					break;
 				  case Piece::BISHOP :
-					poNewPiece = new Bishop(meNewPieceColor);
+					poNewPiece = new Bishop(oEntry.eGetPieceColor());
 					break;
 				  case Piece::QUEEN :
-					poNewPiece = new Queen(meNewPieceColor);
+					poNewPiece = new Queen(oEntry.eGetPieceColor());
 					break;
 				  case Piece::KING :
-					poNewPiece = new King(meNewPieceColor);
+					poNewPiece = new King(oEntry.eGetPieceColor());
 					break;
 				  case Piece::NONE :
 				  default :
@@ -148,28 +95,20 @@ void GameEdition::Run()
 				}
 
 				/* If it is a king, check the number of kings, and update moKings */
-				if(meNewPieceType == Piece::KING)
+				if(oEntry.eGetPieceType() == Piece::KING)
 				{
-					if(!moKingAlreadyThere[meNewPieceColor].bIsEmpty())
-					{
-						mpoInterface->DisplayInCheck(moKingAlreadyThere[meNewPieceColor]);
+					if(!moKingAlreadyThere[oEntry.eGetPieceColor()].bIsEmpty())
 						throw exception("You already have a king of that color on the board");
-					}
 					else
-						moKingAlreadyThere[meNewPieceColor] = strEntry;	// Update of moKings
+						moKingAlreadyThere[oEntry.eGetPieceColor()] = oPos;	// Update of moKings
 				}
 
-				moBoard.SetPiece(strEntry, poNewPiece);	// Place the piece
+				moBoard.SetPiece(oPos, poNewPiece);	// Place the piece
 			}
-
-			mpoInterface->DisplayBoard(moBoard);
-			mpoInterface->CommitDisplay();
 		}
 		catch(exception & e)
 		{
-			mpoInterface->DisplayMessage(e.what());
-			mpoInterface->DisplayBoard(moBoard);
-			mpoInterface->CommitDisplay();
+			mpoInterface->AddMessage(e.what());
 		}
 	}
 }
