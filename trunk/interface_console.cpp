@@ -411,7 +411,7 @@ void InterfaceConsole::DisplayCurrentPlayer(Piece::Color eCurrentPlayer)
 	cout << (eCurrentPlayer == Piece::WHITE ? "White":"Black") << " player" << endl;
 }
 
-char InterfaceConsole::cGetNewPieceType(Piece::Color eColor)
+char InterfaceConsole::cGetNewPieceType(Piece::Color)
 {
 	char cNewType = ' ';
 
