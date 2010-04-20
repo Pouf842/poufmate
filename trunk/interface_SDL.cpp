@@ -25,7 +25,7 @@ InterfaceSDL::InterfaceSDL()
 		throw exception("SDL ttf module could not be loaded");
 
 	mpoMenuFont = TTF_OpenFont("angelina.ttf", 65);
-	mpoMessagesFont = TTF_OpenFont("angelina.ttf", 30);
+	mpoMessagesFont = TTF_OpenFont("angelina.ttf", 20);
 
 	if(!mpoMenuFont || !mpoMessagesFont)
 		throw exception("Font couldn't be loaded");
@@ -91,7 +91,7 @@ InterfaceSDL::~InterfaceSDL()
 	SDL_Quit();
 }
 
-void InterfaceSDL::DisplayBoard(const Board & oBoard)
+void InterfaceSDL::BlitBoard(const Board & oBoard)
 {
 	SDL_Rect position;
 	position.x = 0;
@@ -132,7 +132,7 @@ void InterfaceSDL::DisplayBoard(const Board & oBoard)
 		}
 }
 
-void InterfaceSDL::DisplayGameOver(std::string strMessage)
+void InterfaceSDL::BlitGameOver(std::string strMessage)
 {
 	SDL_Color oBlack = {0, 0, 0};
 	SDL_Color oBackGround = {255, 255, 255};
@@ -157,7 +157,7 @@ void InterfaceSDL::DisplayGameOver(std::string strMessage)
 	return;
 }
 
-void InterfaceSDL::DisplayMessage(std::string strMessage)
+void InterfaceSDL::BlitMessage(std::string strMessage)
 {
 	SDL_Color oBlack = {0, 0, 0};
 
@@ -170,56 +170,7 @@ void InterfaceSDL::DisplayMessage(std::string strMessage)
 	}
 }
 
-std::string InterfaceSDL::strGetEntry()
-{
-	string strEntry = "";
-
-	SDL_Event event;
-
-	while(strEntry == "")
-	{
-		SDL_WaitEvent(&event);
-
-		switch(event.type)
-		{
-		  case SDL_QUIT :
-			strEntry = "x";
-			break;
-		  case SDL_MOUSEBUTTONDOWN :
-			strEntry += '0' + event.button.y / SQUARE_WIDTH;
-			strEntry += '0' + event.button.x / SQUARE_HEIGHT;
-			if(event.button.button == SDL_BUTTON_RIGHT)
-				strEntry += "?";
-			break;
-		  case SDL_KEYUP  :
-			switch(event.key.keysym.sym)
-			{
-			  case SDLK_x :
-				strEntry = "x";
-				break;
-			  case SDLK_c :
-			    strEntry = "c";
-				break;
-			}
-			break;
-		  case SDL_MOUSEBUTTONUP :
-/*			if(event.button.button == SDL_BUTTON_RIGHT)
-			{
-				strEntry += '0' + event.button.y / SQUARE_WIDTH;
-				strEntry += '0' + event.button.x / SQUARE_HEIGHT;
-			}*/
-			return "";
-			break;
-		  default :
-			strEntry = "";
-			break;
-		}
-	}
-
-	return strEntry;
-}
-
-void InterfaceSDL::DisplayPossibilities(vector<Position> oPossibilities)
+void InterfaceSDL::BlitPossibilities(vector<Position> oPossibilities)
 {
 	SDL_Rect position;
 	unsigned int iIndex = 0;
@@ -233,7 +184,7 @@ void InterfaceSDL::DisplayPossibilities(vector<Position> oPossibilities)
 	}
 }
 
-void InterfaceSDL::DisplayInCheck(Position oPos)
+void InterfaceSDL::BlitInCheck(Position oPos)
 {
 	SDL_Rect position;
 	position.y = oPos.mX * SQUARE_HEIGHT;
@@ -242,7 +193,7 @@ void InterfaceSDL::DisplayInCheck(Position oPos)
 	SDL_BlitSurface(mpoGame[CHESS], NULL, mpoGame[SCREEN], &position);
 }
 
-void InterfaceSDL::DisplaySelection(Position oPos)
+void InterfaceSDL::BlitSelection(Position oPos)
 {
 	SDL_Rect position;
 	position.x = oPos.mY * SQUARE_HEIGHT;
@@ -259,7 +210,7 @@ Interface * InterfaceSDL::poGetInstance()
 	return mpoInstance;
 }
 
-void InterfaceSDL::DisplayCurrentPlayer(Piece::Color eColor)
+void InterfaceSDL::BlitCurrentPlayer(Piece::Color eColor)
 {
 	SDL_Color oPlayerColor;
 	string strPlayer = "";
@@ -287,11 +238,6 @@ void InterfaceSDL::DisplayCurrentPlayer(Piece::Color eColor)
 	position.y = 6 * SQUARE_HEIGHT;
 
 	SDL_BlitSurface(poCurrentPlayer, NULL, mpoGame[SCREEN], &position);
-}
-
-void InterfaceSDL::CommitDisplay()
-{
-	SDL_Flip(mpoGame[SCREEN]);
 }
 
 char InterfaceSDL::cGetNewPieceType(Piece::Color eColor)
@@ -365,109 +311,6 @@ char InterfaceSDL::cGetNewPieceType(Piece::Color eColor)
 	return cReturn;
 }
 
-std::string InterfaceSDL::strGetEditionEntry()
-{
-	SDL_Rect position;
-
-	position.x = 700;
-	position.y = 0;
-
-	SDL_Rect oBoardPiece;
-	oBoardPiece.h = 6 * 87;
-	oBoardPiece.x = 0;
-	oBoardPiece.w = 2 * 87;
-	oBoardPiece.y = 0;
-
-	SDL_BlitSurface(mpoGame[BOARD], &oBoardPiece, mpoGame[SCREEN], &position);
-
-	oBoardPiece.h = 87;
-	oBoardPiece.w = 87;
-	oBoardPiece.x = 87;
-	oBoardPiece.y = 1;
-
-	position.x = 743;
-	position.y = 528;
-
-	SDL_BlitSurface(mpoGame[BOARD], &oBoardPiece, mpoGame[SCREEN], &position);
-
-	position.x = 700;
-	position.y = 0;
-
-	for(unsigned int i = 0; i < 6; ++i)
-	{
-		position.y = 87 * i + 5;
-		SDL_BlitSurface(mpoPieces[Piece::WHITE][i], NULL, mpoGame[SCREEN], &position);
-	}
-
-	position.x = 792;
-	for(unsigned int i = 0; i < 6; ++i)
-	{
-		position.y = 87 * i + 5;
-		SDL_BlitSurface(mpoPieces[Piece::BLACK][i], NULL, mpoGame[SCREEN], &position);
-	}
-
-	SDL_Flip(mpoGame[SCREEN]);
-
-	string strReturn = "";
-	SDL_Event event;
-
-	while(strReturn == "")
-	{
-		SDL_WaitEvent(&event);
-
-		if(event.type == SDL_MOUSEBUTTONDOWN
-		&& event.button.button == SDL_BUTTON_LEFT)
-		{
-			if(event.button.x > 879);
-			else if(event.button.x < 700)
-			{
-				strReturn += '0' + event.button.y / SQUARE_WIDTH;
-				strReturn += '0' + event.button.x / SQUARE_HEIGHT;
-			}
-			else
-			{
-				if(event.button.y <= 92)
-					strReturn += 'P';
-				else if(event.button.y <= 179)
-					strReturn += 'R';
-				else if(event.button.y <= 266)
-					strReturn += 'N';
-				else if(event.button.y <= 353)
-					strReturn += 'B';
-				else if(event.button.y <= 440)
-					strReturn += 'Q';
-				else if(event.button.y <= 527)
-					strReturn += 'K';
-				else if(event.button.y <= 614
-					 && event.button.x >= 743
-					 && event.button.x <= 830)
-					 return "#";
-
-				if(event.button.x > 787)
-					strReturn[0] = tolower(strReturn[0]);
-			}
-		}
-		else if(event.type == SDL_KEYDOWN)
-		{
-			switch(event.key.keysym.sym)
-			{
-			  case SDLK_x :
-				return "x";
-				break;
-			  case SDLK_KP1 :
-				return "1";
-			  case SDLK_KP2 :
-				return "2";
-				break;
-			}
-		}
-		else if(event.type == SDL_QUIT)
-			return "x";
-	}
-
-	return strReturn;
-}
-
 int InterfaceSDL::iGetMenuEntry(const std::vector<std::string> & oMenu)
 {
 	SDL_Color oRed = {255, 0, 0};
@@ -483,6 +326,7 @@ int InterfaceSDL::iGetMenuEntry(const std::vector<std::string> & oMenu)
 	position.x = 0;
 	position.y = 0;
 
+	//SDL_FillRect(mpoGame[SCREEN], NULL, SDL_MapRGB(mpoGame[SCREEN]->format, 0, 0, 0));
 	SDL_BlitSurface(mpoGame[BOARD], NULL, mpoGame[SCREEN], &position);
 
 	position.x = FONT_HEIGHT;
@@ -538,6 +382,7 @@ int InterfaceSDL::iGetMenuEntry(const std::vector<std::string> & oMenu)
 					oBoardPosition.x = 0;
 					oBoardPosition.y = 0;
 
+					//SDL_FillRect(mpoGame[SCREEN], NULL, SDL_MapRGB(mpoGame[SCREEN]->format, 0, 0, 0));
 					SDL_BlitSurface(mpoGame[BOARD], NULL, mpoGame[SCREEN], &oBoardPosition);
 					oBoardPosition.x += 8 * SQUARE_HEIGHT;
 					SDL_BlitSurface(mpoGame[MESSAGEBOARD], NULL, mpoGame[SCREEN], &oBoardPosition);
@@ -588,8 +433,11 @@ int InterfaceSDL::iGetMenuEntry(const std::vector<std::string> & oMenu)
 				return 3;
 				break;
 			  case SDLK_KP4 :
-			  case SDLK_x :
 				return 4;
+				break;
+			  case SDLK_KP5 :
+			  case SDLK_x :
+			    return 5;
 				break;
 			  default :
 				break;
@@ -607,114 +455,241 @@ char InterfaceSDL::cGetPlayerColorChoice()
 	return 'W';
 }
 
-string InterfaceSDL::strKeyboardEntry(string strMessage, std::string strDefaultValue)
+void InterfaceSDL::Pause()
 {
-	SDL_Color oBlack = {0, 0, 0};
-	SDL_Color oWhite = {255, 255, 255};
+}
 
-	SDL_Event oEvent;
-	bool bContinue = true;
-	string strKeyboardEntry = "   .   .   .   ";
-	unsigned int iIndex = 0;
-	SDL_Rect oPosition = {0, 0};
+void InterfaceSDL::BlitGame(const Game & oGame)
+{
+	BlitBoard(oGame.oGetBoard());
+	if(oGame.bIsBlackInCheck())
+		BlitInCheck(oGame.oGetKingPosition(Piece::BLACK));
+	else if(oGame.bIsWhiteInCheck())
+		BlitInCheck(oGame.oGetKingPosition(Piece::WHITE));
+}
 
-	SDL_BlitSurface(mpoGame[BOARD], NULL, mpoGame[SCREEN], &oPosition);
+void InterfaceSDL::DisplayGame(const Game & oGame)
+{
+	BlitBoard(oGame.oGetBoard());
+	if(oGame.bIsBlackInCheck())
+		BlitInCheck(oGame.oGetKingPosition(Piece::BLACK));
+	else if(oGame.bIsWhiteInCheck())
+		BlitInCheck(oGame.oGetKingPosition(Piece::WHITE));
 
-	SDL_Surface * poMessageSurface = TTF_RenderText_Solid(mpoMenuFont, strMessage.c_str(), oBlack);
-	SDL_Surface * poEntrySurface = TTF_RenderText_Shaded(mpoMessagesFont, strKeyboardEntry.c_str(), oBlack, oWhite);
-	
-	/* Variation of the entry background size (due to variation of entry size) are visible.
-	   So we add another background to the max size to hide it.*/
-	SDL_Surface * poGetMaxEntryWitdh = TTF_RenderText_Shaded(mpoMessagesFont, "222.222.222.222", oWhite, oWhite);
-	int iMaxEntryWidth = poGetMaxEntryWitdh->w;
-	SDL_FreeSurface(poGetMaxEntryWitdh);
+	SDL_Flip(mpoGame[SCREEN]);
+}
 
-	SDL_Surface * poBackground = SDL_CreateRGBSurface(SDL_HWSURFACE, iMaxEntryWidth, poEntrySurface->h, 32, 0, 0, 0, 0);
-	SDL_FillRect(poBackground, NULL, SDL_MapRGB(poBackground->format, 255, 255, 255));
-	SDL_Rect oBGPosition;
+GameEntry InterfaceSDL::oGetGameEntry(Game & oGame)
+{
+	DisplayGame(oGame);
+	bool bSelectionOk = false;
+	SDL_Event event;
+	Position oFirstSelection;
+	Position oSecondSelection;
+	Position oPossibilitiesPosition;
+	vector<Position> oPossibilities;
 
-	oPosition.x = WINDOW_WIDTH / 2 - poMessageSurface->w / 2;
-	oPosition.y = 200;
+	while(!bSelectionOk)
+	{
+		try
+		{
+			SDL_WaitEvent(&event);
 
-	SDL_BlitSurface(poMessageSurface, NULL, mpoGame[SCREEN], &oPosition);
+			switch(event.type)
+			{
+			  case SDL_QUIT :
+				return GameEntry("x");
+				break;
+			  case SDL_MOUSEBUTTONDOWN :
+				if(event.button.button == SDL_BUTTON_LEFT)
+				{
+					if(oFirstSelection.bIsEmpty())
+					{
+						oFirstSelection = Position(event.button.y / SQUARE_WIDTH, event.button.x / SQUARE_HEIGHT);
 
-	oBGPosition.x = WINDOW_WIDTH / 2 - poBackground->w / 2;
-	oBGPosition.y = oPosition.y + poMessageSurface->h + 30;
+						if(!oGame.oGetBoard().bIsSquareEmpty(oFirstSelection))
+						{
+							if(oGame.oGetBoard().eGetSquareColor(oFirstSelection) != oGame.eGetCurrentPlayer())
+							{
+								BlitMessage("This piece doesn't belong to you");
+								oFirstSelection.Empty();
+							}
+						}
+						else
+							oFirstSelection.Empty();
+					}
+					else
+					{
+						oSecondSelection = Position(event.button.y / SQUARE_WIDTH, event.button.x / SQUARE_HEIGHT);
+						bSelectionOk = true;
+					}
+				}
+				else if(event.button.button == SDL_BUTTON_RIGHT)
+				{
+					oPossibilitiesPosition = Position(event.button.y / SQUARE_WIDTH, event.button.x / SQUARE_HEIGHT);
+					oPossibilities = oGame.oGetPossibilities(oPossibilitiesPosition);
+				}
+				break;
+			  case SDL_MOUSEBUTTONUP :
+				if(event.button.button == SDL_BUTTON_RIGHT)
+				{
+					Position oMousePosition(event.button.y / SQUARE_WIDTH, event.button.x / SQUARE_HEIGHT);
+					  
+					for(unsigned int i = 0; i < oPossibilities.size(); ++i)
+						if(oGame.oGetBoard().eGetSquareColor(oPossibilitiesPosition) == oGame.eGetCurrentPlayer()
+						&& oPossibilities[i] == oMousePosition)
+							return GameEntry(oPossibilitiesPosition, oMousePosition);
 
-	SDL_BlitSurface(poBackground, NULL, mpoGame[SCREEN], &oBGPosition);
+					oPossibilities.clear();
+				}
 
-	oPosition.x = WINDOW_WIDTH / 2 - poEntrySurface->w / 2;
-	oPosition.y = oBGPosition.y;
+				break;
+			  case SDL_KEYUP  :
+				switch(event.key.keysym.sym)
+				{
+				  case SDLK_x :
+					return GameEntry("x");
+					break;
+				  case SDLK_c :
+					return GameEntry("c");
+					break;
+				}
+				break;
+			  default :
+				break;
+			}
+				
+			BlitGame(oGame);
+			BlitPossibilities(oPossibilities);
+			if(!oFirstSelection.bIsEmpty())
+				BlitSelection(oFirstSelection);
 
-	SDL_BlitSurface(poEntrySurface, NULL, mpoGame[SCREEN], &oPosition);
+			SDL_Flip(mpoGame[SCREEN]);
+			/*if(strFirstSelection == "x"
+			|| strFirstSelection == "c")
+				return GameEntry(strFirstSelection);
+
+			oGame.CheckSelectionCoords(strFirstSelection);
+
+			strSecondSelection = strGetEntry();
+
+			if(strSecondSelection == "x"
+			|| strSecondSelection == "c")
+				return GameEntry(strSecondSelection);
+
+			bSelectionOk = true;*/
+		}
+		catch(exception & e)
+		{
+			BlitMessage(e.what());
+		}
+	}
+
+	return GameEntry(oFirstSelection, oSecondSelection);
+}
+
+void InterfaceSDL::AddMessage(std::string)
+{
+}
+
+void InterfaceSDL::BlitEditionSelection(Piece::PieceType eSelectedType, Piece::Color eSelectedColor)
+{
+	if(eSelectedType == Piece::NONE)
+	{
+		SDL_Rect position = {743, 528};
+		SDL_BlitSurface(mpoGame[SELECTION], NULL, mpoGame[SCREEN], &position);
+	}
+}
+
+EditionEntry InterfaceSDL::oGetEditionEntry(const GameEdition & oEdition)
+{
+	static Piece::PieceType eSelectedType = Piece::NONE;
+	static Piece::Color eSelectedColor = Piece::BLACK;
+
+	BlitBoard(oEdition.oGetBoard());
+	BlitEditionCommands();
+	BlitEditionSelection(eSelectedType, eSelectedColor);
 
 	SDL_Flip(mpoGame[SCREEN]);
 
-	do
+	SDL_Event event;
+	bool bEntryOk = false;
+
+	while(!bEntryOk)
 	{
-		SDL_WaitEvent(&oEvent);
+		SDL_WaitEvent(&event);
 
-		if(oEvent.type == SDL_KEYDOWN)
+		switch(event.type)
 		{
-			switch(oEvent.key.keysym.sym)
-			{
-			  case SDLK_ESCAPE :
-			    strKeyboardEntry = "Esc";
-				bContinue = false;
-				break;
-			  case SDLK_KP0 :
-			  case SDLK_KP1 :
-			  case SDLK_KP2 :
-			  case SDLK_KP3 :
-			  case SDLK_KP4 :
-			  case SDLK_KP5 :
-			  case SDLK_KP6 :
-			  case SDLK_KP7 :
-			  case SDLK_KP8 :
-			  case SDLK_KP9 :
-				if(iIndex < strKeyboardEntry.size())
-				{
-					strKeyboardEntry[iIndex] = '0' + (oEvent.key.keysym.sym - SDLK_KP0);
-					++iIndex;
-
-					if(iIndex == 3 || iIndex == 7 || iIndex == 11)
-						++iIndex;
-
-					SDL_FreeSurface(poEntrySurface);
-					poEntrySurface = TTF_RenderText_Shaded(mpoMessagesFont, strKeyboardEntry.c_str(), oBlack, oWhite);
-					oPosition.x = WINDOW_WIDTH / 2 - poEntrySurface->w / 2;
-					SDL_BlitSurface(poBackground, NULL, mpoGame[SCREEN], &oBGPosition);
-					SDL_BlitSurface(poEntrySurface, NULL, mpoGame[SCREEN], &oPosition);
-					SDL_Flip(mpoGame[SCREEN]);
-				}
-				break;
-			  case SDLK_BACKSPACE :
-				if(iIndex > 0)
-				{
-					--iIndex;
-					if(iIndex == 3 || iIndex == 7 || iIndex == 11)
-						--iIndex;
-
-					strKeyboardEntry[iIndex] = ' ';
-
-					SDL_FreeSurface(poEntrySurface);
-					poEntrySurface = TTF_RenderText_Shaded(mpoMessagesFont, strKeyboardEntry.c_str(), oBlack, oWhite);
-					oPosition.x = WINDOW_WIDTH / 2 - poEntrySurface->w / 2;
-					SDL_BlitSurface(poBackground, NULL, mpoGame[SCREEN], &oBGPosition);
-					SDL_BlitSurface(poEntrySurface, NULL, mpoGame[SCREEN], &oPosition);
-					SDL_Flip(mpoGame[SCREEN]);
-				}
-			  case SDLK_RIGHT :
-			  case SDLK_TAB :
-			    if(iIndex < 11)
-			    break;
-			}
+		  case SDL_QUIT :
+			return EditionEntry("x");
+			break;
+		  case SDL_MOUSEBUTTONDOWN :
+			break;
+		  case SDL_KEYDOWN :
+			break;
+		  default :
+			break;
 		}
 
-	} while(bContinue);
+		BlitBoard(oEdition.oGetBoard());
+		BlitEditionCommands();
+		BlitEditionSelection(eSelectedType, eSelectedColor);
 
-	SDL_FreeSurface(poMessageSurface);
-	SDL_FreeSurface(poEntrySurface);
+		SDL_Flip(mpoGame[SCREEN]);
+	}
 
+	return EditionEntry("");
+}
+
+std::string InterfaceSDL::strGetIPEntry()
+{
 	return "";
+}
+
+std::string InterfaceSDL::strGetPortEntry()
+{
+	return "";
+}
+
+void InterfaceSDL::BlitEditionCommands()
+{
+	SDL_Rect position;
+
+	position.x = 700;
+	position.y = 0;
+
+	SDL_Rect oBoardPiece;
+	oBoardPiece.h = 6 * SQUARE_HEIGHT;
+	oBoardPiece.x = 0;
+	oBoardPiece.w = 2 * SQUARE_WIDTH;
+	oBoardPiece.y = 0;
+
+	SDL_BlitSurface(mpoGame[BOARD], &oBoardPiece, mpoGame[SCREEN], &position);
+
+	oBoardPiece.h = SQUARE_HEIGHT;
+	oBoardPiece.w = SQUARE_WIDTH;
+	oBoardPiece.x = SQUARE_WIDTH;
+	oBoardPiece.y = 1;
+
+	position.x = 743;
+	position.y = 528;
+
+	SDL_BlitSurface(mpoGame[BOARD], &oBoardPiece, mpoGame[SCREEN], &position);
+
+	position.x = 700;
+	position.y = 0;
+
+	for(unsigned int i = 0; i < 6; ++i)
+	{
+		position.y = 87 * i + 5;
+		SDL_BlitSurface(mpoPieces[Piece::WHITE][i], NULL, mpoGame[SCREEN], &position);
+	}
+
+	position.x = 792;
+	for(unsigned int i = 0; i < 6; ++i)
+	{
+		position.y = 87 * i + 5;
+		SDL_BlitSurface(mpoPieces[Piece::BLACK][i], NULL, mpoGame[SCREEN], &position);
+	}
 }

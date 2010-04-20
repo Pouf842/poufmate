@@ -27,8 +27,6 @@ class Interface
 	static Interface * mpoInstance;	// The unique instance of the class
 	std::vector<std::string> moMessages;
 
-	virtual void DisplayEditionCommands() = 0;
-
 	/**
 	 * Destructor
 	 */
@@ -39,9 +37,9 @@ class Interface
 	 * Pause the program in wait of an entry from the user
 	 * to continue
 	 */
-	virtual void GetEmptyEntry() = 0;
+	virtual void Pause() = 0;
 	virtual void DisplayGame(const Game &) = 0;
-	virtual GameEntry oGetGameEntry(const Game &) = 0;
+	virtual GameEntry oGetGameEntry(Game &) = 0;
 	virtual void AddMessage(std::string);
 	virtual EditionEntry oGetEditionEntry(const GameEdition &) = 0;
 	virtual std::string strGetIPEntry() = 0;

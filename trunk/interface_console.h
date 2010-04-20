@@ -40,9 +40,9 @@ class InterfaceConsole : public Interface
 	virtual ~InterfaceConsole();
 
   public :
-    virtual void GetEmptyEntry();
+    virtual void Pause();
 	virtual void DisplayGame(const Game &);
-	virtual GameEntry oGetGameEntry(const Game & poGame);
+	virtual GameEntry oGetGameEntry(Game & poGame);
 	virtual EditionEntry oGetEditionEntry(const GameEdition &);
 	virtual std::string strGetIPEntry();
 	virtual std::string strGetPortEntry();

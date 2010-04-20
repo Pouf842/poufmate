@@ -255,7 +255,7 @@ void LanGame::Run()
 		catch(exception & e)
 		{
 			mpoInterface->AddMessage(e.what());
-			mpoInterface->GetEmptyEntry();
+			mpoInterface->Pause();
 		}
 	}
 }
