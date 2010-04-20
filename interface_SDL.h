@@ -20,21 +20,27 @@ class InterfaceSDL : public Interface
 
 	InterfaceSDL();
 	virtual ~InterfaceSDL();
+	virtual void BlitBoard(const Board &);
+	virtual void BlitMessage(std::string strMessage);
+	virtual void BlitPossibilities(std::vector<Position>);
+	virtual void BlitInCheck(Position);
+	virtual void BlitCurrentPlayer(Piece::Color);
+	virtual void BlitSelection(Position);
+	virtual void BlitGameOver(std::string);
+	virtual void BlitGame(const Game &);
+	virtual void BlitEditionCommands();
+	virtual void BlitEditionSelection(Piece::PieceType, Piece::Color);
   public :
-	virtual void DisplayBoard(const Board &);
-	virtual void DisplayMessage(std::string strMessage);
-	virtual std::string strGetEntry();
-	virtual void DisplayPossibilities(std::vector<Position>);
-	virtual void DisplayInCheck(Position);
-	virtual void DisplayCurrentPlayer(Piece::Color);
-	virtual void DisplaySelection(Position);
-	virtual void CommitDisplay();
+    virtual void Pause();
+	virtual void DisplayGame(const Game &);
+	virtual GameEntry oGetGameEntry(Game &);
+	virtual void AddMessage(std::string);
+	virtual EditionEntry oGetEditionEntry(const GameEdition &);
+	virtual std::string strGetIPEntry();
+	virtual std::string strGetPortEntry();
 	virtual char cGetNewPieceType(Piece::Color);
-	virtual char cGetPlayerColorChoice();
 	virtual int iGetMenuEntry(const std::vector<std::string> &);
-	virtual std::string strGetEditionEntry();
-	virtual void DisplayGameOver(std::string);
-	virtual std::string strKeyboardEntry(std::string strMessage, std::string strDefaultValue = "");
+	virtual char cGetPlayerColorChoice();
 	static Interface * poGetInstance();
 };
 

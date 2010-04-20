@@ -33,8 +33,6 @@ class GameEdition : public Module
 	 * Run the edition mode
 	 */
 	virtual void Run();
-
-	bool bIsEntryCorrect(std::string strEntry);
 	Board oGetBoard() const;
 };
 

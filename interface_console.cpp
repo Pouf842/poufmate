@@ -11,7 +11,7 @@ InterfaceConsole::~InterfaceConsole()
 {
 }
 
-GameEntry InterfaceConsole::oGetGameEntry(const Game & oGame)
+GameEntry InterfaceConsole::oGetGameEntry(Game & oGame)
 {
 	DisplayGame(oGame);
 	
@@ -290,7 +290,7 @@ std::string InterfaceConsole::strGetIPEntry()
 	return strIP;
 }
 
-void InterfaceConsole::GetEmptyEntry()
+void InterfaceConsole::Pause()
 {
 	string strEmpty;
 	cin >> strEmpty;
