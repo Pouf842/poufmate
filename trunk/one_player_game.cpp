@@ -9,19 +9,17 @@ using namespace std;
 
 OnePlayerGame::OnePlayerGame(Interface * poInterface) : Game(poInterface)
 {
-	srand((unsigned int) time(NULL));
 }
 
 OnePlayerGame::OnePlayerGame(const Board & oBoard, Interface * poInterface) : Game(oBoard, poInterface)
 {
-	srand((unsigned int) time(NULL));
 }
 
 OnePlayerGame::~OnePlayerGame()
 {
 }
 
-void OnePlayerGame::Run()
+std::string OnePlayerGame::Run()
 {
 	if(!mpoInterface)
 		throw exception("The interface is not defined");
@@ -54,6 +52,9 @@ void OnePlayerGame::Run()
 						CancelLastMove();
 						CancelLastMove();
 					}
+					else if(strEntry == "q"
+					|| strEntry == "r")
+						return strEntry;
 				}
 				/* Select a piece or make a move */
 				else
@@ -121,6 +122,8 @@ void OnePlayerGame::Run()
 			mpoInterface->AddMessage(e.what());
 		}
 	}
+
+	return "";
 }
 
 void OnePlayerGame::PlayComputerMove(unsigned int iDepth)

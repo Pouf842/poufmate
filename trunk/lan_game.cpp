@@ -136,7 +136,7 @@ void LanGame::ClientSocket()
 	mePlayerColor = (strColor[8] == 'W' ? Piece::WHITE : Piece::BLACK);
 }
 
-void LanGame::Run()
+std::string LanGame::Run()
 {
 	if(!mpoInterface)
 		throw exception("The interface is not defined");
@@ -157,7 +157,7 @@ void LanGame::Run()
 		ClientSocket();
 		break;
 	  default :
-		return;
+		return "";
 	    break;
 	}
 
@@ -193,6 +193,9 @@ void LanGame::Run()
 						else
 							mpoInterface->AddMessage("The opponent refuse the annulment");
 					}
+					else if(strEntry == "q"
+						 || strEntry == "r")
+						 return strEntry;
 				}
 				else
 				{
@@ -258,6 +261,8 @@ void LanGame::Run()
 			mpoInterface->Pause();
 		}
 	}
+
+	return "";
 }
 
 void LanGame::PlayOpponentMove()

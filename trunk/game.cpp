@@ -6,6 +6,14 @@ using namespace std;
 Game::Game(Interface * poInterface)
 {
 	SetInterface(poInterface);
+	Initialize();
+
+}
+
+void Game::Initialize()
+{
+	// Initialize the board to a new one (in case of re-initializing)
+	moBoard = Board();
 
 	/* Initialise the positions of the kings */
 	moKings[Piece::WHITE] = Position(7, 4);	

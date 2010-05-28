@@ -63,7 +63,7 @@ class LanGame : public Game
 	 * Implement of Module::Run()
 	 * Run the lan party
 	 */
-	virtual void Run();
+	virtual std::string Run();
 };
 
 #endif

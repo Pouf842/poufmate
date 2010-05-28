@@ -50,7 +50,7 @@ class OnePlayerGame : public Game
 	 * Overload of Game::Run()
 	 * @see Game::Run()
 	 */
-	virtual void Run();
+	virtual std::string Run();
 };
 
 #endif

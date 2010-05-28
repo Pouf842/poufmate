@@ -62,9 +62,18 @@ int main(int argc, char * argv[])
 				if(!bQuit)
 				{
 					poChoosenModule->SetInterface(poInterface);
-					poChoosenModule->Run();
+					string strCmdReturn = "";
+
+					while((strCmdReturn = poChoosenModule->Run()) == "r")
+					{
+						poChoosenModule->Initialize();
+					}
+
 					delete poChoosenModule;
 					poChoosenModule = NULL;
+
+					if(strCmdReturn == "q")
+						bQuit = true;
 				}
 			}
 			catch(exception & e)

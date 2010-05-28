@@ -86,6 +86,7 @@ class Game : public Module
 	 * Move a piece from the first given position, to the second
 	 */
 	virtual void MovePiece(Position oPos1, Position oPos2);
+	virtual void Initialize();
 
   public :
 
