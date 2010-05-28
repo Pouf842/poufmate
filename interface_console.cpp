@@ -37,7 +37,9 @@ GameEntry InterfaceConsole::oGetGameEntry(Game & oGame)
 			strFirstSelection = strGetEntry();
 
 			if(strFirstSelection == "x"
-			|| strFirstSelection == "c")
+			|| strFirstSelection == "c"
+			|| strFirstSelection == "r"
+			|| strFirstSelection == "q")
 				return GameEntry(strFirstSelection);
 
 			oGame.CheckSelectionCoords(strFirstSelection);
@@ -45,7 +47,9 @@ GameEntry InterfaceConsole::oGetGameEntry(Game & oGame)
 			strSecondSelection = strGetEntry();
 
 			if(strSecondSelection == "x"
-			|| strSecondSelection == "c")
+			|| strSecondSelection == "c"
+			|| strSecondSelection == "r"
+			|| strSecondSelection == "q")
 				return GameEntry(strSecondSelection);
 
 			bSelectionOk = true;

@@ -32,8 +32,9 @@ class GameEdition : public Module
 	 * Implement of Module::Run()
 	 * Run the edition mode
 	 */
-	virtual void Run();
+	virtual std::string Run();
 	Board oGetBoard() const;
+	void Initialize();
 };
 
 #endif

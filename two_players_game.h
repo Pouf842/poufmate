@@ -37,7 +37,7 @@ class TwoPlayersGame : public Game
 	 * controls their movements, and transmit them to the board
 	 * @see Module::Run()
 	 */
-	virtual void Run();
+	virtual std::string Run();
 };
 
 #endif

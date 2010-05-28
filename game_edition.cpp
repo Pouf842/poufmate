@@ -25,7 +25,12 @@ Board GameEdition::oGetBoard() const
 	return moBoard;
 }
 
-void GameEdition::Run()
+void GameEdition::Initialize()
+{
+	moBoard = Board();
+}
+
+std::string GameEdition::Run()
 {
 	bool bQuit = false;
 
@@ -111,4 +116,6 @@ void GameEdition::Run()
 			mpoInterface->AddMessage(e.what());
 		}
 	}
+
+	return "";
 }

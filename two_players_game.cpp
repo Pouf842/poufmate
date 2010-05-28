@@ -19,7 +19,7 @@ TwoPlayersGame::~TwoPlayersGame()
 {
 }
 
-void TwoPlayersGame::Run()
+std::string TwoPlayersGame::Run()
 {
 	if(!mpoInterface)
 		throw exception("The interface is not defined");
@@ -45,6 +45,10 @@ void TwoPlayersGame::Run()
 					CancelLastMove();
 					SwitchPlayer();
 				}
+				else if(strEntry == "r")
+					return "r";
+				else if(strEntry == "q")
+					return "q";
 			}
 			/* Select a piece or make a move */
 			else
@@ -102,5 +106,5 @@ void TwoPlayersGame::Run()
 		}
 	}
 
-	return;
+	return "";
 }
