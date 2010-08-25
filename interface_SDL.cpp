@@ -8,6 +8,7 @@
 #define FONT_HEIGHT 69
 #define WINDOW_WIDTH (8 * SQUARE_WIDTH + SIDE_BOARD_WIDTH)
 #define WINDOW_HEIGHT (8 * SQUARE_HEIGHT)
+#define BACKGROUNDCOLOR 200, 200, 200
 
 using namespace std;
 
@@ -326,7 +327,7 @@ int InterfaceSDL::iGetMenuEntry(const std::vector<std::string> & oMenu)
 	position.x = 0;
 	position.y = 0;
 
-	//SDL_FillRect(mpoGame[SCREEN], NULL, SDL_MapRGB(mpoGame[SCREEN]->format, 0, 0, 0));
+	SDL_FillRect(mpoGame[SCREEN], NULL, SDL_MapRGB(mpoGame[SCREEN]->format, BACKGROUNDCOLOR));
 	SDL_BlitSurface(mpoGame[BOARD], NULL, mpoGame[SCREEN], &position);
 
 	position.x = FONT_HEIGHT;
@@ -594,10 +595,40 @@ void InterfaceSDL::AddMessage(std::string)
 
 void InterfaceSDL::BlitEditionSelection(Piece::PieceType eSelectedType, Piece::Color eSelectedColor)
 {
-	if(eSelectedType == Piece::NONE)
+	unsigned int iColorFactor = (eSelectedColor == Piece::WHITE ? 0 : 1);
+	SDL_Rect oSelectionPosition = {SQUARE_WIDTH * (8 +iColorFactor) + 5, 1};
+	switch(eSelectedType)
 	{
-		SDL_Rect position = {743, 528};
-		SDL_BlitSurface(mpoGame[SELECTION], NULL, mpoGame[SCREEN], &position);
+	  case Piece::PAWN :
+		SDL_BlitSurface(mpoGame[SELECTION], NULL, mpoGame[SCREEN], &oSelectionPosition);
+		break;
+	  case Piece::ROOK :
+		oSelectionPosition.y += SQUARE_HEIGHT;
+		SDL_BlitSurface(mpoGame[SELECTION], NULL, mpoGame[SCREEN], &oSelectionPosition);
+		break;
+	  case Piece::KNIGHT :
+		oSelectionPosition.y += SQUARE_HEIGHT * 2;
+		SDL_BlitSurface(mpoGame[SELECTION], NULL, mpoGame[SCREEN], &oSelectionPosition);
+		break;
+	  case Piece::BISHOP :
+		oSelectionPosition.y += SQUARE_HEIGHT * 3;
+		SDL_BlitSurface(mpoGame[SELECTION], NULL, mpoGame[SCREEN], &oSelectionPosition);
+		break;
+	  case Piece::QUEEN :
+		oSelectionPosition.y += SQUARE_HEIGHT * 4;
+		SDL_BlitSurface(mpoGame[SELECTION], NULL, mpoGame[SCREEN], &oSelectionPosition);
+		break;
+	  case Piece::KING :
+		oSelectionPosition.y += SQUARE_HEIGHT * 5;
+		SDL_BlitSurface(mpoGame[SELECTION], NULL, mpoGame[SCREEN], &oSelectionPosition);
+		break;
+	  case Piece::NONE :
+		oSelectionPosition.x = SQUARE_WIDTH * 8 + 5 + SQUARE_WIDTH / 2;
+		oSelectionPosition.y += SQUARE_HEIGHT * 6 + 5;
+		SDL_BlitSurface(mpoGame[SELECTION], NULL, mpoGame[SCREEN], &oSelectionPosition);
+		break;
+	  default :
+		break;
 	}
 }
 
@@ -605,6 +636,11 @@ EditionEntry InterfaceSDL::oGetEditionEntry(const GameEdition & oEdition)
 {
 	static Piece::PieceType eSelectedType = Piece::NONE;
 	static Piece::Color eSelectedColor = Piece::BLACK;
+
+	unsigned int iXMinEdition = 700;
+	unsigned int iYMinEdition = 0;
+	unsigned int iXMaxEdition = 700 + 2 * SQUARE_WIDTH;
+	unsigned int iYMaxEdition = 7 * SQUARE_HEIGHT + 5;
 
 	BlitBoard(oEdition.oGetBoard());
 	BlitEditionCommands();
@@ -625,19 +661,73 @@ EditionEntry InterfaceSDL::oGetEditionEntry(const GameEdition & oEdition)
 			return EditionEntry("x");
 			break;
 		  case SDL_MOUSEBUTTONDOWN :
+			if(event.button.x >= iXMinEdition && event.button.x <= iXMaxEdition
+			&& event.button.y >= iYMinEdition && event.button.y <= iYMaxEdition)
+			{
+				if(event.button.x < iXMinEdition + SQUARE_WIDTH)
+					eSelectedColor = Piece::WHITE;
+				else
+					eSelectedColor = Piece::BLACK;
+
+				unsigned int iY = (event.button.y - iYMinEdition) /  SQUARE_HEIGHT + 1;
+
+				switch(iY)
+				{
+				  case 1 :
+					eSelectedType = Piece::PAWN;
+					break;
+				  case 2 :
+					eSelectedType = Piece::ROOK;
+					break;
+				  case 3 :
+					eSelectedType = Piece::KNIGHT;
+					break;
+				  case 4 :
+					eSelectedType = Piece::BISHOP;
+					break;
+				  case 5 :
+					eSelectedType = Piece::QUEEN;
+					break;
+				  case 6 :
+					eSelectedType = Piece::KING;
+					break;
+				  case 7:
+					eSelectedType = Piece::NONE;
+					break;
+				  default:
+					break;
+				}
+				
+				BlitBoard(oEdition.oGetBoard());
+				BlitEditionCommands();
+				BlitEditionSelection(eSelectedType, eSelectedColor);
+
+				SDL_Flip(mpoGame[SCREEN]);
+			}
+			else if(event.button.x < SQUARE_WIDTH * 8)
+			{
+				unsigned int iX = event.button.y / SQUARE_WIDTH;
+				unsigned int iY = event.button.x / SQUARE_HEIGHT;
+				return EditionEntry(Position(iX, iY), eSelectedType, eSelectedColor);
+			}
+
 			break;
 		  case SDL_KEYDOWN :
+			if(event.key.keysym.sym == SDLK_x)
+				return EditionEntry("x");
+			  
 			break;
 		  default :
 			break;
 		}
 
-		BlitBoard(oEdition.oGetBoard());
-		BlitEditionCommands();
-		BlitEditionSelection(eSelectedType, eSelectedColor);
-
-		SDL_Flip(mpoGame[SCREEN]);
 	}
+
+	BlitBoard(oEdition.oGetBoard());
+	BlitEditionCommands();
+	BlitEditionSelection(eSelectedType, eSelectedColor);
+
+	SDL_Flip(mpoGame[SCREEN]);
 
 	return EditionEntry("");
 }
