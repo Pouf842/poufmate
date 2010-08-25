@@ -62,6 +62,15 @@ std::string GameEdition::Run()
 			{
 				Position oPos = oEntry.oGetPosition();
 
+				/* If it is a king, check the number of kings, and update moKings */
+				if(oEntry.eGetPieceType() == Piece::KING)
+				{
+					if(!moKingAlreadyThere[oEntry.eGetPieceColor()].bIsEmpty())
+						throw exception("You already have a king of that color on the board");
+					else
+						moKingAlreadyThere[oEntry.eGetPieceColor()] = oPos;	// Update of moKings
+				}
+
 				/* Deleting a piece : if it is a king, update moKings */
 				if(oEntry.eGetPieceType() != Piece::KING		// If the new piece type is not KING
 				&& !moBoard.bIsSquareEmpty(oPos)				// and the choosen square is not empty
@@ -97,15 +106,6 @@ std::string GameEdition::Run()
 				  case Piece::NONE :
 				  default :
 					break;
-				}
-
-				/* If it is a king, check the number of kings, and update moKings */
-				if(oEntry.eGetPieceType() == Piece::KING)
-				{
-					if(!moKingAlreadyThere[oEntry.eGetPieceColor()].bIsEmpty())
-						throw exception("You already have a king of that color on the board");
-					else
-						moKingAlreadyThere[oEntry.eGetPieceColor()] = oPos;	// Update of moKings
 				}
 
 				moBoard.SetPiece(oPos, poNewPiece);	// Place the piece
