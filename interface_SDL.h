@@ -7,29 +7,8 @@
 #include <queue>
 #include <vector>
 
-class InterfaceSDL : public Interface
+class __declspec(dllexport) InterfaceSDL : public Interface
 {
-  protected :
-	SDL_Surface * mpoGame[6];
-	SDL_Surface * mpoPieces[2][6];
-	TTF_Font * mpoMenuFont;
-	TTF_Font * mpoMessagesFont;
-	std::queue<SDL_Surface *> moMessages;
-
-	enum eGameImages {SCREEN = 0, BOARD = 1, MESSAGEBOARD = 2, SELECTION = 3, CHESS = 4, POSSIBLE = 5};
-
-	InterfaceSDL();
-	virtual ~InterfaceSDL();
-	virtual void BlitBoard(const Board &);
-	virtual void BlitMessage(std::string strMessage);
-	virtual void BlitPossibilities(std::vector<Position>);
-	virtual void BlitInCheck(Position);
-	virtual void BlitCurrentPlayer(Piece::Color);
-	virtual void BlitSelection(Position);
-	virtual void BlitGameOver(std::string);
-	virtual void BlitGame(const Game &);
-	virtual void BlitEditionCommands();
-	virtual void BlitEditionSelection(Piece::PieceType, Piece::Color);
   public :
     virtual void Pause();
 	virtual void DisplayGame(const Game &);
@@ -41,7 +20,29 @@ class InterfaceSDL : public Interface
 	virtual char cGetNewPieceType(Piece::Color);
 	virtual int iGetMenuEntry(const std::vector<std::string> &);
 	virtual char cGetPlayerColorChoice();
-	static Interface * poGetInstance();
+	static Interface * poGetInstance(struct stExportedMethods exportedMethods);
+
+  protected :
+	SDL_Surface * mpoGame[6];
+	SDL_Surface * mpoPieces[2][6];
+	TTF_Font * mpoMenuFont;
+	TTF_Font * mpoMessagesFont;
+	std::queue<SDL_Surface *> moMessages;
+
+	enum eGameImages {SCREEN = 0, BOARD = 1, MESSAGEBOARD = 2, SELECTION = 3, CHESS = 4, POSSIBLE = 5};
+
+	InterfaceSDL(struct stExportedMethods exportedMethods);
+	virtual ~InterfaceSDL();
+	virtual void BlitBoard(const Board &);
+	virtual void BlitMessage(std::string strMessage);
+	virtual void BlitPossibilities(std::vector<Position>);
+	virtual void BlitInCheck(Position);
+	virtual void BlitCurrentPlayer(Piece::Color);
+	virtual void BlitSelection(Position);
+	virtual void BlitGameOver(std::string);
+	virtual void BlitGame(const Game &);
+	virtual void BlitEditionCommands();
+	virtual void BlitEditionSelection(Piece::PieceType, Piece::Color);
 };
 
 #endif

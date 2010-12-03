@@ -9,6 +9,12 @@
  * The displays are pushed, then commited by a call to CommitDisplay
  */
 
+#ifdef INTERFACEDLL
+    #define __declspec(dllexport) IMPORT_EXPORT
+#else
+    #define __declspec(dllimport) IMPORT_EXPORT
+#endif
+
 #include "board.h"
 #include "game.h"
 #include "game_edition.h"
@@ -21,18 +27,23 @@
 class Game;
 class GameEdition;
 
-class Interface
+class IMPORT_EXPORT Interface
 {
-  protected :
-	static Interface * mpoInstance;	// The unique instance of the class
-	std::vector<std::string> moMessages;
-
-	/**
-	 * Destructor
-	 */
-	virtual ~Interface();
-
   public :
+    struct stExportedMethods
+    {
+        Piece::Color (Board::*pBoardEGetSquareColor)(Position) const;
+        Piece::PieceType (Board::*pBoardEGetSquareType)(Position) const;
+        bool (Board::*pBoardBIsSquareEmpty)(Position) const;
+
+        bool (Game::*pGameBIsPlayerInCheck)(Piece::Color) const;
+        Board (Game::*pGameOGetBoard)(void) const;
+        Position (Game::*pGameOGetKingPosition)(Piece::Color) const;
+        Piece::Color (Game::*pGameEGetCurrentPlayer)() const;
+
+        Board (GameEdition::*pGameEditionOGetBoard)() const;
+    };
+
 	/**
 	 * Pause the program in wait of an entry from the user
 	 * to continue
@@ -70,7 +81,7 @@ class Interface
 	/**
 	 * Return the unique instance of the class
 	 */
-	static Interface * poGetInstance() {}
+    static Interface * poGetInstance(struct stExportedMethods) {return NULL;};
 
 	/**
 	 * Free the instance of the class
@@ -83,6 +94,16 @@ class Interface
 			mpoInstance = NULL;
 		}
 	}
+    
+  protected :
+    struct stExportedMethods mExportedMethods;
+	static Interface * mpoInstance;	// The unique instance of the class
+	std::vector<std::string> moMessages;
+
+	/**
+	 * Destructor
+	 */
+	virtual ~Interface();
 };
 
 #endif

@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual C++ Express 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PoufMate", "PoufMate.vcproj", "{61F95093-DB06-4E8E-8FE2-AEE9783708F4}"
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Poufmate", "Poufmate.vcproj", "{F2A41E6E-73A3-4DB0-AE71-C32EFBB54BE8}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InterfaceSDL", "InterfaceSDL\InterfaceSDL.vcproj", "{118ED975-B45C-436D-86EF-8BAB59CB72D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +11,14 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{61F95093-DB06-4E8E-8FE2-AEE9783708F4}.Debug|Win32.ActiveCfg = Debug|Win32
-		{61F95093-DB06-4E8E-8FE2-AEE9783708F4}.Debug|Win32.Build.0 = Debug|Win32
-		{61F95093-DB06-4E8E-8FE2-AEE9783708F4}.Release|Win32.ActiveCfg = Release|Win32
-		{61F95093-DB06-4E8E-8FE2-AEE9783708F4}.Release|Win32.Build.0 = Release|Win32
+		{F2A41E6E-73A3-4DB0-AE71-C32EFBB54BE8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F2A41E6E-73A3-4DB0-AE71-C32EFBB54BE8}.Debug|Win32.Build.0 = Debug|Win32
+		{F2A41E6E-73A3-4DB0-AE71-C32EFBB54BE8}.Release|Win32.ActiveCfg = Release|Win32
+		{F2A41E6E-73A3-4DB0-AE71-C32EFBB54BE8}.Release|Win32.Build.0 = Release|Win32
+		{118ED975-B45C-436D-86EF-8BAB59CB72D6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{118ED975-B45C-436D-86EF-8BAB59CB72D6}.Debug|Win32.Build.0 = Debug|Win32
+		{118ED975-B45C-436D-86EF-8BAB59CB72D6}.Release|Win32.ActiveCfg = Release|Win32
+		{118ED975-B45C-436D-86EF-8BAB59CB72D6}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

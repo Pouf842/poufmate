@@ -67,19 +67,19 @@ void InterfaceConsole::DisplayGame(const Game & oGame)
 {
 	DisplayBoard(oGame.oGetBoard());
 
-	if(oGame.bIsWhiteInCheck())
+    if(oGame.bIsPlayerInCheck(Piece::WHITE))
 		DisplayGameOver("White king is in check");
 
-	if(oGame.bIsBlackInCheck())
+	if(oGame.bIsPlayerInCheck(Piece::BLACK))
 		DisplayGameOver("Black king is in check");
 
-	if(oGame.bIsWhiteCheckMate())
+    if(oGame.bIsPlayerCheckMate(Piece::WHITE))
 	{
 		DisplayGameOver("White king is check mate !");
 		return;
 	}
 
-	if(oGame.bIsBlackCheckMate())
+    if(oGame.bIsPlayerCheckMate(Piece::BLACK))
 	{
 		DisplayGameOver("Black king is check mate !");
 		return;

@@ -2,21 +2,38 @@
 #include <vector>
 #include <string>
 
-#ifdef __SDL_
-	#include "interface_SDL.h"
-	#define DISPLAY InterfaceSDL
-#else
-	#include "interface_console.h"
-	#define DISPLAY InterfaceConsole
-#endif
-
+#include "windows.h"
 using namespace std;
 
 int main(int argc, char * argv[])
 {
 	try
 	{
-		Interface * poInterface = DISPLAY::poGetInstance();
+        HINSTANCE hInterfaceDLLHandle = LoadLibrary("InterfaceSDL.dll");
+
+
+        Interface::stExportedMethods exportedMethods;
+
+        exportedMethods.pBoardEGetSquareType = &Board::eGetSquareType;
+        exportedMethods.pBoardEGetSquareColor = &Board::eGetSquareColor;
+        exportedMethods.pBoardBIsSquareEmpty = &Board::bIsSquareEmpty;
+
+        exportedMethods.pGameOGetBoard = &Game::oGetBoard;
+        exportedMethods.pGameBIsPlayerInCheck = &Game::bIsPlayerInCheck;
+        exportedMethods.pGameOGetKingPosition = &Game::oGetKingPosition;
+        exportedMethods.pGameEGetCurrentPlayer = &Game::eGetCurrentPlayer;
+
+        exportedMethods.pGameEditionOGetBoard = &GameEdition::oGetBoard;
+
+        int iInterfaceChoice = 1;
+
+        cout << "Choisissez une interface :" << endl;
+        cout << "1 : Interface console" << endl;
+        cout << "2 : Interface SDL" << endl;
+
+        cin >> iInterfaceChoice;
+
+        Interface * poInterface = Interface::poGetInstance(exportedMethods);
 
 		vector<string> oMenu;
 		oMenu.push_back("1.One player game (human VS computer)");

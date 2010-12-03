@@ -1,4 +1,4 @@
-#include "Interface_SDL.h"
+#include "..\interface_SDL.h"
 
 #include <iostream>
 #include <string>
@@ -12,8 +12,10 @@
 
 using namespace std;
 
-InterfaceSDL::InterfaceSDL()
+InterfaceSDL::InterfaceSDL(struct stExportedMethods exportedMethods)
 {
+    mExportedMethods = exportedMethods;
+
 	if(SDL_Init(SDL_INIT_VIDEO) == -1)
 		throw exception("SDL initialisation failed");
 
@@ -126,9 +128,9 @@ void InterfaceSDL::BlitBoard(const Board & oBoard)
 
 			Position oPos(j, i);
 
-			if(!oBoard.bIsSquareEmpty(oPos))
+			if(!(oBoard.*mExportedMethods.pBoardBIsSquareEmpty)(oPos))
 			{
-				SDL_BlitSurface(mpoPieces[oBoard.eGetSquareColor(oPos)][oBoard.poGetPiece(oPos)->eGetType()], NULL, mpoGame[SCREEN], &position);
+				SDL_BlitSurface(mpoPieces[(oBoard.*mExportedMethods.pBoardEGetSquareColor)(oPos)][(oBoard.*mExportedMethods.pBoardEGetSquareType)(oPos)], NULL, mpoGame[SCREEN], &position);
 			}
 		}
 }
@@ -203,10 +205,10 @@ void InterfaceSDL::BlitSelection(Position oPos)
 	SDL_BlitSurface(mpoGame[SELECTION], NULL, mpoGame[SCREEN], &position);
 }
 
-Interface * InterfaceSDL::poGetInstance()
+Interface * InterfaceSDL::poGetInstance(struct stExportedMethods exportedMethods)
 {
 	if(!mpoInstance)
-		mpoInstance = new InterfaceSDL;
+		mpoInstance = new InterfaceSDL(exportedMethods);
 
 	return mpoInstance;
 }
@@ -462,20 +464,21 @@ void InterfaceSDL::Pause()
 
 void InterfaceSDL::BlitGame(const Game & oGame)
 {
-	BlitBoard(oGame.oGetBoard());
-	if(oGame.bIsBlackInCheck())
-		BlitInCheck(oGame.oGetKingPosition(Piece::BLACK));
-	else if(oGame.bIsWhiteInCheck())
-		BlitInCheck(oGame.oGetKingPosition(Piece::WHITE));
+	BlitBoard((oGame.*mExportedMethods.pGameOGetBoard)());
+    if((oGame.*mExportedMethods.pGameBIsPlayerInCheck)(Piece::BLACK))
+		BlitInCheck((oGame.*mExportedMethods.pGameOGetKingPosition)(Piece::BLACK));
+    else if((oGame.*mExportedMethods.pGameBIsPlayerInCheck)(Piece::WHITE))
+		BlitInCheck((oGame.*mExportedMethods.pGameOGetKingPosition)(Piece::WHITE));
 }
 
 void InterfaceSDL::DisplayGame(const Game & oGame)
 {
-	BlitBoard(oGame.oGetBoard());
+    BlitGame(oGame);
+	/*BlitBoard(oGame.oGetBoard());
 	if(oGame.bIsBlackInCheck())
 		BlitInCheck(oGame.oGetKingPosition(Piece::BLACK));
 	else if(oGame.bIsWhiteInCheck())
-		BlitInCheck(oGame.oGetKingPosition(Piece::WHITE));
+		BlitInCheck(oGame.oGetKingPosition(Piece::WHITE));*/
 
 	SDL_Flip(mpoGame[SCREEN]);
 }
@@ -489,6 +492,8 @@ GameEntry InterfaceSDL::oGetGameEntry(Game & oGame)
 	Position oSecondSelection;
 	Position oPossibilitiesPosition;
 	vector<Position> oPossibilities;
+
+    Board oBoard = (oGame.*mExportedMethods.pGameOGetBoard)();
 
 	while(!bSelectionOk)
 	{
@@ -508,9 +513,9 @@ GameEntry InterfaceSDL::oGetGameEntry(Game & oGame)
 					{
 						oFirstSelection = Position(event.button.y / SQUARE_WIDTH, event.button.x / SQUARE_HEIGHT);
 
-						if(!oGame.oGetBoard().bIsSquareEmpty(oFirstSelection))
+						if(!(oBoard.*mExportedMethods.pBoardBIsSquareEmpty)(oFirstSelection))
 						{
-							if(oGame.oGetBoard().eGetSquareColor(oFirstSelection) != oGame.eGetCurrentPlayer())
+							if((oBoard.*mExportedMethods.pBoardEGetSquareColor)(oFirstSelection) != (oGame.*mExportedMethods.pGameEGetCurrentPlayer)())
 							{
 								BlitMessage("This piece doesn't belong to you");
 								oFirstSelection.Empty();
@@ -537,7 +542,7 @@ GameEntry InterfaceSDL::oGetGameEntry(Game & oGame)
 					Position oMousePosition(event.button.y / SQUARE_WIDTH, event.button.x / SQUARE_HEIGHT);
 					  
 					for(unsigned int i = 0; i < oPossibilities.size(); ++i)
-						if(oGame.oGetBoard().eGetSquareColor(oPossibilitiesPosition) == oGame.eGetCurrentPlayer()
+						if((oBoard.*mExportedMethods.pBoardEGetSquareColor)(oPossibilitiesPosition) == (oGame.*mExportedMethods.pGameEGetCurrentPlayer)()
 						&& oPossibilities[i] == oMousePosition)
 							return GameEntry(oPossibilitiesPosition, oMousePosition);
 
@@ -642,7 +647,7 @@ EditionEntry InterfaceSDL::oGetEditionEntry(const GameEdition & oEdition)
 	unsigned int iXMaxEdition = 700 + 2 * SQUARE_WIDTH;
 	unsigned int iYMaxEdition = 7 * SQUARE_HEIGHT + 5;
 
-	BlitBoard(oEdition.oGetBoard());
+	BlitBoard((oEdition.*mExportedMethods.pGameEditionOGetBoard)());
 	BlitEditionCommands();
 	BlitEditionSelection(eSelectedType, eSelectedColor);
 
@@ -698,7 +703,7 @@ EditionEntry InterfaceSDL::oGetEditionEntry(const GameEdition & oEdition)
 					break;
 				}
 				
-				BlitBoard(oEdition.oGetBoard());
+				BlitBoard((oEdition.*mExportedMethods.pGameEditionOGetBoard)());
 				BlitEditionCommands();
 				BlitEditionSelection(eSelectedType, eSelectedColor);
 
@@ -723,7 +728,7 @@ EditionEntry InterfaceSDL::oGetEditionEntry(const GameEdition & oEdition)
 
 	}
 
-	BlitBoard(oEdition.oGetBoard());
+	BlitBoard((oEdition.*mExportedMethods.pGameEditionOGetBoard)());
 	BlitEditionCommands();
 	BlitEditionSelection(eSelectedType, eSelectedColor);
 

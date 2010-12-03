@@ -124,10 +124,8 @@ class Game : public Module
 	 * Return mbIsOver
 	 */
 	virtual bool bIsOver() const;
-	bool bIsWhiteInCheck() const;
-	bool bIsBlackInCheck() const;
-	bool bIsWhiteCheckMate() const;
-	bool bIsBlackCheckMate() const;
+	bool bIsPlayerInCheck(Piece::Color) const;
+    bool bIsPlayerCheckMate(Piece::Color) const;
 	bool bIsStaleMate() const;
 
 };

@@ -411,24 +411,20 @@ Position Game::oGetKingPosition(Piece::Color eColor) const
 }
 
 
-bool Game::bIsWhiteInCheck() const
+bool Game::bIsPlayerInCheck(Piece::Color ePlayer) const
 {
-	return mbIsWhiteInCheck;
+    if(ePlayer == Piece::WHITE)
+	    return mbIsWhiteInCheck;
+    else
+        return mbIsBlackInCheck;
 }
 
-bool Game::bIsBlackInCheck() const
+bool Game::bIsPlayerCheckMate(Piece::Color ePlayer) const
 {
-	return mbIsBlackInCheck;
-}
-
-bool Game::bIsWhiteCheckMate() const
-{
-	return mbIsWhiteCheckMate;
-}
-
-bool Game::bIsBlackCheckMate() const
-{
-	return mbIsBlackCheckMate;
+    if(ePlayer == Piece::WHITE)
+	    return mbIsWhiteCheckMate;
+    else
+        return mbIsBlackCheckMate;
 }
 
 bool Game::bIsStaleMate() const
