@@ -7,7 +7,7 @@
 #include <queue>
 #include <vector>
 
-class __declspec(dllexport) InterfaceSDL : public Interface
+class /*IMPORT_EXPORT*/ InterfaceSDL : public Interface
 {
   public :
     virtual void Pause();

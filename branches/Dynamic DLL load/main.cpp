@@ -2,8 +2,12 @@
 #include <vector>
 #include <string>
 
+#include "interface.h"
 #include "windows.h"
 using namespace std;
+
+//typedef static Interface * (*poGetInterfaceInstance)(struct stExportedMethods);
+typedef int (*poFunctionTypeTest)();
 
 int main(int argc, char * argv[])
 {
@@ -11,6 +15,7 @@ int main(int argc, char * argv[])
 	{
         HINSTANCE hInterfaceDLLHandle = LoadLibrary("InterfaceSDL.dll");
 
+        poFunctionTypeTest poGetInterfaceInstance = (poFunctionTypeTest) GetProcAddress(hInterfaceDLLHandle, "poGetInstance");
 
         Interface::stExportedMethods exportedMethods;
 
@@ -25,15 +30,8 @@ int main(int argc, char * argv[])
 
         exportedMethods.pGameEditionOGetBoard = &GameEdition::oGetBoard;
 
-        int iInterfaceChoice = 1;
-
-        cout << "Choisissez une interface :" << endl;
-        cout << "1 : Interface console" << endl;
-        cout << "2 : Interface SDL" << endl;
-
-        cin >> iInterfaceChoice;
-
-        Interface * poInterface = Interface::poGetInstance(exportedMethods);
+        Interface * poInterface;
+        //Interface * poInterface = Interface::poGetInstance(exportedMethods);
 
 		vector<string> oMenu;
 		oMenu.push_back("1.One player game (human VS computer)");
