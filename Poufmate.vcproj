@@ -275,14 +275,6 @@
 			<Filter
 				Name="Interfaces"
 				>
-				<File
-					RelativePath=".\interface.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\interface_console.cpp"
-					>
-				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -411,10 +403,6 @@
 				</File>
 				<File
 					RelativePath=".\interface_console.h"
-					>
-				</File>
-				<File
-					RelativePath=".\interface_SDL.h"
 					>
 				</File>
 			</Filter>

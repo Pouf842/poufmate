@@ -9,11 +9,11 @@
  * The displays are pushed, then commited by a call to CommitDisplay
  */
 
-#ifdef INTERFACEDLL
-    #define __declspec(dllexport) IMPORT_EXPORT
-#else
-    #define __declspec(dllimport) IMPORT_EXPORT
-#endif
+//#ifdef __INTERFACEDLL_
+//    #define __declspec(dllexport) IMPORT_EXPORT
+//#else
+//    #define __declspec(dllimport) IMPORT_EXPORT
+//#endif
 
 #include "board.h"
 #include "game.h"
@@ -27,7 +27,7 @@
 class Game;
 class GameEdition;
 
-class IMPORT_EXPORT Interface
+class /*IMPORT_EXPORT*/ Interface
 {
   public :
     struct stExportedMethods
