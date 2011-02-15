@@ -89,6 +89,8 @@ std::string TwoPlayersGame::Run()
 					throw exception("That move puts you in check");
 				}
 
+				(meCurrentPlayer == Piece::WHITE ? mbIsWhiteInCheck : mbIsBlackInCheck) = false;    // if the move was authorized, player is no longer in check
+
 				SwitchPlayer();	// Next player
 			}
 
