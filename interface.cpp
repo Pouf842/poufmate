@@ -2,8 +2,6 @@
 
 using namespace std;
 
-Interface * Interface::mpoInstance = NULL;
-
 Interface::~Interface()
 {
 }

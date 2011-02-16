@@ -1,15 +1,17 @@
 #ifndef __INTERFACE_SDL_H_
 #define __INTERFACE_SDL_H_
 
-#include "interface.h"
+#include "../interface.h"
 #include "SDL.h"
 #include "SDL_ttf.h"
 #include <queue>
 #include <vector>
 
-class /*IMPORT_EXPORT*/ InterfaceSDL : public Interface
+class InterfaceSDL : public Interface
 {
   public :
+	InterfaceSDL(struct stExportedMethods exportedMethods);
+	virtual ~InterfaceSDL();
     virtual void Pause();
 	virtual void DisplayGame(const Game &);
 	virtual GameEntry oGetGameEntry(Game &);
@@ -31,8 +33,6 @@ class /*IMPORT_EXPORT*/ InterfaceSDL : public Interface
 
 	enum eGameImages {SCREEN = 0, BOARD = 1, MESSAGEBOARD = 2, SELECTION = 3, CHESS = 4, POSSIBLE = 5};
 
-	InterfaceSDL(struct stExportedMethods exportedMethods);
-	virtual ~InterfaceSDL();
 	virtual void BlitBoard(const Board &);
 	virtual void BlitMessage(std::string strMessage);
 	virtual void BlitPossibilities(std::vector<Position>);
