@@ -272,10 +272,6 @@
 					>
 				</File>
 			</Filter>
-			<Filter
-				Name="Interfaces"
-				>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="Fichiers d&apos;en-tête"
@@ -399,10 +395,6 @@
 				>
 				<File
 					RelativePath=".\interface.h"
-					>
-				</File>
-				<File
-					RelativePath=".\interface_console.h"
 					>
 				</File>
 			</Filter>

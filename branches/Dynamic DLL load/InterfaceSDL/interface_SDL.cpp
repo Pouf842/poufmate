@@ -1,4 +1,4 @@
-#include "..\interface_SDL.h"
+#include "interface_SDL.h"
 
 #include <iostream>
 #include <string>
@@ -11,6 +11,13 @@
 #define BACKGROUNDCOLOR 200, 200, 200
 
 using namespace std;
+
+extern "C" __declspec(dllexport) Interface * poGetInstance(struct Interface::stExportedMethods exportedMethods)
+{
+    Interface * poInterface = new InterfaceSDL(exportedMethods);
+
+    return poInterface;
+}
 
 InterfaceSDL::InterfaceSDL(struct stExportedMethods exportedMethods)
 {
@@ -203,14 +210,6 @@ void InterfaceSDL::BlitSelection(Position oPos)
 	position.y = oPos.mX * SQUARE_WIDTH;
 
 	SDL_BlitSurface(mpoGame[SELECTION], NULL, mpoGame[SCREEN], &position);
-}
-
-Interface * InterfaceSDL::poGetInstance(struct stExportedMethods exportedMethods)
-{
-	if(!mpoInstance)
-		mpoInstance = new InterfaceSDL(exportedMethods);
-
-	return mpoInstance;
 }
 
 void InterfaceSDL::BlitCurrentPlayer(Piece::Color eColor)
@@ -439,9 +438,12 @@ int InterfaceSDL::iGetMenuEntry(const std::vector<std::string> & oMenu)
 				return 4;
 				break;
 			  case SDLK_KP5 :
-			  case SDLK_x :
 			    return 5;
 				break;
+              case SDLK_KP6 :
+			  case SDLK_x :
+                return 6;
+                break;
 			  default :
 				break;
 			}

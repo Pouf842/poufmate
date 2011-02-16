@@ -77,33 +77,14 @@ class /*IMPORT_EXPORT*/ Interface
 	 * ('W', or 'w' for white, and 'B' or 'b' for black)
 	 */
 	virtual char cGetPlayerColorChoice() = 0;
-
-	/**
-	 * Return the unique instance of the class
-	 */
-    static Interface * poGetInstance(struct stExportedMethods) {return NULL;};
-
-	/**
-	 * Free the instance of the class
-	 */
-	static void FreeInstance()
-	{
-		if(mpoInstance)
-		{
-			delete mpoInstance;
-			mpoInstance = NULL;
-		}
-	}
     
-  protected :
-    struct stExportedMethods mExportedMethods;
-	static Interface * mpoInstance;	// The unique instance of the class
-	std::vector<std::string> moMessages;
-
 	/**
 	 * Destructor
 	 */
 	virtual ~Interface();
+  protected :
+    struct stExportedMethods mExportedMethods;
+	std::vector<std::string> moMessages;
 };
 
 #endif

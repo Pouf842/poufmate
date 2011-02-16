@@ -6,16 +6,18 @@
 #include "windows.h"
 using namespace std;
 
-//typedef static Interface * (*poGetInterfaceInstance)(struct stExportedMethods);
-typedef int (*poFunctionTypeTest)();
+typedef Interface * (*pfpoGetInterface)(struct Interface::stExportedMethods);
 
 int main(int argc, char * argv[])
 {
 	try
 	{
         HINSTANCE hInterfaceDLLHandle = LoadLibrary("InterfaceSDL.dll");
+        bool bInterfaceSDL = true;
 
-        poFunctionTypeTest poGetInterfaceInstance = (poFunctionTypeTest) GetProcAddress(hInterfaceDLLHandle, "poGetInstance");
+        pfpoGetInterface poGetInterfaceInstance = (pfpoGetInterface) GetProcAddress(hInterfaceDLLHandle, "poGetInstance");
+
+        DWORD error = GetLastError();
 
         Interface::stExportedMethods exportedMethods;
 
@@ -30,15 +32,15 @@ int main(int argc, char * argv[])
 
         exportedMethods.pGameEditionOGetBoard = &GameEdition::oGetBoard;
 
-        Interface * poInterface;
-        //Interface * poInterface = Interface::poGetInstance(exportedMethods);
+        Interface * poInterface = poGetInterfaceInstance(exportedMethods);
 
 		vector<string> oMenu;
 		oMenu.push_back("1.One player game (human VS computer)");
 		oMenu.push_back("2.Two player game (human VS human)");
 		oMenu.push_back("3.Edition mode");
 		oMenu.push_back("4.Two player lan game");
-		oMenu.push_back("5.Quit");
+        oMenu.push_back("5.Change interface");
+		oMenu.push_back("6.Quit");
 
 		Module * poChoosenModule = 0;	// Create a new game
 		bool bQuit = false;
@@ -66,7 +68,21 @@ int main(int argc, char * argv[])
 					  case 4 :
 						poChoosenModule = new LanGame;
 						break;
-					  case 5 :
+                      case 5 :
+                        delete poInterface;
+                        FreeLibrary(hInterfaceDLLHandle);
+
+                        if(bInterfaceSDL)
+                            hInterfaceDLLHandle = LoadLibrary("InterfaceConsole.dll");
+                        else
+                            hInterfaceDLLHandle = LoadLibrary("InterfaceSDL.dll");
+
+                        poGetInterfaceInstance = (pfpoGetInterface) GetProcAddress(hInterfaceDLLHandle, "poGetInstance");
+                        poInterface = poGetInterfaceInstance(exportedMethods);
+
+                        bInterfaceSDL = !bInterfaceSDL;
+                        break;
+					  case 6 :
 						bQuit = true;
 						break;
 					  default :
@@ -74,7 +90,7 @@ int main(int argc, char * argv[])
 					}
 				}
 
-				if(!bQuit)
+				if(!bQuit && poChoosenModule)
 				{
 					poChoosenModule->SetInterface(poInterface);
 					string strCmdReturn = "";
@@ -97,7 +113,9 @@ int main(int argc, char * argv[])
 			}
 		}
 
-		Interface::FreeInstance();
+        delete poInterface;
+
+        FreeLibrary(hInterfaceDLLHandle);
 	}
 	catch(exception & e)
 	{
