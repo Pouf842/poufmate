@@ -27,7 +27,7 @@
 class Game;
 class GameEdition;
 
-class /*IMPORT_EXPORT*/ Interface
+class Interface
 {
   public :
     struct stExportedMethods
