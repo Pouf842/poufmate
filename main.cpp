@@ -12,7 +12,7 @@ int main(int argc, char * argv[])
 {
 	try
 	{
-        HINSTANCE hInterfaceDLLHandle = LoadLibrary("InterfaceSDL.dll");
+        HINSTANCE hInterfaceDLLHandle = LoadLibrary("InterfaceIrrlicht.dll");
         bool bInterfaceSDL = true;
 
         pfpoGetInterface poGetInterfaceInstance = (pfpoGetInterface) GetProcAddress(hInterfaceDLLHandle, "poGetInstance");

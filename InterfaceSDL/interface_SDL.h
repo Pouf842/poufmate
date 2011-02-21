@@ -22,7 +22,6 @@ class InterfaceSDL : public Interface
 	virtual char cGetNewPieceType(Piece::Color);
 	virtual int iGetMenuEntry(const std::vector<std::string> &);
 	virtual char cGetPlayerColorChoice();
-	static Interface * poGetInstance(struct stExportedMethods exportedMethods);
 
   protected :
 	SDL_Surface * mpoGame[6];

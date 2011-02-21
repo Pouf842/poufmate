@@ -87,4 +87,6 @@ class Interface
 	std::vector<std::string> moMessages;
 };
 
+extern "C" __declspec(dllexport) Interface * poGetInstance(struct Interface::stExportedMethods exportedMethods);
+
 #endif

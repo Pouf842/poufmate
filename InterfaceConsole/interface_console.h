@@ -61,12 +61,6 @@ class InterfaceConsole : public Interface
 	 * @see Interface::cGetPlayerColorChoice()
 	 */
 	virtual char cGetPlayerColorChoice();
-
-	/**
-	 * Implement of Interface::poGetInstance()
-	 * @see Interface::poGetInstance()
-	 */
-	static Interface * poGetInstance();
 };
 
 #endif
