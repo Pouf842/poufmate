@@ -27,6 +27,7 @@ class InterfaceIrrlicht : public Interface
     video::IVideoDriver * mpoVideoDriver;
     scene::ISceneManager * mpoSceneManager;
     gui::IGUIEnvironment * mpoGUIEnvironment;
+    int miUserSelection;
 };
 
 #endif
