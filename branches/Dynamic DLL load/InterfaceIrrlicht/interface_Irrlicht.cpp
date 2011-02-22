@@ -5,7 +5,29 @@ extern "C" __declspec(dllexport) Interface * poGetInstance(struct Interface::stE
     return new InterfaceIrrlicht(exportedMethods);
 }
 
-InterfaceIrrlicht::InterfaceIrrlicht(struct Interface::stExportedMethods exportedMethods)
+class EventManager : public IEventReceiver
+{
+  public :
+    EventManager(int * piUserSelection) : IEventReceiver(), mpiUserSelection(piUserSelection)
+    {
+    }
+
+  protected :
+    virtual bool OnEvent(const SEvent & event)
+    {
+        if(event.EventType == EET_GUI_EVENT && event.GUIEvent.EventType == gui::EGET_BUTTON_CLICKED)
+        {
+            *mpiUserSelection = event.GUIEvent.Caller->getID();
+            return true;
+        }
+        else
+            return false;
+    }
+
+    int * mpiUserSelection;
+};
+
+InterfaceIrrlicht::InterfaceIrrlicht(struct Interface::stExportedMethods exportedMethods) : mpoGUIEnvironment(NULL), mpoMainWindow(NULL), mpoSceneManager(NULL), mpoVideoDriver(NULL), miUserSelection(-1)
 {
     mExportedMethods = exportedMethods;
 
@@ -17,6 +39,8 @@ InterfaceIrrlicht::InterfaceIrrlicht(struct Interface::stExportedMethods exporte
                                  false,
                                  NULL);
 
+    mpoMainWindow->setEventReceiver(new EventManager(&miUserSelection));
+
     mpoVideoDriver = mpoMainWindow->getVideoDriver();
     mpoSceneManager = mpoMainWindow->getSceneManager();
     mpoGUIEnvironment = mpoMainWindow->getGUIEnvironment();
@@ -24,9 +48,13 @@ InterfaceIrrlicht::InterfaceIrrlicht(struct Interface::stExportedMethods exporte
     scene::ICameraSceneNode * poCamera = mpoSceneManager->addCameraSceneNodeFPS(NULL, 100, 0.1, 0, NULL, 5, false, 0, true);
     poCamera->setPosition(core::vector3df(0, 10, -10));
     poCamera->setTarget(core::vector3df(0, 0, 0));
+    poCamera->setInputReceiverEnabled(false);
 
-    scene::IMesh * poBoard = mpoSceneManager->getMesh("untitled.obj");
-    mpoSceneManager->addMeshSceneNode(poBoard, NULL, -1, core::vector3df(0, 0, 0), core::vector3df(0, 0, 0), core::vector3df(8, 8, 8))->setMaterialFlag(video::EMF_LIGHTING, false);
+    scene::IMesh * poBoard = mpoSceneManager->getMesh("Meshes/Board.obj");
+    scene::IMeshSceneNode * poBoardNode = mpoSceneManager->addMeshSceneNode(poBoard, NULL, -1, core::vector3df(0, 0, 0), core::vector3df(0, 0, 0), core::vector3df(8, 8, 8));
+
+    poBoardNode->setMaterialFlag(video::EMF_LIGHTING, false);
+    poBoardNode->setMaterialTexture(0, mpoVideoDriver->getTexture("Images/Echiquier.bmp"));
 }
 
 InterfaceIrrlicht::~InterfaceIrrlicht()
@@ -73,9 +101,20 @@ char InterfaceIrrlicht::cGetNewPieceType(Piece::Color)
 
 int InterfaceIrrlicht::iGetMenuEntry(const std::vector<std::string> & oMenuItems)
 {
-    mpoGUIEnvironment->addStaticText(L"PoufMate !", core::rect<s32>(100, 100, 500, 700), true)->setOverrideFont(mpoGUIEnvironment->getFont("Lucida.png"));
+    miUserSelection = -1;
 
-    while(mpoMainWindow->run())
+    gui::IGUIStaticText * poTest = mpoGUIEnvironment->addStaticText(L"PoufMate !", core::rect<s32>(0, 50, 800, 100));
+    poTest->setOverrideFont(mpoGUIEnvironment->getFont("Lucida.png"));
+    poTest->setTextAlignment(gui::EGUIA_CENTER, gui::EGUIA_CENTER);
+    poTest->setOverrideColor(video::SColor(255, 255, 0, 0));
+
+    for(int i = 0; i < oMenuItems.size(); ++i)
+    {
+        core::stringw strItem(oMenuItems[i].c_str());
+        mpoGUIEnvironment->addButton(core::rect<s32>(300, 110 + 50 * i, 500, 130 + 50 * i), NULL, i + 1, strItem.c_str(), L"Lancer une nouvelle partie contre l'ordinateur");
+    }
+
+    while(mpoMainWindow->run() && miUserSelection == -1)
     {
         mpoVideoDriver->beginScene(true, true, video::SColor(255, 255, 255, 255));
 
@@ -85,7 +124,7 @@ int InterfaceIrrlicht::iGetMenuEntry(const std::vector<std::string> & oMenuItems
         mpoVideoDriver->endScene();
     }
 
-    return 0;
+    return miUserSelection;
 }
 
 char InterfaceIrrlicht::cGetPlayerColorChoice()
