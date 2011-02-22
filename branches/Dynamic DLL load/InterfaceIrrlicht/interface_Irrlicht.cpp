@@ -5,27 +5,29 @@ extern "C" __declspec(dllexport) Interface * poGetInstance(struct Interface::stE
     return new InterfaceIrrlicht(exportedMethods);
 }
 
-class EventManager : public IEventReceiver
+bool InterfaceIrrlicht::OnEvent(const SEvent & event)
 {
-  public :
-    EventManager(int * piUserSelection) : IEventReceiver(), mpiUserSelection(piUserSelection)
+    if(event.EventType == EET_GUI_EVENT)
     {
-    }
-
-  protected :
-    virtual bool OnEvent(const SEvent & event)
-    {
-        if(event.EventType == EET_GUI_EVENT && event.GUIEvent.EventType == gui::EGET_BUTTON_CLICKED)
+        if(event.GUIEvent.EventType == gui::EGET_ELEMENT_HOVERED)
         {
-            *mpiUserSelection = event.GUIEvent.Caller->getID();
+            if(event.GUIEvent.Caller->getType() == gui::EGUIET_BUTTON)
+            {
+                mpoSelectionToken->setVisible(true);
+                mpoSelectionToken->setRelativePosition(core::rect<s32>(180, 110 + (event.GUIEvent.Caller->getID() - 1) * 50, 230, 160 + (event.GUIEvent.Caller->getID() - 1) * 50));
+                return true;
+            }
+        }
+        else if(event.GUIEvent.EventType == gui::EGET_BUTTON_CLICKED)
+        {
+            miUserSelection = event.GUIEvent.Caller->getID();
             return true;
         }
-        else
-            return false;
     }
+    else
+        return false;
+}
 
-    int * mpiUserSelection;
-};
 
 InterfaceIrrlicht::InterfaceIrrlicht(struct Interface::stExportedMethods exportedMethods) : mpoGUIEnvironment(NULL), mpoMainWindow(NULL), mpoSceneManager(NULL), mpoVideoDriver(NULL), miUserSelection(-1)
 {
@@ -39,7 +41,7 @@ InterfaceIrrlicht::InterfaceIrrlicht(struct Interface::stExportedMethods exporte
                                  false,
                                  NULL);
 
-    mpoMainWindow->setEventReceiver(new EventManager(&miUserSelection));
+    mpoMainWindow->setEventReceiver(this);
 
     mpoVideoDriver = mpoMainWindow->getVideoDriver();
     mpoSceneManager = mpoMainWindow->getSceneManager();
@@ -111,8 +113,13 @@ int InterfaceIrrlicht::iGetMenuEntry(const std::vector<std::string> & oMenuItems
     for(int i = 0; i < oMenuItems.size(); ++i)
     {
         core::stringw strItem(oMenuItems[i].c_str());
-        mpoGUIEnvironment->addButton(core::rect<s32>(300, 110 + 50 * i, 500, 130 + 50 * i), NULL, i + 1, strItem.c_str(), L"Lancer une nouvelle partie contre l'ordinateur");
+        mpoGUIEnvironment->addButton(core::rect<s32>(250, 110 + 50 * i, 550, 130 + 50 * i), NULL, i + 1, strItem.c_str(), L"Lancer une nouvelle partie contre l'ordinateur")->setOverrideFont(mpoGUIEnvironment->getFont("Lucida.png"));
     }
+
+    video::ITexture * poSelectionTokenImg = mpoVideoDriver->getTexture("Images/token.jpg");
+    
+    mpoSelectionToken = mpoGUIEnvironment->addImage(poSelectionTokenImg, core::vector2d<s32>(200, 110));
+    mpoSelectionToken->setVisible(false);
 
     while(mpoMainWindow->run() && miUserSelection == -1)
     {

@@ -6,7 +6,7 @@
 
 using namespace irr;
 
-class InterfaceIrrlicht : public Interface
+class InterfaceIrrlicht : public Interface, public IEventReceiver
 {  
   public :
 	InterfaceIrrlicht(struct stExportedMethods exportedMethods);
@@ -23,7 +23,10 @@ class InterfaceIrrlicht : public Interface
 	virtual char cGetPlayerColorChoice();
 
   protected :
+    virtual bool OnEvent(const SEvent &);
+
     IrrlichtDevice * mpoMainWindow;
+    gui::IGUIImage * mpoSelectionToken;
     video::IVideoDriver * mpoVideoDriver;
     scene::ISceneManager * mpoSceneManager;
     gui::IGUIEnvironment * mpoGUIEnvironment;
