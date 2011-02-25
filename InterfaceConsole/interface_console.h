@@ -7,7 +7,7 @@
  * @see class Interface
  */
 
-#include "../interface.h"
+#include "interface.h"
 #include <sstream>
 #include <vector>
 #include <string>

@@ -1,5 +1,5 @@
 
-#include "edition_entry.h"
+#include "../edition_entry.h"
 
 using namespace std;
 

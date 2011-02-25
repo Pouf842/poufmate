@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="InterfaceIrrlicht"
-	ProjectGUID="{A9473428-7AEE-4F0F-825E-E5AC15286860}"
-	RootNamespace="InterfaceIrrlicht"
+	Name="InterfaceSDK"
+	ProjectGUID="{7BA7EA56-1C86-4DE6-890C-BBE4E8A0014B}"
+	RootNamespace="InterfaceSDK"
 	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
@@ -17,9 +17,9 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="2"
+			ConfigurationType="4"
 			CharacterSet="2"
 			>
 			<Tool
@@ -40,7 +40,6 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;P:\Developpement\irrlicht-1.7.2\include&quot;;&quot;P:\Developpement\CEGUI-SDK-0.7.5-vc9\cegui\include&quot;;&quot;$(SolutionDir)SDK Poufmate interface&quot;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -57,17 +56,10 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="Irrlicht.lib CEGUIBase_d.lib CEGUIIrrlichtRenderer_d.lib InterfaceSDK.lib"
-				AdditionalLibraryDirectories="&quot;$(SolutionDir)SDK Poufmate interface&quot;;&quot;P:\Developpement\irrlicht-1.7.2\lib\Win32-visualStudio&quot;;&quot;P:\Developpement\CEGUI-SDK-0.7.5-vc9\lib&quot;"
-				GenerateDebugInformation="true"
-				TargetMachine="1"
+				Name="VCLibrarianTool"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -79,17 +71,14 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="4"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
@@ -127,17 +116,10 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				GenerateDebugInformation="true"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				TargetMachine="1"
+				Name="VCLibrarianTool"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -147,9 +129,6 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -165,7 +144,19 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\interface_Irrlicht.cpp"
+				RelativePath=".\edition_entry.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\game_entry.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\interface.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\position.cpp"
 				>
 			</File>
 		</Filter>
@@ -174,50 +165,6 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath="..\SDK Poufmate interface\board.h"
-				>
-			</File>
-			<File
-				RelativePath="..\SDK Poufmate interface\edition_entry.h"
-				>
-			</File>
-			<File
-				RelativePath="..\SDK Poufmate interface\game.h"
-				>
-			</File>
-			<File
-				RelativePath="..\SDK Poufmate interface\game_entry.h"
-				>
-			</File>
-			<File
-				RelativePath="..\SDK Poufmate interface\interface.h"
-				>
-			</File>
-			<File
-				RelativePath=".\interface_Irrlicht.h"
-				>
-			</File>
-			<File
-				RelativePath="..\SDK Poufmate interface\module.h"
-				>
-			</File>
-			<File
-				RelativePath="..\SDK Poufmate interface\movement.h"
-				>
-			</File>
-			<File
-				RelativePath="..\SDK Poufmate interface\piece.h"
-				>
-			</File>
-			<File
-				RelativePath="..\SDK Poufmate interface\position.h"
-				>
-			</File>
-			<File
-				RelativePath="..\SDK Poufmate interface\square.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Fichiers de ressources"
