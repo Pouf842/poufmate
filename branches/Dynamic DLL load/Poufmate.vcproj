@@ -40,6 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)SDK Poufmate interface&quot;"
 				PreprocessorDefinitions="__SDL_"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -58,7 +59,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="Ws2_32.lib"
+				AdditionalDependencies="Ws2_32.lib InterfaceSDK.lib"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)SDK Poufmate interface&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -169,19 +171,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\edition_entry.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\game_entry.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\main.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\position.cpp"
 				>
 			</File>
 			<File

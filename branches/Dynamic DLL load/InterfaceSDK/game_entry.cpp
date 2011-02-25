@@ -1,5 +1,5 @@
 
-#include "game_entry.h"
+#include "../game_entry.h"
 
 using namespace std;
 

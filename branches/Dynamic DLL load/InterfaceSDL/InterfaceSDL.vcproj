@@ -40,6 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)SDK Poufmate interface&quot;"
 				PreprocessorDefinitions="__INTERFACEDLL_"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -58,7 +59,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL.lib SDL_ttf.lib"
+				AdditionalDependencies="SDL.lib SDL_ttf.lib InterfaceSDK.lib"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)SDK Poufmate interface&quot;"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -164,23 +166,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\edition_entry.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\game_entry.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\interface.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\interface_SDL.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\position.cpp"
 				>
 			</File>
 		</Filter>
@@ -190,11 +176,47 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\interface.h"
+				RelativePath="..\SDK Poufmate interface\board.h"
+				>
+			</File>
+			<File
+				RelativePath="..\SDK Poufmate interface\edition_entry.h"
+				>
+			</File>
+			<File
+				RelativePath="..\SDK Poufmate interface\game.h"
+				>
+			</File>
+			<File
+				RelativePath="..\SDK Poufmate interface\game_entry.h"
+				>
+			</File>
+			<File
+				RelativePath="..\SDK Poufmate interface\interface.h"
 				>
 			</File>
 			<File
 				RelativePath=".\interface_SDL.h"
+				>
+			</File>
+			<File
+				RelativePath="..\SDK Poufmate interface\module.h"
+				>
+			</File>
+			<File
+				RelativePath="..\SDK Poufmate interface\movement.h"
+				>
+			</File>
+			<File
+				RelativePath="..\SDK Poufmate interface\piece.h"
+				>
+			</File>
+			<File
+				RelativePath="..\SDK Poufmate interface\position.h"
+				>
+			</File>
+			<File
+				RelativePath="..\SDK Poufmate interface\square.h"
 				>
 			</File>
 		</Filter>

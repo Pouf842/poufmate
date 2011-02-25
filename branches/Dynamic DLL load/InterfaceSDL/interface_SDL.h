@@ -1,7 +1,7 @@
 #ifndef __INTERFACE_SDL_H_
 #define __INTERFACE_SDL_H_
 
-#include "../interface.h"
+#include "interface.h"
 #include "SDL.h"
 #include "SDL_ttf.h"
 #include <queue>
