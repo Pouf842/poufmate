@@ -24,12 +24,16 @@ class InterfaceIrrlicht : public Interface, public IEventReceiver
 
   protected :
     virtual bool OnEvent(const SEvent &);
+    void InitGUI();
 
     IrrlichtDevice * mpoMainWindow;
-    gui::IGUIImage * mpoSelectionToken;
     video::IVideoDriver * mpoVideoDriver;
     scene::ISceneManager * mpoSceneManager;
-    gui::IGUIEnvironment * mpoGUIEnvironment;
+    
+    CEGUI::IrrlichtRenderer * mpoGUI;
+    CEGUI::WindowManager * mpoGUIWinManager;
+    CEGUI::System * mpoGUISystem;
+
     int miUserSelection;
 };
 

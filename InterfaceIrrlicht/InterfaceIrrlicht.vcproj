@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;P:\Developpement\irrlicht-1.7.2\include&quot;"
+				AdditionalIncludeDirectories="&quot;P:\Developpement\irrlicht-1.7.2\include&quot;;&quot;P:\Developpement\CEGUI-SDK-0.7.5-vc9\cegui\include&quot;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -58,8 +58,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="Irrlicht.lib"
-				AdditionalLibraryDirectories="&quot;P:\Developpement\irrlicht-1.7.2\lib\Win32-visualStudio&quot;"
+				AdditionalDependencies="Irrlicht.lib CEGUIBase_d.lib CEGUIIrrlichtRenderer_d.lib"
+				AdditionalLibraryDirectories="&quot;P:\Developpement\irrlicht-1.7.2\lib\Win32-visualStudio&quot;;&quot;P:\Developpement\CEGUI-SDK-0.7.5-vc9\lib&quot;"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
