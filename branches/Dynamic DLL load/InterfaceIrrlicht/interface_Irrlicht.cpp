@@ -1,35 +1,22 @@
+#include "CEGUI.h"
+#include "RendererModules\Irrlicht\CEGUIIrrlichtRenderer.h"
 #include "interface_irrlicht.h"
+
+#define CEGUIXY(a, b) CEGUI::UVector2(CEGUI::UDim(a, 0), CEGUI::UDim(b, 0))
 
 extern "C" __declspec(dllexport) Interface * poGetInstance(struct Interface::stExportedMethods exportedMethods)
 {
     return new InterfaceIrrlicht(exportedMethods);
 }
 
-bool InterfaceIrrlicht::OnEvent(const SEvent & event)
+bool InterfaceIrrlicht::OnEvent(const SEvent & stEvent)
 {
-    if(event.EventType == EET_GUI_EVENT)
-    {
-        if(event.GUIEvent.EventType == gui::EGET_ELEMENT_HOVERED)
-        {
-            if(event.GUIEvent.Caller->getType() == gui::EGUIET_BUTTON)
-            {
-                mpoSelectionToken->setVisible(true);
-                mpoSelectionToken->setRelativePosition(core::rect<s32>(180, 110 + (event.GUIEvent.Caller->getID() - 1) * 50, 230, 160 + (event.GUIEvent.Caller->getID() - 1) * 50));
-                return true;
-            }
-        }
-        else if(event.GUIEvent.EventType == gui::EGET_BUTTON_CLICKED)
-        {
-            miUserSelection = event.GUIEvent.Caller->getID();
-            return true;
-        }
-    }
-    else
-        return false;
+
+    return false;
 }
 
 
-InterfaceIrrlicht::InterfaceIrrlicht(struct Interface::stExportedMethods exportedMethods) : mpoGUIEnvironment(NULL), mpoMainWindow(NULL), mpoSceneManager(NULL), mpoVideoDriver(NULL), miUserSelection(-1)
+InterfaceIrrlicht::InterfaceIrrlicht(struct Interface::stExportedMethods exportedMethods) : mpoMainWindow(NULL), mpoSceneManager(NULL), mpoVideoDriver(NULL), miUserSelection(-1)
 {
     mExportedMethods = exportedMethods;
 
@@ -45,23 +32,28 @@ InterfaceIrrlicht::InterfaceIrrlicht(struct Interface::stExportedMethods exporte
 
     mpoVideoDriver = mpoMainWindow->getVideoDriver();
     mpoSceneManager = mpoMainWindow->getSceneManager();
-    mpoGUIEnvironment = mpoMainWindow->getGUIEnvironment();
-
-    scene::ICameraSceneNode * poCamera = mpoSceneManager->addCameraSceneNodeFPS(NULL, 100, 0.1, 0, NULL, 5, false, 0, true);
-    poCamera->setPosition(core::vector3df(0, 10, -10));
-    poCamera->setTarget(core::vector3df(0, 0, 0));
-    poCamera->setInputReceiverEnabled(false);
 
     scene::IMesh * poBoard = mpoSceneManager->getMesh("Meshes/Board.obj");
     scene::IMeshSceneNode * poBoardNode = mpoSceneManager->addMeshSceneNode(poBoard, NULL, -1, core::vector3df(0, 0, 0), core::vector3df(0, 0, 0), core::vector3df(8, 8, 8));
 
     poBoardNode->setMaterialFlag(video::EMF_LIGHTING, false);
     poBoardNode->setMaterialTexture(0, mpoVideoDriver->getTexture("Images/Echiquier.bmp"));
+
+    mpoSceneManager->setAmbientLight(video::SColorf(1.0, 1.0, 1.0, 0));
+    scene::ISceneNode * poCameraContainer = mpoSceneManager->addEmptySceneNode();
+    poCameraContainer->setName("cameraContainer");
+
+    scene::ICameraSceneNode * poCamera = mpoSceneManager->addCameraSceneNodeFPS(poCameraContainer, 100, 0.1, 0, NULL, 5, false, 0, true);
+    poCamera->setPosition(core::vector3df(0, 10.25, -10.25));
+    poCamera->setTarget(core::vector3df(0, 0, 0));
+    poCamera->setInputReceiverEnabled(false);
+
+    InitGUI();
 }
 
 InterfaceIrrlicht::~InterfaceIrrlicht()
 {
-    mpoMainWindow->drop();    
+    mpoMainWindow->drop();
 }
 
 void InterfaceIrrlicht::Pause()
@@ -105,31 +97,43 @@ int InterfaceIrrlicht::iGetMenuEntry(const std::vector<std::string> & oMenuItems
 {
     miUserSelection = -1;
 
-    gui::IGUIStaticText * poTest = mpoGUIEnvironment->addStaticText(L"PoufMate !", core::rect<s32>(0, 50, 800, 100));
-    poTest->setOverrideFont(mpoGUIEnvironment->getFont("Lucida.png"));
-    poTest->setTextAlignment(gui::EGUIA_CENTER, gui::EGUIA_CENTER);
-    poTest->setOverrideColor(video::SColor(255, 255, 0, 0));
+    CEGUI::Window * poGeneralFrame = mpoGUIWinManager->createWindow("DefaultWindow", "GeneralFrame");
+    mpoGUISystem->setGUISheet(poGeneralFrame);
 
-    for(int i = 0; i < oMenuItems.size(); ++i)
-    {
-        core::stringw strItem(oMenuItems[i].c_str());
-        mpoGUIEnvironment->addButton(core::rect<s32>(250, 110 + 50 * i, 550, 130 + 50 * i), NULL, i + 1, strItem.c_str(), L"Lancer une nouvelle partie contre l'ordinateur")->setOverrideFont(mpoGUIEnvironment->getFont("Lucida.png"));
-    }
+    /*CEGUI::FrameWindow * poFrameWinTest = static_cast<CEGUI::FrameWindow*>(mpoGUIWinManager->createWindow("TaharezLook/FrameWindow", "Test"));
+    poGeneralFrame->addChildWindow(poFrameWinTest);
+    poFrameWinTest->setPosition(CEGUI::UVector2(CEGUI::UDim(0.25f, 0), CEGUI::UDim(0.25f, 0)));
+    poFrameWinTest->setSize(CEGUI::UVector2(CEGUI::UDim(0.5f, 0), CEGUI::UDim(0.5f, 0)));
+    poFrameWinTest->setText("Hello world");*/
 
-    video::ITexture * poSelectionTokenImg = mpoVideoDriver->getTexture("Images/token.jpg");
+    CEGUI::Window * poTitle = mpoGUIWinManager->createWindow("TaharezLook/StaticText", "Title");
+    poTitle->setPosition(CEGUIXY(0, 0));
+    poTitle->setSize(CEGUIXY(1, 0.10));
+    poTitle->setProperty("HorzFormatting", "HorzCentred");
+    poTitle->setProperty("FrameEnabled", "False");
+    poTitle->setProperty("BackgroundEnabled", "False");
+    poTitle->setProperty("TextColours", "tl:AAFF0000 tr:AA0000FF bl:AAFF0000 br:AA0000FF");
+
+    poTitle->setText("Poufmate !");
+    poGeneralFrame->addChildWindow(poTitle);
+
+    scene::ISceneNode * poCameraContainer = mpoSceneManager->getSceneNodeFromName("cameraContainer");
     
-    mpoSelectionToken = mpoGUIEnvironment->addImage(poSelectionTokenImg, core::vector2d<s32>(200, 110));
-    mpoSelectionToken->setVisible(false);
-
     while(mpoMainWindow->run() && miUserSelection == -1)
     {
         mpoVideoDriver->beginScene(true, true, video::SColor(255, 255, 255, 255));
 
+        poCameraContainer->setRotation(core::vector3df(0, poCameraContainer->getRotation().Y + 0.05, 0));
         mpoSceneManager->drawAll();
-        mpoGUIEnvironment->drawAll();
+        mpoGUISystem->renderGUI();
 
         mpoVideoDriver->endScene();
     }
+ 
+    poGeneralFrame->destroy();
+
+    if(!mpoMainWindow->run())
+        return 6;
 
     return miUserSelection;
 }
@@ -137,4 +141,29 @@ int InterfaceIrrlicht::iGetMenuEntry(const std::vector<std::string> & oMenuItems
 char InterfaceIrrlicht::cGetPlayerColorChoice()
 {
     return 'W';
+}
+
+void InterfaceIrrlicht::InitGUI()
+{
+    mpoGUI = &CEGUI::IrrlichtRenderer::bootstrapSystem(*mpoMainWindow);
+    mpoGUIWinManager = &CEGUI::WindowManager::getSingleton();
+    mpoGUISystem = &CEGUI::System::getSingleton();
+
+    CEGUI::DefaultResourceProvider * poResourceProvider = static_cast<CEGUI::DefaultResourceProvider*>(mpoGUISystem->getResourceProvider());
+    poResourceProvider->setResourceGroupDirectory("schemes", "datafiles/schemes/");
+    poResourceProvider->setResourceGroupDirectory("imagesets", "datafiles/imagesets/");
+    poResourceProvider->setResourceGroupDirectory("fonts", "datafiles/fonts/");
+    poResourceProvider->setResourceGroupDirectory("layouts", "datafiles/layouts/");
+    poResourceProvider->setResourceGroupDirectory("looknfeels", "datafiles/looknfeel/");
+    poResourceProvider->setResourceGroupDirectory("lua_scripts", "datafiles/lua_scripts/");
+
+    CEGUI::Imageset::setDefaultResourceGroup("imagesets");
+    CEGUI::Font::setDefaultResourceGroup("fonts");
+    CEGUI::Scheme::setDefaultResourceGroup("schemes");
+    CEGUI::WidgetLookManager::setDefaultResourceGroup("looknfeels");
+    CEGUI::WindowManager::setDefaultResourceGroup("layouts");
+    CEGUI::ScriptModule::setDefaultResourceGroup("lua_scripts");
+
+    CEGUI::FontManager::getSingleton().create("DejaVuSans-10.font" );
+    CEGUI::SchemeManager::getSingleton().create("TaharezLook.scheme");
 }

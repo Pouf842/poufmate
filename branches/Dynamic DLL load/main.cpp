@@ -120,6 +120,7 @@ int main(int argc, char * argv[])
 	catch(exception & e)
 	{
 		cout << "Uncatched exception : " << e.what() << endl;
+        getchar();
 	}
 	catch(...)
 	{
