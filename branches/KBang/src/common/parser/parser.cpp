@@ -22,7 +22,7 @@
 #include "parserstructs.h"
 #include "parser.h"
 #include "queryget.h"
-#include "util.h"
+#include "../util.h"
 #include "xmlnode.h"
 
 #include <QtDebug>

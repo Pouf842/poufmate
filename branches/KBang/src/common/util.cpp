@@ -29,13 +29,18 @@ QString randomToken(int minLength, int maxLength)
     const static char* chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     const static int charl = strlen(chars);
     int length = minLength + ((int)qrand() % (maxLength - minLength + 1));
-    char token[length+1];
+    char * token = (char *) malloc(length+1);
+
     for (int i = 0; i < length; ++i)
     {
         token[i] = chars[qrand() % charl];
     }
     token[length - 1] = '\0';
-    return QString(token);
+
+    QString qstrReturn(token);
+    free(token);
+
+    return qstrReturn;
 }
 
 bool randomBool(qreal probability)
