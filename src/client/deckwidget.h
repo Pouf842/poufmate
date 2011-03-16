@@ -24,7 +24,7 @@
 #include <QWidget>
 #include <QMoveEvent>
 
-#include <cardpilewidget.h>
+#include "cardpilewidget.h"
 
 namespace client {
 class CardWidgetFactory;

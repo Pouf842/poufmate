@@ -19,7 +19,7 @@
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="4"
 			CharacterSet="2"
 			>
 			<Tool
@@ -40,6 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="P:\Developpement\Qt\qt\include;P:\Developpement\Qt\qt\include\QtGui;P:\Developpement\Qt\qt\include\QtCore;P:\Developpement\Qt\qt\include\QtNetwork;$(ProjectDir)uics;P:\Developpement\Qt\qt\include\QtXml;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -56,15 +57,10 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				GenerateDebugInformation="true"
-				TargetMachine="1"
+				Name="VCLibrarianTool"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -74,9 +70,6 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -161,12 +154,92 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath="..\src\common\config.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\gameenums.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\util.cpp"
+				>
+			</File>
+			<Filter
+				Name="parser"
+				>
+				<File
+					RelativePath="..\src\common\parser\ioproxy.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\common\parser\parser.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\common\parser\parserstructs.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\common\parser\queryget.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\common\parser\queryresult.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\common\parser\xmlnode.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Fichiers d&apos;en-tête"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath="..\src\common\config.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\gameenums.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\util.h"
+				>
+			</File>
+			<Filter
+				Name="parser"
+				>
+				<File
+					RelativePath="..\src\common\parser\ioproxy.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\common\parser\parser.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\common\parser\parserstructs.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\common\parser\queryget.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\common\parser\queryresult.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\common\parser\xmlnode.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Fichiers de ressources"

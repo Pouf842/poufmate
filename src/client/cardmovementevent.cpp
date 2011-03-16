@@ -186,7 +186,7 @@ void CardMovementEvent::startTransition()
     mp_card->show();
     m_currPos = m_srcPos = mp_card->pos();
     m_destPos = mp_destPocket->mapTo(mp_game->mainWidget(), mp_destPocket->newCardPosition());
-    m_length  = sqrt(pow(m_destPos.x() - m_srcPos.x(), 2) + pow(m_destPos.y() - m_srcPos.y(), 2));
+    m_length  = sqrt(pow((double) (m_destPos.x() - m_srcPos.x()), (double) 2) + pow((double) (m_destPos.y() - m_srcPos.y()), (double) 2));
     mp_card->setShadowMode();
     m_time.start();
     sm_timer.start(tickTime, this);

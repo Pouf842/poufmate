@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="P:\Developpement\KBang\src\common;P:\Developpement\Qt\qt\include;P:\Developpement\Qt\qt\include\QtGui;P:\Developpement\Qt\qt\include\QtCore"
+				AdditionalIncludeDirectories="P:\Developpement\KBang\src\common;P:\Developpement\Qt\qt\include;P:\Developpement\Qt\qt\include\QtGui;P:\Developpement\Qt\qt\include\QtCore;P:\Developpement\Qt\qt\include\QtNetwork;$(ProjectDir)uics;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -58,6 +58,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="QtCored4.lib QtGuid4.lib QtNetworkd4.lib $(OutDir)\common.lib"
+				AdditionalLibraryDirectories="P:\Developpement\Qt\qt\lib"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -165,6 +167,16 @@
 			<File
 				RelativePath="..\src\client\aboutdialog.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputDir)$(InputFileName) -o $(ProjectDir)mocs\moc_$(InputName)"
+						CommandLine="moc $(InputDir)$(InputFileName) -o $(ProjectDir)mocs\moc_$(InputName)"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName)"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\client\card.cpp"
@@ -566,9 +578,9 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="uic $(InputDir)$(InputFileName) -o $(ProjectDir)Test\ui_$(InputName).h"
-						CommandLine="uic $(InputDir)$(InputFileName) -o $(ProjectDir)Test\ui_$(InputName).h"
-						Outputs="$(ProjectDir)Test2\ui_$(InputName).h"
+						Description="uic $(InputFileName) ==&gt; ui_$(InputName).h"
+						CommandLine="uic $(InputDir)$(InputFileName) -o $(ProjectDir)uics\ui_$(InputName).h&#x0D;&#x0A;"
+						Outputs="$(ProjectDir)uics\ui_$(InputName).h"
 					/>
 				</FileConfiguration>
 			</File>
@@ -581,7 +593,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="uic $(InputFileName) ==&gt; ui_$(InputName).h"
-						CommandLine="uic $(InputDir)$(InputFileName) -o $(ProjectDir)uics\ui_$(InputName).h"
+						CommandLine="uic $(InputDir)$(InputFileName) -o $(ProjectDir)uics\ui_$(InputName).h&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)uics\ui_$(InputName).h"
 					/>
 				</FileConfiguration>
@@ -595,7 +607,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="uic $(InputFileName) ==&gt; ui_$(InputName).h"
-						CommandLine="uic $(InputDir)$(InputFileName) -o $(ProjectDir)uics\ui_$(InputName).h"
+						CommandLine="uic $(InputDir)$(InputFileName) -o $(ProjectDir)uics\ui_$(InputName).h&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)uics\ui_$(InputName).h"
 					/>
 				</FileConfiguration>
@@ -609,7 +621,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="uic $(InputFileName) ==&gt; ui_$(InputName).h"
-						CommandLine="uic $(InputDir)$(InputFileName) -o $(ProjectDir)uics\ui_$(InputName).h"
+						CommandLine="uic $(InputDir)$(InputFileName) -o $(ProjectDir)uics\ui_$(InputName).h&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)uics\ui_$(InputName).h"
 					/>
 				</FileConfiguration>
@@ -623,7 +635,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="uic $(InputFileName) ==&gt; ui_$(InputName).h"
-						CommandLine="uic $(InputDir)$(InputFileName) -o $(ProjectDir)uics\ui_$(InputName).h"
+						CommandLine="uic $(InputDir)$(InputFileName) -o $(ProjectDir)uics\ui_$(InputName).h&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)uics\ui_$(InputName).h"
 					/>
 				</FileConfiguration>
@@ -637,7 +649,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="uic $(InputFileName) ==&gt; ui_$(InputName).h"
-						CommandLine="uic $(InputDir)$(InputFileName) -o $(ProjectDir)uics\ui_$(InputName).h"
+						CommandLine="uic $(InputDir)$(InputFileName) -o $(ProjectDir)uics\ui_$(InputName).h&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)uics\ui_$(InputName).h"
 					/>
 				</FileConfiguration>
@@ -651,7 +663,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="uic $(InputFileName) ==&gt; ui_$(InputName).h"
-						CommandLine="uic $(InputDir)$(InputFileName) -o $(ProjectDir)uics\ui_$(InputName).h"
+						CommandLine="uic $(InputDir)$(InputFileName) -o $(ProjectDir)uics\ui_$(InputName).h&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)uics\ui_$(InputName).h"
 					/>
 				</FileConfiguration>
@@ -665,7 +677,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="uic $(InputFileName) ==&gt; ui_$(InputName).h"
-						CommandLine="uic $(InputDir)$(InputFileName) -o $(ProjectDir)uics\ui_$(InputName).h"
+						CommandLine="uic $(InputDir)$(InputFileName) -o $(ProjectDir)uics\ui_$(InputName).h&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)uics\ui_$(InputName).h"
 					/>
 				</FileConfiguration>
@@ -679,7 +691,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="uic $(InputFileName) ==&gt; ui_$(InputName).h"
-						CommandLine="uic $(InputDir)$(InputFileName) -o $(ProjectDir)uics\ui_$(InputName).h"
+						CommandLine="uic $(InputDir)$(InputFileName) -o $(ProjectDir)uics\ui_$(InputName).h&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)uics\ui_$(InputName).h"
 					/>
 				</FileConfiguration>
@@ -693,7 +705,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="uic $(InputFileName) ==&gt; ui_$(InputName).h"
-						CommandLine="uic $(InputDir)$(InputFileName) -o $(ProjectDir)uics\ui_$(InputName).h"
+						CommandLine="uic $(InputDir)$(InputFileName) -o $(ProjectDir)uics\ui_$(InputName).h&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)uics\ui_$(InputName).h"
 					/>
 				</FileConfiguration>

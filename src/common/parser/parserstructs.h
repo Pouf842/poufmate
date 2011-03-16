@@ -20,7 +20,7 @@
 #ifndef PARSERSTRUCTS_H
 #define PARSERSTRUCTS_H
 
-#include "gameenums.h"
+#include "../gameenums.h"
 
 #include <QList>
 #include <QImage>
