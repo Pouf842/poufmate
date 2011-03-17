@@ -130,7 +130,7 @@ void VoidAI::requestWithAction()
                                     qDebug() << "VoidAI: BadTargetPlayerException!";
                                 } catch (OneBangPerTurnException e) {
                                     qDebug() << "VoidAI: One bang per turn!";
-                                } catch(GameException& e) {
+                                } catch(GameException&) {
                                     qDebug() << "VoidAI: GameException";
                                 }
                             }

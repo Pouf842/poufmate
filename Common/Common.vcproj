@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="P:\Developpement\Qt\qt\include;P:\Developpement\Qt\qt\include\QtGui;P:\Developpement\Qt\qt\include\QtCore;P:\Developpement\Qt\qt\include\QtNetwork;$(ProjectDir)uics;P:\Developpement\Qt\qt\include\QtXml;"
+				AdditionalIncludeDirectories="P:\Developpement\Qt\include;P:\Developpement\Qt\include\QtGui;P:\Developpement\Qt\include\QtCore;P:\Developpement\Qt\include\QtNetwork;$(ProjectDir)uics;P:\Developpement\Qt\include\QtXml;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -58,6 +58,8 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				AdditionalDependencies="QtCore4.lib QtGui4.lib"
+				AdditionalLibraryDirectories="P:\Developpement\Qt\lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -154,63 +156,141 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
-			<File
-				RelativePath="..\src\common\config.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\gameenums.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\util.cpp"
-				>
-			</File>
 			<Filter
-				Name="parser"
+				Name="Headers"
 				>
 				<File
-					RelativePath="..\src\common\parser\ioproxy.cpp"
+					RelativePath=".\mocs\moc_config.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\common\parser\parser.cpp"
+					RelativePath=".\mocs\moc_gameenums.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\common\parser\parserstructs.cpp"
+					RelativePath=".\mocs\moc_util.cpp"
+					>
+				</File>
+				<Filter
+					Name="parser"
+					>
+					<File
+						RelativePath=".\mocs\parser\moc_ioproxy.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\mocs\parser\moc_parser.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\mocs\parser\moc_parserstructs.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\mocs\parser\moc_queryget.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\mocs\parser\moc_queryresult.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\mocs\parser\moc_xmlnode.cpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="Sources"
+				>
+				<File
+					RelativePath="..\src\common\config.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\common\parser\queryget.cpp"
+					RelativePath="..\src\common\gameenums.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\common\parser\queryresult.cpp"
+					RelativePath="..\src\common\util.cpp"
 					>
 				</File>
-				<File
-					RelativePath="..\src\common\parser\xmlnode.cpp"
+				<Filter
+					Name="parser"
 					>
-				</File>
+					<File
+						RelativePath="..\src\common\parser\ioproxy.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\src\common\parser\parser.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\src\common\parser\parserstructs.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\src\common\parser\queryget.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\src\common\parser\queryresult.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\src\common\parser\xmlnode.cpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
-			Name="Fichiers d&apos;en-tête"
+			Name="Headers Qt"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
 				RelativePath="..\src\common\config.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\common\gameenums.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\common\util.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<Filter
 				Name="parser"
@@ -218,26 +298,86 @@
 				<File
 					RelativePath="..\src\common\parser\ioproxy.h"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="moc $(InputPath) -o $(ProjectDir)mocs\parser\moc_$(InputName).cpp"
+							CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\parser\moc_$(InputName).cpp"
+							Outputs="$(ProjectDir)mocs\parser\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\common\parser\parser.h"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="moc $(InputPath) -o $(ProjectDir)mocs\parser\moc_$(InputName).cpp"
+							CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\parser\moc_$(InputName).cpp"
+							Outputs="$(ProjectDir)mocs\parser\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\common\parser\parserstructs.h"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="moc $(InputPath) -o $(ProjectDir)mocs\parser\moc_$(InputName).cpp"
+							CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\parser\moc_$(InputName).cpp"
+							Outputs="$(ProjectDir)mocs\parser\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\common\parser\queryget.h"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="moc $(InputPath) -o $(ProjectDir)mocs\parser\moc_$(InputName).cpp"
+							CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\parser\moc_$(InputName).cpp"
+							Outputs="$(ProjectDir)mocs\parser\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\common\parser\queryresult.h"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="moc $(InputPath) -o $(ProjectDir)mocs\parser\moc_$(InputName).cpp"
+							CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\parser\moc_$(InputName).cpp"
+							Outputs="$(ProjectDir)mocs\parser\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\common\parser\xmlnode.h"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="moc $(InputPath) -o $(ProjectDir)mocs\parser\moc_$(InputName).cpp"
+							CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\parser\moc_$(InputName).cpp"
+							Outputs="$(ProjectDir)mocs\parser\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 		</Filter>

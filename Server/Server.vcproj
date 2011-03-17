@@ -40,6 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="P:\Developpement\KBang\src\common;P:\Developpement\Qt\include;P:\Developpement\Qt\include\QtGui;P:\Developpement\Qt\include\QtCore;P:\Developpement\Qt\include\QtNetwork;$(ProjectDir)uics;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -57,7 +58,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="common.lib QtCore4.lib QtNetwork4.lib QtGui4.lib"
+				AdditionalLibraryDirectories="P:\Developpement\Qt\lib;$(OutDir)"
 				GenerateDebugInformation="true"
+				SubSystem="1"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -161,12 +165,1248 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<Filter
+				Name="Headers"
+				>
+				<File
+					RelativePath=".\mocs\moc_cardbang.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cardbarrel.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cardbeer.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_carddrawcards.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cardduel.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_carddynamite.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cardfactory.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cardgeneralstore.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cardhorse.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cardjail.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cardmissed.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cardmultishoot.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cardplayable.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cards.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cardtaker.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_characterbase.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_characterblackjack.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_charactercalamityjanet.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_charactercassidygringo.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_characterjessejones.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_characterjourdonnais.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_characterkitcarlson.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_characterlist.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_characterluckyduke.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_characterpedroramirez.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_characterpropertychange.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_charactersidketchum.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_charactersuzylafayette.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_charactervulturesam.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_checkdeckresulthandler.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_client.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_common.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_console.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_consolecommand.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_game.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_gamecycle.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_gameeventlistener.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_gameeventmanager.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_gameexceptions.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_gameinfo.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_gamelogger.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_gameserver.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_gametable.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_player.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_playerctrl.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_playerreaper.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_playingcard.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_privateplayerview.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_publicgameview.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_publicplayerview.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_reactioncard.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_reactionhandler.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_tablecard.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_tcpserver.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_voidai.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_weaponcard.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Sources"
+				>
+				<File
+					RelativePath="..\src\server\cardbang.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\cardbarrel.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\cardbeer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\carddrawcards.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\cardduel.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\carddynamite.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\cardfactory.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\cardgeneralstore.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\cardhorse.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\cardjail.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\cardmissed.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\cardmultishoot.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\cardplayable.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\cardtaker.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\characterbase.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\characterblackjack.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\charactercalamityjanet.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\charactercassidygringo.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\characterjessejones.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\characterjourdonnais.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\characterkitcarlson.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\characterlist.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\characterluckyduke.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\characterpedroramirez.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\characterpropertychange.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\charactersidketchum.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\charactersuzylafayette.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\charactervulturesam.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\checkdeckresulthandler.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\client.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\common.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\console.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\consolecommand.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\game.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\gamecycle.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\gameeventlistener.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\gameeventmanager.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\gameinfo.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\gamelogger.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\gameserver.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\gametable.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\main.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\player.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\playerctrl.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\playerreaper.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\playingcard.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\privateplayerview.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\publicgameview.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\publicplayerview.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\reactioncard.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\reactionhandler.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\tablecard.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\tcpserver.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\voidai.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\weaponcard.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
-			Name="Fichiers d&apos;en-tête"
+			Name="Headers Qt"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath="..\src\server\cardbang.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\cardbarrel.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\cardbeer.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\carddrawcards.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\cardduel.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\carddynamite.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\cardfactory.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\cardgeneralstore.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\cardhorse.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\cardjail.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\cardmissed.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\cardmultishoot.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\cardplayable.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\cards.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\cardtaker.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\characterbase.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\characterblackjack.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\charactercalamityjanet.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\charactercassidygringo.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\characterjessejones.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\characterjourdonnais.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\characterkitcarlson.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\characterlist.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\characterluckyduke.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\characterpedroramirez.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\characterpropertychange.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\charactersidketchum.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\charactersuzylafayette.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\charactervulturesam.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\checkdeckresulthandler.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\client.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\common.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\console.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\consolecommand.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\game.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\gamecycle.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\gameeventlistener.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\gameeventmanager.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\gameexceptions.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\gameinfo.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\gamelogger.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\gameserver.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\gametable.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\player.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\playerctrl.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\playerreaper.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\playingcard.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\privateplayerview.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\publicgameview.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\publicplayerview.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\reactioncard.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\reactionhandler.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\tablecard.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\tcpserver.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\voidai.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\weaponcard.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
 		</Filter>
 		<Filter
 			Name="Fichiers de ressources"

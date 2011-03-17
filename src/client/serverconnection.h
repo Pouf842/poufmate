@@ -27,10 +27,10 @@
 
 class QTcpSocket;
 class QByteArray;
-class CreatePlayerData;
-class CreateGameData;
-class ServerInfoData;;
-class CardMovementData;
+struct CreatePlayerData;
+struct CreateGameData;
+struct ServerInfoData;;
+struct CardMovementData;
 class Parser;
 class QueryGet;
 

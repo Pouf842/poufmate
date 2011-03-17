@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'connecttoserverdialog.ui'
 **
-** Created: Wed 16. Mar 09:48:10 2011
-**      by: Qt User Interface Compiler version 4.7.0
+** Created: Thu 17. Mar 13:27:43 2011
+**      by: Qt User Interface Compiler version 4.7.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/

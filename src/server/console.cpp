@@ -25,8 +25,8 @@
 Console::Console(GameServer* gameServer, FILE* in, FILE* out):
         QThread(gameServer),
         m_isEnabled(1),
-        m_cin(in, QIODevice::ReadOnly),
-        m_cout(out, QIODevice::WriteOnly),
+        //m_cin(in, QIODevice::ReadOnly),
+        //m_cout(out, QIODevice::WriteOnly),
         mp_gameServer(gameServer)
 {
 }
