@@ -2,11 +2,12 @@
 #define GAMETABLE_H
 
 #include <QtCore>
+#include "game.h"
 
 class PlayingCard;
 class TableCard;
 class Player;
-class Game;
+//class Game;
 class CardFactory;
 class CheckDeckResultHandler;
 
