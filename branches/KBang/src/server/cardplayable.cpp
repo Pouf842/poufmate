@@ -21,7 +21,7 @@
 #include "player.h"
 #include "gametable.h"
 
-/*CardPlayable::CardPlayable(Game* game, int id) : mp_game(game), m_id(id)
+CardPlayable::CardPlayable(Game* game, int id) : mp_game(game), m_id(id)
 {
 }
 
@@ -31,8 +31,8 @@ CardPlayable::~CardPlayable()
 
 void CardPlayable::play()
 {
-    //mp_game->gameTable().playCard(owner(), this);
+    mp_game->gameTable().playCard(owner(), this);
     return 1;
 }
-*/
+
 
