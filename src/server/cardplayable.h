@@ -29,7 +29,7 @@
  * card.
  * @author MacJariel <MacJariel@gmail.com>
  */
-/*class CardPlayable: public PlayingCard
+class CardPlayable: public PlayingCard
 {
 Q_OBJECT
 public:
@@ -42,6 +42,6 @@ public:
 
     virtual void respondPass() = 0;
     virtual void respondCard(PlayingCard* targetCard) = 0;
-};*/
+};
 
 #endif
