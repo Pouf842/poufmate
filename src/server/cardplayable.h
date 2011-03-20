@@ -16,7 +16,7 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+ *************************************************************************** /
 #ifndef CARDPLAYABLE_H
 #define CARDPLAYABLE_H
 
@@ -28,12 +28,12 @@
  * Some of these cards can also require to specify a target player or target
  * card.
  * @author MacJariel <MacJariel@gmail.com>
- */
+ * /
 class CardPlayable: public PlayingCard
 {
 Q_OBJECT
 public:
-    CardPlayable(Game* game, int id);
+   // CardPlayable(Game* game, int id);
     virtual ~CardPlayable();
 
     virtual void play();
@@ -44,4 +44,4 @@ public:
     virtual void respondCard(PlayingCard* targetCard) = 0;
 };
 
-#endif
+#endif*/

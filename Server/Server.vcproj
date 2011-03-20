@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="P:\Developpement\KBang\src\common;P:\Developpement\Qt\include;P:\Developpement\Qt\include\QtGui;P:\Developpement\Qt\include\QtCore;P:\Developpement\Qt\include\QtNetwork;$(ProjectDir)uics;"
+				AdditionalIncludeDirectories="$(SolutionDir)src\common;$(QTDIR)include;$(QTDIR)include\QtGui;$(QTDIR)include\QtCore;$(QTDIR)include\QtNetwork;$(ProjectDir)uics;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -58,8 +58,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="common.lib QtCore4.lib QtNetwork4.lib QtGui4.lib"
-				AdditionalLibraryDirectories="P:\Developpement\Qt\lib;$(OutDir)"
+				AdditionalDependencies="common.lib QtCored4.lib QtNetwork4.lib QtGui4.lib"
+				AdditionalLibraryDirectories="$(QTDIR)lib;$(OutDir)"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -632,7 +632,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						AdditionalDependencies=""
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>

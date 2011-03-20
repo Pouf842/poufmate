@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="P:\Developpement\KBang\src\common;P:\Developpement\Qt\include;P:\Developpement\Qt\include\QtGui;P:\Developpement\Qt\include\QtCore;P:\Developpement\Qt\include\QtNetwork;$(ProjectDir)uics;"
+				AdditionalIncludeDirectories="$(SolutionDir)src\common;$(QTDIR)include;$(QTDIR)include\QtGui;$(QTDIR)include\QtCore;$(QTDIR)include\QtNetwork;$(ProjectDir)uics;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -58,8 +58,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(OutDir)\common.lib QtCore4.lib QtGui4.lib QtNetwork4.lib"
-				AdditionalLibraryDirectories="P:\Developpement\Qt\lib"
+				AdditionalDependencies="$(OutDir)\common.lib QtCored4.lib QtGuid4.lib QtNetworkd4.lib"
+				AdditionalLibraryDirectories="$(QTDIR)lib"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				EntryPointSymbol=""
@@ -332,442 +332,162 @@
 				<File
 					RelativePath="..\src\client\aboutdialog.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\card.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\cardactionswidget.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\cardlistwidget.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\cardmovementevent.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\cardpilewidget.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\cardpocket.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\cardwidget.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\cardwidgetfactory.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\cardwidgetsizemanager.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\cardzoomwidget.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\characterwidget.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\chatwidget.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\common.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\connecttoserverdialog.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\creategamedialog.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\deckwidget.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\game.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\gameactionmanager.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\gamecontextchangeevent.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\gameevent.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\gameeventhandler.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\gameeventqueue.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\gameloop.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\gamemessageevent.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\gamesyncevent.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\graveyardwidget.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\joingamedialog.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\lifepointschangeevent.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\localplayerwidget.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\logwidget.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\main.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\mainwindow.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\newserverdialog.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\opponentwidget.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\playerdiedevent.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\playerevent.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\playerwidget.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\selectplayericonwidget.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\serverconnection.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 			</Filter>
 			<Filter
@@ -793,7 +513,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -807,7 +527,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -821,7 +541,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -835,7 +555,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -849,7 +569,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -863,7 +583,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -877,7 +597,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -891,7 +611,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -905,7 +625,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -919,7 +639,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -933,7 +653,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -947,7 +667,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -961,7 +681,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -975,7 +695,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -989,7 +709,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1003,7 +723,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1017,7 +737,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1031,7 +751,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1045,7 +765,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1059,7 +779,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1073,7 +793,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1087,7 +807,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1101,7 +821,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1115,7 +835,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1129,7 +849,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1143,7 +863,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1157,7 +877,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1171,7 +891,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1185,7 +905,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1199,7 +919,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1213,7 +933,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1227,7 +947,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1241,7 +961,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1255,7 +975,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1269,7 +989,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1283,7 +1003,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1297,7 +1017,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1311,7 +1031,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1325,7 +1045,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -1381,7 +1101,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="rcc $(InputPath) -o $(InputDir)client_resources.cpp"
-						CommandLine="rcc $(InputPath) -o $(InputDir)client_resources.cpp"
+						CommandLine="rcc $(InputPath) -o $(InputDir)client_resources.cpp&#x0D;&#x0A;"
 						Outputs="$(InputDir)client_resources.cpp"
 					/>
 				</FileConfiguration>
