@@ -16,12 +16,12 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+ *************************************************************************** /
 #include "cardplayable.h"
 #include "player.h"
 #include "gametable.h"
 
-CardPlayable::CardPlayable(Game* game, int id) : mp_game(game), m_id(id)
+CardPlayable::CardPlayable(Game* game, int id) : PlayingCard(game, id)
 {
 }
 
@@ -34,5 +34,5 @@ void CardPlayable::play()
     mp_game->gameTable().playCard(owner(), this);
     return 1;
 }
-
+*/
 

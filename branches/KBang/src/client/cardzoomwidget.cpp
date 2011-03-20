@@ -43,7 +43,7 @@ CardZoomWidget::CardZoomWidget(Game* game, CardWidget* cardWidget):
     validate();
     raise();
     show();
-    grabMouse();
+    //grabMouse();
     mp_game->pauseGameEvents();
     m_time.start();
 }
