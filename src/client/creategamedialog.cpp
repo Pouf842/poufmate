@@ -88,6 +88,7 @@ void CreateGameDialog::on_pushButtonCreate_clicked()
     createGameData.playerPassword       = lineEditGamePasswordPlayers->text();
     createGameData.spectatorPassword    = lineEditGamePasswordSpectators->text();
     createGameData.flagShufflePlayers   = radioButtonOrderRandom->isChecked();
+    createGameData.highNoonEnabled      = checkBoxHighNoon->isChecked();
 
     CreatePlayerData createPlayerData;
     createPlayerData.name               = lineEditPlayerName->text();

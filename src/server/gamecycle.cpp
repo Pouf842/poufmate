@@ -1,5 +1,6 @@
 #include "gamecycle.h"
 #include "gametable.h"
+#include "gameinfo.h"
 #include "gameexceptions.h"
 #include "game.h"
 #include "player.h"
@@ -84,7 +85,11 @@ void GameCycle::startTurn(Player* player)
 {
     m_contextDirty = 1;
     if (player->role() == ROLE_SHERIFF)
+    {
+        if(mp_game->gameInfo().hasHighNoon());
         m_turnNum++;
+    }
+
     mp_currentPlayer = mp_requestedPlayer = player;
     m_state = GAMEPLAYSTATE_DRAW;
     mp_currentPlayer->onTurnStart();

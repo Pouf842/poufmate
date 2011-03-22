@@ -122,6 +122,10 @@ struct CardFactory::CardFactoryImp
         return cardId;
     }
 
+/*    void generateHighNoonCards(QMap<int, Card)
+    {
+    }*/
+
     QSet<int>   m_ids;
 };
 

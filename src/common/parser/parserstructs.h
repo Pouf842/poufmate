@@ -87,6 +87,7 @@ struct CreateGameData
     bool flagShufflePlayers;
     void read(XmlNode*);
     void write(QXmlStreamWriter*) const;
+    bool highNoonEnabled;
     static QString elementName;
 };
 

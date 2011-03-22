@@ -338,6 +338,10 @@ void Game::startGame(Player* player)
     if (!m_startable) {
         throw BadGameStateException();
     }
+
+    if(mp_gameInfo->hasHighNoon());
+//        createHighNoonDeck();
+
     m_state = GAMESTATE_PLAYING;
     if (mp_gameInfo->hasShufflePlayers())
         shufflePlayers();

@@ -58,7 +58,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="common.lib QtCored4.lib QtNetwork4.lib QtGui4.lib"
+				AdditionalDependencies="common.lib QtCored4.lib QtNetworkd4.lib QtGuid4.lib"
 				AdditionalLibraryDirectories="$(QTDIR)lib;$(OutDir)"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -338,6 +338,10 @@
 				</File>
 				<File
 					RelativePath=".\mocs\moc_gametable.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_highnooncard.cpp"
 					>
 				</File>
 				<File
@@ -667,6 +671,14 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\src\server\cardblessing.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\server\cardcurse.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\server\carddrawcards.h"
 				>
 				<FileConfiguration
@@ -735,6 +747,22 @@
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\cardghosttown.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\server\cardgoldrush.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\server\cardhangover.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\server\cardhighnoon.h"
+				>
 			</File>
 			<File
 				RelativePath="..\src\server\cardhorse.h"
@@ -821,6 +849,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\src\server\cardshootout.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\server\cardtaker.h"
 				>
 				<FileConfiguration
@@ -833,6 +865,30 @@
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\cardthedaltons.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\server\cardthedoctor.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\server\cardthereverent.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\server\cardthesermon.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\server\cardthirst.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\server\cardtrainarrival.h"
+				>
 			</File>
 			<File
 				RelativePath="..\src\server\characterbase.h"
@@ -1214,6 +1270,20 @@
 			</File>
 			<File
 				RelativePath="..\src\server\gametable.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\server\highnooncard.h"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"

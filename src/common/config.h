@@ -33,7 +33,7 @@ class Config: private NonCopyable {
 
 public:
     QString         readString(QString group, QString varName);
-    QStringList  readStringList(QString group, QString varName);
+    QStringList     readStringList(QString group, QString varName);
     int             readInt(QString group, QString varName);
     QList<int>      readIntList(QString group, QString varName);
 
