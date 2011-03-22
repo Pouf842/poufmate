@@ -166,6 +166,22 @@ enum GameMessageType {
     GAMEMESSAGE_PLAYERDIED,
 };
 
+enum HighNoonCardType { 
+    HIGHNOON_INVALID = 0,
+    HIGHNOON_GOLD_RUSH,
+    HIGHNOON_SHOOTOUT,
+    HIGHNOON_THE_DOCTOR,
+    HIGHNOON_TRAIN_ARRIVAL,
+    HIGHNOON_THE_DALTONS,
+    HIGHNOON_HANGOVER,
+    HIGHNOON_THE_SERMON,
+    HIGHNOON_CURSE,
+    HIGHNOON_GHOST_TOWN,
+    HIGHNOON_THIRST,
+    HIGHNOON_THE_REVEREND,
+    HIGHNOON_HIGH_NOON
+};
+
 
 CardSuit        stringToCardSuit(const QString& s);
 QString         cardSuitToString(const CardSuit& suit);

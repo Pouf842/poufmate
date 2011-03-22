@@ -215,6 +215,7 @@ void CreateGameData::read(XmlNode* node)
     playerPassword      = node->attribute("playerPassword");
     spectatorPassword   = node->attribute("spectatorPassword");
     flagShufflePlayers  = node->attribute("shufflePlayers") == "true";
+    highNoonEnabled     = node->attribute("highNoon") == "true";
 }
 
 void CreateGameData::write(QXmlStreamWriter* writer) const
@@ -227,10 +228,11 @@ void CreateGameData::write(QXmlStreamWriter* writer) const
     writer->writeAttribute("maxSpectators",         QString::number(maxSpectators));
     writer->writeAttribute("AIPlayers",             QString::number(AIPlayers));
     if (!playerPassword.isNull())
-        writer->writeAttribute("playerPassword",        playerPassword);
+        writer->writeAttribute("playerPassword",    playerPassword);
     if (!spectatorPassword.isNull())
-        writer->writeAttribute("spectatorPassword",     spectatorPassword);
+        writer->writeAttribute("spectatorPassword", spectatorPassword);
     writer->writeAttribute("shufflePlayers",        flagShufflePlayers ? "true" : "false");
+    writer->writeAttribute("highNoon",              highNoonEnabled ? "true" : "false");
     writer->writeEndElement();
 }
 

@@ -128,6 +128,7 @@ private:
     QList<PlayingCard*>            m_graveyard;
     QList<PlayingCard*>            m_selection;
     QMap<int, PlayingCard*>        m_cards;
+    //QList<
 };
 
 #endif // GAMETABLE_H

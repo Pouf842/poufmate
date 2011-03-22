@@ -40,6 +40,7 @@ public:
     inline bool     hasSpectatorPassword()  const { return !m_spectatorPassword.isNull(); }
     inline int      creatorId()             const { return m_creatorId; }
     inline bool     hasShufflePlayers()     const { return m_shufflePlayersFlag; }
+    inline bool     hasHighNoon()           const { return m_highNoonFlag; }
 
     inline bool comparePlayerPassword(const QString& password) const {
         return password == m_playerPassword;
@@ -67,6 +68,7 @@ private:
     QString m_playerPassword;
     QString m_spectatorPassword;
     bool    m_shufflePlayersFlag;
+    bool    m_highNoonFlag;
 };
 
 #endif // GAMEINFO_H

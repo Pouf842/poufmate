@@ -10,7 +10,8 @@ GameInfo::GameInfo(const CreateGameData& createGameData):
     m_AIPlayers(createGameData.AIPlayers),
     m_playerPassword(createGameData.playerPassword),
     m_spectatorPassword(createGameData.spectatorPassword),
-    m_shufflePlayersFlag(createGameData.flagShufflePlayers)
+    m_shufflePlayersFlag(createGameData.flagShufflePlayers),
+    m_highNoonFlag(createGameData.highNoonEnabled)
 {
     Q_ASSERT(!m_name.isEmpty());
     Q_ASSERT(m_minPlayers <= m_maxPlayers);

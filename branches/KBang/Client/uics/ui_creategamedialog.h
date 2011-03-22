@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'creategamedialog.ui'
 **
-** Created: Thu 17. Mar 13:27:43 2011
+** Created: Tue 22. Mar 14:47:18 2011
 **      by: Qt User Interface Compiler version 4.7.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -14,6 +14,7 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QCheckBox>
 #include <QtGui/QDialog>
 #include <QtGui/QFrame>
 #include <QtGui/QGridLayout>
@@ -65,12 +66,13 @@ public:
     QLabel *label_12;
     QFrame *line;
     QLabel *label_5;
+    QCheckBox *checkBoxHighNoon;
 
     void setupUi(QDialog *CreateGameDialog)
     {
         if (CreateGameDialog->objectName().isEmpty())
             CreateGameDialog->setObjectName(QString::fromUtf8("CreateGameDialog"));
-        CreateGameDialog->resize(374, 369);
+        CreateGameDialog->resize(393, 377);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -118,7 +120,7 @@ public:
 
         horizontalSpacer = new QSpacerItem(213, 28, QSizePolicy::Preferred, QSizePolicy::Minimum);
 
-        gridLayout->addItem(horizontalSpacer, 14, 0, 1, 3);
+        gridLayout->addItem(horizontalSpacer, 15, 0, 1, 3);
 
         label = new QLabel(CreateGameDialog);
         label->setObjectName(QString::fromUtf8("label"));
@@ -162,17 +164,17 @@ public:
         lineEditPlayerName = new QLineEdit(CreateGameDialog);
         lineEditPlayerName->setObjectName(QString::fromUtf8("lineEditPlayerName"));
 
-        gridLayout->addWidget(lineEditPlayerName, 10, 1, 1, 4);
+        gridLayout->addWidget(lineEditPlayerName, 11, 1, 1, 4);
 
         pushButtonCreate = new QPushButton(CreateGameDialog);
         pushButtonCreate->setObjectName(QString::fromUtf8("pushButtonCreate"));
 
-        gridLayout->addWidget(pushButtonCreate, 14, 3, 1, 1);
+        gridLayout->addWidget(pushButtonCreate, 15, 3, 1, 1);
 
         pushButtonCancel = new QPushButton(CreateGameDialog);
         pushButtonCancel->setObjectName(QString::fromUtf8("pushButtonCancel"));
 
-        gridLayout->addWidget(pushButtonCancel, 14, 4, 1, 2);
+        gridLayout->addWidget(pushButtonCancel, 15, 4, 1, 2);
 
         label_8 = new QLabel(CreateGameDialog);
         label_8->setObjectName(QString::fromUtf8("label_8"));
@@ -192,31 +194,31 @@ public:
         sizePolicy2.setHeightForWidth(label_7->sizePolicy().hasHeightForWidth());
         label_7->setSizePolicy(sizePolicy2);
 
-        gridLayout->addWidget(label_7, 10, 0, 1, 1);
+        gridLayout->addWidget(label_7, 11, 0, 1, 1);
 
         label_9 = new QLabel(CreateGameDialog);
         label_9->setObjectName(QString::fromUtf8("label_9"));
 
-        gridLayout->addWidget(label_9, 12, 0, 1, 1);
+        gridLayout->addWidget(label_9, 13, 0, 1, 1);
 
         selectPlayerIconWidget = new client::SelectPlayerIconWidget(CreateGameDialog);
         selectPlayerIconWidget->setObjectName(QString::fromUtf8("selectPlayerIconWidget"));
         selectPlayerIconWidget->setFrameShape(QFrame::Box);
         selectPlayerIconWidget->setFrameShadow(QFrame::Raised);
 
-        gridLayout->addWidget(selectPlayerIconWidget, 10, 5, 3, 1);
+        gridLayout->addWidget(selectPlayerIconWidget, 11, 5, 3, 1);
 
         lineEditPlayerPassword = new QLineEdit(CreateGameDialog);
         lineEditPlayerPassword->setObjectName(QString::fromUtf8("lineEditPlayerPassword"));
 
-        gridLayout->addWidget(lineEditPlayerPassword, 12, 1, 1, 4);
+        gridLayout->addWidget(lineEditPlayerPassword, 13, 1, 1, 4);
 
         line_2 = new QFrame(CreateGameDialog);
         line_2->setObjectName(QString::fromUtf8("line_2"));
         line_2->setFrameShape(QFrame::HLine);
         line_2->setFrameShadow(QFrame::Sunken);
 
-        gridLayout->addWidget(line_2, 13, 0, 1, 6);
+        gridLayout->addWidget(line_2, 14, 0, 1, 6);
 
         label_11 = new QLabel(CreateGameDialog);
         label_11->setObjectName(QString::fromUtf8("label_11"));
@@ -253,12 +255,17 @@ public:
         line->setFrameShape(QFrame::HLine);
         line->setFrameShadow(QFrame::Sunken);
 
-        gridLayout->addWidget(line, 9, 0, 1, 6);
+        gridLayout->addWidget(line, 10, 0, 1, 6);
 
         label_5 = new QLabel(CreateGameDialog);
         label_5->setObjectName(QString::fromUtf8("label_5"));
 
         gridLayout->addWidget(label_5, 5, 0, 2, 2);
+
+        checkBoxHighNoon = new QCheckBox(CreateGameDialog);
+        checkBoxHighNoon->setObjectName(QString::fromUtf8("checkBoxHighNoon"));
+
+        gridLayout->addWidget(checkBoxHighNoon, 9, 0, 1, 1);
 
 #ifndef QT_NO_SHORTCUT
         label_4->setBuddy(spinBoxMaxPlayers);
@@ -329,6 +336,7 @@ public:
         label_5->setToolTip(QApplication::translate("CreateGameDialog", "This is the password that is required to join the game as a player.", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         label_5->setText(QApplication::translate("CreateGameDialog", "Password for Players", 0, QApplication::UnicodeUTF8));
+        checkBoxHighNoon->setText(QApplication::translate("CreateGameDialog", "High Noon extension", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
