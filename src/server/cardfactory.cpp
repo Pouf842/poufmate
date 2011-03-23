@@ -111,7 +111,6 @@ struct CardFactory::CardFactoryImp
         }
     }
 
-
     int id()
     {
         int cardId;
@@ -121,10 +120,6 @@ struct CardFactory::CardFactoryImp
         m_ids.insert(cardId);
         return cardId;
     }
-
-/*    void generateHighNoonCards(QMap<int, Card)
-    {
-    }*/
 
     QSet<int>   m_ids;
 };
