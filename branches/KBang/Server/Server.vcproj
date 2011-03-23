@@ -181,6 +181,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\mocs\moc_cardblessing.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cardcurse.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\mocs\moc_carddrawcards.cpp"
 					>
 				</File>
@@ -198,6 +206,22 @@
 				</File>
 				<File
 					RelativePath=".\mocs\moc_cardgeneralstore.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cardghosttown.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cardgoldrush.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cardhangover.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cardhighnoon.cpp"
 					>
 				</File>
 				<File
@@ -225,7 +249,35 @@
 					>
 				</File>
 				<File
+					RelativePath=".\mocs\moc_cardshootout.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\mocs\moc_cardtaker.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cardthedaltons.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cardthedoctor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cardthereverent.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cardthesermon.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cardthirst.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mocs\moc_cardtrainarrival.cpp"
 					>
 				</File>
 				<File
@@ -457,6 +509,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\server\cardthedoctor.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\server\characterbase.cpp"
 					>
 				</File>
@@ -562,6 +618,10 @@
 				</File>
 				<File
 					RelativePath="..\src\server\gametable.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\server\highnooncard.cpp"
 					>
 				</File>
 				<File
@@ -673,10 +733,30 @@
 			<File
 				RelativePath="..\src\server\cardblessing.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\server\cardcurse.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\server\carddrawcards.h"
@@ -751,18 +831,58 @@
 			<File
 				RelativePath="..\src\server\cardghosttown.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\server\cardgoldrush.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\server\cardhangover.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\server\cardhighnoon.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\server\cardhorse.h"
@@ -851,6 +971,16 @@
 			<File
 				RelativePath="..\src\server\cardshootout.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\server\cardtaker.h"
@@ -869,26 +999,86 @@
 			<File
 				RelativePath="..\src\server\cardthedaltons.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\server\cardthedoctor.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\server\cardthereverent.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\server\cardthesermon.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\server\cardthirst.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\server\cardtrainarrival.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\server\characterbase.h"

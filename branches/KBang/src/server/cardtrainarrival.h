@@ -17,28 +17,16 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef HIGHNOONCARD_H
-#define HIGHNOONCARD_H
+#ifndef CARDTRAINARRIVAL_H
+#define CARDTRAINARRIVAL_H
 
-#include <QObject>
-#include "parser/parserstructs.h"
+#include "highnooncard.h"
 
-class Game;
-
-class HighNoonCard : public QObject
+class CardTrainArrival : public HighNoonCard
 {
-  Q_OBJECT
   public :
-    HighNoonCard(Game * game, int id, HighNoonCardType type);
-    virtual ~HighNoonCard();
-
-    inline int id()                 const { return m_id;    }
-    inline HighNoonCardType type()  const { return m_type;  }
-
-    virtual void play() = 0;
-  protected :
-    Game *              mp_game;
-    int                 m_id;
-    HighNoonCardType    m_type;
+    CardTrainArrival(Game * game, int id);
+    virtual ~CardTrainArrival();
 };
+
 #endif
