@@ -40,6 +40,8 @@ void GameEventHandler::connectSlots(QObject* signalEmitter)
             this,               SLOT(onPlayerUpdateEvent(const PublicPlayerData&)));
     connect(signalEmitter,      SIGNAL(sigEventGameMessage(const GameMessage&)),
             this,               SLOT(onGameMessageEvent(const GameMessage&)));
+    connect(signalEmitter,      SIGNAL(sigEventHighNoonCard(const HighNoonCardType&)),
+            this,               SLOT(onHighNoonCard(const HighNoonCardType&)));
 }
 
 void GameEventHandler::pause()
@@ -100,4 +102,9 @@ void GameEventHandler::onPlayerUpdateEvent(const PublicPlayerData& player)
 void GameEventHandler::onGameMessageEvent(const GameMessage& gameMessage)
 {
     mp_queue->add(new GameMessageEvent(mp_game, gameMessage));
+}
+
+void GameEventHandler::onHighNoonCard(HighNoonCardType type)
+{
+    //mp_queue->add(new 
 }

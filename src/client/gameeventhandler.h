@@ -33,6 +33,8 @@ public slots:
 
     void onGameMessageEvent(const GameMessage&);
 
+    void onHighNoonCard(HighNoonCardType);
+
 
 
 private:

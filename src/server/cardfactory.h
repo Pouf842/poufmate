@@ -4,6 +4,7 @@
 #include <QMap>
 class PlayingCard;
 class Game;
+class HighNoonCard;
 
 /**
  * The CardFactory class is a class that creates cards.
@@ -14,6 +15,7 @@ public:
     CardFactory();
     ~CardFactory();
     QMap<int, PlayingCard*> generateCards(Game* game);
+    QMap<int, HighNoonCard*> generateHighNoonCards(Game * game);
 
 private:
     struct CardFactoryImp;

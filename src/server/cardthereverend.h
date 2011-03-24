@@ -17,16 +17,17 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef CARDREVERENT_H
-#define CARDREVERENT_H
+#ifndef CARDTHEREVEREND_H
+#define CARDTHEREVEREND_H
 
 #include "highnooncard.h"
 
-class CardReverent : public HighNoonCard
+class CardTheReverend : public HighNoonCard
 {
   public :
-    CardReverent(Game * game, int id);
-    virtual ~CardReverent();
+    CardTheReverend(Game * game, int id);
+    virtual ~CardTheReverend();
+    virtual void play();
 };
 
 #endif

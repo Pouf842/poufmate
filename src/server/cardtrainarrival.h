@@ -27,6 +27,7 @@ class CardTrainArrival : public HighNoonCard
   public :
     CardTrainArrival(Game * game, int id);
     virtual ~CardTrainArrival();
+    virtual void play();
 };
 
 #endif

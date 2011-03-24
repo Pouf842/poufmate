@@ -27,6 +27,7 @@ class CardGoldRush : public HighNoonCard
   public :
     CardGoldRush(Game * game, int id);
     virtual ~CardGoldRush();
+    virtual void play();
 };
 
 #endif

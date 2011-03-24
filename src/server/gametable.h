@@ -9,7 +9,7 @@ class Player;
 class Game;
 class CardFactory;
 class CheckDeckResultHandler;
-
+class HighNoonCard;
 
 class GameTable
 {
@@ -106,8 +106,9 @@ public:
 
     QList<PlayingCard*> selection() const { return m_selection; }
 
+    void playHighNoon();
 private:
-    void generateCards(CardFactory*);
+    void generateCards(CardFactory*, bool bHighNoon = false);
     void shuffleDeck();
     void dealCards();
     void regenerateDeck();
@@ -120,15 +121,16 @@ protected:
    /**
     * Prepares the game.
     */
-    void prepareGame(CardFactory*);
+    void prepareGame(CardFactory*, bool bHighNoon = false);
 
 private:
     Game*                          mp_game;
     QList<PlayingCard*>            m_deck;
+    QList<HighNoonCard*>           m_highnoon_deck;
     QList<PlayingCard*>            m_graveyard;
     QList<PlayingCard*>            m_selection;
     QMap<int, PlayingCard*>        m_cards;
-    //QList<
+    QMap<int, HighNoonCard*>       m_highnoon_cards;
 };
 
 #endif // GAMETABLE_H

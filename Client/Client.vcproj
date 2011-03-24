@@ -278,6 +278,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\mocs\moc_highnoonevent.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\mocs\moc_joingamedialog.cpp"
 					>
 				</File>
@@ -435,6 +439,10 @@
 				</File>
 				<File
 					RelativePath="..\src\client\graveyardwidget.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\client\highnoonevent.cpp"
 					>
 				</File>
 				<File
@@ -878,6 +886,20 @@
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
 						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\client\highnoonevent.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>

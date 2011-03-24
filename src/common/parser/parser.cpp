@@ -484,6 +484,10 @@ void Parser::processStanza()
             emit sigEventGameContextChange(gameContextData);
             return;
         }
+
+        if (event->name() == "highnoon-card")
+            emit sigEventHighNoonCard((HighNoonCardType) event->attribute("type").toInt());
+
         qDebug("Parser: recieved unknown event: %s.", qPrintable(event->name()));
         return;
     }
@@ -655,6 +659,14 @@ void Parser::eventGameCanBeStarted(bool canBeStared)
     eventEnd();
 }
 
+void Parser::eventHighNoonPlayed(HighNoonCardType type)
+{
+    eventStart();
+    mp_streamWriter->writeStartElement("highnoon-card");
+    mp_streamWriter->writeAttribute("type", QString::number(type));
+    mp_streamWriter->writeEndElement();
+    eventEnd();
+}
 
 void Parser::streamError()
 {

@@ -308,3 +308,42 @@ QString gameMessageTypeToString(const GameMessageType& g) {
     return "";
 }
 
+HighNoonCardType    stringToHighNoonCardType(const QString& s)
+{
+      if(s == "Gold rush")      return HIGHNOON_GOLD_RUSH;
+      if(s == "Blessing")       return HIGHNOON_BLESSING;
+      if(s == "Shootout")       return HIGHNOON_SHOOTOUT;
+      if(s == "The doctor")     return HIGHNOON_THE_DOCTOR;
+      if(s == "Train arrival")  return HIGHNOON_TRAIN_ARRIVAL;
+      if(s == "The daltons")    return HIGHNOON_THE_DALTONS;
+      if(s == "Hangover")       return HIGHNOON_HANGOVER;
+      if(s == "The sermon")     return HIGHNOON_THE_SERMON;
+      if(s == "Curse")          return HIGHNOON_CURSE;
+      if(s == "Ghost town")     return HIGHNOON_GHOST_TOWN;
+      if(s == "Thirst")         return HIGHNOON_THIRST;
+      if(s == "The reverend")   return HIGHNOON_THE_REVEREND;
+      if(s == "High noon")      return HIGHNOON_HIGH_NOON;
+
+      return HIGHNOON_INVALID;
+}
+
+QString             highNoonCardTypeToString(const HighNoonCardType& g)
+{
+    switch(g)
+    {
+      case HIGHNOON_GOLD_RUSH       : return "Gold rush";
+      case HIGHNOON_BLESSING        : return "Blessing";
+      case HIGHNOON_SHOOTOUT        : return "Shootout";
+      case HIGHNOON_THE_DOCTOR      : return "The doctor";
+      case HIGHNOON_TRAIN_ARRIVAL   : return "Train arrival";
+      case HIGHNOON_THE_DALTONS     : return "The daltons";
+      case HIGHNOON_HANGOVER        : return "Hangover";
+      case HIGHNOON_THE_SERMON      : return "The sermon";
+      case HIGHNOON_CURSE           : return "Curse";
+      case HIGHNOON_GHOST_TOWN      : return "Ghost town";
+      case HIGHNOON_THIRST          : return "Thirst";
+      case HIGHNOON_THE_REVEREND    : return "The reverend";
+      case HIGHNOON_HIGH_NOON       : return "High noon";
+      default                       : return "INVALID !";
+    }
+}

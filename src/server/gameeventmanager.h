@@ -80,6 +80,8 @@ public:
 
     void onPlayerUseAbility(Player*);
 
+    void onHighNoonPlayed(HighNoonCardType);
+
     struct Handler {
 
         Handler(): handler(0), player(0), isSupervisor(0) {}

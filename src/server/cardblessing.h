@@ -26,7 +26,8 @@ class CardBlessing : public HighNoonCard
 {
   public :
     CardBlessing(Game * game, int id);
-    virtual CardBlessing();
+    virtual ~CardBlessing();
+    virtual void play();
 };
 
 #endif

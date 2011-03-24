@@ -27,6 +27,7 @@ class CardCurse : public HighNoonCard
   public :
     CardCurse(Game * game, int id);
     virtual ~CardCurse();
+    virtual void play();
 };
 
 #endif

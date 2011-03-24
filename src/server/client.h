@@ -131,6 +131,7 @@ public: /* The GameEventListener interface */
     virtual void onLifePointsChange(PublicPlayerView&, int lifePoints, PublicPlayerView* causedBy);
     virtual void onDeckRegenerate();
     virtual void onPlayerUseAbility(PublicPlayerView&);
+    virtual void onHighNoonPlayed(HighNoonCardType);
 
     virtual void onActionRequest(ActionRequestType requestType);
 

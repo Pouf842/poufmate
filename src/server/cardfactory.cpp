@@ -1,12 +1,12 @@
 #include "cardfactory.h"
 #include "cards.h"
+#include "include_highnooncards.h"
 
 #include <QSet>
 #include <cstdlib>
 
 struct CardFactory::CardFactoryImp
 {
-
     void generateCards(Game* game, QMap<int, PlayingCard*>& res)
     {
         QList<PlayingCard*> list;
@@ -111,6 +111,31 @@ struct CardFactory::CardFactoryImp
         }
     }
 
+    QMap<int, HighNoonCard*> generateHighNoonCards(Game * game)
+    {
+        QList<HighNoonCard*> list;
+
+        list.append(new CardGoldRush(game, id()));
+        list.append(new CardShootOut(game, id()));
+        list.append(new CardTheDoctor(game, id()));
+        list.append(new CardTrainArrival(game, id()));
+        list.append(new CardTheDaltons(game, id()));
+        list.append(new CardHangOver(game, id()));
+        list.append(new CardTheSermon(game, id()));
+        list.append(new CardCurse(game, id()));
+        list.append(new CardGhostTown(game, id()));
+        list.append(new CardThirst(game, id()));
+        list.append(new CardTheReverend(game, id()));
+        list.append(new CardHighNoon(game, id()));
+
+        QMap<int, HighNoonCard*> toReturn;
+
+        foreach(HighNoonCard* card, list)
+            toReturn[card->id()] = card;
+
+        return toReturn;
+    }
+
     int id()
     {
         int cardId;
@@ -138,6 +163,11 @@ QMap<int, PlayingCard*> CardFactory::generateCards(Game* game)
 {
     QMap<int, PlayingCard*> res;
     mp_imp->generateCards(game, res);
-    return res;
 
+    return res;
+}
+
+QMap<int, HighNoonCard*> CardFactory::generateHighNoonCards(Game * game)
+{
+    return mp_imp->generateHighNoonCards(game);
 }

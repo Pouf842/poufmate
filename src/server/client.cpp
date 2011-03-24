@@ -804,6 +804,11 @@ void Client::onActionRequest(ActionRequestType requestType)
     qDebug() << QString("Client (%1): onActionRequest(%2)").arg(m_id).arg(requestType);
 }
 
+void Client::onHighNoonPlayed(HighNoonCardType type)
+{
+    if(mp_parser == 0) return;
+    mp_parser->eventHighNoonPlayed(type);
+}
 
 PublicPlayerView* Client::getPlayer(int playerId)
 {

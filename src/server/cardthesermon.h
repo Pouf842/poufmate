@@ -27,6 +27,7 @@ class CardTheSermon : public HighNoonCard
   public :
     CardTheSermon(Game * game, int id);
     virtual ~CardTheSermon();
+    virtual void play();
 };
 
 #endif
