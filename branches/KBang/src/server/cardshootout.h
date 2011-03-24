@@ -27,6 +27,7 @@ class CardShootOut : public HighNoonCard
   public :
     CardShootOut(Game * game, int id);
     virtual ~CardShootOut();
+    virtual void play();
 };
 
 #endif

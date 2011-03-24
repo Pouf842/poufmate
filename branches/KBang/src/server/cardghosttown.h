@@ -27,6 +27,7 @@ class CardGhostTown : public HighNoonCard
   public :
     CardGhostTown(Game * game, int id);
     virtual ~CardGhostTown();
+    virtual void play();
 };
 
 #endif

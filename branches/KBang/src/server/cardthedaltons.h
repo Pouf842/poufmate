@@ -27,6 +27,7 @@ class CardTheDaltons : public HighNoonCard
   public :
     CardTheDaltons(Game * game, int id);
     virtual ~CardTheDaltons();
+    virtual void play();
 };
 
 #endif

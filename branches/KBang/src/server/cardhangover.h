@@ -27,6 +27,7 @@ class CardHangOver: public HighNoonCard
   public :
     CardHangOver(Game * game, int id);
     virtual ~CardHangOver();
+    virtual void play();
 };
 
 #endif

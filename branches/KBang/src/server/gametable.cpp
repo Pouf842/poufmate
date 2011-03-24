@@ -6,6 +6,7 @@
 #include "gameexceptions.h"
 #include "game.h"
 #include "tablecard.h"
+#include "highnooncard.h"
 #include "cardfactory.h"
 #include "checkdeckresulthandler.h"
 
@@ -16,8 +17,8 @@ GameTable::GameTable(Game* game):
 }
 
 
-void GameTable::prepareGame(CardFactory* cardFactory) {
-    generateCards(cardFactory);
+void GameTable::prepareGame(CardFactory* cardFactory, bool bHighNoon) {
+    generateCards(cardFactory, bHighNoon);
     mp_game->gameEventManager().onGameSync();
     dealCards();
 }
@@ -282,11 +283,18 @@ PlayingCard* GameTable::graveyardTop() const
     return m_graveyard.last();
 }
 
-void GameTable::generateCards(CardFactory* cardFactory)
+void GameTable::generateCards(CardFactory* cardFactory, bool bHighNoon)
 {
     m_cards = cardFactory->generateCards(mp_game);
     m_deck << m_cards.values();
     shuffleDeck();
+
+    if(bHighNoon)
+    {
+        m_highnoon_cards = cardFactory->generateHighNoonCards(mp_game);
+        m_highnoon_deck << m_highnoon_cards.values();
+        shuffleList(m_highnoon_deck);
+    }
 }
 
 void GameTable::shuffleDeck()
@@ -365,4 +373,11 @@ void GameTable::putCardToDeck(PlayingCard* card)
 void GameTable::putCardToGraveyard(PlayingCard* card)
 {
     m_graveyard.push_back(card);
+}
+
+void GameTable::playHighNoon()
+{
+    HighNoonCard * card = m_highnoon_deck.takeFirst();
+    card->play();
+    mp_game->gameEventManager().onHighNoonPlayed(card->type());
 }

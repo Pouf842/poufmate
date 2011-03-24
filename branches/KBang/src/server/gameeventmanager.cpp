@@ -260,3 +260,9 @@ void GameEventManager::onPlayerUseAbility(Player* player)
         h->handler->onPlayerUseAbility(player->publicView());
     }
 }
+
+void GameEventManager::onHighNoonPlayed(HighNoonCardType type)
+{
+    foreach(Handler * h, m_handlers)
+        h->handler->onHighNoonPlayed(type);
+}

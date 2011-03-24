@@ -169,6 +169,7 @@ enum GameMessageType {
 enum HighNoonCardType { 
     HIGHNOON_INVALID = 0,
     HIGHNOON_GOLD_RUSH,
+    HIGHNOON_BLESSING,
     HIGHNOON_SHOOTOUT,
     HIGHNOON_THE_DOCTOR,
     HIGHNOON_TRAIN_ARRIVAL,
@@ -183,25 +184,27 @@ enum HighNoonCardType {
 };
 
 
-CardSuit        stringToCardSuit(const QString& s);
-QString         cardSuitToString(const CardSuit& suit);
-CharacterType   stringToCharacterType(const QString& s);
-QString         characterTypeToString(const CharacterType& t);
-PlayingCardType stringToPlayingCardType(const QString& s);
-QString         playingCardTypeToString(const PlayingCardType& c);
-PlayerRole      stringToPlayerRole(const QString& s);
-QString         playerRoleToString(const PlayerRole& r);
-GamePlayState   stringToGamePlayState(const QString& s);
-QString         gamePlayStateToString(const GamePlayState& s);
-ReactionType    stringToReactionType(const QString& s);
-QString         reactionTypeToString(const ReactionType& r);
-PocketType      stringToPocketType(const QString& s);
-QString         pocketTypeToString(const PocketType& p);
-GameState       stringToGameState(const QString& s);
-QString         gameStateToString(const GameState& s);
-ClientType      stringToClientType(const QString& s);
-QString         clientTypeToString(const ClientType& t);
-GameMessageType stringToGameMessageType(const QString& s);
-QString         gameMessageTypeToString(const GameMessageType& g);
+CardSuit            stringToCardSuit(const QString& s);
+QString             cardSuitToString(const CardSuit& suit);
+CharacterType       stringToCharacterType(const QString& s);
+QString             characterTypeToString(const CharacterType& t);
+PlayingCardType     stringToPlayingCardType(const QString& s);
+QString             playingCardTypeToString(const PlayingCardType& c);
+PlayerRole          stringToPlayerRole(const QString& s);
+QString             playerRoleToString(const PlayerRole& r);
+GamePlayState       stringToGamePlayState(const QString& s);
+QString             gamePlayStateToString(const GamePlayState& s);
+ReactionType        stringToReactionType(const QString& s);
+QString             reactionTypeToString(const ReactionType& r);
+PocketType          stringToPocketType(const QString& s);
+QString             pocketTypeToString(const PocketType& p);
+GameState           stringToGameState(const QString& s);
+QString             gameStateToString(const GameState& s);
+ClientType          stringToClientType(const QString& s);
+QString             clientTypeToString(const ClientType& t);
+GameMessageType     stringToGameMessageType(const QString& s);
+QString             gameMessageTypeToString(const GameMessageType& g);
+HighNoonCardType    stringToHighNoonCardType(const QString& s);
+QString             highNoonCardTypeToString(const HighNoonCardType& g);
 
 #endif // GAMEENUMS_H

@@ -51,6 +51,7 @@ public:
     virtual void onLifePointsChange(PublicPlayerView&, int, PublicPlayerView*) {}
     virtual void onDeckRegenerate() {}
     virtual void onPlayerUseAbility(PublicPlayerView&) {}
+    virtual void onHighNoonPlayed(HighNoonCardType) {};
 
     virtual void onActionRequest(ActionRequestType);
 

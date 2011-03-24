@@ -27,6 +27,7 @@ class CardThirst : public HighNoonCard
   public :
     CardThirst(Game * game, int id);
     virtual ~CardThirst();
+    virtual void play();
 };
 
 #endif

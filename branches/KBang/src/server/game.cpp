@@ -346,7 +346,7 @@ void Game::startGame(Player* player)
     setRolesAndCharacters();
 
     gameEventManager().onGameStarted();
-    mp_gameTable->prepareGame(GameServer::instance().cardFactory());
+    mp_gameTable->prepareGame(GameServer::instance().cardFactory(), mp_gameInfo->hasHighNoon());
     mp_gameCycle->start();
 }
 

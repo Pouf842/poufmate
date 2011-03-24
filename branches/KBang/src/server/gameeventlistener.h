@@ -123,6 +123,8 @@ public:
 
     virtual void onActionRequest(ActionRequestType requestType) = 0;
 
+    virtual void onHighNoonPlayed(HighNoonCardType) = 0;
+
     virtual ~GameEventListener() {}
 };
 

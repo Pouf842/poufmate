@@ -109,6 +109,7 @@ signals:
     void sigEventCardMovement(const CardMovementData&);
     void sigEventChatMessage(int senderId, const QString& senderName, const QString& message);
     void sigEventGameMessage(const GameMessage&);
+    void sigEventHighNoonCard(HighNoonCardType type);
 
     ////////////
     // SERVER //
@@ -128,6 +129,7 @@ public:
     void eventLifePointsChange(int playerId, int lifePoints);
     void eventPlayerDied(int playerId, PlayerRole role);
     void eventGameCanBeStarted(bool canBeStarted);
+    void eventHighNoonPlayed(HighNoonCardType type);
 
 signals:
     void sigQueryServerInfo(const QueryResult&);

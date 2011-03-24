@@ -218,6 +218,11 @@ void GameLogger::onPlayerUseAbility(PublicPlayerView& p)
     m_logFile << "onPlayerUseAbility(player=" << p.id() << ")" << endl;
 }
 
+void GameLogger::onHighNoonPlayed(HighNoonCardType type)
+{
+    m_logFile << "onHighNoonPlayed : " << highNoonCardTypeToString(type).toStdString() << endl;
+}
+
 QString GameLogger::cardToString(const PlayingCard* card)
 {
     if (card == 0) return "card()";
