@@ -91,7 +91,7 @@ void GameCycle::startTurn(Player* player)
         if(mp_game->gameInfo().hasHighNoon())
             mp_game->gameTable().playHighNoon();
     }
-this->
+
     mp_currentPlayer = mp_requestedPlayer = player;
     m_state = GAMEPLAYSTATE_DRAW;
     mp_currentPlayer->onTurnStart();
