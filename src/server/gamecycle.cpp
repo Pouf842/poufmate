@@ -86,10 +86,10 @@ void GameCycle::startTurn(Player* player)
     m_contextDirty = 1;
     if (player->role() == ROLE_SHERIFF)
     {
+        m_turnNum++;
+
         if(mp_game->gameInfo().hasHighNoon())
             mp_game->gameTable().playHighNoon();
-
-        m_turnNum++;
     }
 this->
     mp_currentPlayer = mp_requestedPlayer = player;

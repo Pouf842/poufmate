@@ -262,8 +262,8 @@ void ServerConnection::recievedEventLeaveGame(int gameId, const StructPlayer& pl
 
 void ServerConnection::initializeParserConnections()
 {
-    connect(mp_parser, SIGNAL(sigEventEnterGameMode(int,QString,ClientType)),
-            this,      SIGNAL(enterGameMode(int,QString,ClientType)));
+    connect(mp_parser, SIGNAL(sigEventEnterGameMode(int,QString,bool,ClientType)),
+            this,      SIGNAL(enterGameMode(int,QString,bool,ClientType)));
     connect(mp_parser, SIGNAL(sigEventExitGameMode()),
             this,      SIGNAL(exitGameMode()));
     connect(mp_parser, SIGNAL(sigEventChatMessage(int, const QString&, const QString&)),

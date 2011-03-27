@@ -27,9 +27,10 @@
 
 using namespace client;
 
-QMap<PlayingCardType, Card*> Card::sm_playingCards;
-QMap<PlayerRole,      Card*> Card::sm_roleCards;
-QMap<CharacterType,   Card*> Card::sm_characterCards;
+QMap<PlayingCardType,	Card*> Card::sm_playingCards;
+QMap<PlayerRole,		Card*> Card::sm_roleCards;
+QMap<CharacterType,		Card*> Card::sm_characterCards;
+QMap<HighNoonCardType,	Card*> Card::sm_highNoonCards;
 
 Card::Card(const QString& name, PlayingCardType playingCardType, const QString& imageFileName):
         m_name(name),
@@ -72,6 +73,19 @@ Card::Card(const QString& name, CharacterType character, const QString& imageFil
     sm_characterCards[character] = this;
 }
 
+Card::Card(const QString& name, HighNoonCardType type, const QString& imageFileName):
+        m_name(name),
+        m_type(Card::HighNoon),
+        m_imageFileName(imageFileName)
+{
+    if (sm_highNoonCards.contains(type)) {
+        qCritical("Unable to create a highnoon card. Given highnoon card already created.");
+        return;
+    }
+    loadPixmap();
+	sm_highNoonCards[type] = this;
+}
+
 QPixmap Card::image(const CardSuit& suit, const CardRank& rank) const
 {
 
@@ -106,7 +120,7 @@ QPixmap Card::image(const CardSuit& suit, const CardRank& rank) const
                          Qt::RoundJoin));
 
         painter.setBrush(Qt::black);
-    painter.drawPath(path1);
+		painter.drawPath(path1);
 
         painter.setPen(QPen(Qt::white, 1, Qt::SolidLine, Qt::RoundCap,
                          Qt::RoundJoin));
@@ -160,12 +174,26 @@ void Card::loadDefaultRuleset()
     new Card("Willy the Kid",   CHARACTER_WILLY_THE_KID,    "gfx/characters/willy-the-kid.png");
     new Card("",                CHARACTER_UNKNOWN,          "gfx/cards/back-character.png");
 
-
     new Card("Sheriff",  ROLE_SHERIFF,    "gfx/cards/sheriff.png");
     new Card("Renegade", ROLE_RENEGADE,   "gfx/cards/renegade.png");
     new Card("Outlaw",   ROLE_OUTLAW,     "gfx/cards/outlaw.png");
     new Card("Deputy",   ROLE_DEPUTY,     "gfx/cards/deputy.png");
     new Card("",         ROLE_UNKNOWN,    "gfx/cards/back-role.png");
+
+	new Card("Blessing",		HIGHNOON_BLESSING,		"gfx/highnoon/blessing.png");
+    new Card("Gold rush",		HIGHNOON_GOLD_RUSH,		"gfx/highnoon/gold-rush.png");
+    new Card("Shootout",		HIGHNOON_SHOOTOUT,		"gfx/highnoon/shootout.png");
+    new Card("The doctor",		HIGHNOON_THE_DOCTOR,	"gfx/highnoon/the-doctor.png");
+    new Card("Train arrival",	HIGHNOON_TRAIN_ARRIVAL,	"gfx/highnoon/train-arrival.png");
+    new Card("The Daltons",		HIGHNOON_THE_DALTONS,	"gfx/highnoon/the-daltons.png");
+    new Card("Hangover",		HIGHNOON_HANGOVER,		"gfx/highnoon/hang-over.png");
+    new Card("The sermon",		HIGHNOON_THE_SERMON,	"gfx/highnoon/the-sermon.png");
+    new Card("Curse",			HIGHNOON_CURSE,			"gfx/highnoon/curse.png");
+    new Card("Ghost town",		HIGHNOON_GHOST_TOWN,	"gfx/highnoon/ghost-town.png");
+    new Card("Thirst",			HIGHNOON_THIRST,		"gfx/highnoon/thirst.png");
+    new Card("The reverend",	HIGHNOON_THE_REVEREND,	"gfx/highnoon/the-reverend.png");
+    new Card("High Noon",		HIGHNOON_HIGH_NOON,		"gfx/highnoon/high-noon.png");
+	new Card("",				HIGHNOON_INVALID,		"gfx/highnoon/back-highnoon.png");
 }
 
 
@@ -182,6 +210,11 @@ const Card* Card::findRoleCard(PlayerRole id)
 const Card* Card::findCharacterCard(CharacterType id)
 {
     return (sm_characterCards.contains(id) ? sm_characterCards[id] : 0);
+}
+
+const Card* Card::findHighNoonCard(HighNoonCardType type)
+{
+    return (sm_highNoonCards.contains(type) ? sm_highNoonCards[type] : 0);
 }
 
 QString Card::rankToString(CardRank rank)

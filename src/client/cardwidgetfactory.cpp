@@ -36,6 +36,15 @@ CardWidget* CardWidgetFactory::createRoleCard(QWidget* parent, PlayerRole role)
     return cardWidget;
 }
 
+CardWidget* CardWidgetFactory::createHighNoonCard(QWidget* parent, HighNoonCardType type)
+{
+	CardWidget * cardWidget = new CardWidget(parent, Card::HighNoon);
+	registerCard(cardWidget);
+	cardWidget->setHighNoonType(type);
+	cardWidget->setSize(CardWidget::SIZE_NORMAL);
+	return cardWidget;
+}
+
 void CardWidgetFactory::registerCard(CardWidget* cardWidget)
 {
     cardWidget->setGameActionManager(mp_game->gameActionManager());

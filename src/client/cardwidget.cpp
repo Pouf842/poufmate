@@ -52,6 +52,7 @@ CardWidget::CardWidget(QWidget* parent, Card::Type cardType):
         m_ownerId(0),
         m_playerRole(ROLE_UNKNOWN),
         m_characterType(CHARACTER_UNKNOWN),
+		m_highNoonType(HIGHNOON_INVALID),
         m_qsize(sm_qsizeSmall),
         m_shadowMode(0),
         m_hasHighlight(0),
@@ -80,6 +81,7 @@ void CardWidget::clone(CardWidget* other)
     m_cardType = other->type();
     m_playerRole = other->m_playerRole;
     m_characterType = other->character();
+	m_highNoonType = other->highNoonType();
     m_cardData = other->cardData();
 }
 
@@ -111,6 +113,8 @@ void CardWidget::validate()
         case Card::Character:
             card = Card::findCharacterCard(m_characterType);
             break;
+		case Card::HighNoon:
+			card = Card::findHighNoonCard(m_highNoonType);
         }
         if (card == 0) {
             qFatal("Cannot look-up the card!");
@@ -180,6 +184,12 @@ void CardWidget::setCharacterType(CharacterType characterType)
 {
     m_characterType = characterType;
     m_isEmpty = 0;
+}
+
+void CardWidget::setHighNoonType(HighNoonCardType type)
+{
+	m_highNoonType = type;
+	m_isEmpty = 0;
 }
 
 void CardWidget::setEmpty()

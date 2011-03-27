@@ -55,7 +55,7 @@ struct GameInfoData
     QString name, description;
     int minPlayers, maxPlayers, maxSpectators;
     int alivePlayersCnt, totalPlayersCnt, spectatorsCnt, AIPlayersCnt;
-    bool hasPlayerPassword, hasSpectatorPassword;
+    bool hasPlayerPassword, hasSpectatorPassword, hasHighNoon;
     GameState state;
     QList<PlayerInfoData> players;
     void read(XmlNode*);

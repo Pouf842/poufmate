@@ -401,8 +401,9 @@ void Parser::processStanza()
         if (event->name() == "enter-game-mode") {
             int gameId       = event->attribute("id").toInt();
             QString gameName = event->attribute("name");
+			bool highNoon	 = (event->attribute("highnoon") == "true" ? true : false);
             ClientType type  = stringToClientType(event->attribute("type"));
-            emit sigEventEnterGameMode(gameId, gameName, type);
+            emit sigEventEnterGameMode(gameId, gameName, highNoon, type);
             return;
         }
         if (event->name() == "exit-game-mode") {
@@ -521,13 +522,14 @@ QueryGet* Parser::queryGet()
     return query;
 }
 
-void Parser::eventEnterGameMode(int gameId, const QString& gameName, ClientType type)
+void Parser::eventEnterGameMode(int gameId, const QString& gameName, bool highNoon, ClientType type)
 {
     eventStart();
     mp_streamWriter->writeStartElement("enter-game-mode");
     mp_streamWriter->writeAttribute("id", QString::number(gameId));
     mp_streamWriter->writeAttribute("name", gameName);
     mp_streamWriter->writeAttribute("type", clientTypeToString(type));
+	mp_streamWriter->writeAttribute("highnoon", (highNoon ? "true" : "false"));
     mp_streamWriter->writeEndElement();
     eventEnd();
 }

@@ -153,6 +153,7 @@ void JoinGameDialog::updateGameView()
         labelPlayers->setText("");
         labelAIPlayers->setText("");
         labelPassword->setText("");
+		labelHighNoon->setText("");
         playerListView->clear();
         return;
     }
@@ -162,6 +163,7 @@ void JoinGameDialog::updateGameView()
     labelState->setText(gameState(gameInfo->state));
     labelPlayers->setText(gameInfo->minPlayers + " - " + gameInfo->maxPlayers);
     labelAIPlayers->setText(QString::number(gameInfo->AIPlayersCnt));
+	labelHighNoon->setText(gameInfo->hasHighNoon ? "Yes" : "No");
     if (gameInfo->hasPlayerPassword)
         labelPassword->setText(QObject::tr("players need password"));
     else if (gameInfo->hasSpectatorPassword)

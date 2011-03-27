@@ -49,6 +49,7 @@ public:
     inline PocketType       pocketType()     const { return m_pocket; }
     inline int              ownerId()    const { return m_ownerId; }
     inline CharacterType    character()  const { return m_characterType; }
+	inline HighNoonCardType highNoonType() const { return m_highNoonType; }
 
     void setGameActionManager(GameActionManager*);
 
@@ -61,6 +62,7 @@ public:
 
     void setPlayerRole(PlayerRole);
     void setCharacterType(CharacterType);
+	void setHighNoonType(HighNoonCardType type);
     void setEmpty();
 
     void setSize(Size size);
@@ -92,13 +94,14 @@ protected:
 private:
     virtual void paintEvent (QPaintEvent *event);
 
-    Card::Type    m_cardType;
+    Card::Type			m_cardType;
 
-    CardData      m_cardData;
-    PocketType    m_pocket;
-    int           m_ownerId;
-    PlayerRole    m_playerRole;
-    CharacterType m_characterType;
+    CardData			m_cardData;
+    PocketType			m_pocket;
+    int					m_ownerId;
+    PlayerRole			m_playerRole;
+    CharacterType		m_characterType;
+	HighNoonCardType	m_highNoonType;
 
     Size        m_size;
     QSize       m_qsize;

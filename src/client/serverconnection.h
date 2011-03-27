@@ -109,7 +109,7 @@ signals:
 
     void incomingChatMessage(int senderId, const QString& senderName,const QString& message);
 
-    void enterGameMode(int gameId, const QString& gameName, const ClientType&);
+    void enterGameMode(int gameId, const QString& gameName, bool highNoon, const ClientType&);
     void exitGameMode();
     void gameCanBeStarted(bool canBeStarted);
     void eventCardMovement(const CardMovementData&);

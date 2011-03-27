@@ -128,6 +128,7 @@ void GameInfoData::read(XmlNode* node)
     AIPlayersCnt        = node->attribute("AIPlayersCnt").toInt();
     hasPlayerPassword   = node->attribute("hasPlayerpassword") == "true";
     hasSpectatorPassword= node->attribute("hasSpectatorPassword") == "true";
+	hasHighNoon			= node->attribute("hasHighNoon") == "true";
     state               = stringToGameState(node->attribute("state"));
     players.clear();
     foreach(XmlNode* child, node->getChildren()) {
@@ -153,6 +154,7 @@ void GameInfoData::write(QXmlStreamWriter* writer) const
     writer->writeAttribute("AIPlayersCnt",          QString::number(AIPlayersCnt));
     writer->writeAttribute("hasPlayerPassword",     hasPlayerPassword ? "true" : "false");
     writer->writeAttribute("hasSpectatorPassword",  hasPlayerPassword ? "true" : "false");
+	writer->writeAttribute("hasHighNoon",			hasHighNoon	? "true" : "false");
     writer->writeAttribute("state",                 gameStateToString(state));
     foreach(const PlayerInfoData& playerInfo, players) {
         playerInfo.write(writer);

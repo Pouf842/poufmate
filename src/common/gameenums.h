@@ -45,6 +45,7 @@ enum PlayerRole {
 enum PocketType {
     POCKET_INVALID = 0,
     POCKET_DECK,
+	POCKET_HIGHNOONGRAVEYARD,
     POCKET_GRAVEYARD,
     POCKET_HAND,
     POCKET_TABLE,

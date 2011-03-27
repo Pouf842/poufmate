@@ -1,5 +1,5 @@
-#ifndef HIGHNOONDEVENT_H
-#define HIGHNOONDEVENT_H
+#ifndef HIGHNOONEVENT_H
+#define HIGHNOONEVENT_H
 
 #include "parser/parserstructs.h"
 #include "gameevent.h"
@@ -19,4 +19,4 @@ protected :
     HighNoonCardType m_type;
 };
 }
-#endif // GAMEFOCUSCHANGEEVENT_H
+#endif
