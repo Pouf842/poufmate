@@ -2,6 +2,8 @@
 
 #include "highnoonevent.h"
 #include "game.h"
+#include "deckwidget.h"
+#include "highnoongraveyardwidget.h"
 #include "cardwidget.h"
 
 using namespace client;
@@ -19,7 +21,9 @@ HighNoonEvent::~HighNoonEvent()
 void HighNoonEvent::run()
 {
     GameEvent::run();
-/*    PlayerWidget* player = mp_game->playerWidget(m_playerId);
+	mp_game->highNoonDeck()->pop();
+	mp_game->highNoonGraveyard()->push(m_type);
+    /*PlayerWidget* player = mp_game->playerWidget(m_playerId);
     player->dieAndRevealRole(m_role);*/
     QTimer::singleShot(1000, this, SLOT(finish()));
 }

@@ -95,7 +95,7 @@ public:
     void actionDiscard(int cardId);
 
 signals:
-    void sigEventEnterGameMode(int gameId, const QString& gameName, ClientType);
+    void sigEventEnterGameMode(int gameId, const QString& gameName, bool highNoon, ClientType);
     void sigEventExitGameMode();
     void sigEventPlayerJoinedGame(const PublicPlayerData&);
     void sigEventPlayerLeavedGame(int playerId);
@@ -115,7 +115,7 @@ signals:
     // SERVER //
     ////////////
 public:
-    void eventEnterGameMode(int gameId, const QString& gameName, ClientType);
+    void eventEnterGameMode(int gameId, const QString& gameName, bool highNoon, ClientType);
     void eventExitGameMode();
     void eventPlayerJoinedGame(const PublicPlayerData&);
     void eventPlayerLeavedGame(int playerId);

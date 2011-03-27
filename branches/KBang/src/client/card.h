@@ -56,9 +56,10 @@ class Card: private NonCopyable
 {
 public:
     typedef enum {
-        Character, /**< Character card (Susy Lafayete, etc.) */
-        Role,      /**< Role card (Sheriff, etc.) */
-        Playing    /**< Playing card (Bang!, etc.) */
+        Character,	/**< Character card (Susy Lafayete, etc.) */
+        Role,		/**< Role card (Sheriff, etc.) */
+        Playing,    /**< Playing card (Bang!, etc.) */
+		HighNoon	/**< High noon card (coma, the doctor, etc.) */
     } Type;
 
 private:
@@ -71,6 +72,7 @@ private:
      Card(const QString& name, PlayingCardType, const QString& imageFileName);
      Card(const QString& name, PlayerRole, const QString& imageFileName);
      Card(const QString& name, CharacterType, const QString& imageFileName);
+	 Card(const QString& name, HighNoonCardType type, const QString& imageFileName);
 
 public:
     inline QString name()  const { return m_name;  } ///< Returns card name.
@@ -84,6 +86,7 @@ public: /* static */
     static const Card* findPlayingCard(PlayingCardType);
     static const Card* findRoleCard(PlayerRole);
     static const Card* findCharacterCard(CharacterType);
+	static const Card* findHighNoonCard(HighNoonCardType type);
 
     static QString rankToString(CardRank);
     static QChar   suitToChar(CardSuit);
@@ -99,9 +102,10 @@ private:
     QPixmap m_image;
     QString m_imageFileName;
 
-    static QMap<PlayingCardType, Card*> sm_playingCards;
-    static QMap<PlayerRole,      Card*> sm_roleCards;
-    static QMap<CharacterType,   Card*> sm_characterCards;
+    static QMap<PlayingCardType,	Card*> sm_playingCards;
+    static QMap<PlayerRole,			Card*> sm_roleCards;
+    static QMap<CharacterType,		Card*> sm_characterCards;
+	static QMap<HighNoonCardType,	Card*> sm_highNoonCards;
 };
 }
 #endif

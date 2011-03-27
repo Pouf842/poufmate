@@ -366,6 +366,7 @@ void Client::onHandlerRegistered(const PublicGameView* publicGameView, PlayerCtr
     mp_publicGameView = publicGameView;
     mp_parser->eventEnterGameMode(mp_publicGameView->id(),
                                   mp_publicGameView->name(),
+								  mp_publicGameView->gameInfoData().hasHighNoon,
                                   CLIENT_PLAYER); //@todo: spectator
     onGameSync();
 }

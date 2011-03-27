@@ -76,6 +76,7 @@ GameInfoData PublicGameView::gameInfoData() const
     //res.AIPlayersCnt    todo
     res.hasPlayerPassword = mp_game->gameInfo().hasPlayerPassword();
     res.hasSpectatorPassword = mp_game->gameInfo().hasSpectatorPassword();
+	res.hasHighNoon			 = mp_game->gameInfo().hasHighNoon();
     res.state           = mp_game->gameState();
     foreach(Player* p, mp_game->playerList()) {
         PlayerInfoData playerInfo;

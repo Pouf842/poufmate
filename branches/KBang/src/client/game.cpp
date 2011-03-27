@@ -26,6 +26,7 @@
 #include "gameeventhandler.h"
 #include "deckwidget.h"
 #include "graveyardwidget.h"
+#include "highnoongraveyardwidget.h"
 #include "cardwidgetsizemanager.h"
 
 #include <QtDebug>
@@ -33,10 +34,11 @@
 
 using namespace client;
 
-Game::Game(QObject* parent, int gameId, ClientType clientType,
+Game::Game(QObject* parent, int gameId, bool highNoon, ClientType clientType,
            ServerConnection* serverConnection, const GameWidgets& gameWidgets):
         QObject(parent),
         m_gameId(gameId),
+		m_highNoon(highNoon),
         m_playerId(0),
         m_isCreator(0),
         m_gameState(GAMESTATE_INVALID),
@@ -49,6 +51,8 @@ Game::Game(QObject* parent, int gameId, ClientType clientType,
         mp_statusLabel(gameWidgets.statusLabel),
         mp_startButton(0),
         mp_deck(0),
+		mp_highNoonDeck(0),
+		mp_highNoonGraveyard(0),
         mp_graveyard(0),
         mp_selection(0),
         m_cardWidgetFactory(this),
@@ -273,6 +277,16 @@ void Game::loadGameInterface()
     Q_ASSERT(mp_middleWidget->layout() == 0);
     qDebug("---- loading game interface ----");
     mp_deck = new DeckWidget(0);
+
+	if(m_highNoon)
+	{
+		mp_highNoonDeck = new DeckWidget(0);
+		mp_highNoonDeck->init(&m_cardWidgetFactory);
+
+		mp_highNoonGraveyard = new HighNoonGraveyardWidget(0);
+		mp_highNoonGraveyard->init(&m_cardWidgetFactory);
+	}
+
     mp_deck->init(&m_cardWidgetFactory);
     mp_graveyard = new GraveyardWidget(0);
     mp_graveyard->init(&m_cardWidgetFactory);
@@ -290,7 +304,16 @@ void Game::loadGameInterface()
     l->addStretch(3);
 
     QBoxLayout* l2 = new QBoxLayout(QBoxLayout::LeftToRight);
-    l2->addStretch(3);
+	
+	if(m_highNoon)
+	{
+		l2->addWidget(mp_highNoonGraveyard);
+		l2->addWidget(mp_highNoonDeck);
+		l2->addStretch(2);
+	}
+	else
+		l2->addStretch(3);
+
     l2->addWidget(mp_selection);
     l2->addStretch(3);
 
@@ -312,6 +335,13 @@ void Game::unloadGameInterface()
     mp_deck->deleteLater();
     mp_graveyard->deleteLater();
     mp_selection->deleteLater();
+
+	if(m_highNoon)
+	{
+		mp_highNoonDeck->deleteLater();
+		mp_highNoonDeck->deleteLater();
+	}
+
     delete mp_middleWidget->layout();
     m_interface = NoInterface;
     mp_deck = 0;

@@ -10,6 +10,7 @@
 #include "playerdiedevent.h"
 #include "playerevent.h"
 #include "gamemessageevent.h"
+#include "highnoonevent.h"
 
 using namespace client;
 
@@ -106,5 +107,5 @@ void GameEventHandler::onGameMessageEvent(const GameMessage& gameMessage)
 
 void GameEventHandler::onHighNoonCard(HighNoonCardType type)
 {
-    //mp_queue->add(new 
+	mp_queue->add(new HighNoonEvent(mp_game, type));
 }

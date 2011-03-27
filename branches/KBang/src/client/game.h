@@ -41,6 +41,7 @@ class CardWidgetSizeManager;
 
 class DeckWidget;
 class GraveyardWidget;
+class HighNoonGraveyardWidget;
 
 /**
  * @author MacJariel <MacJariel@gmail.com>
@@ -48,7 +49,7 @@ class GraveyardWidget;
 class Game: public QObject {
 Q_OBJECT;
 public:
-    Game(QObject* parent, int gameId, ClientType, ServerConnection*, const GameWidgets&);
+    Game(QObject* parent, int gameId, bool highNoon, ClientType, ServerConnection*, const GameWidgets&);
     virtual ~Game();
 
     void setPlayerId(int playerId);
@@ -72,10 +73,12 @@ public slots:
     void startButtonClicked();
 
 public:
-    inline DeckWidget*     deck() const               { return mp_deck; }
-    inline GraveyardWidget*graveyard() const          { return mp_graveyard; }
-    inline CardListWidget*       selection() const          { return mp_selection; }
-    inline PlayerWidget*   playerWidget(int id) const { return m_players.contains(id) ? m_players[id] : 0; }
+    inline DeckWidget*				deck() const				{ return mp_deck; }
+    inline GraveyardWidget*			graveyard() const			{ return mp_graveyard; }
+	inline DeckWidget*				highNoonDeck() const		{ return mp_highNoonDeck; }
+	inline HighNoonGraveyardWidget*	highNoonGraveyard() const	{ return mp_highNoonGraveyard; }
+	inline CardListWidget*			selection() const			{ return mp_selection; }
+    inline PlayerWidget*			playerWidget(int id) const	{ return m_players.contains(id) ? m_players[id] : 0; }
     inline LocalPlayerWidget*
                            localPlayerWidget() const  { return mp_localPlayerWidget; }
     inline QWidget*        mainWidget() const         { return mp_mainWidget; }
@@ -120,6 +123,7 @@ private:
 
 private:
     int             m_gameId;
+	bool			m_highNoon;
     int             m_playerId;
     bool            m_isCreator;
     GameState       m_gameState;
@@ -143,16 +147,18 @@ private:
 
 
 
-    QHash<int, PlayerWidget*> m_players;
-    QPushButton*              mp_startButton;
-    DeckWidget*               mp_deck;
-    GraveyardWidget*          mp_graveyard;
-    CardListWidget*                 mp_selection;
-    QQueue<CardMovementData> m_cardMovementQueue;
+    QHash<int, PlayerWidget*>	m_players;
+    QPushButton*				mp_startButton;
+    DeckWidget*					mp_deck;
+	DeckWidget*					mp_highNoonDeck;
+	HighNoonGraveyardWidget*	mp_highNoonGraveyard;
+    GraveyardWidget*			mp_graveyard;
+    CardListWidget*				mp_selection;
+    QQueue<CardMovementData>	m_cardMovementQueue;
 
-    GameEventHandler*         mp_gameEventHandler;
-    CardWidgetFactory         m_cardWidgetFactory;
-    GameActionManager    m_gameActionManager;
+    GameEventHandler*			mp_gameEventHandler;
+    CardWidgetFactory			m_cardWidgetFactory;
+    GameActionManager			m_gameActionManager;
 
 
 
