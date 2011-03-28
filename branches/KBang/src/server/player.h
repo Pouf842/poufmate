@@ -84,7 +84,10 @@ public:
     inline int                  id()               const { return this ? m_id : 0;     }
     inline PlayerCtrl*          playerCtrl()       const { return mp_playerCtrl;       }
     inline QString              name()             const { return m_name;              }
-    inline QString              password()         const { return m_password;          }
+    /*inline*/ QString              password()         const
+    {
+        return m_password;
+    }
     inline QImage               avatar()           const { return m_avatar;            }
     inline Game*                game()             const { return mp_game;             }
     inline int                  lifePoints()       const { return m_lifePoints;        }

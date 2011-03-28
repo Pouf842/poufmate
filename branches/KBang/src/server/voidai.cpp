@@ -27,7 +27,7 @@ CreatePlayerData VoidAI::createPlayerData() const
 {
     CreatePlayerData res;
     res.name = QString("VoidAI #%1").arg(m_id);
-    res.password = "void";
+    res.password = "";
     return res;
 }
 

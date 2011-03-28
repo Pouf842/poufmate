@@ -218,21 +218,25 @@ QString reactionTypeToString(const ReactionType& r)
 
 PocketType stringToPocketType(const QString& s)
 {
-    if (s == "deck")      return POCKET_DECK;
-    if (s == "graveyard") return POCKET_GRAVEYARD;
-    if (s == "hand")      return POCKET_HAND;
-    if (s == "table")     return POCKET_TABLE;
-    if (s == "selection") return POCKET_SELECTION;
+    if (s == "deck")                return POCKET_DECK;
+    if (s == "highnoon-deck")       return POCKET_HIGHNOON_DECK;
+    if (s == "graveyard")           return POCKET_GRAVEYARD;
+    if (s == "highnoon-graveyard")  return POCKET_HIGHNOON_GRAVEYARD;
+    if (s == "hand")                return POCKET_HAND;
+    if (s == "table")               return POCKET_TABLE;
+    if (s == "selection")           return POCKET_SELECTION;
     return POCKET_INVALID;
 }
 
 QString pocketTypeToString(const PocketType& p)
 {
-    if (p == POCKET_DECK)       return "deck";
-    if (p == POCKET_GRAVEYARD)  return "graveyard";
-    if (p == POCKET_HAND)       return "hand";
-    if (p == POCKET_TABLE)      return "table";
-    if (p == POCKET_SELECTION)  return "selection";
+    if (p == POCKET_DECK)               return "deck";
+    if (p == POCKET_HIGHNOON_DECK)      return "highnoon-deck";
+    if (p == POCKET_GRAVEYARD)          return "graveyard";
+    if (p == POCKET_HIGHNOON_GRAVEYARD) return "highnoon-graveyard";
+    if (p == POCKET_HAND)               return "hand";
+    if (p == POCKET_TABLE)              return "table";
+    if (p == POCKET_SELECTION)          return "selection";
     return "";
 }
 

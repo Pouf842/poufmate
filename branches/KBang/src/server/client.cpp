@@ -808,6 +808,18 @@ void Client::onActionRequest(ActionRequestType requestType)
 void Client::onHighNoonPlayed(HighNoonCardType type)
 {
     if(mp_parser == 0) return;
+
+    CardMovementData cardMovement;
+    cardMovement.pocketTypeFrom = POCKET_HIGHNOON_DECK;
+    cardMovement.pocketTypeTo   = POCKET_HIGHNOON_GRAVEYARD;
+    cardMovement.playerFrom     = 0;
+    cardMovement.playerTo       = 0;
+
+    CardData card;
+    card.type                   = CARD_UNKNOWN;
+    cardMovement.card           = card;
+
+    mp_parser->eventCardMovement(cardMovement);
     mp_parser->eventHighNoonPlayed(type);
 }
 

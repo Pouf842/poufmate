@@ -487,7 +487,10 @@ void Parser::processStanza()
         }
 
         if (event->name() == "highnoon-card")
+        {
             emit sigEventHighNoonCard((HighNoonCardType) event->attribute("type").toInt());
+            return;
+        }
 
         qDebug("Parser: recieved unknown event: %s.", qPrintable(event->name()));
         return;
