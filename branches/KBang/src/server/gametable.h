@@ -99,6 +99,7 @@ public:
     bool isEmptyGraveyard() const;
 
     PlayingCard* graveyardTop() const;
+	HighNoonCard* highNoonGraveyardTop() const;
 
     PlayingCard* card(int cardId) const {
         return (m_cards.contains(cardId)) ? m_cards[cardId] : 0;
@@ -124,13 +125,14 @@ protected:
     void prepareGame(CardFactory*, bool bHighNoon = false);
 
 private:
-    Game*                          mp_game;
-    QList<PlayingCard*>            m_deck;
-    QList<HighNoonCard*>           m_highnoon_deck;
-    QList<PlayingCard*>            m_graveyard;
-    QList<PlayingCard*>            m_selection;
-    QMap<int, PlayingCard*>        m_cards;
-    QMap<int, HighNoonCard*>       m_highnoon_cards;
+    Game*							mp_game;
+    QList<PlayingCard*>				m_deck;
+    QList<HighNoonCard*>			m_highnoon_deck;
+    QList<PlayingCard*>				m_graveyard;
+	QList<HighNoonCard*>			m_highNoonGraveyard;
+    QList<PlayingCard*>				m_selection;
+    QMap<int, PlayingCard*>			m_cards;
+    QMap<int, HighNoonCard*>		m_highnoon_cards;
 };
 
 #endif // GAMETABLE_H

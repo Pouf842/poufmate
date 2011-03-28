@@ -25,6 +25,7 @@
 #include "publicgameview.h"
 #include "privateplayerview.h"
 #include "playingcard.h"
+#include "highnooncard.h"
 #include "parser/parserstructs.h"
 
 #include "voidai.h"
@@ -402,6 +403,14 @@ void Client::onGameSync()
     gameSyncData.isCreator = mp_playerCtrl->privatePlayerView().isCreator();
     gameSyncData.state = mp_publicGameView->gameState();
     gameSyncData.graveyard = mp_publicGameView->graveyardTop()->cardData();
+
+	HighNoonCard* top = mp_publicGameView->highNoonGraveyardTop();
+
+	if(top != 0)
+		gameSyncData.highNoonGraveyard = top->type();
+	else
+		gameSyncData.highNoonGraveyard = HIGHNOON_INVALID;
+
     foreach (const PublicPlayerView* p, mp_publicGameView->publicPlayerList())
         gameSyncData.players.append(p->publicPlayerData());
     gameSyncData.localPlayer = mp_playerCtrl->privatePlayerView().privatePlayerData();

@@ -154,6 +154,7 @@ struct GameSyncData {
     GameContextData         gameContext;
     GameState               state;
     CardData                graveyard;
+	HighNoonCardType		highNoonGraveyard;
     QList<CardData>         selection;
     void read(XmlNode*);
     void write(QXmlStreamWriter*) const;

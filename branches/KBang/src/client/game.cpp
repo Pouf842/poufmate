@@ -280,7 +280,7 @@ void Game::loadGameInterface()
 
 	if(m_highNoon)
 	{
-		mp_highNoonDeck = new DeckWidget(0);
+		mp_highNoonDeck = new DeckWidget(0, Card::HighNoon);
 		mp_highNoonDeck->init(&m_cardWidgetFactory);
         mp_highNoonDeck->setPocketType(POCKET_HIGHNOON_DECK);
 

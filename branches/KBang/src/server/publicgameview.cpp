@@ -25,6 +25,7 @@
 #include "gamecycle.h"
 #include "gametable.h"
 #include "reactioncard.h"
+#include "highnooncard.h"
 
 PublicGameView::PublicGameView(Game* game):
     mp_game(game)
@@ -104,6 +105,11 @@ GameState PublicGameView::gameState() const
 PlayingCard* PublicGameView::graveyardTop() const
 {
     return mp_game->gameTable().graveyardTop();
+}
+
+HighNoonCard* PublicGameView::highNoonGraveyardTop() const
+{
+	return mp_game->gameTable().highNoonGraveyardTop();
 }
 /*
 const PlayingCard* PublicGameView::reactionCard() const

@@ -22,9 +22,10 @@
 
 using namespace client;
 
-DeckWidget::DeckWidget(QWidget *parent):
+DeckWidget::DeckWidget(QWidget *parent, Card::Type type):
         CardPileWidget(parent),
-        mp_cardWidgetFactory(0)
+        mp_cardWidgetFactory(0),
+		m_cardType(type)
 {
     setPocketType(POCKET_DECK);
 }
@@ -36,12 +37,12 @@ DeckWidget::~DeckWidget()
 void DeckWidget::init(CardWidgetFactory* cardWidgetFactory)
 {
     mp_cardWidgetFactory = cardWidgetFactory;
-    m_cards.push(newCard());
+	m_cards.push(newCard());
 }
 
 CardWidget* DeckWidget::pop()
 {
-    return newCard();
+	return newCard();
 }
 
 void DeckWidget::push(CardWidget* card)
@@ -53,7 +54,13 @@ void DeckWidget::push(CardWidget* card)
 CardWidget* DeckWidget::newCard()
 {
     Q_ASSERT(mp_cardWidgetFactory != 0);
-    CardWidget* w = mp_cardWidgetFactory->createPlayingCard(this);
+	CardWidget* w;
+
+	if(m_cardType == Card::Playing)
+		w = mp_cardWidgetFactory->createPlayingCard(this);
+	else if(m_cardType == Card::HighNoon)
+		w = mp_cardWidgetFactory->createHighNoonCard(this);
+
     w->setSize(m_cardWidgetSize);
     w->validate();
     w->raise();

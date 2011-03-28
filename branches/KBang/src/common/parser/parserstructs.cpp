@@ -249,7 +249,6 @@ void CardData::read(XmlNode* node)
 
 void CardData::write(QXmlStreamWriter* writer) const
 {
-
     writer->writeStartElement(elementName);
     writer->writeAttribute("id",        QString::number(id));
     writer->writeAttribute("type",      playingCardTypeToString(type));
@@ -377,7 +376,9 @@ void GameSyncData::read(XmlNode* node)
     }
     localPlayer.read(node->getChildren()[1]);
     gameContext.read(node->getChildren()[2]);
-    graveyard.read(node->getChildren()[3]->getFirstChild());
+	graveyard.read(node->getChildren()[3]->getFirstChild());
+
+	//highNoonGraveyard = stringToHighNoonCardType(node->attribute("highNoonGraveyard"));
 
     selection.clear();
     foreach(XmlNode* cardNode, node->getChildren()[4]->getChildren()) {
@@ -407,6 +408,8 @@ void GameSyncData::write(QXmlStreamWriter* writer) const
     writer->writeStartElement("graveyard");
     graveyard.write(writer);
     writer->writeEndElement();
+
+	//writer->writeAttribute("highNoonGraveyard", highNoonCardTypeToString(highNoonGraveyard));
 
     writer->writeStartElement("selection");
     foreach (const CardData& c, selection)

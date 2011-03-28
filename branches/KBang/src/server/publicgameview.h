@@ -29,6 +29,7 @@
 class Game;
 class PublicPlayerView;
 class PlayingCard;
+class HighNoonCard;
 
 /**
  * The PublicGameView class provides an interface for quering public information
@@ -84,6 +85,7 @@ public:
     GameContextData gameContextData() const;
     GameState       gameState() const;
     PlayingCard*    graveyardTop() const;
+	HighNoonCard*	highNoonGraveyardTop() const;
 
     QList<PlayingCard*> selection() const;
 

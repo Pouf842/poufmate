@@ -283,6 +283,12 @@ PlayingCard* GameTable::graveyardTop() const
     return m_graveyard.last();
 }
 
+HighNoonCard* GameTable::highNoonGraveyardTop() const
+{
+	if (m_highNoonGraveyard.isEmpty()) return 0;
+	return m_highNoonGraveyard.last();
+}
+
 void GameTable::generateCards(CardFactory* cardFactory, bool bHighNoon)
 {
     m_cards = cardFactory->generateCards(mp_game);
@@ -379,5 +385,7 @@ void GameTable::playHighNoon()
 {
     HighNoonCard * card = m_highnoon_deck.takeFirst();
     mp_game->gameEventManager().onHighNoonPlayed(card->type());
+	m_highNoonGraveyard.push_front(card);
+
     card->play();
 }
