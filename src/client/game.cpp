@@ -282,6 +282,7 @@ void Game::loadGameInterface()
 	{
 		mp_highNoonDeck = new DeckWidget(0);
 		mp_highNoonDeck->init(&m_cardWidgetFactory);
+        mp_highNoonDeck->setPocketType(POCKET_HIGHNOON_DECK);
 
 		mp_highNoonGraveyard = new HighNoonGraveyardWidget(0);
 		mp_highNoonGraveyard->init(&m_cardWidgetFactory);
@@ -308,8 +309,9 @@ void Game::loadGameInterface()
 	if(m_highNoon)
 	{
 		l2->addWidget(mp_highNoonGraveyard);
+        l2->addStretch(1);
 		l2->addWidget(mp_highNoonDeck);
-		l2->addStretch(2);
+		l2->addStretch(1);
 	}
 	else
 		l2->addStretch(3);
@@ -339,7 +341,7 @@ void Game::unloadGameInterface()
 	if(m_highNoon)
 	{
 		mp_highNoonDeck->deleteLater();
-		mp_highNoonDeck->deleteLater();
+        mp_highNoonGraveyard->deleteLater();
 	}
 
     delete mp_middleWidget->layout();

@@ -51,7 +51,6 @@ Player::Player(Game* game, int id, const CreatePlayerData& createPlayerData):
         m_publicPlayerView(this),
         m_privatePlayerView(this)
 {
-
     mp_playerCtrl = new PlayerCtrl(this);
     m_predrawChecks.append(0);
 }

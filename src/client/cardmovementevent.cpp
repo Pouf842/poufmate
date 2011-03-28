@@ -126,6 +126,9 @@ void CardMovementEvent::setCardAndPocket()
     case POCKET_SELECTION:
         mp_card = mp_game->selection()->take(m_cardMovementData.card.id);
         break;
+    case POCKET_HIGHNOON_DECK:
+        mp_card = mp_game->highNoonDeck()->pop();
+        break;
     case POCKET_INVALID:
         break;
     }
@@ -146,6 +149,9 @@ void CardMovementEvent::setCardAndPocket()
         break;
     case POCKET_SELECTION:
         mp_destPocket = mp_game->selection();
+        break;
+    case POCKET_HIGHNOON_GRAVEYARD:
+        mp_destPocket = (CardPocket*) mp_game->highNoonGraveyard();
         break;
     case POCKET_INVALID:
         break;

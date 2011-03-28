@@ -378,6 +378,6 @@ void GameTable::putCardToGraveyard(PlayingCard* card)
 void GameTable::playHighNoon()
 {
     HighNoonCard * card = m_highnoon_deck.takeFirst();
-    card->play();
     mp_game->gameEventManager().onHighNoonPlayed(card->type());
+    card->play();
 }
