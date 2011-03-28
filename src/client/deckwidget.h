@@ -36,7 +36,7 @@ class DeckWidget : public CardPileWidget
 {
 Q_OBJECT
 public:
-    DeckWidget(QWidget *parent = 0);
+	DeckWidget(QWidget *parent = 0, Card::Type type = Card::Playing);
     ~DeckWidget();
 
     void init(CardWidgetFactory*);
@@ -45,10 +45,10 @@ public:
     virtual void push(CardWidget* card);
 
 
-
 private:
     CardWidget* newCard();
     CardWidgetFactory* mp_cardWidgetFactory;
+	Card::Type m_cardType;
 };
 }
 #endif
