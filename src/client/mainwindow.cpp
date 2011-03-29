@@ -138,11 +138,11 @@ void MainWindow::showAboutDialog()
     mp_aboutDialog->show();
 }
 
-void MainWindow::enterGameMode(int gameId, const QString& gameName, bool highNoon, ClientType clientType)
+void MainWindow::enterGameMode(int gameId, const QString& gameName, bool highNoonEnabled, ClientType clientType)
 {
     Q_ASSERT(mp_game == 0);
     GameWidgets x(mp_centralWidget, mp_middleWidget, mp_localPlayerWidget, m_opponentWidgets, mp_statusLabel);
-    mp_game = new Game(this, gameId, highNoon, clientType, &m_serverConnection, x);
+    mp_game = new Game(this, gameId, clientType, highNoonEnabled, &m_serverConnection, x);
     connect(mp_game, SIGNAL(emitLogMessage(const QString&)),
             mp_logWidget, SLOT(appendLogMessage(const QString&)));
     mp_logWidget->appendLogMessage(tr("You have joined <i>%1</i>.").arg(gameName));

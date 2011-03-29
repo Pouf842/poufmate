@@ -26,13 +26,15 @@ void GameSyncEvent::run()
         ++index;
     Q_ASSERT(index < m_gameSyncData.players.size());
 
-
     mp_game->setPlayerId(m_gameSyncData.localPlayer.id);
     mp_game->setGameState(m_gameSyncData.state);
     mp_game->setIsCreator(m_gameSyncData.isCreator);
     mp_game->validate();
 
     mp_game->setGraveyard(m_gameSyncData.graveyard);
+
+    if(m_gameSyncData.highNoonEnabled)
+        mp_game->setHighNoonGraveyard(m_gameSyncData.highNoonGraveyard);
 
     mp_game->localPlayerWidget()->setFromPublicData(m_gameSyncData.players[index]);
     mp_game->localPlayerWidget()->setFromPrivateData(m_gameSyncData.localPlayer);

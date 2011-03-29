@@ -149,6 +149,7 @@ struct GameSyncData {
     int                     id;
     QString                 name;
     bool                    isCreator;
+    bool                    highNoonEnabled;
     QList<PublicPlayerData> players;
     PrivatePlayerData       localPlayer;
     GameContextData         gameContext;

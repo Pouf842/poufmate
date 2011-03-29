@@ -107,6 +107,7 @@ public:
 
     bool canBeStarted() const { return m_startable; }
     bool isFinished() const { return m_state == GAMESTATE_FINISHED; }
+    bool highNoonEnabled() const;
 
     /**
      * Returns the list of players, respecting the order

@@ -368,6 +368,8 @@ void GameSyncData::read(XmlNode* node)
     name = node->attribute("name");
     isCreator = node->attribute("is-creator") == "true";
     state = stringToGameState(node->attribute("state"));
+    highNoonEnabled = (node->attribute("highNoonEnabled") == "true");
+
     players.clear();
     foreach(XmlNode* player, node->getFirstChild()->getChildren()) {
         PublicPlayerData publicPlayerData;
@@ -378,7 +380,7 @@ void GameSyncData::read(XmlNode* node)
     gameContext.read(node->getChildren()[2]);
 	graveyard.read(node->getChildren()[3]->getFirstChild());
 
-	//highNoonGraveyard = stringToHighNoonCardType(node->attribute("highNoonGraveyard"));
+	highNoonGraveyard = stringToHighNoonCardType(node->attribute("highNoonGraveyard"));
 
     selection.clear();
     foreach(XmlNode* cardNode, node->getChildren()[4]->getChildren()) {
@@ -396,7 +398,9 @@ void GameSyncData::write(QXmlStreamWriter* writer) const
     writer->writeAttribute("id", QString::number(id));
     writer->writeAttribute("name", name);
     writer->writeAttribute("is-creator", isCreator ? "true" : "false");
+    writer->writeAttribute("highNoonEnabled", highNoonEnabled ? "true" : "false");
     writer->writeAttribute("state", gameStateToString(state));
+	writer->writeAttribute("highNoonGraveyard", highNoonCardTypeToString(highNoonGraveyard));
 
     writer->writeStartElement("players");
     foreach (const PublicPlayerData& p, players)
@@ -408,8 +412,6 @@ void GameSyncData::write(QXmlStreamWriter* writer) const
     writer->writeStartElement("graveyard");
     graveyard.write(writer);
     writer->writeEndElement();
-
-	//writer->writeAttribute("highNoonGraveyard", highNoonCardTypeToString(highNoonGraveyard));
 
     writer->writeStartElement("selection");
     foreach (const CardData& c, selection)

@@ -81,6 +81,8 @@ public:
 
     bool canBeStarted() const;
 
+    bool highNoonEnabled() const;
+
     GameInfoData    gameInfoData() const;
     GameContextData gameContextData() const;
     GameState       gameState() const;
