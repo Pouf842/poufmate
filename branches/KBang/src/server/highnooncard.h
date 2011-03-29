@@ -33,7 +33,7 @@ class HighNoonCard : public QObject
     virtual ~HighNoonCard();
 
     inline int id()                 const { return m_id;    }
-    inline HighNoonCardType type()  const { return m_type;  }
+    inline HighNoonCardType type()  const { if(this != 0) return m_type; else return HIGHNOON_INVALID;  }
 
     virtual void play() = 0;
   protected :

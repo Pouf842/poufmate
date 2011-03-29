@@ -429,3 +429,8 @@ QList<PlayerRole> Game::getRoleList()
     }
     return res;
 }
+
+bool Game::highNoonEnabled() const
+{
+    return mp_gameInfo->hasHighNoon();
+}

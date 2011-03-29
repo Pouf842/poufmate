@@ -51,7 +51,7 @@ public slots:
     void leaveGame();
     void showAboutDialog();
 
-    void enterGameMode(int gameId, const QString& gameName, bool, ClientType);
+    void enterGameMode(int gameId, const QString& gameName, bool highNoonEnabled, ClientType);
     void exitGameMode();
 
     void serverConnectionStatusChanged();

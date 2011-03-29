@@ -34,11 +34,11 @@
 
 using namespace client;
 
-Game::Game(QObject* parent, int gameId, bool highNoon, ClientType clientType,
+Game::Game(QObject* parent, int gameId, ClientType clientType, bool highNoonEnabled,
            ServerConnection* serverConnection, const GameWidgets& gameWidgets):
         QObject(parent),
         m_gameId(gameId),
-		m_highNoon(highNoon),
+		m_highNoon(highNoonEnabled),
         m_playerId(0),
         m_isCreator(0),
         m_gameState(GAMESTATE_INVALID),
@@ -196,7 +196,14 @@ void Game::setGraveyard(const CardData& data)
 {
     if (m_interface != GameInterface)
         return;
+
     mp_graveyard->setFirstCard(data);
+}
+
+void Game::setHighNoonGraveyard(HighNoonCardType type)
+{
+    if(type != HIGHNOON_INVALID)
+        mp_highNoonGraveyard->push(type);
 }
 
 void Game::validate()
@@ -278,15 +285,15 @@ void Game::loadGameInterface()
     qDebug("---- loading game interface ----");
     mp_deck = new DeckWidget(0);
 
-	if(m_highNoon)
-	{
-		mp_highNoonDeck = new DeckWidget(0, Card::HighNoon);
-		mp_highNoonDeck->init(&m_cardWidgetFactory);
-        mp_highNoonDeck->setPocketType(POCKET_HIGHNOON_DECK);
+	mp_highNoonDeck = new DeckWidget(0, Card::HighNoon);
+	mp_highNoonDeck->init(&m_cardWidgetFactory);
+    mp_highNoonDeck->setPocketType(POCKET_HIGHNOON_DECK);
 
-		mp_highNoonGraveyard = new HighNoonGraveyardWidget(0);
-		mp_highNoonGraveyard->init(&m_cardWidgetFactory);
-	}
+	mp_highNoonGraveyard = new HighNoonGraveyardWidget(0);
+	mp_highNoonGraveyard->init(&m_cardWidgetFactory);
+
+    mp_highNoonDeck->setVisible(m_highNoon);
+    mp_highNoonGraveyard->setVisible(m_highNoon);
 
     mp_deck->init(&m_cardWidgetFactory);
     mp_graveyard = new GraveyardWidget(0);

@@ -367,7 +367,7 @@ void Client::onHandlerRegistered(const PublicGameView* publicGameView, PlayerCtr
     mp_publicGameView = publicGameView;
     mp_parser->eventEnterGameMode(mp_publicGameView->id(),
                                   mp_publicGameView->name(),
-								  mp_publicGameView->gameInfoData().hasHighNoon,
+                                  mp_publicGameView->highNoonEnabled(),
                                   CLIENT_PLAYER); //@todo: spectator
     onGameSync();
 }
@@ -403,11 +403,10 @@ void Client::onGameSync()
     gameSyncData.isCreator = mp_playerCtrl->privatePlayerView().isCreator();
     gameSyncData.state = mp_publicGameView->gameState();
     gameSyncData.graveyard = mp_publicGameView->graveyardTop()->cardData();
+    gameSyncData.highNoonEnabled = mp_publicGameView->highNoonEnabled();
 
-	HighNoonCard* top = mp_publicGameView->highNoonGraveyardTop();
-
-	if(top != 0)
-		gameSyncData.highNoonGraveyard = top->type();
+    if(gameSyncData.highNoonEnabled)
+		gameSyncData.highNoonGraveyard = mp_publicGameView->highNoonGraveyardTop()->type();
 	else
 		gameSyncData.highNoonGraveyard = HIGHNOON_INVALID;
 
@@ -418,8 +417,6 @@ void Client::onGameSync()
     foreach (const PlayingCard* c, mp_publicGameView->selection())
         gameSyncData.selection.append(c->cardData());
     mp_parser->eventGameSync(gameSyncData);
-
-
 
     if (gameSyncData.isCreator && gameSyncData.state == GAMESTATE_WAITINGFORPLAYERS)
         onGameStartabilityChanged(mp_publicGameView->canBeStarted());

@@ -62,6 +62,11 @@ bool PublicGameView::canBeStarted() const
     return mp_game->canBeStarted();
 }
 
+bool PublicGameView::highNoonEnabled() const
+{
+    return mp_game->highNoonEnabled();
+}
+
 GameInfoData PublicGameView::gameInfoData() const
 {
     GameInfoData res;

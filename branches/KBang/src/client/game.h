@@ -49,7 +49,7 @@ class HighNoonGraveyardWidget;
 class Game: public QObject {
 Q_OBJECT;
 public:
-    Game(QObject* parent, int gameId, bool highNoon, ClientType, ServerConnection*, const GameWidgets&);
+    Game(QObject* parent, int gameId, ClientType, bool highNoonEnabled, ServerConnection*, const GameWidgets&);
     virtual ~Game();
 
     void setPlayerId(int playerId);
@@ -58,12 +58,12 @@ public:
     void setSelection(QList<CardData>);
     void setIsCreator(bool isCreator);
     void setGraveyard(const CardData&);
+    void setHighNoonGraveyard(HighNoonCardType type);
     void validate();
     void clear();
 
     void setTextInfo(const QString&);
     void unsetTextInfo();
-
 
     void playerJoinedGame(const PublicPlayerData& player);
     void playerLeavedGame(int playerId);
