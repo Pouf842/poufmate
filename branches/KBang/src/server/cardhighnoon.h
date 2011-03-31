@@ -22,12 +22,22 @@
 
 #include "highnooncard.h"
 
+class Player;
+
 class CardHighNoon : public HighNoonCard
 {
+  Q_OBJECT
   public :
     CardHighNoon(Game * game, int id);
     virtual ~CardHighNoon();
     virtual void play();
+
+  private slots :
+    void playEffect(Player *);
+    void stop();
+
+  private :
+    bool m_beginned;
 };
 
 #endif

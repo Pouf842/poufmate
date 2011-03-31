@@ -21,13 +21,22 @@
 #define CARDTHEDALTONS_H
 
 #include "highnooncard.h"
+#include "reactionhandler.h"
 
-class CardTheDaltons : public HighNoonCard
+class CardTheDaltons : public HighNoonCard, public ReactionHandler
 {
   public :
     CardTheDaltons(Game * game, int id);
     virtual ~CardTheDaltons();
     virtual void play();
+
+    virtual void respondCard(PlayingCard* targetCard);
+
+    virtual ReactionType reactionType() const;
+    virtual Player* causedBy() const;
+  protected :
+    void nextPlayer();
+    Player* mp_currentPlayer;
 };
 
 #endif

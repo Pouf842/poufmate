@@ -84,19 +84,21 @@ void GameCycle::start()
 void GameCycle::startTurn(Player* player)
 {
     m_contextDirty = 1;
+    mp_currentPlayer = mp_requestedPlayer = player;
+    m_state = GAMEPLAYSTATE_DRAW;
+
     if (player->role() == ROLE_SHERIFF)
     {
         m_turnNum++;
+
+        emit newGameTurn();
 
         if(mp_game->gameInfo().hasHighNoon())
             mp_game->gameTable().playHighNoon();
     }
 
-    mp_currentPlayer = mp_requestedPlayer = player;
-    m_state = GAMEPLAYSTATE_DRAW;
+    emit newTurn(mp_currentPlayer);
     mp_currentPlayer->onTurnStart();
-    m_drawCardCount = 0;
-    m_drawCardMax = 2;
 }
 
 void GameCycle::draw(Player* player, bool specialDraw)
