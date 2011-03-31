@@ -82,6 +82,8 @@ public:
     bool isCardEffect() const;
 
 signals:
+    void newTurn(Player*);
+    void newGameTurn();
     void cardEffectOver();
 
 private:
@@ -93,8 +95,6 @@ private:
     QQueue<ReactionHandler*>    m_reactionHandlers;
     QQueue<Player*>             m_reactionPlayers;
 
-    int     m_drawCardCount;
-    int     m_drawCardMax;
     int     m_turnNum;
     bool    m_contextDirty;
     bool    m_isCardEffect;

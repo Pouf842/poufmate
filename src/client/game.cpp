@@ -285,7 +285,6 @@ void Game::loadGameInterface()
     qDebug("---- loading game interface ----");
     mp_deck = new DeckWidget(0);
 
-    iébiébsl
 	mp_highNoonDeck = new DeckWidget(0, Card::HighNoon);
 	mp_highNoonDeck->init(&m_cardWidgetFactory);
     mp_highNoonDeck->setPocketType(POCKET_HIGHNOON_DECK);

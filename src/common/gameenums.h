@@ -30,7 +30,8 @@ enum ActionRequestType {
     REQUEST_DRAW,
     REQUEST_PLAY,
     REQUEST_RESPOND,
-    REQUEST_DISCARD
+    REQUEST_DISCARD,
+    REQUEST_SELECT_ON_TABLE
 };
 
 enum PlayerRole {

@@ -509,10 +509,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\src\server\cardthedoctor.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\src\server\characterbase.cpp"
 					>
 				</File>
@@ -713,6 +709,10 @@
 					</File>
 					<File
 						RelativePath="..\src\server\cardthedaltons.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\src\server\cardthedoctor.cpp"
 						>
 					</File>
 					<File

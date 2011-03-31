@@ -170,7 +170,8 @@ void VoidAI::requestWithAction()
                 }
             }
             qDebug() << QString("VoidAI (%1): REQUEST_RESPOND").arg(m_id);;
-            QList<PlayingCard*> cards = mp_playerCtrl->privatePlayerView().hand();
+            
+            QList<PlayingCard*> cards = mp_playerCtrl->privatePlayerView().table();
             foreach (PlayingCard* c, cards) {
                 try {
                     qDebug() << "Trying to play: " << playingCardTypeToString(c->type());
@@ -185,6 +186,23 @@ void VoidAI::requestWithAction()
                     e.debug();
                 }
             }
+
+            cards = mp_playerCtrl->privatePlayerView().hand();
+            foreach (PlayingCard* c, cards) {
+                try {
+                    qDebug() << "Trying to play: " << playingCardTypeToString(c->type());
+                    mp_playerCtrl->playCard(c);
+                    return;
+                } catch (BadCardException e) {
+                    qDebug() << QString("VoidAI (%1): Respond: BadCardException").arg(m_id);
+                } catch (BadPlayerException e) {
+                    qDebug() << QString("VoidAI (%1): Respond: BadPlayerException").arg(m_id);
+                } catch (GameException& e) {
+                    qDebug("VoidAI");
+                    e.debug();
+                }
+            }
+
             qDebug() << QString("VoidAI (%1): Trying to pass").arg(m_id);
             try {
                 mp_playerCtrl->pass();
@@ -207,5 +225,15 @@ void VoidAI::requestWithAction()
                 qDebug() << QString("VoidAI (%1): BadGameStateException").arg(m_id);
             }
             break;
+       /* case REQUEST_SELECT_ON_TABLE :
+            try
+            {
+                qDebug() << QString("VoidAI (%1): discarding a table card").arg(m_id);
+                PlayingCard * card = mp_playerCtrl->privatePlayerView().table().first();
+                mp_playerCtrl->discardCard(card);
+            }
+            catch(...)
+            {
+            }*/
     }
 }
