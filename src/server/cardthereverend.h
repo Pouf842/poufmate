@@ -21,13 +21,18 @@
 #define CARDTHEREVEREND_H
 
 #include "highnooncard.h"
+#include "actionchecker.h"
 
-class CardTheReverend : public HighNoonCard
+class CardTheReverend : public HighNoonCard, public ActionChecker
 {
+  Q_OBJECT
   public :
     CardTheReverend(Game * game, int id);
     virtual ~CardTheReverend();
     virtual void play();
+    virtual bool checkCard(PlayingCard * card, Player * player = 0);
+  public slots :    
+    void stop();
 };
 
 #endif

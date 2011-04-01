@@ -118,6 +118,14 @@ public:
     }
 };
 
+class ActionCheckException : public GameException
+{
+public :
+    virtual void debug() {
+        qDebug("ActionCheck failed");
+    }
+};
+
 class BadCardException: public GameException
 {
 public:

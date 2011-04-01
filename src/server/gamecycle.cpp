@@ -8,6 +8,7 @@
 #include "gameeventmanager.h"
 #include "reactioncard.h"
 #include "characterbase.h"
+#include "actionchecker.h"
 #include <QDebug>
 
 GameCycle::GameCycle(Game* game):
@@ -169,13 +170,13 @@ void GameCycle::playCard(Player* player, PlayingCard* card)
         throw BadCardException();
     }
 
+    foreach(ActionChecker * checker, m_checkers)
+        if(!checker->checkCard(card, player))
+            throw ActionCheckException();
+
     if (isResponse()) {
         player->character()->respondCard(m_reactionHandlers.head(), card);
     } else {
-//        if (card->owner() == 0) {
-//            qDebug() << "Cannot play card owned by nobody.";
-//            throw BadCardException();
-//        }
         player->character()->playCard(card);
     }
     sendRequest();
@@ -190,6 +191,10 @@ void GameCycle::playCard(Player* player, PlayingCard* card, Player* targetPlayer
     if (card->owner() !=  0 && card->owner() != player) {
         throw BadCardException();
     }
+
+    foreach(ActionChecker * checker, m_checkers)
+        if(!checker->checkCard(card, player))
+            throw ActionCheckException();
 
     if (!targetPlayer->isAlive())
         throw BadTargetPlayerException();
@@ -210,6 +215,10 @@ void GameCycle::playCard(Player* player, PlayingCard* card, PlayingCard* targetC
     if (card->owner() !=  0 && card->owner() != player) {
         throw BadCardException();
     }
+
+    foreach(ActionChecker * checker, m_checkers)
+        if(!checker->checkCard(card, player))
+            throw ActionCheckException();
 
     if (isResponse())
         throw BadGameStateException();
@@ -234,6 +243,11 @@ void GameCycle::pass(Player* player)
 void GameCycle::useAbility(Player* player)
 {
     m_contextDirty = 0;
+
+    foreach(ActionChecker * checker, m_checkers)
+        if(!checker->checkAbility(player->characterType()))
+            throw ActionCheckException();
+
     player->character()->useAbility();
     sendRequest();
 }
@@ -241,6 +255,11 @@ void GameCycle::useAbility(Player* player)
 void GameCycle::useAbility(Player* player, Player* targetPlayer)
 {
     m_contextDirty = 0;
+
+    foreach(ActionChecker * checker, m_checkers)
+        if(!checker->checkAbility(player->characterType()))
+            throw ActionCheckException();
+
     player->character()->useAbility(targetPlayer);
     sendRequest();
 }
@@ -248,6 +267,11 @@ void GameCycle::useAbility(Player* player, Player* targetPlayer)
 void GameCycle::useAbility(Player* player, QList<PlayingCard*> cards)
 {
     m_contextDirty = 0;
+
+    foreach(ActionChecker * checker, m_checkers)
+        if(!checker->checkAbility(player->characterType()))
+            throw ActionCheckException();
+
     player->character()->useAbility(cards);
     sendRequest();
 }
@@ -362,4 +386,16 @@ int GameCycle::needDiscard(Player* player)
 void GameCycle::announceContextChange()
 {
     mp_game->gameEventManager().onGameContextChange(gameContextData());
+}
+
+void GameCycle::registerActionChecker(ActionChecker* actionChecker)
+{
+    if(!m_checkers.contains(actionChecker))
+        m_checkers.append(actionChecker);
+}
+
+void GameCycle::unregisterActionChecker(ActionChecker* actionChecker)
+{
+    if(m_checkers.contains(actionChecker))
+        m_checkers.removeOne(actionChecker);
 }

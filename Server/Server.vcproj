@@ -746,6 +746,16 @@
 			<File
 				RelativePath="..\src\server\actionchecker.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\server\cardbang.h"
