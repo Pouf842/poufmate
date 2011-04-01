@@ -11,7 +11,7 @@ class Player;
 class PlayingCard;
 class ReactionHandler;
 class CheckDeckResultHandler;
-
+class ActionChecker;
 
 class GameCycle: public QObject
 {
@@ -34,6 +34,9 @@ public:
     void assertTurn() const;
     void assertResponse() const;
     void assertDiscard() const;
+
+    void registerActionChecker(ActionChecker*);
+    void unregisterActionChecker(ActionChecker*);
 
     inline ReactionHandler* reactionHandler() const { return isResponse() ? m_reactionHandlers.head() : 0; }
 
@@ -95,9 +98,10 @@ private:
     QQueue<ReactionHandler*>    m_reactionHandlers;
     QQueue<Player*>             m_reactionPlayers;
 
-    int     m_turnNum;
-    bool    m_contextDirty;
-    bool    m_isCardEffect;
+    int                     m_turnNum;
+    bool                    m_contextDirty;
+    bool                    m_isCardEffect;
+    QList<ActionChecker*>   m_checkers;
 
 private:
     void    sendRequest();
