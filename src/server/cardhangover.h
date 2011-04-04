@@ -21,13 +21,21 @@
 #define CARDHANGOVER_H
 
 #include "highnooncard.h"
+#include "actionchecker.h"
 
-class CardHangOver: public HighNoonCard
+class Player;
+
+class CardHangOver: public HighNoonCard, ActionChecker
 {
+  Q_OBJECT
   public :
     CardHangOver(Game * game, int id);
     virtual ~CardHangOver();
     virtual void play();
+    virtual bool checkAbility(Player *);
+
+  public slots :
+    void stop();
 };
 
 #endif

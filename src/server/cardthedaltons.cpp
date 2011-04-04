@@ -24,22 +24,23 @@ void CardTheDaltons::nextPlayer()
     if(mp_currentPlayer == 0)
         mp_currentPlayer = mp_game->gameCycle().currentPlayer();    // Highnoon are played on the sheriff turn
     else
-        mp_currentPlayer = mp_game->nextPlayer(mp_currentPlayer);
-
-    if(mp_currentPlayer->isAlive())
     {
-        if(mp_currentPlayer->table().count() == 1)
+        while(!mp_currentPlayer->isAlive())
         {
-            mp_game->gameTable().cancelCard(mp_currentPlayer->table().first(), mp_currentPlayer);
-            
-            if(mp_game->nextPlayer(mp_currentPlayer)->role() != ROLE_SHERIFF)
-                nextPlayer();
-            else
-                mp_currentPlayer = 0;
+            mp_currentPlayer = mp_game->nextPlayer(mp_currentPlayer);
         }
-        else if(mp_currentPlayer->table().count() > 0)
-            mp_game->gameCycle().setResponseMode(this, mp_currentPlayer);
+
+        if(mp_currentPlayer->role() == ROLE_SHERIFF)
+            return;
     }
+
+    if(mp_currentPlayer->table().count() == 1)
+    {
+        mp_game->gameTable().cancelCard(mp_currentPlayer->table().first(), mp_currentPlayer);
+        nextPlayer();
+    }
+    else if(mp_currentPlayer->table().count() > 0)
+        mp_game->gameCycle().setResponseMode(this, mp_currentPlayer);
 }
 
 void CardTheDaltons::respondCard(PlayingCard* targetCard)
