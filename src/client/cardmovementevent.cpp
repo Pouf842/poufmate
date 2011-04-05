@@ -39,7 +39,7 @@ using namespace client;
 
 // DEBUG FAST VALUES
 const int       tickTime        = 20;
-const double    pixelsPerSecond = 1000;
+const double    pixelsPerSecond = 5000;
 
 QBasicTimer CardMovementEvent:: sm_timer;
 

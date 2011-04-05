@@ -161,6 +161,9 @@ void Game::setGameContext(const GameContextData& gameContextData)
         case REACTION_LUCKYDUKE:
             message = tr("Feelin' lucky? Pick a card to respond with.");
             break;
+        case REACTION_DALTONS :
+            message = tr("The daltons are in town ! Pick a card to discard on your table");
+            break;
         case REACTION_NONE:
             NOT_REACHED();
         }
@@ -255,6 +258,7 @@ void Game::loadCreatorInterface()
     QBoxLayout* l = new QBoxLayout(QBoxLayout::LeftToRight);
     mp_startButton->setText(tr("Start game"));
     mp_startButton->setEnabled(0);
+
     connect(mp_startButton, SIGNAL(clicked()),
             this, SLOT(startButtonClicked()));
     connect(mp_serverConnection, SIGNAL(gameCanBeStarted(bool)),
@@ -410,6 +414,9 @@ void Game::playerUpdate(const PublicPlayerData& player)
 void Game::gameCanBeStarted(bool canBeStarted)
 {
     mp_startButton->setEnabled(canBeStarted);
+
+    if(canBeStarted)
+        mp_startButton->setFocus();
 }
 
 void Game::startButtonClicked()

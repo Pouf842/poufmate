@@ -32,7 +32,7 @@ using namespace client;
 QTimer CharacterWidget::sm_timer;
 int    CharacterWidget::sm_countAnimaton = 0;
 
-double pixelsPerSecond =  25;
+double pixelsPerSecond =  100;
 const int timerInterval = 100;
 
 
@@ -124,7 +124,7 @@ void CharacterWidget::lifePointsChanged()
 
 void CharacterWidget::onTimeout()
 {
-    qreal progress;
+    qreal progress = 1;
     if (!isEmpty()) {
         progress = (m_time.elapsed() * pixelsPerSecond / 1000) / abs(m_sourceY - m_targetY);
         int currentY;
