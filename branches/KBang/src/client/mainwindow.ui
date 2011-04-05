@@ -651,7 +651,7 @@
      <x>0</x>
      <y>0</y>
      <width>388</width>
-     <height>24</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="autoFillBackground">
@@ -710,10 +710,19 @@
    <property name="text">
     <string>&amp;Leave Game</string>
    </property>
+   <property name="shortcut">
+    <string>F12</string>
+   </property>
   </action>
   <action name="actionCreateGame">
    <property name="text">
     <string>C&amp;reate Game</string>
+   </property>
+   <property name="shortcut">
+    <string>F2</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WindowShortcut</enum>
    </property>
   </action>
   <action name="mp_actionAbout">

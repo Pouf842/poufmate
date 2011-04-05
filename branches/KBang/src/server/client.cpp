@@ -601,7 +601,7 @@ void Client::onPlayerPlayCard(PublicPlayerView& player, const PlayingCard* card,
     message.type = GAMEMESSAGE_PLAYERPLAYCARD;
     message.player = player.id();
     message.card = card->cardData();
-    message.targetCard = card->cardData();
+    message.targetCard = target->cardData();
     message.targetPlayer = targetPlayer ? targetPlayer->id() : 0;
     mp_parser->eventGameMessage(message);
 

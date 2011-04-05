@@ -13,9 +13,9 @@ CardHangOver::~CardHangOver()
 
 void CardHangOver::play()
 {
-    mp_game->gameCycle().registerActionChecker(this);
+    /*mp_game->gameCycle().registerActionChecker(this);
     connect(&mp_game->gameCycle(), SIGNAL(newGameTurn()),
-            this, SLOT(stop()));
+            this, SLOT(stop()));*/
 }
 
 void CardHangOver::stop()
