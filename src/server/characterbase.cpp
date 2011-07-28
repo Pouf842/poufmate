@@ -9,6 +9,8 @@
 #include "gameeventmanager.h"
 #include "checkdeckresulthandler.h"
 
+int CharacterBase::iNbCardsToDraw = 2;
+
 CharacterBase::CharacterBase(QObject *parent, CharacterType characterType):
         QObject(parent),
         m_characterType(characterType),
@@ -23,7 +25,7 @@ int CharacterBase::maxLifePoints() const
 
 void CharacterBase::draw(bool)
 {
-    mp_player->game()->gameTable().playerDrawFromDeck(mp_player, 2, 0);
+    mp_player->game()->gameTable().playerDrawFromDeck(mp_player, iNbCardsToDraw, 0);
 }
 
 void CharacterBase::playCard(PlayingCard* card)
@@ -102,4 +104,14 @@ GameTable& CharacterBase::gameTable()
 GameCycle& CharacterBase::gameCycle()
 {
     return mp_player->game()->gameCycle();
+}
+
+void CharacterBase::setNbCardsToDraw(int iNewNbCardsToDraw)
+{
+    iNbCardsToDraw = iNewNbCardsToDraw;
+}
+
+int CharacterBase::iGetNbCardsToDraw()
+{
+    return iNbCardsToDraw;
 }

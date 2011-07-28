@@ -21,8 +21,8 @@ void CharacterPedroRamirez::draw(bool specialDraw)
             throw BadGameStateException(); // @todo: maybe throw different exception
         notifyAbilityUse();
         gameTable().playerDrawFromGraveyard(mp_player);
-        gameTable().playerDrawFromDeck(mp_player, 1, 0);
+        gameTable().playerDrawFromDeck(mp_player, CharacterBase::iGetNbCardsToDraw() - 1, 0);
     } else {
-        CharacterBase::draw(0);
+        CharacterBase::draw(false);
     }
 }

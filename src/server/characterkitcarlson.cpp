@@ -24,7 +24,7 @@ void CharacterKitCarlson::draw(bool specialDraw)
         Q_ASSERT(gameTable().selection().size() == 3);
         gameCycle().setResponseMode(this, mp_player);
     } else {
-        CharacterBase::draw(0);
+        CharacterBase::draw(false);
     }
 }
 
