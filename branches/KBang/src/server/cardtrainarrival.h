@@ -21,13 +21,18 @@
 #define CARDTRAINARRIVAL_H
 
 #include "highnooncard.h"
+#include "actionchecker.h"
 
-class CardTrainArrival : public HighNoonCard
+class CardTrainArrival : public HighNoonCard, public ActionChecker
 {
+  Q_OBJECT
   public :
     CardTrainArrival(Game * game, int id);
     virtual ~CardTrainArrival();
     virtual void play();
+    virtual bool checkAbility(CharacterType type);
+  public slots :
+    void stop();
 };
 
 #endif

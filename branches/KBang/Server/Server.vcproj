@@ -752,7 +752,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
 					/>
 				</FileConfiguration>

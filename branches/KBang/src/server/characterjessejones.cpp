@@ -23,7 +23,7 @@ void CharacterJesseJones::draw(bool specialDraw)
             throw BadTargetPlayerException();
         notifyAbilityUse();
         gameTable().playerStealCard(mp_player, targetCard);
-        gameTable().playerDrawFromDeck(mp_player, 1, 0);
+        gameTable().playerDrawFromDeck(mp_player, CharacterBase::iGetNbCardsToDraw() - 1, 0);
     } else {
         CharacterBase::draw(0);
     }
