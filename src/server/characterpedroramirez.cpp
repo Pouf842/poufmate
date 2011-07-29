@@ -1,8 +1,10 @@
 #include "characterpedroramirez.h"
+#include "game.h"
 #include "gamecycle.h"
 #include "playingcard.h"
 #include "gametable.h"
 #include "gameexceptions.h"
+#include "player.h"
 
 CharacterPedroRamirez::CharacterPedroRamirez(QObject *parent):
         CharacterBase(parent, CHARACTER_PEDRO_RAMIREZ)
@@ -21,7 +23,7 @@ void CharacterPedroRamirez::draw(bool specialDraw)
             throw BadGameStateException(); // @todo: maybe throw different exception
         notifyAbilityUse();
         gameTable().playerDrawFromGraveyard(mp_player);
-        gameTable().playerDrawFromDeck(mp_player, CharacterBase::iGetNbCardsToDraw() - 1, 0);
+        gameTable().playerDrawFromDeck(mp_player, mp_player->game()->iGetNbCardsToDraw() - 1, 0);
     } else {
         CharacterBase::draw(false);
     }

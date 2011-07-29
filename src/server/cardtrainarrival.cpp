@@ -18,7 +18,7 @@ void CardTrainArrival::play()
     connect(&mp_game->gameCycle(), SIGNAL(newGameTurn()),
             this, SLOT(stop()));
 
-    CharacterBase::setNbCardsToDraw(3);
+    mp_game->setNbCardsToDraw(3);
 }
 
 bool CardTrainArrival::checkAbility(CharacterType type)
@@ -32,5 +32,5 @@ void CardTrainArrival::stop()
     disconnect(&mp_game->gameCycle(), SIGNAL(newGameTurn()),
                this, SLOT(stop()));
 
-    CharacterBase::setNbCardsToDraw(2);
+    mp_game->setNbCardsToDraw(2);
 }

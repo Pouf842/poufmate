@@ -1,4 +1,5 @@
 #include "characterjessejones.h"
+#include "game.h"
 #include "gametable.h"
 #include "gamecycle.h"
 #include "player.h"
@@ -23,7 +24,7 @@ void CharacterJesseJones::draw(bool specialDraw)
             throw BadTargetPlayerException();
         notifyAbilityUse();
         gameTable().playerStealCard(mp_player, targetCard);
-        gameTable().playerDrawFromDeck(mp_player, CharacterBase::iGetNbCardsToDraw() - 1, 0);
+        gameTable().playerDrawFromDeck(mp_player, mp_player->game()->iGetNbCardsToDraw() - 1, 0);
     } else {
         CharacterBase::draw(0);
     }

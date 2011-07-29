@@ -40,12 +40,7 @@ public:
 
     virtual void checkDeck(PlayingCard* causedBy, bool (*checkFunc)(PlayingCard*), CheckDeckResultHandler*);
 
-    static void setNbCardsToDraw(int iNewNbCardsToDraw);
-    static int  iGetNbCardsToDraw();
-
 protected:
-    static int iNbCardsToDraw;
-
     void setCharacterType(CharacterType type);
     void notifyAbilityUse();
 

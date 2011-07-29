@@ -185,6 +185,11 @@ public:
      */
     void sendChatMessage(Player* player, const QString& message);
 
+    void setNbCardsToDraw(int iNewNbCardsToDraw);
+    int  iGetNbCardsToDraw();
+  protected :
+    int  m_iNbCardsToDraw;
+
 private:
     void checkStartable();
     void shufflePlayers();
