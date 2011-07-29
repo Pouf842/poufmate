@@ -63,6 +63,9 @@ Game::Game(GameServer* parent, int gameId, const CreateGameData& createGameData)
     mp_playerReaper = mp_defaultPlayerReaper;
     mp_gameLogger = new GameLogger();
     mp_gameEventManager->registerSupervisor(mp_gameLogger);
+
+    m_iNbCardsToDraw = 2;
+
     createAI(mp_gameInfo->AIPlayers());
 }
 
@@ -433,4 +436,14 @@ QList<PlayerRole> Game::getRoleList()
 bool Game::highNoonEnabled() const
 {
     return mp_gameInfo->hasHighNoon();
+}
+
+void Game::setNbCardsToDraw(int iNewNbCardsToDraw)
+{
+    m_iNbCardsToDraw = iNewNbCardsToDraw;
+}
+
+int Game::iGetNbCardsToDraw()
+{
+    return m_iNbCardsToDraw;
 }
