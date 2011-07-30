@@ -447,31 +447,3 @@ int Game::iGetNbCardsToDraw()
 {
     return m_iNbCardsToDraw;
 }
-
-/*void Game::setCheckerSubstitute(CheckerSubstitute * pNewChecker)
-{
-	if(mp_checkerSubstitute == NULL)
-		mp_checkerSubstitute = pNewChecker;
-	else
-		throw BadUsageException();
-}
-
-/**
- * Set a substitute to the deck check (for cards such as dynamite, jail, barrel...)
- * /
-void Game::unsetCheckerSubstitute(CheckerSubstitute * pCurrentChecker)
-{
-	if(pCurrentChecker == mp_checkerSubstitute)
-		mp_checkerSubstitute = NULL;
-	else
-		throw BadUsageException();
-}
-
-/**
- * Get the substitute to the deck check (for cards such as dynamite, jail, barrel...)
- * /
-CheckerSubstitute * Game::getCheckerSubstitute()
-{
-	return mp_checkerSubstitute;
-}
-*/

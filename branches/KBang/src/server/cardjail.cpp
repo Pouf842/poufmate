@@ -57,9 +57,5 @@ void CardJail::unregisterPlayer(Player* player)
 
 bool CardJail::checkJail(PlayingCard* card)
 {
-		/*if(mp_checkerReplace != NULL)
-		return mp_checkerReplace->check();
-	else*/
-
     return (card->suit() == SUIT_HEARTS);
 }
