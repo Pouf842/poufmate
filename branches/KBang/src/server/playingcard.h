@@ -83,11 +83,13 @@ public:
 
     void setVirtual(PlayingCard* master);
     void setVirtual(Player* owner, PocketType pocket);
+	void setSuit(CardSuit suit);
 
 protected:
     Game*       game()      const { return mp_game; }
     GameTable*  gameTable() const;
     GameCycle*  gameCycle() const;
+    Game*           mp_game;
 
 
     void setType(PlayingCardType type);
@@ -95,7 +97,6 @@ protected:
 private:
     inline void setOwner(Player *owner)             { mp_owner = owner; }
     inline void setPocket(const PocketType& pocket) { m_pocket = pocket; }
-
 private:
     int             m_id;
     PlayingCardType m_type;
@@ -103,7 +104,6 @@ private:
     CardRank        m_rank;
     Player*         mp_owner;
     PocketType      m_pocket;
-    Game*           mp_game;
     bool            m_isVirtual;
     PlayingCard*    mp_master;
 };

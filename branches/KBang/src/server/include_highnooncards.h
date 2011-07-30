@@ -10,3 +10,4 @@
 #include "cardthirst.h"
 #include "cardthereverend.h"
 #include "cardhighnoon.h"
+#include "cardblessing.h"

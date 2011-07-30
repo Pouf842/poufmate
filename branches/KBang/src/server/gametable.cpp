@@ -293,6 +293,7 @@ void GameTable::generateCards(CardFactory* cardFactory, bool bHighNoon)
 {
     m_cards = cardFactory->generateCards(mp_game);
     m_deck << m_cards.values();
+
     shuffleDeck();
 
     if(bHighNoon)
@@ -388,4 +389,9 @@ void GameTable::playHighNoon()
 	m_highNoonGraveyard.push_front(card);
 
     card->play();
+}
+
+QList<PlayingCard*> GameTable::getAllPlayingCards()
+{
+	return m_cards.values();
 }

@@ -24,10 +24,14 @@
 
 class CardThirst : public HighNoonCard
 {
+  Q_OBJECT
   public :
     CardThirst(Game * game, int id);
     virtual ~CardThirst();
     virtual void play();
+
+  public slots :
+	void stop();
 };
 
 #endif

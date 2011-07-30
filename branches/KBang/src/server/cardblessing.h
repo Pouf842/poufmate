@@ -21,13 +21,23 @@
 #define CARDBLESSING_H
 
 #include "highnooncard.h"
+#include <QMap>
+
+class PlayingCard;
 
 class CardBlessing : public HighNoonCard
 {
+  Q_OBJECT
   public :
     CardBlessing(Game * game, int id);
     virtual ~CardBlessing();
     virtual void play();
+
+  public slots :
+	void stop();
+
+  protected :
+	QMap<PlayingCard*, CardSuit> m_cards;
 };
 
 #endif

@@ -279,7 +279,7 @@ void GameCycle::useAbility(Player* player, QList<PlayingCard*> cards)
 void GameCycle::checkDeck(Player* player, PlayingCard* causedBy,
                           bool (*checkFunc)(PlayingCard*), CheckDeckResultHandler* resultHandler)
 {
-    player->character()->checkDeck(causedBy, checkFunc, resultHandler);
+	player->character()->checkDeck(causedBy, checkFunc, resultHandler);
 }
 
 void GameCycle::setResponseMode(ReactionHandler* reactionHandler, Player* player, bool skipQueue)
