@@ -24,10 +24,14 @@
 
 class CardGoldRush : public HighNoonCard
 {
+  Q_OBJECT
   public :
     CardGoldRush(Game * game, int id);
     virtual ~CardGoldRush();
     virtual void play();
+
+  public slots :
+    void stop();
 };
 
 #endif
