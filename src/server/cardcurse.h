@@ -21,13 +21,23 @@
 #define CARDCURSE_H
 
 #include "highnooncard.h"
+#include <QMap>
+
+class PlayingCard;
 
 class CardCurse : public HighNoonCard
 {
+  Q_OBJECT
   public :
     CardCurse(Game * game, int id);
     virtual ~CardCurse();
     virtual void play();
+
+  public slots :
+	void stop();
+
+  protected :
+	QMap<PlayingCard*, CardSuit> m_cards;
 };
 
 #endif

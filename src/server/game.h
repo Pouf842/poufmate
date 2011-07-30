@@ -185,8 +185,16 @@ public:
      */
     void sendChatMessage(Player* player, const QString& message);
 
+	/**
+	 * Set the number of card to draw at the beginning of each player's turn
+	 */
     void setNbCardsToDraw(int iNewNbCardsToDraw);
+
+	/**
+	 * Get the number of card to draw at the beginning of each player's turn
+	 */
     int  iGetNbCardsToDraw();
+
   protected :
     int  m_iNbCardsToDraw;
 

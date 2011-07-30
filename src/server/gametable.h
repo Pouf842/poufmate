@@ -108,6 +108,7 @@ public:
     QList<PlayingCard*> selection() const { return m_selection; }
 
     void playHighNoon();
+	QList<PlayingCard*> getAllPlayingCards();
 private:
     void generateCards(CardFactory*, bool bHighNoon = false);
     void shuffleDeck();

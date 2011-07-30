@@ -513,62 +513,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\src\server\characterbase.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\server\characterblackjack.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\server\charactercalamityjanet.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\server\charactercassidygringo.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\server\characterjessejones.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\server\characterjourdonnais.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\server\characterkitcarlson.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\server\characterlist.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\server\characterluckyduke.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\server\characterpedroramirez.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\server\characterpropertychange.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\server\charactersidketchum.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\server\charactersuzylafayette.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\server\charactervulturesam.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\src\server\checkdeckresulthandler.cpp"
 					>
 				</File>
@@ -733,6 +677,66 @@
 					</File>
 					<File
 						RelativePath="..\src\server\cardtrainarrival.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Characters"
+					>
+					<File
+						RelativePath="..\src\server\characterbase.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\src\server\characterblackjack.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\src\server\charactercalamityjanet.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\src\server\charactercassidygringo.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\src\server\characterjessejones.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\src\server\characterjourdonnais.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\src\server\characterkitcarlson.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\src\server\characterlist.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\src\server\characterluckyduke.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\src\server\characterpedroramirez.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\src\server\characterpropertychange.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\src\server\charactersidketchum.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\src\server\charactersuzylafayette.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\src\server\charactervulturesam.cpp"
 						>
 					</File>
 				</Filter>

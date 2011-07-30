@@ -90,13 +90,13 @@ signals:
     void cardEffectOver();
 
 private:
-    Game*                       mp_game;
+    Game *                      mp_game;
     GamePlayState               m_state;
     GamePlayState               m_lastState;
-    Player*                     mp_currentPlayer;
-    Player*                     mp_requestedPlayer;
-    QQueue<ReactionHandler*>    m_reactionHandlers;
-    QQueue<Player*>             m_reactionPlayers;
+    Player *                    mp_currentPlayer;
+    Player *                    mp_requestedPlayer;
+    QQueue<ReactionHandler *>   m_reactionHandlers;
+    QQueue<Player *>            m_reactionPlayers;
 
     int                     m_turnNum;
     bool                    m_contextDirty;

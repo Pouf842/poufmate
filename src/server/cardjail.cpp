@@ -37,7 +37,7 @@ void CardJail::play(Player* targetPlayer)
 }
 
 void CardJail::checkResult(bool result)
-{            
+{
     gameTable()->playerDiscardCard(this);
     if (!result) {
         gameCycle()->skipPlayersTurn();
@@ -57,5 +57,9 @@ void CardJail::unregisterPlayer(Player* player)
 
 bool CardJail::checkJail(PlayingCard* card)
 {
+		/*if(mp_checkerReplace != NULL)
+		return mp_checkerReplace->check();
+	else*/
+
     return (card->suit() == SUIT_HEARTS);
 }

@@ -127,6 +127,7 @@ struct CardFactory::CardFactoryImp
         list.append(new CardThirst(game, id()));
         list.append(new CardTheReverend(game, id()));
         list.append(new CardHighNoon(game, id()));
+		list.append(new CardBlessing(game, id()));
 
         QMap<int, HighNoonCard*> toReturn;
 

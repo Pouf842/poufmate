@@ -118,3 +118,8 @@ void PlayingCard::setType(PlayingCardType type)
 {
     m_type = type;
 }
+
+void PlayingCard::setSuit(CardSuit suit)
+{
+	m_suit = suit;
+}

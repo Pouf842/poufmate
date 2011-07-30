@@ -35,9 +35,6 @@ class CardHighNoon : public HighNoonCard
   private slots :
     void playEffect(Player *);
     void stop();
-
-  private :
-    bool m_beginned;
 };
 
 #endif
