@@ -973,202 +973,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\src\server\characterbase.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
-						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\src\server\characterblackjack.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
-						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\src\server\charactercalamityjanet.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
-						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\src\server\charactercassidygringo.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
-						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\src\server\characterjessejones.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
-						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\src\server\characterjourdonnais.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
-						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\src\server\characterkitcarlson.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
-						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\src\server\characterlist.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
-						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\src\server\characterluckyduke.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
-						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\src\server\characterpedroramirez.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
-						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\src\server\characterpropertychange.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
-						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\src\server\charactersidketchum.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
-						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\src\server\charactersuzylafayette.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
-						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\src\server\charactervulturesam.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
-						CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
-						Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="..\src\server\checkdeckresulthandler.h"
 				>
 				<FileConfiguration
@@ -1737,6 +1541,206 @@
 				</File>
 				<File
 					RelativePath="..\src\server\cardtrainarrival.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+							CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
+							Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+			</Filter>
+			<Filter
+				Name="Characters"
+				>
+				<File
+					RelativePath="..\src\server\characterbase.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+							CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
+							Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\server\characterblackjack.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+							CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
+							Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\server\charactercalamityjanet.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+							CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
+							Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\server\charactercassidygringo.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+							CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
+							Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\server\characterjessejones.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+							CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
+							Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\server\characterjourdonnais.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+							CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
+							Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\server\characterkitcarlson.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+							CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
+							Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\server\characterlist.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+							CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
+							Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\server\characterluckyduke.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+							CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
+							Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\server\characterpedroramirez.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+							CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
+							Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\server\characterpropertychange.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+							CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
+							Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\server\charactersidketchum.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+							CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
+							Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\server\charactersuzylafayette.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp"
+							CommandLine="moc $(InputPath) -o $(ProjectDir)mocs\moc_$(InputName).cpp&#x0D;&#x0A;"
+							Outputs="$(ProjectDir)mocs\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\server\charactervulturesam.h"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
