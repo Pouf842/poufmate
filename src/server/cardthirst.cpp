@@ -20,7 +20,7 @@ void CardThirst::play()
 
 void CardThirst::stop()
 {
-	disconnect(mp_game, SIGNAL(newGameTurn()),
+	disconnect(&mp_game->gameCycle(), SIGNAL(newGameTurn()),
 			   this, SLOT(stop()));
 
 	mp_game->setNbCardsToDraw(2);

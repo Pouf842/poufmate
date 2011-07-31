@@ -23,7 +23,6 @@ void HighNoonEvent::run()
     GameEvent::run();
 	mp_game->highNoonDeck()->pop();
 	mp_game->highNoonGraveyard()->push(m_type);
-    /*PlayerWidget* player = mp_game->playerWidget(m_playerId);
-    player->dieAndRevealRole(m_role);*/
+
     QTimer::singleShot(1000, this, SLOT(finish()));
 }
