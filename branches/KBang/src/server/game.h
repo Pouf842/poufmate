@@ -115,6 +115,8 @@ public:
      */
     QList<Player*> playerList() const { return m_playerList; }
 
+	void setPlayerList(QList<Player*> & newPlayerList) { m_playerList = newPlayerList; }
+
     /**
      * This method is provided for convenience.
      * @see Game::playerList()

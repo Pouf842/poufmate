@@ -29,7 +29,9 @@ void CardTheSermon::stop()
 bool CardTheSermon::checkCard(PlayingCard * card, Player * player)
 {
     if(card->type() == CARD_BANG)
-        if(mp_game->gameCycle().isResponse() && mp_game->gameCycle().reactionHandler()->reactionType() == REACTION_GENERALSTORE)
+        if(mp_game->gameCycle().isResponse()
+		&& ((mp_game->gameCycle().reactionHandler()->reactionType() == REACTION_GENERALSTORE)
+		||	(mp_game->gameCycle().reactionHandler()->reactionType() == REACTION_KITCARLSON)))
             return true;
         else
             return false;
