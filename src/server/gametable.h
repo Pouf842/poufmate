@@ -114,6 +114,7 @@ private:
     void shuffleDeck();
     void dealCards();
     void regenerateDeck();
+	void regenerateHighNoonDeck();
     void moveCardToGraveyard(PlayingCard*);
     inline PlayingCard* popCardFromDeck();
     inline void putCardToDeck(PlayingCard*);

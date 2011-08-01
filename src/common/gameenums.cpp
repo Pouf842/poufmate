@@ -287,6 +287,7 @@ GameMessageType stringToGameMessageType(const QString& s) {
     if (s == "player-steal-card")           return GAMEMESSAGE_PLAYERSTEALCARD;
     if (s == "player-cancel-card")          return GAMEMESSAGE_PLAYERCANCELCARD;
     if (s == "deck-regenerate")             return GAMEMESSAGE_DECKREGENERATE;
+	if (s == "highnoon-deck-regenerate")	return GAMEMESSAGE_HIGHNOONDECKREGENERATE;
     if (s == "player-died")                 return GAMEMESSAGE_PLAYERDIED;
     return GAMEMESSAGE_INVALID;
 }
@@ -306,6 +307,7 @@ QString gameMessageTypeToString(const GameMessageType& g) {
     case GAMEMESSAGE_PLAYERSTEALCARD:           return "player-steal-card";
     case GAMEMESSAGE_PLAYERCANCELCARD:          return "player-cancel-card";
     case GAMEMESSAGE_DECKREGENERATE:            return "deck-regenerate";
+	case GAMEMESSAGE_HIGHNOONDECKREGENERATE:	return "highnoon-deck-regenerate";
     case GAMEMESSAGE_PLAYERDIED:                return "player-died";
     case GAMEMESSAGE_INVALID:                   return "";
     }

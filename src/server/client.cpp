@@ -800,6 +800,15 @@ void Client::onDeckRegenerate()
     mp_parser->eventGameMessage(message);
 }
 
+void Client::onHighNoonDeckRegenerate()
+{
+	if(mp_parser == 0) return;
+
+	GameMessage message;
+	message.type = GAMEMESSAGE_HIGHNOONDECKREGENERATE;
+	mp_parser->eventGameMessage(message);
+}
+
 void Client::onPlayerUseAbility(PublicPlayerView&)
 {
     ///@todo create new use ability event

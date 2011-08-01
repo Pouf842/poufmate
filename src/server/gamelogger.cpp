@@ -213,6 +213,10 @@ void GameLogger::onDeckRegenerate()
     m_logFile << "onDeckRegenerate()" << endl;
 }
 
+void GameLogger::onHighNoonDeckRegenerate()
+{
+	m_logFile << "onHighNoonDeckRegenerate()" << endl;
+}
 void GameLogger::onPlayerUseAbility(PublicPlayerView& p)
 {
     m_logFile << "onPlayerUseAbility(player=" << p.id() << ")" << endl;
