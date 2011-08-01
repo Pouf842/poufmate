@@ -50,6 +50,7 @@ public:
     virtual void onGameContextChange(const GameContextData&) {}
     virtual void onLifePointsChange(PublicPlayerView&, int, PublicPlayerView*) {}
     virtual void onDeckRegenerate() {}
+	virtual void onHighNoonDeckRegenerate() {}
     virtual void onPlayerUseAbility(PublicPlayerView&) {}
     virtual void onHighNoonPlayed(HighNoonCardType) {};
 

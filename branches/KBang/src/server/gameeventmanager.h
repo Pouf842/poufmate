@@ -78,6 +78,8 @@ public:
 
     void onDeckRegenerate();
 
+	void onHighNoonDeckRegenerate();
+
     void onPlayerUseAbility(Player*);
 
     void onHighNoonPlayed(HighNoonCardType);

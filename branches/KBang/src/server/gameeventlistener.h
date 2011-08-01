@@ -119,6 +119,8 @@ public:
 
     virtual void onDeckRegenerate() = 0;
 
+	virtual void onHighNoonDeckRegenerate() = 0;
+
     virtual void onPlayerUseAbility(PublicPlayerView&) = 0;
 
     virtual void onActionRequest(ActionRequestType requestType) = 0;

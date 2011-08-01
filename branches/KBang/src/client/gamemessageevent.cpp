@@ -103,6 +103,9 @@ void GameMessageEvent::run()
     case GAMEMESSAGE_DECKREGENERATE:
         msg = tr("The deck ran out of cards. Cards from the discard pile were shuffled and are now used as new deck.");
         break;
+	case GAMEMESSAGE_HIGHNOONDECKREGENERATE:
+		msg = tr("The high noon deck ran out of cards. Cards from the high noon discard pile were shuffled and are now used as new deck.");
+		break;
     case GAMEMESSAGE_PLAYERDIED:
         msg = tr("%1 passed away. R.I.P.").
                     arg(decoratePlayerName(playerName));

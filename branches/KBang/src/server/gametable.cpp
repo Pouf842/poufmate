@@ -338,6 +338,17 @@ void GameTable::regenerateDeck()
     mp_game->gameEventManager().onDeckRegenerate();
 }
 
+void GameTable::regenerateHighNoonDeck()
+{
+	Q_ASSERT(m_highnoon_deck.isEmpty());
+	Q_ASSERT(!m_highNoonGraveyard.isEmpty());
+	m_highnoon_deck << m_highNoonGraveyard;
+    m_highNoonGraveyard.clear();
+	m_highNoonGraveyard << m_highnoon_deck.takeLast();
+	shuffleList(m_highnoon_deck);
+    mp_game->gameEventManager().onHighNoonDeckRegenerate();
+}
+
 void GameTable::moveCardToGraveyard(PlayingCard* card)
 {
     Player* owner = card->owner();
@@ -385,6 +396,11 @@ void GameTable::putCardToGraveyard(PlayingCard* card)
 void GameTable::playHighNoon()
 {
     HighNoonCard * card = m_highnoon_deck.takeFirst();
+
+	if(m_highnoon_deck.isEmpty())
+		regenerateHighNoonDeck();
+		
+
     mp_game->gameEventManager().onHighNoonPlayed(card->type());
 	m_highNoonGraveyard.push_front(card);
 

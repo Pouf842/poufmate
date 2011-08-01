@@ -254,6 +254,13 @@ void GameEventManager::onDeckRegenerate()
     }
 }
 
+void GameEventManager::onHighNoonDeckRegenerate()
+{
+	foreach(Handler* h, m_handlers) {
+        h->handler->onHighNoonDeckRegenerate();
+    }
+}
+
 void GameEventManager::onPlayerUseAbility(Player* player)
 {
     foreach(Handler* h, m_handlers) {
