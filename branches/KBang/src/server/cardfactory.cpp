@@ -115,7 +115,7 @@ struct CardFactory::CardFactoryImp
     {
         QList<HighNoonCard*> list;
 
-        /*list.append(new CardTheDoctor(game, id()));
+        list.append(new CardTheDoctor(game, id()));
         list.append(new CardGoldRush(game, id()));
         list.append(new CardShootOut(game, id()));
         list.append(new CardTrainArrival(game, id()));
@@ -127,10 +127,7 @@ struct CardFactory::CardFactoryImp
         list.append(new CardThirst(game, id()));
         list.append(new CardTheReverend(game, id()));
         list.append(new CardHighNoon(game, id()));
-		list.append(new CardBlessing(game, id()));*/
-
-		list.append(new CardTheDaltons(game, id()));
-		list.append(new CardTheDaltons(game, id()));
+		list.append(new CardBlessing(game, id()));
 
         QMap<int, HighNoonCard*> toReturn;
 

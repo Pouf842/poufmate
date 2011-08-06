@@ -16,6 +16,7 @@ CardTheDaltons::~CardTheDaltons()
 
 void CardTheDaltons::play()
 {
+	mp_currentPlayer = 0;
     nextPlayer();
 }
 
@@ -28,7 +29,7 @@ void CardTheDaltons::nextPlayer()
         mp_currentPlayer = mp_game->nextPlayer(mp_currentPlayer);
 
         if(mp_currentPlayer->role() == ROLE_SHERIFF)
-            return;
+			return;
     }
 
     if(mp_currentPlayer->table().count() == 0)
