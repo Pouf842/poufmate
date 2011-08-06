@@ -197,6 +197,7 @@ ReactionType stringToReactionType(const QString& s)
     if (s == "last-save")       return REACTION_LASTSAVE;
     if (s == "lucky-duke")      return REACTION_LUCKYDUKE;
     if (s == "kit-carlson")     return REACTION_KITCARLSON;
+	if (s == "daltons")			return REACTION_DALTONS;
     return REACTION_NONE;
 }
 
@@ -211,6 +212,7 @@ QString reactionTypeToString(const ReactionType& r)
     case REACTION_LASTSAVE:     return "last-save";
     case REACTION_LUCKYDUKE:    return "lucky-duke";
     case REACTION_KITCARLSON:   return "kit-carlson";
+	case REACTION_DALTONS:		return "daltons";
     case REACTION_NONE:         return "";
     }
     return "";
