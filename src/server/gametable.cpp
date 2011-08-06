@@ -396,14 +396,12 @@ void GameTable::putCardToGraveyard(PlayingCard* card)
 void GameTable::playHighNoon()
 {
     HighNoonCard * card = m_highnoon_deck.takeFirst();
+	m_highNoonGraveyard.push_front(card);
 
 	if(m_highnoon_deck.isEmpty())
 		regenerateHighNoonDeck();
-		
 
     mp_game->gameEventManager().onHighNoonPlayed(card->type());
-	m_highNoonGraveyard.push_front(card);
-
     card->play();
 }
 
