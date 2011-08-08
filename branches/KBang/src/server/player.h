@@ -174,7 +174,7 @@ public:
 
     void modifyDistanceIn(int delta);
     void modifyDistanceOut(int delta);
-    void modifyUnlimitedBangs(int delta);
+    void modifyUnlimitedBangs(bool bUnlimitedBangs);
     void setBangPower(int bangPower);
     void setWeaponRange(int weaponRange);
     void setAlive(bool isAlive);
@@ -223,6 +223,7 @@ public:
 
 public slots:
     void checkEmptyHand();
+	void resetNbBangs();
 
 signals:
     void onHit(int lifePoints, Player* causedBy);
@@ -262,8 +263,9 @@ private:
     int                       m_weaponRange;
     int                       m_distanceIn;
     int                       m_distanceOut;
-    int                       m_lastBangTurn;
-    int                       m_unlimitedBangs;
+	int						  m_nbBangsToPlayInTurn;
+	int						  m_nbBangsPlayedInTurn;
+
     int                       m_bangPower;
     int                       m_currentPredraw;
 

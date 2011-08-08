@@ -72,7 +72,7 @@ void WeaponCard::registerPlayer(Player* player)
 {
     player->setWeaponRange(m_range);
     if (m_range == 1) {
-        player->modifyUnlimitedBangs(1);
+        player->modifyUnlimitedBangs(true);
     }
 }
 
@@ -80,7 +80,7 @@ void WeaponCard::unregisterPlayer(Player* player)
 {
     player->setWeaponRange(1);
     if (m_range == 1) {
-        player->modifyUnlimitedBangs(-1);
+        player->modifyUnlimitedBangs(false);
     }
 }
 

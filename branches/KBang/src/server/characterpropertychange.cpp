@@ -40,7 +40,7 @@ void CharacterPropertyChange::setPlayer(Player* player)
         player->modifyDistanceIn(1);
         break;
     case WillyTheKid:
-        player->modifyUnlimitedBangs(1);
+        player->modifyUnlimitedBangs(true);
         break;
     case SlabTheKiller:
         player->setBangPower(2);
