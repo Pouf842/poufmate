@@ -167,6 +167,11 @@ void Player::setBangPower(int bangPower)
     m_bangPower = bangPower;
 }
 
+void Player::setBangsToPlayInTurn(int nbBangsToPlay)
+{
+	m_nbBangsToPlayInTurn = nbBangsToPlay;
+}
+
 void Player::setWeaponRange(int weaponRange)
 {
     m_weaponRange = weaponRange;
