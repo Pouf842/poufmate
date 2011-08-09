@@ -45,7 +45,7 @@ Player::Player(Game* game, int id, const CreatePlayerData& createPlayerData):
         m_weaponRange(1),
         m_distanceIn(0),
         m_distanceOut(0),
-		m_nbBangsToPlayInTurn(0),
+		m_nbBangsToPlayInTurn(1),
 		m_nbBangsPlayedInTurn(0),
         m_bangPower(1),
         m_publicPlayerView(this),
@@ -159,7 +159,7 @@ void Player::modifyDistanceOut(int delta)
 
 void Player::modifyUnlimitedBangs(bool bUnlimitedBangs)
 {
-	m_nbBangsToPlayInTurn = (unsigned int) 0xFFFFFFFF;
+	m_nbBangsToPlayInTurn = (unsigned int) 0x7FFFFFFF;
 }
 
 void Player::setBangPower(int bangPower)
@@ -277,6 +277,7 @@ void Player::onBangPlayed()
 void Player::onTurnStart()
 {
     m_currentPredraw = m_predrawChecks.last();
+	m_nbBangsPlayedInTurn = 0;
 }
 
 

@@ -114,6 +114,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="$(SolutionDir)src\common;$(QTDIR)include;$(QTDIR)include\QtGui;$(QTDIR)include\QtCore;$(QTDIR)include\QtNetwork;$(ProjectDir)uics;"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				WarningLevel="3"
@@ -130,6 +131,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="$(OutDir)\common.lib QtCore4.lib QtGui4.lib QtNetwork4.lib"
+				AdditionalLibraryDirectories="$(QTDIR)lib"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -448,24 +451,10 @@
 				<File
 					RelativePath="..\src\client\highnoonevent.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\highnoongraveyardwidget.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\client\joingamedialog.cpp"
