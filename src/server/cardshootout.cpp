@@ -20,11 +20,17 @@ void CardShootOut::play()
 
 	foreach(Player * player, players)
 		if(player->hasUnlimitedBangs())
-		player->setNbBangsToPlay(2);
+			player->setNbBangsToPlay(2);
 }
 
 void CardShootOut::stop()
 {
 	disconnect(&mp_game->gameCycle(), SIGNAL(newGameTurn()),
 			this, SLOT(stop()));
+
+	QList<Player*> players = mp_game->playerList();
+
+	foreach(Player * player, players)
+		if(player->hasUnlimitedBangs())
+			player->setNbBangsToPlay(1);
 }
