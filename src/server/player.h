@@ -223,7 +223,6 @@ public:
 
 public slots:
     void checkEmptyHand();
-	void resetNbBangs();
 
 signals:
     void onHit(int lifePoints, Player* causedBy);
