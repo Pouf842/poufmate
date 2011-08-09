@@ -24,10 +24,14 @@
 
 class CardShootOut : public HighNoonCard
 {
+  Q_OBJECT
   public :
     CardShootOut(Game * game, int id);
     virtual ~CardShootOut();
     virtual void play();
+
+  public slots :
+	void stop();
 };
 
 #endif
