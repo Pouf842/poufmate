@@ -19,8 +19,8 @@ void CardShootOut::play()
 	QList<Player*> players = mp_game->playerList();
 
 	foreach(Player * player, players)
-		if(player->hasUnlimitedBangs())
-			player->setNbBangsToPlay(2);
+		if(!player->hasUnlimitedBangs())
+			player->setBangsToPlayInTurn(2);
 }
 
 void CardShootOut::stop()
@@ -31,6 +31,6 @@ void CardShootOut::stop()
 	QList<Player*> players = mp_game->playerList();
 
 	foreach(Player * player, players)
-		if(player->hasUnlimitedBangs())
-			player->setNbBangsToPlay(1);
+		if(!player->hasUnlimitedBangs())
+			player->setBangsToPlayInTurn(1);
 }
