@@ -52,7 +52,8 @@ Game::Game(GameServer* parent, int gameId, const CreateGameData& createGameData)
     m_state(GAMESTATE_WAITINGFORPLAYERS),
     m_publicGameView(this),
     m_nextUnusedPlayerId(0),
-    m_startable(0)
+    m_startable(0),
+    m_nbBangsToPlayInTurn(1)
 {
     mp_gameInfo = new GameInfo(createGameData);
     mp_gameTable = new GameTable(this);

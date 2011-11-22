@@ -197,6 +197,11 @@ public:
 	 */
     int  iGetNbCardsToDraw();
 
+    /*
+     * Get the number of bang allowed to be played in turn.
+     */
+    void setNbBangsToPlayInTurn(int iNewNbBangs) { m_nbBangsToPlayInTurn = iNewNbBangs; };
+    int getNbBangsToPlayInTurn() { return m_nbBangsToPlayInTurn; };
   protected :
     int  m_iNbCardsToDraw;
 
@@ -226,6 +231,7 @@ private:
     int                 m_goodGuysCount;
     int                 m_outlawsCount;
     int                 m_renegadesCount;
+    int                 m_nbBangsToPlayInTurn;
     BeerRescue*         mp_beerRescue;
     PlayerReaper*       mp_defaultPlayerReaper;
     PlayerReaper*       mp_playerReaper;

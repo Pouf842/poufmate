@@ -32,6 +32,9 @@ class CardShootOut : public HighNoonCard
 
   public slots :
 	void stop();
+
+  protected :
+    int m_iInitialNbBang;
 };
 
 #endif
