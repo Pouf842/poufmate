@@ -5,6 +5,7 @@
 
 CardShootOut::CardShootOut(Game * game, int id) : HighNoonCard(game, id, HIGHNOON_SHOOTOUT)
 {
+    m_iInitialNbBang = mp_game->getNbBangsToPlayInTurn();
 }
 
 CardShootOut::~CardShootOut()
@@ -17,10 +18,7 @@ void CardShootOut::play()
 			this, SLOT(stop()));
 
 	QList<Player*> players = mp_game->playerList();
-
-	foreach(Player * player, players)
-		if(!player->hasUnlimitedBangs())
-			player->setBangsToPlayInTurn(2);
+    mp_game->setNbBangsToPlayInTurn(m_iInitialNbBang + 1);
 }
 
 void CardShootOut::stop()
@@ -29,8 +27,5 @@ void CardShootOut::stop()
 			this, SLOT(stop()));
 
 	QList<Player*> players = mp_game->playerList();
-
-	foreach(Player * player, players)
-		if(!player->hasUnlimitedBangs())
-			player->setBangsToPlayInTurn(1);
+    mp_game->setNbBangsToPlayInTurn(m_iInitialNbBang);
 }

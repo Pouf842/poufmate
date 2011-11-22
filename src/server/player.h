@@ -106,7 +106,8 @@ public:
     inline bool                 hasController()    const { return mp_gameEventListener != 0; }
     inline GameEventListener*   gameEventListener()const { return mp_gameEventListener; }
     inline int                  bangPower()        const { return m_bangPower;         }
-	inline bool					hasUnlimitedBangs()const { return m_nbBangsToPlayInTurn == 0x7FFFFFFF; }
+    inline bool                 hasUnlimitedBangs()const { return m_bUnlimitedBangs;   }
+	//inline bool					hasUnlimitedBangs()const { return m_nbBangsToPlayInTurn == 0x7FFFFFFF; }
     inline PublicPlayerView&    publicView()       const { return m_publicPlayerView;  }
     inline PrivatePlayerView&   privateView()      const { return m_privatePlayerView; }
     bool                        isAI()             const;
@@ -177,7 +178,7 @@ public:
     void modifyDistanceOut(int delta);
     void modifyUnlimitedBangs(bool bUnlimitedBangs);
     void setBangPower(int bangPower);
-	void setBangsToPlayInTurn(int nbBangsToPlay);
+	//void setBangsToPlayInTurn(int nbBangsToPlay);
     void setWeaponRange(int weaponRange);
     void setAlive(bool isAlive);
     void setWinner(bool isWinner);
@@ -264,7 +265,8 @@ private:
     int                       m_weaponRange;
     int                       m_distanceIn;
     int                       m_distanceOut;
-	int						  m_nbBangsToPlayInTurn;
+    bool                      m_bUnlimitedBangs;
+	//int						  m_nbBangsToPlayInTurn;
 	int						  m_nbBangsPlayedInTurn;
 
     int                       m_bangPower;

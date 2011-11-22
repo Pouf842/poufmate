@@ -45,8 +45,7 @@ Player::Player(Game* game, int id, const CreatePlayerData& createPlayerData):
         m_weaponRange(1),
         m_distanceIn(0),
         m_distanceOut(0),
-		m_nbBangsToPlayInTurn(1),
-		m_nbBangsPlayedInTurn(0),
+        m_bUnlimitedBangs(false),
         m_bangPower(1),
         m_publicPlayerView(this),
         m_privatePlayerView(this)
@@ -104,7 +103,8 @@ bool Player::hasIdenticalCardOnTable(PlayingCard* card) const
 
 bool Player::canPlayBang() const
 {
-	return (m_nbBangsPlayedInTurn < m_nbBangsToPlayInTurn);
+    return (m_bUnlimitedBangs || (m_nbBangsPlayedInTurn < mp_game->getNbBangsToPlayInTurn()));
+	//return (m_nbBangsPlayedInTurn < m_nbBangsToPlayInTurn);
 }
 
 void Player::modifyLifePoints(int x, Player* causedBy)
@@ -159,7 +159,8 @@ void Player::modifyDistanceOut(int delta)
 
 void Player::modifyUnlimitedBangs(bool bUnlimitedBangs)
 {
-	m_nbBangsToPlayInTurn = (unsigned int) 0x7FFFFFFF;
+    m_bUnlimitedBangs = bUnlimitedBangs;
+	//m_nbBangsToPlayInTurn = (unsigned int) 0x7FFFFFFF;
 }
 
 void Player::setBangPower(int bangPower)
@@ -167,10 +168,10 @@ void Player::setBangPower(int bangPower)
     m_bangPower = bangPower;
 }
 
-void Player::setBangsToPlayInTurn(int nbBangsToPlay)
+/*void Player::setBangsToPlayInTurn(int nbBangsToPlay)
 {
 	m_nbBangsToPlayInTurn = nbBangsToPlay;
-}
+}*/
 
 void Player::setWeaponRange(int weaponRange)
 {
