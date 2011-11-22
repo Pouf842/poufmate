@@ -17,6 +17,8 @@ public:
     CharacterPropertyChange(QObject* parent, Type);
     virtual int maxLifePoints() const;
     virtual void setPlayer(Player* player);
+    virtual void setAbility();
+    virtual void unsetAbility();
 
 private:
     Type m_type;

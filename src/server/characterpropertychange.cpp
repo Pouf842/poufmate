@@ -32,18 +32,41 @@ int CharacterPropertyChange::maxLifePoints() const
 void CharacterPropertyChange::setPlayer(Player* player)
 {
     CharacterBase::setPlayer(player);
+    setAbility();
+}
+
+void CharacterPropertyChange::setAbility()
+{
     switch(m_type) {
     case RoseDoolan:
-        player->modifyDistanceOut(1);
+        mp_player->modifyDistanceOut(1);
         break;
     case PaulRegret:
-        player->modifyDistanceIn(1);
+        mp_player->modifyDistanceIn(1);
         break;
     case WillyTheKid:
-        player->modifyUnlimitedBangs(true);
+        mp_player->modifyUnlimitedBangs(true);
         break;
     case SlabTheKiller:
-        player->setBangPower(2);
+        mp_player->setBangPower(2);
+        break;
+    }
+}
+
+void CharacterPropertyChange::unsetAbility()
+{
+    switch(m_type) {
+    case RoseDoolan:
+        mp_player->modifyDistanceOut(-1);
+        break;
+    case PaulRegret:
+        mp_player->modifyDistanceIn(-1);
+        break;
+    case WillyTheKid:
+        mp_player->modifyUnlimitedBangs(false);
+        break;
+    case SlabTheKiller:
+        mp_player->setBangPower(1);
         break;
     }
 }
