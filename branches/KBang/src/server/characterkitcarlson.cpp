@@ -12,7 +12,7 @@ CharacterKitCarlson::CharacterKitCarlson(QObject *parent):
 
 void CharacterKitCarlson::useAbility()
 {
-    gameCycle().draw(mp_player, 1);
+    gameCycle().draw(mp_player, m_bAbilityEnabled);
 }
 
 

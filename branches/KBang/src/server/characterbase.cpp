@@ -13,7 +13,8 @@
 CharacterBase::CharacterBase(QObject *parent, CharacterType characterType):
         QObject(parent),
         m_characterType(characterType),
-        mp_player(0)
+        mp_player(0),
+        m_bAbilityEnabled(true)
 {
 }
 
@@ -68,6 +69,11 @@ void CharacterBase::checkDeck(PlayingCard* causedBy,
     bool checkResult = (*checkFunc)(checkedCard);
     mp_player->game()->gameEventManager().onPlayerCheckDeck(mp_player, checkedCard, causedBy, checkResult);
     resultHandler->checkResult(checkResult);
+}
+
+void CharacterBase::enableAbility(bool bAbilityEnabled)
+{
+    m_bAbilityEnabled = bAbilityEnabled;
 }
 
 void CharacterBase::useAbility(Player* targetPlayer)

@@ -14,6 +14,9 @@ CharacterSidKetchum::CharacterSidKetchum(QObject *parent):
 
 void CharacterSidKetchum::useAbility(QList<PlayingCard*> cards)
 {
+    if(!m_bAbilityEnabled)
+        throw BadUsageException();
+
     if (cards.size() != 2)
         throw BadCardException();
 

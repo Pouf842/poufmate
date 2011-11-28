@@ -35,6 +35,16 @@ void CharacterPropertyChange::setPlayer(Player* player)
     setAbility();
 }
 
+void CharacterPropertyChange::enableAbility(bool bEnable)
+{
+    m_bAbilityEnabled = bEnable;
+
+    if(m_bAbilityEnabled)
+        setAbility();
+    else
+        unsetAbility();
+}
+
 void CharacterPropertyChange::setAbility()
 {
     switch(m_type) {

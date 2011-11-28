@@ -22,8 +22,10 @@
 
 #include "highnooncard.h"
 #include "actionchecker.h"
+#include <QMap>
 
 class Player;
+class CharacterBase;
 
 class CardHangOver: public HighNoonCard, ActionChecker
 {
