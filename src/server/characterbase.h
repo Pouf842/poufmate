@@ -40,6 +40,8 @@ public:
 
     virtual void checkDeck(PlayingCard* causedBy, bool (*checkFunc)(PlayingCard*), CheckDeckResultHandler*);
 
+    virtual void enableAbility(bool bAbilityEnabled);
+
 protected:
     void setCharacterType(CharacterType type);
     void notifyAbilityUse();
@@ -49,6 +51,7 @@ protected:
 
     CharacterType m_characterType;
     Player*       mp_player;
+    bool          m_bAbilityEnabled;
 
 };
 

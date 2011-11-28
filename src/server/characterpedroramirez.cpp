@@ -13,12 +13,15 @@ CharacterPedroRamirez::CharacterPedroRamirez(QObject *parent):
 
 void CharacterPedroRamirez::useAbility()
 {
-    gameCycle().draw(mp_player, 1);
+    gameCycle().draw(mp_player, m_bAbilityEnabled);
 }
 
 void CharacterPedroRamirez::draw(bool specialDraw)
 {
     if (specialDraw) {
+        if(!m_bAbilityEnabled)
+            throw BadUsageException();
+
         if (gameTable().isEmptyGraveyard())
             throw BadGameStateException(); // @todo: maybe throw different exception
         notifyAbilityUse();

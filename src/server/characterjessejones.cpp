@@ -13,7 +13,7 @@ CharacterJesseJones::CharacterJesseJones(QObject *parent):
 void CharacterJesseJones::useAbility(Player* targetPlayer)
 {
     mp_targetPlayer = targetPlayer;
-    gameCycle().draw(mp_player, 1);
+    gameCycle().draw(mp_player, m_bAbilityEnabled);
 }
 
 void CharacterJesseJones::draw(bool specialDraw)
