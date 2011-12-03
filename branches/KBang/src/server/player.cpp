@@ -254,7 +254,11 @@ void Player::registerPredrawCheck(int priority)
 void Player::unregisterPredrawCheck(int priority)
 {
     m_predrawChecks.removeAll(priority);
-    //m_currentPredraw = 0;
+
+	if(m_predrawChecks.count() == 0)
+		m_currentPredraw = 0;
+	else
+		m_currentPredraw = m_predrawChecks.first();
 }
 
 void Player::predrawCheck(int checkId)
