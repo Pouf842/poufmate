@@ -115,11 +115,11 @@ struct CardFactory::CardFactoryImp
     {
         QList<HighNoonCard*> list;
 
+        list.append(new CardTheDaltons(game, id()));
         list.append(new CardTheDoctor(game, id()));
         list.append(new CardGoldRush(game, id()));
         list.append(new CardShootOut(game, id()));
         list.append(new CardTrainArrival(game, id()));
-        list.append(new CardTheDaltons(game, id()));
         list.append(new CardHangOver(game, id()));
         list.append(new CardTheSermon(game, id()));
         list.append(new CardCurse(game, id()));

@@ -377,6 +377,7 @@ void Game::checkStartable()
 void Game::shufflePlayers()
 {
     shuffleList(m_playerList);
+
     m_publicPlayerList.clear();
     foreach(Player* player, m_playerList) {
         m_publicPlayerList.append(&player->publicView());
