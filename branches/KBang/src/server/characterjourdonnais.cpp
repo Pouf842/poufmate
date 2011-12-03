@@ -11,6 +11,9 @@ CharacterJourdonnais::CharacterJourdonnais(QObject* parent):
 
 void CharacterJourdonnais::useAbility()
 {
+	if(!m_bAbilityEnabled)
+        throw BadCardException();
+
     if (mp_integratedBarrel == 0) {
         mp_integratedBarrel = new CardBarrel(mp_player->game(), 0, SUIT_CLUBS, 2);
         mp_integratedBarrel->setVirtual(mp_player, POCKET_TABLE);

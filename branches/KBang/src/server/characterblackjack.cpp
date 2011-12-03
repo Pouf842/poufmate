@@ -11,12 +11,19 @@ CharacterBlackJack::CharacterBlackJack(QObject* parent):
 
 void CharacterBlackJack::draw(bool)
 {
-    gameTable().playerDrawFromDeck(mp_player, mp_player->game()->iGetNbCardsToDraw() - 1, 0);
-    QList<const PlayingCard*> cards = gameTable().playerDrawFromDeck(mp_player, 1, true);
-    const PlayingCard* card = cards[0];
-    Q_ASSERT(card != 0);
-    if (card->suit() == SUIT_HEARTS || card->suit() == SUIT_DIAMONDS) {
-        notifyAbilityUse();
-        gameTable().playerDrawFromDeck(mp_player, 1, 0);
-    }
+	if(!m_bAbilityEnabled)
+		CharacterBase::draw();
+	else
+	{
+		gameTable().playerDrawFromDeck(mp_player, mp_player->game()->iGetNbCardsToDraw() - 1, 0);
+
+
+		QList<const PlayingCard*> cards = gameTable().playerDrawFromDeck(mp_player, 1, true);
+		const PlayingCard* card = cards[0];
+		Q_ASSERT(card != 0);
+		if (card->suit() == SUIT_HEARTS || card->suit() == SUIT_DIAMONDS) {
+			notifyAbilityUse();
+			gameTable().playerDrawFromDeck(mp_player, 1, 0);
+		}
+	}
 }

@@ -73,6 +73,7 @@ void CharacterPropertyChange::unsetAbility()
         mp_player->modifyDistanceIn(-1);
         break;
     case WillyTheKid:
+		// To-do : what if he has a Volcanic ?
         mp_player->modifyUnlimitedBangs(false);
         break;
     case SlabTheKiller:

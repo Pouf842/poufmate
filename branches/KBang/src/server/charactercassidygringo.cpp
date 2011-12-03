@@ -29,7 +29,10 @@ int CharacterCassidyGringo::maxLifePoints() const
 
 void CharacterCassidyGringo::onHit(int lifePoints, Player* causedBy)
 {
-    if (m_type == BartCassidy) {
+	if(!m_bAbilityEnabled)
+		return;
+
+	if (m_type == BartCassidy) {
         notifyAbilityUse();
         gameTable().playerDrawFromDeck(mp_player, lifePoints, 0);
         return;
