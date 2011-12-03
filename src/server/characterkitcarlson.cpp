@@ -12,6 +12,9 @@ CharacterKitCarlson::CharacterKitCarlson(QObject *parent):
 
 void CharacterKitCarlson::useAbility()
 {
+	if(!m_bAbilityEnabled)
+        throw BadCardException();
+
     gameCycle().draw(mp_player, m_bAbilityEnabled);
 }
 
@@ -19,6 +22,9 @@ void CharacterKitCarlson::useAbility()
 void CharacterKitCarlson::draw(bool specialDraw)
 {
     if (specialDraw) {
+		if(!m_bAbilityEnabled)
+			throw BadCardException();
+
         notifyAbilityUse();
         gameTable().drawIntoSelection(3, mp_player);
         Q_ASSERT(gameTable().selection().size() == 3);

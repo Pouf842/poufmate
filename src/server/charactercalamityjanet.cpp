@@ -20,7 +20,7 @@ void CharacterCalamityJanet::playCard(PlayingCard* card)
         card->play();
     } catch (BadCardException& e) {
         PlayingCard* swapped = swapCards(card);
-        if (swapped) {
+        if (m_bAbilityEnabled && swapped) {
             swapped->play();
             notifyAbilityUse();
         } else {
@@ -35,7 +35,7 @@ void CharacterCalamityJanet::playCard(PlayingCard* card, Player* targetPlayer)
         card->play(targetPlayer);
     } catch (BadUsageException& e) {
         PlayingCard* swapped = swapCards(card);
-        if (swapped) {
+        if (m_bAbilityEnabled && swapped) {
             swapped->play(targetPlayer);
             notifyAbilityUse();
         } else {
@@ -51,7 +51,7 @@ void CharacterCalamityJanet::playCard(PlayingCard* card, PlayingCard* targetCard
         card->play(targetCard);
     } catch (BadCardException& e) {
         PlayingCard* swapped = swapCards(card);
-        if (swapped) {
+        if (m_bAbilityEnabled && swapped) {
             swapped->play(targetCard);
             notifyAbilityUse();
         } else {
@@ -66,7 +66,7 @@ void CharacterCalamityJanet::respondCard(ReactionHandler* reactionHandler, Playi
         reactionHandler->respondCard(targetCard);
     } catch (BadCardException& e) {
         PlayingCard* swapped = swapCards(targetCard);
-        if (swapped) {
+        if (m_bAbilityEnabled && swapped) {
             reactionHandler->respondCard(swapped);
             notifyAbilityUse();
         } else {

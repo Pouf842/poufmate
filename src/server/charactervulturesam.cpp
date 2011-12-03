@@ -23,6 +23,9 @@ void CharacterVultureSam::playerDied()
 
 void CharacterVultureSam::cleanUpCards(Player* corpse)
 {
+	if(!m_bAbilityEnabled)
+		return;
+
     notifyAbilityUse();
     foreach(PlayingCard* card, corpse->hand())
         mp_player->game()->gameTable().playerStealCard(mp_player, card);

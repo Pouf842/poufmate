@@ -18,12 +18,17 @@ void CharacterLuckyDuke::checkDeck(PlayingCard* causedBy,
                                    bool (*checkFunc)(PlayingCard*),
                                    CheckDeckResultHandler* resultHandler)
 {
-    mp_causedBy = causedBy;
-    notifyAbilityUse();
-    gameTable().drawIntoSelection(2);
-    mp_resultHandler = resultHandler;
-    mp_checkFunc = checkFunc;
-    gameCycle().setResponseMode(this, mp_player, 1);
+	if(!m_bAbilityEnabled)
+		CharacterBase::checkDeck()
+	else
+	{
+		mp_causedBy = causedBy;
+		notifyAbilityUse();
+		gameTable().drawIntoSelection(2);
+		mp_resultHandler = resultHandler;
+		mp_checkFunc = checkFunc;
+		gameCycle().setResponseMode(this, mp_player, 1);
+	}
 }
 
 void CharacterLuckyDuke::respondCard(PlayingCard* checkedCard)

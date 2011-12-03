@@ -13,7 +13,10 @@ CharacterPedroRamirez::CharacterPedroRamirez(QObject *parent):
 
 void CharacterPedroRamirez::useAbility()
 {
-    gameCycle().draw(mp_player, m_bAbilityEnabled);
+	if(!m_bAbilityEnabled)
+        throw BadCardException();
+
+    gameCycle().draw(mp_player, true);
 }
 
 void CharacterPedroRamirez::draw(bool specialDraw)

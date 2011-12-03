@@ -80,6 +80,7 @@ void WeaponCard::unregisterPlayer(Player* player)
 {
     player->setWeaponRange(1);
     if (m_range == 1) {
+		// To-do : What if he is Willy the kid ?
         player->modifyUnlimitedBangs(false);
     }
 }
