@@ -193,7 +193,7 @@
           <item row="7" column="0">
            <widget class="QLabel" name="label">
             <property name="text">
-             <string>High Noon extension</string>
+             <string>High Noon extension:</string>
             </property>
            </widget>
           </item>

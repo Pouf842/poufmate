@@ -162,7 +162,7 @@ void Game::setGameContext(const GameContextData& gameContextData)
             message = tr("Feelin' lucky? Pick a card to respond with.");
             break;
         case REACTION_DALTONS :
-            message = tr("The daltons are in town ! Pick a card to discard on your table");
+            message = tr("The daltons are in town ! Pick a card to discard on your table.");
             break;
         case REACTION_NONE:
             NOT_REACHED();
