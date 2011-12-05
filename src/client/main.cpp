@@ -47,12 +47,18 @@ int main(int argc, char *argv[])
 #endif
 
     QApplication app(argc, argv);
+    
+    QTranslator translator;
+    translator.load("kbang_fr.qm");
+    app.installTranslator(&translator);
+
     app.setApplicationName("KBang Client");
     app.setApplicationVersion(QString("%1.%2.%3").arg(KBANG_CLIENT_VERSION_MAJOR).
                                                   arg(KBANG_CLIENT_VERSION_MINOR).
                                                   arg(KBANG_CLIENT_VERSION_REVISION));
     MainWindow mainWindow;
     mainWindow.show();
+
     return app.exec();
 }
 
