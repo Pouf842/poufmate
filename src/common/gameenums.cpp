@@ -290,6 +290,7 @@ GameMessageType stringToGameMessageType(const QString& s) {
     if (s == "player-cancel-card")          return GAMEMESSAGE_PLAYERCANCELCARD;
     if (s == "deck-regenerate")             return GAMEMESSAGE_DECKREGENERATE;
 	if (s == "highnoon-deck-regenerate")	return GAMEMESSAGE_HIGHNOONDECKREGENERATE;
+    if (s == "highnoon-card")               return GAMEMESSAGE_HIGHNOON_CARD;
     if (s == "player-died")                 return GAMEMESSAGE_PLAYERDIED;
     return GAMEMESSAGE_INVALID;
 }
@@ -310,6 +311,7 @@ QString gameMessageTypeToString(const GameMessageType& g) {
     case GAMEMESSAGE_PLAYERCANCELCARD:          return "player-cancel-card";
     case GAMEMESSAGE_DECKREGENERATE:            return "deck-regenerate";
 	case GAMEMESSAGE_HIGHNOONDECKREGENERATE:	return "highnoon-deck-regenerate";
+    case GAMEMESSAGE_HIGHNOON_CARD:             return "highnoon-card";
     case GAMEMESSAGE_PLAYERDIED:                return "player-died";
     case GAMEMESSAGE_INVALID:                   return "";
     }

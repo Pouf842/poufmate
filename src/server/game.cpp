@@ -392,6 +392,7 @@ void Game::setRolesAndCharacters()
     QListIterator<Player*> pIt(m_playerList);
     QListIterator<PlayerRole> rIt(roles);
     QListIterator<CharacterBase*> cIt(characters);
+
     int i = 0;
     m_goodGuysCount = m_outlawsCount = m_renegadesCount = 0;
     while(pIt.hasNext() && rIt.hasNext() && cIt.hasNext())

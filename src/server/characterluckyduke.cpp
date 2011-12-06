@@ -19,7 +19,7 @@ void CharacterLuckyDuke::checkDeck(PlayingCard* causedBy,
                                    CheckDeckResultHandler* resultHandler)
 {
 	if(!m_bAbilityEnabled)
-		CharacterBase::checkDeck()
+		CharacterBase::checkDeck(causedBy, checkFunc, resultHandler);
 	else
 	{
 		mp_causedBy = causedBy;
