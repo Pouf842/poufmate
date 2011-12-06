@@ -824,6 +824,54 @@ void Client::onHighNoonPlayed(HighNoonCardType type)
 {
     if(mp_parser == 0) return;
 
+    GameMessage message;
+    message.type = GAMEMESSAGE_HIGHNOON_CARD;
+
+    switch(type)
+    {
+      case HIGHNOON_BLESSING :
+        message.highNoonCardType = HIGHNOON_BLESSING;
+        break;
+      case HIGHNOON_CURSE :
+        message.highNoonCardType = HIGHNOON_CURSE;
+        break;
+      case HIGHNOON_GHOST_TOWN :
+        message.highNoonCardType = HIGHNOON_GHOST_TOWN;
+        break;
+      case HIGHNOON_GOLD_RUSH :
+        message.highNoonCardType = HIGHNOON_GOLD_RUSH;
+        break;
+      case HIGHNOON_HANGOVER :
+        message.highNoonCardType = HIGHNOON_HANGOVER;
+        break;
+      case HIGHNOON_HIGH_NOON :
+        message.highNoonCardType = HIGHNOON_HIGH_NOON;
+        break;
+      case HIGHNOON_SHOOTOUT :
+        message.highNoonCardType = HIGHNOON_SHOOTOUT;
+        break;
+      case HIGHNOON_THE_DALTONS :
+        message.highNoonCardType = HIGHNOON_THE_DALTONS;
+        break;
+      case HIGHNOON_THE_DOCTOR :
+        message.highNoonCardType = HIGHNOON_THE_DOCTOR;
+        break;
+      case HIGHNOON_THE_REVEREND :
+        message.highNoonCardType = HIGHNOON_THE_REVEREND;
+        break;
+      case HIGHNOON_THE_SERMON :
+        message.highNoonCardType = HIGHNOON_THE_SERMON;
+        break;
+      case HIGHNOON_THIRST :
+        message.highNoonCardType = HIGHNOON_THIRST;
+        break;
+      case HIGHNOON_TRAIN_ARRIVAL :
+        message.highNoonCardType = HIGHNOON_TRAIN_ARRIVAL;
+        break;
+    }
+
+    mp_parser->eventGameMessage(message);
+
     CardMovementData cardMovement;
     cardMovement.pocketTypeFrom = POCKET_HIGHNOON_DECK;
     cardMovement.pocketTypeTo   = POCKET_HIGHNOON_GRAVEYARD;

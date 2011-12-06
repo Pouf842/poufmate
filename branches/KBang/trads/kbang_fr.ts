@@ -760,17 +760,100 @@ p, li { white-space: pre-wrap; }
         <translation>%1 est mort. R.I.P.</translation>
     </message>
     <message>
-        <location filename="../src/client/gamemessageevent.cpp" line="125"/>
+        <location filename="../src/client/gamemessageevent.cpp" line="117"/>
+        <source>Thee shall be blessed as &lt;i&gt;only hearts&lt;/i&gt; thee shall pick.</source>
+        <translation>Bénis soyez-vous, car seul des coeurs, vous piocherez.</translation>
+    </message>
+    <message>
+        <location filename="../src/client/gamemessageevent.cpp" line="120"/>
+        <source>Thee shall be cursed, as &lt;i&gt;only spades&lt;/i&gt; will fall on you.</source>
+        <translation>Maudits soyez-vous, car seul des piques vous recevrez.</translation>
+    </message>
+    <message>
+        <location filename="../src/client/gamemessageevent.cpp" line="123"/>
+        <source>The deads rise from their graves.</source>
+        <translation>Les morts sortent de leurs tombes.</translation>
+    </message>
+    <message>
+        <location filename="../src/client/gamemessageevent.cpp" line="126"/>
+        <source>Gold rush ! &lt;i&gt;The play turn is now counter-clockwise&lt;/i&gt;.</source>
+        <translation>Ruée vers l&apos;or ! Le sens de jeu est inversé.</translation>
+    </message>
+    <message>
+        <location filename="../src/client/gamemessageevent.cpp" line="129"/>
+        <source>
+Every body has a hangover. &lt;i&gt;All special abilities are disabled&lt;/i&gt;.</source>
+        <translation>
+Tout le monde est dans le coma. Les capacités spéciales sont désactivés.</translation>
+    </message>
+    <message>
+        <location filename="../src/client/gamemessageevent.cpp" line="132"/>
+        <source>
+High noon. The sun makes &lt;i&gt;everybody lose one life point at the beginning of their turn&lt;/i&gt;.</source>
+        <translation>
+Soleil de plomb. Le soleil fait &lt;i&gt;perdre à tous le monde un point de vie au début de leur tour&lt;/i&gt;.</translation>
+    </message>
+    <message>
+        <location filename="../src/client/gamemessageevent.cpp" line="135"/>
+        <source>
+Shootout ! It&apos;s crazy out there ! Everybody can shoot a &lt;i&gt;additional bang&lt;/i&gt; !</source>
+        <translation>
+Fusillade ! C&apos;est la folie, la dehors ! Tout le monde peut tirer &lt;i&gt;un bang supplémentaire&lt;/i&gt; !</translation>
+    </message>
+    <message>
+        <location filename="../src/client/gamemessageevent.cpp" line="138"/>
+        <source>
+The Daltons are in towns. They&apos;ll &lt;i&gt;rob a blue card&lt;/i&gt; on everybody&apos;s table.</source>
+        <translation>
+Les Daltons sont en ville. Ils &lt;i&gt;voleront une carte bleue&lt;/i&gt; à chaque joueur.</translation>
+    </message>
+    <message>
+        <location filename="../src/client/gamemessageevent.cpp" line="141"/>
+        <source>
+The doctor is here to &lt;i&gt;heal the weakests&lt;/i&gt; of you.</source>
+        <translation>
+Le docteur est là pour &lt;i&gt;soigner les plus faibles&lt;/i&gt; d&apos;entre vous.</translation>
+    </message>
+    <message>
+        <location filename="../src/client/gamemessageevent.cpp" line="144"/>
+        <source>
+Thee shall not consume the drink of the devil. As &lt;i&gt;beer&lt;/i&gt; is corrupting men.</source>
+        <translation>
+Tu ne consumeras point de la boisson du diable. Car la &lt;i&gt;bière&lt;/i&gt; corromp les hommes.</translation>
+    </message>
+    <message>
+        <location filename="../src/client/gamemessageevent.cpp" line="147"/>
+        <source>
+Thee shall not shoot. &lt;i&gt;Bangs&lt;/i&gt; are not allowed by our mighty lord.</source>
+        <translation>
+Tu ne tireras pas. Les &lt;i&gt;Bangs&lt;/i&gt; ne sont pas autorisés par notre seigneur tout puissant.</translation>
+    </message>
+    <message>
+        <location filename="../src/client/gamemessageevent.cpp" line="150"/>
+        <source>
+The thirst is striking everybody down. Everyone will &lt;i&gt;pick only one card at the beginning of their turn&lt;/i&gt;.</source>
+        <translation>
+La soif vous terrasse. Tout le monde ne piochera &lt;i&gt;qu&apos;une seule carte en début de tour&lt;/i&gt;.</translation>
+    </message>
+    <message>
+        <location filename="../src/client/gamemessageevent.cpp" line="153"/>
+        <source>
+A fresh train arrival ! Everybody can &lt;i&gt;pick up three cards at the beginning of their turn&lt;/i&gt;.</source>
+        <translation>
+Un arrivage tout frais est arrivé ! Tout le monde peut &lt;i&gt;piocher une carte supplémentair en début de tour&lt;/i&gt;.</translation>
+    </message>
+    <message>
+        <location filename="../src/client/gamemessageevent.cpp" line="170"/>
         <source>&lt;i&gt;unknown card&lt;/i&gt;</source>
         <translation>&lt;i&gt;Carte cachée&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="../src/client/gamemessageevent.cpp" line="152"/>
+        <location filename="../src/client/gamemessageevent.cpp" line="197"/>
         <source>%1, %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/client/gamemessageevent.cpp" line="154"/>
+        <location filename="../src/client/gamemessageevent.cpp" line="199"/>
         <source>%1 and %2</source>
         <translation>%1 et %2</translation>
     </message>

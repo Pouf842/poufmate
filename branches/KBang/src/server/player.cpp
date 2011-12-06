@@ -258,7 +258,7 @@ void Player::unregisterPredrawCheck(int priority)
 	if(m_predrawChecks.count() == 0)
 		m_currentPredraw = 0;
 	else
-		m_currentPredraw = m_predrawChecks.first();
+		m_currentPredraw = m_predrawChecks.last();
 }
 
 void Player::predrawCheck(int checkId)

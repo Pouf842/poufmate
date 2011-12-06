@@ -424,11 +424,13 @@ void GameSyncData::write(QXmlStreamWriter* writer) const
 void GameMessage::read(XmlNode* node)
 {
     Q_ASSERT(node->name() == elementName);
-    type            = stringToGameMessageType(node->attribute("type"));
-    player          = node->attribute("player").toInt();
-    targetPlayer    = node->attribute("targetPlayer").toInt();
-    causedBy        = node->attribute("causedBy").toInt();
-    checkResult     = node->attribute("checkResult") == "true";
+    type             = stringToGameMessageType(node->attribute("type"));
+    player           = node->attribute("player").toInt();
+    targetPlayer     = node->attribute("targetPlayer").toInt();
+    causedBy         = node->attribute("causedBy").toInt();
+    checkResult      = node->attribute("checkResult") == "true";
+    highNoonCardType = stringToHighNoonCardType(node->attribute("highNoonCardType"));
+
     cards.clear();
     foreach(XmlNode* child, node->getChildren()) {
         if (child->name() == "card")
@@ -457,6 +459,8 @@ void GameMessage::write(QXmlStreamWriter* writer) const
         writer->writeAttribute("causedBy", QString::number(causedBy));
     if (type == GAMEMESSAGE_PLAYERCHECKDECK)
         writer->writeAttribute("checkResult", checkResult ? "true" : "false");
+    if(type == GAMEMESSAGE_HIGHNOON_CARD)
+        writer->writeAttribute("highNoonCardType", highNoonCardTypeToString(highNoonCardType));
     if (card.id) {
         card.write(writer);
     }

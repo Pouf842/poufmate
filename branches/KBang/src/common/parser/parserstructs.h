@@ -170,6 +170,7 @@ struct GameMessage {
     int causedBy;
     CardData card;
     CardData targetCard;
+    HighNoonCardType highNoonCardType;
     QList<CardData> cards;
     bool checkResult;
     void read(XmlNode*);

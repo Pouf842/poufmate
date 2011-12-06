@@ -12,7 +12,7 @@ CharacterBlackJack::CharacterBlackJack(QObject* parent):
 void CharacterBlackJack::draw(bool)
 {
 	if(!m_bAbilityEnabled)
-		CharacterBase::draw();
+		CharacterBase::draw(false);
 	else
 	{
 		gameTable().playerDrawFromDeck(mp_player, mp_player->game()->iGetNbCardsToDraw() - 1, 0);

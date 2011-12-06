@@ -110,6 +110,51 @@ void GameMessageEvent::run()
         msg = tr("%1 passed away. R.I.P.").
                     arg(decoratePlayerName(playerName));
         break;
+    case GAMEMESSAGE_HIGHNOON_CARD :
+        switch(m_gameMessage.highNoonCardType)
+        {
+          case HIGHNOON_BLESSING :
+            msg = tr("Thee shall be blessed as <i>only hearts</i> thee shall pick.");
+            break;
+          case HIGHNOON_CURSE :
+            msg = tr("Thee shall be cursed, as <i>only spades</i> will fall on you.");
+            break;
+          case HIGHNOON_GHOST_TOWN :
+            msg = tr("The deads rise from their graves.");
+            break;
+          case HIGHNOON_GOLD_RUSH :
+            msg = tr("Gold rush ! <i>The play turn is now counter-clockwise</i>.");
+            break;
+          case HIGHNOON_HANGOVER :
+            msg = tr("\nEvery body has a hangover. <i>All special abilities are disabled</i>.");
+            break;
+          case HIGHNOON_HIGH_NOON :
+            msg = tr("\nHigh noon. The sun makes <i>everybody lose one life point at the beginning of their turn</i>.");
+            break;
+          case HIGHNOON_SHOOTOUT :
+            msg = tr("\nShootout ! It's crazy out there ! Everybody can shoot a <i>additional bang</i> !");
+            break;
+          case HIGHNOON_THE_DALTONS :
+            msg = tr("\nThe Daltons are in towns. They'll <i>rob a blue card</i> on everybody's table.");
+            break;
+          case HIGHNOON_THE_DOCTOR :
+            msg = tr("\nThe doctor is here to <i>heal the weakests</i> of you.");
+            break;
+          case HIGHNOON_THE_REVEREND :
+            msg = tr("\nThee shall not consume the drink of the devil. As <i>beer</i> is corrupting men.");
+            break;
+          case HIGHNOON_THE_SERMON :
+            msg = tr("\nThee shall not shoot. <i>Bangs</i> are not allowed by our mighty lord.");
+            break;
+          case HIGHNOON_THIRST :
+            msg = tr("\nThe thirst is striking everybody down. Everyone will <i>pick only one card at the beginning of their turn</i>.");
+            break;
+          case HIGHNOON_TRAIN_ARRIVAL :
+            msg = tr("\nA fresh train arrival ! Everybody can <i>pick up three cards at the beginning of their turn</i>.");
+            break;
+          case HIGHNOON_INVALID :
+            break;
+        }
     case GAMEMESSAGE_INVALID:
         break;
     }

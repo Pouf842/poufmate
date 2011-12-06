@@ -2,6 +2,7 @@
 #include "cardbarrel.h"
 #include "player.h"
 #include "gamecycle.h"
+#include "gameexceptions.h"
 
 CharacterJourdonnais::CharacterJourdonnais(QObject* parent):
         CharacterBase(parent, CHARACTER_JOURDONNAIS),
@@ -12,7 +13,7 @@ CharacterJourdonnais::CharacterJourdonnais(QObject* parent):
 void CharacterJourdonnais::useAbility()
 {
 	if(!m_bAbilityEnabled)
-        throw BadCardException();
+        throw BadUsageException();
 
     if (mp_integratedBarrel == 0) {
         mp_integratedBarrel = new CardBarrel(mp_player->game(), 0, SUIT_CLUBS, 2);
