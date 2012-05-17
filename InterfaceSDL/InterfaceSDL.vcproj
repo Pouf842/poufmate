@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)SDK Poufmate interface&quot;"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)SDK Poufmate interface&quot; ; &quot;$(SDLDIR)include&quot;"
 				PreprocessorDefinitions="__INTERFACEDLL_"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -60,7 +60,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="SDL.lib SDL_ttf.lib InterfaceSDK.lib"
-				AdditionalLibraryDirectories="&quot;$(SolutionDir)SDK Poufmate interface&quot;"
+				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;;&quot;$(SDLDIR)lib&quot;"
+				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>

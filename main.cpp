@@ -12,7 +12,7 @@ int main(int argc, char * argv[])
 {
 	try
 	{
-        HINSTANCE hInterfaceDLLHandle = LoadLibrary("InterfaceIrrlicht.dll");
+        HINSTANCE hInterfaceDLLHandle = LoadLibrary("InterfaceSDL.dll");
         bool bInterfaceSDL = true;
 
         pfpoGetInterface poGetInterfaceInstance = (pfpoGetInterface) GetProcAddress(hInterfaceDLLHandle, "poGetInstance");
@@ -96,9 +96,7 @@ int main(int argc, char * argv[])
 					string strCmdReturn = "";
 
 					while((strCmdReturn = poChoosenModule->Run()) == "r")
-					{
 						poChoosenModule->Initialize();
-					}
 
 					delete poChoosenModule;
 					poChoosenModule = NULL;

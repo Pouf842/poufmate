@@ -449,7 +449,7 @@ int InterfaceSDL::iGetMenuEntry(const std::vector<std::string> & oMenu)
 			}
 		}
 		else if(event.type == SDL_QUIT)
-			return 4;
+			return 6;
 	}
 
 	return 1;
