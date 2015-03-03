@@ -40,11 +40,12 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="D:\Outils\Irrlicht\include"
+				AdditionalIncludeDirectories="P:\Developpement\Irrlicht\include"
+				PreprocessorDefinitions="__DEBUG_"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				WarningLevel="3"
+				WarningLevel="1"
 				DebugInformationFormat="4"
 			/>
 			<Tool
@@ -61,7 +62,7 @@
 				AdditionalDependencies="Irrlicht.lib"
 				OutputFile="$(ProjectDir)..\bin\$(ProjectName).exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="D:\Outils\Irrlicht\lib\Win32-visualStudio"
+				AdditionalLibraryDirectories="P:\Developpement\Irrlicht\lib\Win32-visualStudio"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)\$(TargetName).pdb"
 				SubSystem="1"
@@ -174,6 +175,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\Game.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\main.cpp"
 				>
 			</File>
@@ -189,6 +194,10 @@
 			>
 			<File
 				RelativePath="..\src\Controller.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Game.h"
 				>
 			</File>
 			<File
