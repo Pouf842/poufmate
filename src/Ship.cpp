@@ -86,8 +86,14 @@ void Ship::updateShipPosition()
 
 		matrix4 mShipOrientation;
 		mShipOrientation.setRotationDegrees(mpoShip->getRotation());
+		
+		if(vThrottle.getLength() != 0)
+			cout << "vThrottle1 : " << vThrottle << endl;
 		mShipOrientation.transformVect(vThrottle);
 		mvSpeed += vThrottle * fElapsedSecs;
+
+		if(vThrottle.getLength() != 0)
+			cout << "vThrottle2 : " << vThrottle << endl;
 	}
 	else
 	{
@@ -104,7 +110,21 @@ void Ship::updateShipPosition()
 	}
 
 	if(mvSpeed.getLength() > MAX_SPEED)
-		mvSpeed = mvSpeed.normalize() * MAX_SPEED;
+		mvSpeed.setLength(MAX_SPEED);
+	if(mvSpeed.X > MAX_SPEED)
+		mvSpeed.X = MAX_SPEED;
+	else if(mvSpeed.X < -MAX_SPEED)
+		mvSpeed.X = -MAX_SPEED;
+
+	if(mvSpeed.Y > MAX_SPEED)
+		mvSpeed.Y = MAX_SPEED;
+	else if(mvSpeed.Y < -MAX_SPEED)
+		mvSpeed.Y = -MAX_SPEED;
+
+	if(mvSpeed.Z > MAX_SPEED)
+		mvSpeed.Z = MAX_SPEED;
+	else if(mvSpeed.Z < -MAX_SPEED)
+		mvSpeed.Z = -MAX_SPEED;
 
 	mpoShip->setPosition(mpoShip->getPosition() + mvSpeed * fElapsedSecs);
 }
@@ -113,22 +133,22 @@ void Ship::updateShipRotation()
 {
 	vector3df vRotation(0, 0, 0);
 
-	/*EKEY_CODE sKeysPositive[3] = {KEY_KEY_I, KEY_KEY_L, KEY_KEY_U};
-	EKEY_CODE sKeysNegative[3] = {KEY_KEY_K, KEY_KEY_J, KEY_KEY_O};
+	/**/EKEY_CODE sKeysPositive[3] = {KEY_KEY_I, KEY_KEY_L, KEY_KEY_O};
+	EKEY_CODE sKeysNegative[3] = {KEY_KEY_K, KEY_KEY_J, KEY_KEY_U};
 	f32 * sRotationAxe[3] = {&vRotation.X, &vRotation.Y, &vRotation.Z};
 
 	for(u32 i = 0; i < 3; ++i)
 	{
-		if(bIsKeyDown(sKeysPositive[i]))
+		if(mpoController->bIsKeyDown(sKeysPositive[i]))
 			*sRotationAxe[i] = ROTATION_SPEED;
-		else if(bIsKeyDown(sKeysNegative[i]))
+		else if(mpoController->bIsKeyDown(sKeysNegative[i]))
 			*sRotationAxe[i] = -ROTATION_SPEED;
 
 		if(*sRotationAxe[i] > 360)
 			*sRotationAxe[i] -= 360;
 		else if(*sRotationAxe[i] < -360)
 			*sRotationAxe[i] += 360;
-	}*/
+	}/*/
 
 	f32 * sRotationAxe[4]  = {&vRotation.Z, &vRotation.X, NULL, &vRotation.Y};
 
@@ -139,7 +159,7 @@ void Ship::updateShipRotation()
 			if(oJoystickState.Axis[i] > 6000
 			||  oJoystickState.Axis[i] < -6000)
 				*sRotationAxe[i] = ((float) oJoystickState.Axis[i]) / 32727 * 360;
-
+	/**/
 	vRotation.X = -vRotation.X;
 	vRotation.Z = -vRotation.Z;
 
