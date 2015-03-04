@@ -10,7 +10,7 @@
  * @see class Module
  */
 
-#include "game.h"
+#include "Modules/game.h"
 
 class TwoPlayersGame : public Game
 {

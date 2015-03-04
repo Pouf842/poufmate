@@ -1,8 +1,8 @@
 #ifndef __ONE_PLAYER_GAME_H_
 #define __ONE_PLAYER_GAME_H_
 
-#include "game.h"
-#include "interface.h"
+#include "Modules/game.h"
+#include "Interface/interface.h"
 
 class OnePlayerGame : public Game
 {
@@ -21,13 +21,13 @@ class OnePlayerGame : public Game
 	/**
 	 * Note the current situation (moBoard) for the specified player
 	 */
-	int HeuristicValue(Piece::Color);
+	int HeuristicValue(Piece::PIECE_COLOR);
 
 	/**
 	 * Generate a list of all possible movements for the specified player
 	 * in the current situation (moBoard)
 	 */
-	std::vector<Movement*> GenerateMovementsForPlayer(Piece::Color eColor);
+	std::vector<Movement*> GenerateMovementsForPlayer(Piece::PIECE_COLOR eColor);
 
   public :
     /**

@@ -173,6 +173,10 @@
 				Name="Modules"
 				>
 				<File
+					RelativePath="..\..\src\Poufmate\Modules\one_player_game.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\Poufmate\Modules\two_players_game.cpp"
 					>
 				</File>
@@ -181,6 +185,14 @@
 		<Filter
 			Name="Fichier en-tête"
 			>
+			<File
+				RelativePath="..\..\src\Poufmate\Modules\one_player_game.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\Poufmate\Modules\two_players_game.h"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath="..\..\src\Poufmate\main.cpp"
