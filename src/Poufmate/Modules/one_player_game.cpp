@@ -1,8 +1,8 @@
 #include "one_player_game.h"
-#include "board.h"
-#include "piece.h"
-#include "include_movements.h"
-#include "interface.h"
+#include "Core/board.h"
+#include "Pieces/piece.h"
+#include "Movements/include_movements.h"
+#include "Interface/interface.h"
 #include <time.h>
 
 using namespace std;
@@ -19,15 +19,15 @@ OnePlayerGame::~OnePlayerGame()
 {
 }
 
-std::string OnePlayerGame::Run()
+Entry::ENTRY_COMMAND OnePlayerGame::Run()
 {
 	if(!mpoInterface)
 		throw exception("The interface is not defined");
 
-	Piece::Color ePlayerColor = Piece::WHITE;
+	Piece::PIECE_COLOR ePlayerColor = Piece::PC_WHITE;
 
 	if(mpoInterface->cGetPlayerColorChoice() != 'W')
-		ePlayerColor = Piece::BLACK;
+		ePlayerColor = Piece::PC_BLACK;
 
 	Movement * poNextMove = NULL;
 
@@ -37,7 +37,7 @@ std::string OnePlayerGame::Run()
 		{
 			if(meCurrentPlayer == ePlayerColor)
 			{
-				GameEntry oEntry = mpoInterface->oGetGameEntry(*this);	// Getting the next command
+				Entry oEntry = mpoInterface->oGetEntry();	// Getting the next command
 			
 				if(oEntry.bIsCommand())			// Do nothing
 				{

@@ -1,8 +1,9 @@
-#include "Core\board.h"
-#include "Pieces\piece.h"
-#include "Interface\interface.h"
-#include "Modules\two_players_game.h"
-#include "Movements\include_movements.h"
+#include "two_players_game.h"
+
+#include "Core/board.h"
+#include "Pieces/piece.h"
+#include "Interface/interface.h"
+#include "Movements/include_movements.h"
 #include <string>
 
 using namespace std;
@@ -39,7 +40,7 @@ Entry::ENTRY_COMMAND TwoPlayersGame::Run()
 
 				if(eCommand == Entry::EC_NONE);			// Do nothing
 				else if(eCommand == Entry::EC_STOP_GAME)
-					mbIsOver = true;		// Stop the game
+					return eCommand;
 				/* Cancel last move */
 				else if(eCommand == Entry::EC_CANCEL_MOVE)
 				{

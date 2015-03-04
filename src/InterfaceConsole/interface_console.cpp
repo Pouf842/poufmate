@@ -1,6 +1,6 @@
 #include "interface_console.h"
-#include "game.h"
-#include "board.h"
+#include "Modules/game.h"
+#include "Core/board.h"
 
 using namespace std;
 
