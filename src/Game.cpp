@@ -65,7 +65,7 @@ void Game::CreateWorld()
 	poCubeNode->setRotation(vector3df(90, 0, 0));
 	poCubeNode->setScale(vector3df(10000, 10000, 10000));
 
-	poCubeNode->setMaterialFlag(EMF_LIGHTING, false);
+	poCubeNode->setMaterialFlag(EMF_LIGHTING, true);
 
 	poCubeNode->setMaterialTexture(0, mpoVideoDriver->getTexture("media/rockwall.jpg"));
 	poCubeNode->getMaterial(0).getTextureMatrix(0).setTextureScale(10, 10);
@@ -74,11 +74,12 @@ void Game::CreateWorld()
 	IMesh * poShipNodeMesh = mpoSceneManager->getGeometryCreator()->createSphereMesh(10, 32, 32);
 	mpoSceneManager->getMeshManipulator()->flipSurfaces(poShipNodeMesh);
 
-	IMeshSceneNode * mpoShipNode = mpoSceneManager->addOctreeSceneNode(poShipNodeMesh);
+	//IMeshSceneNode * mpoShipNode = mpoSceneManager->addOctreeSceneNode(poShipNodeMesh);
+	ISceneNode * mpoShipNode = mpoSceneManager->addEmptySceneNode();
 	mpoShipNode->setPosition(vector3df(0, 0, 0));
 	mpoShipNode->setMaterialFlag(EMF_LIGHTING, false);
 	mpoShipNode->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
-	mpoShipNode->setMaterialTexture(0, mpoVideoDriver->getTexture("media/earth.jpg"));
+	//mpoShipNode->setMaterialTexture(0, mpoVideoDriver->getTexture("media/earth.jpg"));
 
 	ICameraSceneNode * poCamera = mpoSceneManager->addCameraSceneNode(/**/mpoShipNode/*/NULL/**/);
 	poCamera->bindTargetAndRotation(false);
@@ -94,13 +95,30 @@ void Game::CreateWorld()
 
 	ISceneNode * poEarth = mpoSceneManager->addSphereSceneNode(50, 64);
 	poEarth->getMaterial(0).setTexture(0, mpoVideoDriver->getTexture("media/earth.jpg"));
-	poEarth->setMaterialFlag(EMF_LIGHTING, false);
+	poEarth->setMaterialFlag(EMF_LIGHTING, true);
 
 	ISceneNodeAnimator * poEarthAnimator = mpoSceneManager->createFlyCircleAnimator(vector3df(0, 0, 0), 100, 2 * PI / 10000);
 	poEarth->addAnimator(poEarthAnimator);
 
 	ISceneNodeAnimator * poEarthAnimator2 = mpoSceneManager->createRotationAnimator(vector3df(0, ((f32) 360) / 1000, 0));
 	poEarth->addAnimator(poEarthAnimator2);
+
+	/** Tests pièce de Jérôme **/
+	ILightSceneNode * poLight = mpoSceneManager->addLightSceneNode(NULL, vector3df(-50, 50, 0));
+	IBillboardSceneNode * poBillBoard = mpoSceneManager->addBillboardSceneNode(poLight, dimension2d<f32>(50, 50));
+	poBillBoard->setMaterialFlag(EMF_LIGHTING, false);
+	poBillBoard->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
+	ITexture * poLightTexture = mpoVideoDriver->getTexture("media/particlewhite.bmp");
+	poBillBoard->setMaterialTexture(0, poLightTexture);
+
+	IMesh * poMesh = mpoSceneManager->getMesh("media/pawn.3ds");
+	//mpoSceneManager->getMeshManipulator()->flipSurfaces(poMesh);
+	IMeshSceneNode * poPiece = mpoSceneManager->addMeshSceneNode(poMesh);
+	//poPiece->setMaterialTexture(0, poLightTexture);
+	poPiece->setMaterialFlag(EMF_LIGHTING, true);
+	//poPiece->setMaterialFlag(video::EMF_NORMALIZE_NORMALS, true);
+	//poPiece->setScale(vector3df(100, 100, 100));
+	poPiece->setPosition(vector3df(0, -50, 100));
 }
 
 void Game::run()

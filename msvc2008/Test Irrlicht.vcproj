@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="P:\Developpement\Irrlicht\include"
+				AdditionalIncludeDirectories=""
 				PreprocessorDefinitions="__DEBUG_"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,7 +62,7 @@
 				AdditionalDependencies="Irrlicht.lib"
 				OutputFile="$(ProjectDir)..\bin\$(ProjectName).exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="P:\Developpement\Irrlicht\lib\Win32-visualStudio"
+				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)\$(TargetName).pdb"
 				SubSystem="1"
