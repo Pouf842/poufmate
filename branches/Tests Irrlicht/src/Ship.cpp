@@ -87,13 +87,8 @@ void Ship::updateShipPosition()
 		matrix4 mShipOrientation;
 		mShipOrientation.setRotationDegrees(mpoShip->getRotation());
 		
-		if(vThrottle.getLength() != 0)
-			cout << "vThrottle1 : " << vThrottle << endl;
 		mShipOrientation.transformVect(vThrottle);
 		mvSpeed += vThrottle * fElapsedSecs;
-
-		if(vThrottle.getLength() != 0)
-			cout << "vThrottle2 : " << vThrottle << endl;
 	}
 	else
 	{
