@@ -14,26 +14,32 @@ using namespace std;
 
 typedef Interface * (*pfpoGetInterface)();
 
+vector<string> strInterfaceDLLs;
+
 int main(int argc, char * argv[])
 {
 	try
 	{
-        HINSTANCE hInterfaceDLLHandle = LoadLibrary("InterfaceConsole.dll");
+		strInterfaceDLLs.push_back("InterfaceConsole.dll");
+		strInterfaceDLLs.push_back("InterfaceSDL.dll");
+		strInterfaceDLLs.push_back("InterfaceIrrlicht.dll");
+		vector<string>::iterator iCurrentIDLL = strInterfaceDLLs.begin();
+
+		HINSTANCE hIConsoleDLLHandle = LoadLibrary(iCurrentIDLL->c_str());
 
         DWORD error = GetLastError();
 
 		if(error)
 			throw exception("Erreur : Impossible de charger l'interface console InterfaceConsole.dll");
 
-		pfpoGetInterface poGetInterfaceInstance = (pfpoGetInterface) GetProcAddress(hInterfaceDLLHandle, "poGetInterface");
+		pfpoGetInterface poGetIInstance = (pfpoGetInterface) GetProcAddress(hIConsoleDLLHandle, "poGetInterface");
 
         error = GetLastError();
 
 		if(error)
 			throw exception("Erreur : La fonction "GET_INTERFACE_FUNCTION" n'a pas été trouvée");
-        bool bInterfaceSDL = false;
 
-        Interface * poInterface = poGetInterfaceInstance();
+        Interface * poInterface = poGetIInstance();
 
 		vector<string> oMenu;
 		oMenu.push_back("1.One player game (human VS computer)");
@@ -68,21 +74,27 @@ int main(int argc, char * argv[])
 						break;
 					  /*case 4 :
 						poChoosenModule = new LanGame;
-						break;
+						break;*/
                       case 5 :
                         delete poInterface;
-                        FreeLibrary(hInterfaceDLLHandle);
+                        FreeLibrary(hIConsoleDLLHandle);
 
-                        if(bInterfaceSDL)
-                            hInterfaceDLLHandle = LoadLibrary("InterfaceConsole.dll");
-                        else
-                            hInterfaceDLLHandle = LoadLibrary("InterfaceSDL.dll");
+                        hIConsoleDLLHandle = NULL;
 
-                        poGetInterfaceInstance = (pfpoGetInterface) GetProcAddress(hInterfaceDLLHandle, "poGetInstance");
-                        poInterface = poGetInterfaceInstance();
+						while(!hIConsoleDLLHandle)
+						{
+							++iCurrentIDLL;
 
-                        bInterfaceSDL = !bInterfaceSDL;
-                        break;*/
+							if(iCurrentIDLL == strInterfaceDLLs.end())
+								iCurrentIDLL = strInterfaceDLLs.begin();
+
+							hIConsoleDLLHandle = LoadLibrary(iCurrentIDLL->c_str());
+						}
+
+                        poGetIInstance = (pfpoGetInterface) GetProcAddress(hIConsoleDLLHandle, "poGetInterface");
+                        poInterface = poGetIInstance();
+
+                        break;
 					  case 6 :
 						bQuit = true;
 						break;
@@ -115,7 +127,7 @@ int main(int argc, char * argv[])
 
         delete poInterface;
 
-        FreeLibrary(hInterfaceDLLHandle);
+        FreeLibrary(hIConsoleDLLHandle);
 	}
 	catch(exception & e)
 	{
