@@ -14,6 +14,9 @@
 
 class InterfaceConsole : public Interface
 {
+protected :
+	unsigned int muLastPercent;
+
 	/**
 	 * Implemented Interface::methods
 	 */
@@ -22,9 +25,11 @@ class InterfaceConsole : public Interface
 	virtual Entry oGetEntry();
 	virtual std::string strGetIPEntry();
 	virtual std::string strGetPortEntry();
-	virtual Piece::PIECE_TYPE cGetNewPieceType(const Piece::PIECE_COLOR);
-	virtual Piece::PIECE_COLOR cGetPlayerColorChoice();
+	virtual Piece::PIECE_TYPE eGetNewPieceType(const Piece::PIECE_COLOR);
+	virtual Piece::PIECE_COLOR eGetPlayerColorChoice();
 	virtual Entry::ENTRY_COMMAND GameOver(std::string strMessage);
+	virtual void SetBusy();
+	virtual void SetProgress(unsigned int);
 	virtual ~InterfaceConsole();
 
 	/**
@@ -33,8 +38,11 @@ class InterfaceConsole : public Interface
 	std::string strGetEntry();
 	void DisplayModule(const Module * oModule);
 	void DisplayBoard(const Board & oBoard);
-	void DisplayCurrentPlayer(Piece::PIECE_COLOR eCurrentPlayer);
+	void DisplayCurrentPlayer();
+	void DisplayPlayerInCheck();
+	void DisplayEditionSelection();
 	void DisplayHelp();
+	Entry eGetSelectionPieceEntry(std::string);
 };
 
 #endif

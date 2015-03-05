@@ -8,11 +8,11 @@
 
 using namespace std;
 
-TwoPlayersGame::TwoPlayersGame(Interface * poInterface) : Game(poInterface, Module::MT_TWO_PLAYER_GAME)
+TwoPlayersGame::TwoPlayersGame(Interface * poInterface) : Game(poInterface, Module::MT_GAME)
 {
 }
 
-TwoPlayersGame::TwoPlayersGame(const Board & oBoard, Interface * poInterface) : Game(oBoard, poInterface)
+TwoPlayersGame::TwoPlayersGame(const Board & oBoard, Interface * poInterface) : Game(oBoard, poInterface, Module::MT_GAME)
 {
 }
 
@@ -27,6 +27,8 @@ Entry::ENTRY_COMMAND TwoPlayersGame::Run()
 
 	Movement * poNextMove = NULL;	// The next move
 
+	Entry::ENTRY_COMMAND eCommand;
+
 	while(!bIsOver())
 	{
 		try
@@ -36,16 +38,19 @@ Entry::ENTRY_COMMAND TwoPlayersGame::Run()
 			
 			if(oEntry.bIsCommand())
 			{
-				Entry::ENTRY_COMMAND eCommand = oEntry.eGetCommand();
+				eCommand = oEntry.eGetCommand();
 
 				if(eCommand == Entry::EC_NONE);			// Do nothing
-				else if(eCommand == Entry::EC_STOP_GAME)
-					return eCommand;
 				/* Cancel last move */
 				else if(eCommand == Entry::EC_CANCEL_MOVE)
 				{
-					CancelLastMove();
-					SwitchPlayer();
+					if(mpoSelectedPosition)
+						mpoSelectedPosition = NULL;
+					else
+					{
+						CancelLastMove();
+						SwitchPlayer();
+					}
 				}
 				else
 					return eCommand;
@@ -53,6 +58,9 @@ Entry::ENTRY_COMMAND TwoPlayersGame::Run()
 			/*Move the piece or execute a command*/
 			else
 			{
+				if(oEntry.bIsPiece())
+					throw exception("Invalid entry type : piece");
+
 				if(!poGetSelectedPosition())
 				{
 					Position oPos(oEntry.oGetPos());
@@ -85,10 +93,7 @@ Entry::ENTRY_COMMAND TwoPlayersGame::Run()
 							poNextMove = new CastlingMove(oPos1, oPos2);
 						}
 						else if(bIsPromotion(oPos1, oPos2))	// Promotion
-						{
-							char cNewPieceType = mpoInterface->cGetNewPieceType(meCurrentPlayer);
-							poNextMove = new Promotion(oPos1, oPos2, cNewPieceType);
-						}
+							poNextMove = new Promotion(oPos1, oPos2, mpoInterface->eGetNewPieceType(meCurrentPlayer));
 						else if(moBoard.poGetPiece(oPos1)->bIsFirstMove())	// First move
 							poNextMove = new FirstMove(oPos1, oPos2);
 						else if(bIsEnPassantOk(oPos1, oPos2))
@@ -121,10 +126,9 @@ Entry::ENTRY_COMMAND TwoPlayersGame::Run()
 							mbIsOver = true;
 						}
 						else if(bIsInCheck(meCurrentPlayer))	// Display the current player as in check
-						{
 							(meCurrentPlayer == Piece::PC_WHITE ? mbIsWhiteInCheck : mbIsBlackInCheck) = true;
-							mbIsOver = true;
-						}
+
+						RefreshCheckBooleans();
 					}
 				}
 			}
@@ -132,10 +136,9 @@ Entry::ENTRY_COMMAND TwoPlayersGame::Run()
 		catch(exception & e)
 		{
 			mpoInterface->DisplayMessage(e.what());	// Display the error message
+			mpoSelectedPosition = NULL;
 		}
 	}
-
-	Entry::ENTRY_COMMAND eCommand;
 
 	if(mbIsBlackCheckMate || mbIsWhiteCheckMate)
 	{
@@ -145,9 +148,6 @@ Entry::ENTRY_COMMAND TwoPlayersGame::Run()
 	}
 	else if(mbIsStaleMate)
 		eCommand = mpoInterface->GameOver("It's a stale !");
-
-	if(eCommand == Entry::EC_CANCEL_MOVE)
-		eCommand = Entry::EC_RESET_GAME;
 
 	return eCommand;
 }

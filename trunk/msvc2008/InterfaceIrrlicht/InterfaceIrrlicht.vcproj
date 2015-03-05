@@ -17,7 +17,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="$(ProjectDir)$(ConfigurationName)\"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="2"
@@ -40,12 +40,12 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;P:\Developpement\irrlicht-1.7.2\include&quot;;&quot;P:\Developpement\CEGUI-SDK-0.7.5-vc9\cegui\include&quot;;&quot;$(SolutionDir)SDK Poufmate interface&quot;"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)..\Release\SDK Interfaces&quot;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				WarningLevel="3"
-				DebugInformationFormat="4"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -58,9 +58,13 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="Irrlicht.lib CEGUIBase_d.lib CEGUIIrrlichtRenderer_d.lib InterfaceSDK.lib"
-				AdditionalLibraryDirectories="&quot;$(SolutionDir)SDK Poufmate interface&quot;;&quot;P:\Developpement\irrlicht-1.7.2\lib\Win32-visualStudio&quot;;&quot;P:\Developpement\CEGUI-SDK-0.7.5-vc9\lib&quot;"
+				AdditionalDependencies="&quot;$(SolutionDir)..\Release\SDK Interfaces\Core.lib&quot;"
+				OutputFile="$(SolutionDir)..\bin\$(ProjectName).dll"
+				LinkIncremental="1"
+				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
+				ProgramDatabaseFile="$(OutDir)$(TargetName).pdb"
+				ImportLibrary="$(OutDir)$(TargetName).lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -164,12 +168,20 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath="..\..\src\InterfaceIrrlicht\interface_Irrlicht.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Fichiers d&apos;en-tête"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath="..\..\src\InterfaceIrrlicht\interface_Irrlicht.h"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

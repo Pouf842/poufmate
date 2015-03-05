@@ -1,5 +1,6 @@
 #include "interface_console.h"
 #include "Modules/game.h"
+#include "Modules/game_edition.h"
 #include "Core/board.h"
 
 using namespace std;
@@ -37,9 +38,28 @@ void InterfaceConsole::DisplayMessage(const std::string strMessage)
 	cout << strMessage << endl;
 }
 
-void InterfaceConsole::DisplayCurrentPlayer(Piece::PIECE_COLOR eCurrentPlayer)
+void InterfaceConsole::DisplayCurrentPlayer()
 {
-	cout << (eCurrentPlayer == Piece::PC_WHITE ? "White":"Black") << " player" << endl;
+	if(mpoModule->eGetType() != Module::MT_GAME)
+		throw exception("Cannot display in check player in a non-game module");
+
+	Piece::PIECE_COLOR eCurrentPlayer = ((Game*) mpoModule)->eGetCurrentPlayer();
+
+	cout << (eCurrentPlayer == Piece::PC_WHITE ? "White" : "Black") << " player" << endl;
+}
+
+void InterfaceConsole::DisplayPlayerInCheck()
+{
+	if(mpoModule->eGetType() != Module::MT_GAME)
+		throw exception("Cannot display in check player in a non-game module");
+
+	bool bIsWhiteInCheck = ((Game*) mpoModule)->bIsPlayerInCheck(Piece::PC_WHITE);
+	bool bIsBlackInCheck = ((Game*) mpoModule)->bIsPlayerInCheck(Piece::PC_BLACK);
+
+	if(bIsWhiteInCheck)
+		cout << "White player in check" << endl;
+	else if(bIsBlackInCheck)
+		cout << "Black player in check" << endl;
 }
 
 void InterfaceConsole::DisplayBoard(const Board & oBoard)
@@ -63,9 +83,9 @@ void InterfaceConsole::DisplayBoard(const Board & oBoard)
 			char cPieceChar = ' ';	// Empty square (default value)
 
 			/* Check the piece type */
-			if(!(oBoard.bIsSquareEmpty)(oPos))
+			if(!oBoard.bIsSquareEmpty(oPos))
 			{
-                switch((oBoard.eGetSquareType)(oPos))
+                switch(oBoard.eGetSquareType(oPos))
 				{
 				  case Piece::PT_ROOK :
 					cPieceChar = 'R';
@@ -88,7 +108,7 @@ void InterfaceConsole::DisplayBoard(const Board & oBoard)
 				}
 
 				/* Black pieces are in lower case */
-                if((oBoard.eGetSquareColor)(oPos) == Piece::PC_BLACK)
+                if(oBoard.eGetSquareColor(oPos) == Piece::PC_BLACK)
 					cPieceChar = tolower(cPieceChar);
 			}
 
@@ -135,9 +155,13 @@ void InterfaceConsole::DisplayModule(const Module * oModule)
 
 		DisplayBoard(oModule->oGetBoard());
 
-		if(oModule->eGetType() == Module::MT_ONE_PLAYER_GAME
-		|| oModule->eGetType() == Module::MT_TWO_PLAYER_GAME)
-			DisplayCurrentPlayer(((Game*)oModule)->eGetCurrentPlayer());
+		if(oModule->eGetType() == Module::MT_GAME)
+		{
+			DisplayCurrentPlayer();
+			DisplayPlayerInCheck();
+		}
+		else if(oModule->eGetType() == Module::MT_EDITION)
+			DisplayEditionSelection();
 	}
 	catch(exception & e)
 	{
@@ -158,34 +182,48 @@ Entry InterfaceConsole::oGetEntry()
 {
 	DisplayModule(mpoModule);
 
-	string strEntry;
-
 	while(1)
 	{
 		try
 		{
-			string strFirstSelection = strGetEntry();
+			string strEntry = strGetEntry();
 
-			if(strFirstSelection == "c")
-				return Entry(Entry::EC_CANCEL_MOVE);
-			else if(strFirstSelection == "r")
-				return Entry(Entry::EC_RESET_GAME);
-			else if(strFirstSelection == "x")
-				return Entry(Entry::EC_STOP_GAME);
-			else if(strFirstSelection == "q")
-				return Entry(Entry::EC_QUIT_GAME);
-			else if(strFirstSelection == "h")
+			if(strEntry == "h")
+			{
 				DisplayHelp();
+				return Entry::EC_NONE;
+			}
+
+			if(strEntry[0] == 'P'
+			|| strEntry[0] == 'p')
+				return eGetSelectionPieceEntry(strEntry);
 			else
 			{
-				string strPosition = strFirstSelection;
+				if(strEntry == "c")
+					return Entry(Entry::EC_CANCEL_MOVE);
+				else if(strEntry == "r")
+					return Entry(Entry::EC_RESET_GAME);
+				else if(strEntry == "x")
+					return Entry(Entry::EC_STOP_GAME);
+				else if(strEntry == "q")
+					return Entry(Entry::EC_QUIT_GAME);
+				else if(strEntry == "1")
+					return Entry(Entry::EC_ONE_PLAYER_GAME);
+				else if(strEntry == "2")
+					return Entry(Entry::EC_TWO_PLAYERS_GAME);
+				else if(strEntry == "h")
+					DisplayHelp();
+				else
+				{
+					string strPosition = strEntry;
 
-				if(strPosition[0] >= 'a' && strPosition[0] <= 'h')
-					strPosition[0] = strPosition[0] + 'A' - 'a';
+					if(strPosition[0] >= 'a' && strPosition[0] <= 'h')
+						strPosition[0] = strPosition[0] + 'A' - 'a';
 
-				strPosition[0] = strPosition[0] - 'A' + '0';	// Conversion of alpha A-H to digit 1-8
+					strPosition[0] = strPosition[0] - 'A' + '0';	// Conversion of alpha A-H to digit 1-8
 
-				return Entry(strPosition);
+					return Entry(strPosition);
+				}
 			}
 		}
 		catch(exception & e)
@@ -207,14 +245,61 @@ std::string InterfaceConsole::strGetPortEntry()
 	return "";
 }
 
-Piece::PIECE_TYPE InterfaceConsole::cGetNewPieceType(const Piece::PIECE_COLOR)
+Piece::PIECE_TYPE InterfaceConsole::eGetNewPieceType(const Piece::PIECE_COLOR)
 {
-	return Piece::PT_KING;
+	cout << "Please choose a new piece type" << endl;
+
+	char cChoice = ' ';
+	string strChoices = "RKBQrkbq";
+
+	while(strChoices.find(cChoice) == -1)
+	{
+		cout << "Enter :" << endl;
+		cout << "\t'R' for Rook" << endl;
+		cout << "\t'K' for Knight" << endl;
+		cout << "\t'B' for Bishop" << endl;
+		cout << "\t'Q' for Queen" << endl;
+		cin >> cChoice;
+	}
+
+	switch(cChoice)
+	{
+	  case 'R':
+	  case 'r':
+		return Piece::PT_ROOK;
+		break;
+	  case 'K':
+	  case 'k':
+		return Piece::PT_KNIGHT;
+		break;
+	  case 'B':
+	  case 'b':
+		return Piece::PT_BISHOP;
+		break;
+	  case 'Q':
+	  case 'q':
+		return Piece::PT_QUEEN;
+		break;
+	  default:
+		throw exception("Unknow choice of piece type");
+		break;
+	}
 }
 
-Piece::PIECE_COLOR InterfaceConsole::cGetPlayerColorChoice()
+Piece::PIECE_COLOR InterfaceConsole::eGetPlayerColorChoice()
 {
-	return Piece::PC_WHITE;
+	cout << "Which color would you like to play ? " << endl;
+
+	char cChoice = ' ';
+
+	while(cChoice != 'b'
+	   && cChoice != 'w')
+	{
+		cout << "Enter 'b' for black, or 'w' for white" << endl;
+		cin >> cChoice;
+	}
+
+	return (cChoice == 'w' ? Piece::PC_WHITE : Piece::PC_BLACK);
 }
 
 InterfaceConsole::~InterfaceConsole()
@@ -252,360 +337,168 @@ Entry::ENTRY_COMMAND InterfaceConsole::GameOver(std::string strMessage)
 	return Entry::EC_NONE;
 }
 
+void InterfaceConsole::DisplayEditionSelection()
+{
+	if(mpoModule->eGetType() != Module::MT_EDITION)
+		throw exception("Cannot display piece types in any other mode than edition");
+
+	Piece::PIECE_TYPE ePieceType;
+
+	ostringstream strPieces("");
+	ostringstream strSelection("");
+
+	for(unsigned int i = 0; i < 6; ++i)
+	{
+		switch(i)
+		{
+		  case 0 :
+			strPieces << "R ";
+			ePieceType = Piece::PT_ROOK;
+			break;
+		  case 1 :
+			strPieces << "N ";
+			ePieceType = Piece::PT_KNIGHT;
+			break;
+		  case 2 :
+			strPieces << "B ";
+			ePieceType = Piece::PT_BISHOP;
+			break;
+		  case 3 :
+			strPieces << "Q ";
+			ePieceType = Piece::PT_QUEEN;
+			break;
+		  case 4 :
+			strPieces << "K ";
+			ePieceType = Piece::PT_KING;
+			break;
+		  case 5 :
+			strPieces << "P ";
+			ePieceType = Piece::PT_PAWN;
+			break;
+		}
+
+		if(ePieceType == mpoModule->eGetSelectedPieceType())
+			strSelection << (mpoModule->eGetSelectedPieceColor() == Piece::PC_WHITE ? "W" : "B") << " ";
+		else
+			strSelection << "  ";
+	}
+
+	cout << strPieces.str() << endl;
+	cout << strSelection.str() << endl;
+}
+
 void InterfaceConsole::DisplayHelp()
 {
-	cout << "Commandes :" << endl;
-	cout << "h : Afficher cette aide" << endl;
-	cout << "c : Annuler un coup" << endl;
-	cout << "r : Recommencer une partie" << endl;
-	cout << "x : Quitter la partie" << endl;
-	cout << "q : Quitter le jeu" << endl;
-}
-/*
-InterfaceConsole::InterfaceConsole() : meNewPieceType(Piece::NONE), meNewPieceColor(Piece::PC_WHITE)
-{
-}
-
-InterfaceConsole::~InterfaceConsole()
-{
-}
-
-Entry InterfaceConsole::oGetEntry(Game & oGame)
-{
-	DisplayGame(oGame);
-	
-	if(oGame.bIsOver())
+	if(mpoModule->eGetType() == Module::MT_EDITION)
 	{
-		Entry oEntry(strGetEntry());
-
-		while(!oEntry.bIsCommand())
-		{
-			DisplayMessage("Press x to exit.");
-			oEntry = strGetEntry();
-		}
+		cout << "Edition commands :" << endl;
+		cout << "\tTo choose a piece, enter \"PCT\", where 'P' is 'P', 'C' is a color between 'B' and 'W', and 'T' is a type between :" << endl;
+		cout << "\t\t'R' for rook" << endl;
+		cout << "\t\t'N' for knight" << endl;
+		cout << "\t\t'B' for bishop" << endl;
+		cout << "\t\t'Q' for queen" << endl;
+		cout << "\t\t'K' for king" << endl;
+		cout << "\t\t'P' for pawn" << endl;
+		cout << "\tTo choose a position to place the selected piece, enter the position's coordinates directly" << endl;
 	}
-
-	bool bSelectionOk = false;
-	string strFirstSelection;
-	string strSecondSelection;
-
-	while(!bSelectionOk)
+	else
 	{
-		try
-		{
-			strFirstSelection = strGetEntry();
-
-			if(strFirstSelection == "x"
-			|| strFirstSelection == "c"
-			|| strFirstSelection == "r"
-			|| strFirstSelection == "q")
-				return Entry(strFirstSelection);
-
-			oGame.CheckSelectionCoords(strFirstSelection);
-
-			strSecondSelection = strGetEntry();
-
-			if(strSecondSelection == "x"
-			|| strSecondSelection == "c"
-			|| strSecondSelection == "r"
-			|| strSecondSelection == "q")
-				return Entry(strSecondSelection);
-
-			bSelectionOk = true;
-		}
-		catch(exception & e)
-		{
-			DisplayMessage(e.what());
-		}
+		cout << "Game commands :" << endl;
+		cout << "\th : Display this help" << endl;
+		cout << "\tc : Cancel last move or selection" << endl;
+		cout << "\tr : Restart the current game session" << endl;
+		cout << "\tx : Quit the current game session" << endl;
+		cout << "\tq : Quit the game" << endl;
 	}
-
-	return Entry(strFirstSelection, strSecondSelection);
 }
 
-EditionEntry InterfaceConsole::oGetEditionEntry(const GameEdition & oGameEdition)
+void InterfaceConsole::SetBusy()
 {
-	static bool bAlreadyEntered = false;
+	DisplayModule(mpoModule);
 
-    DisplayBoard(oGameEdition.oGetBoard)());
+	cout << "Computer thinking. Wait for your turn." << endl;
+	cout << "|                    |" << endl;
+	cout << " " << flush;
 
-	if(!bAlreadyEntered)
-		DisplayEditionCommands();
+	muLastPercent = 0;
+}
 
-	bAlreadyEntered = true;
-	while(1)
+void InterfaceConsole::SetProgress(unsigned int uPercent)
+{
+	if(uPercent < 0 || uPercent > 100)
+		throw exception("Error : Percentage must be between 0 and 100");
+
+	if(uPercent / 5 > muLastPercent)
 	{
-		DisplaySelectedPiece();
-		string strEntry = strGetEntry();
+		cout << "*" << flush;
+		muLastPercent++;
+	}
+}
 
-		if(bIsPieceSelection(strEntry))
-		{
-			switch(toupper(strEntry[0]))
-			{
-			  case 'R' :
-				meNewPieceType = Piece::ROOK;
-				break;
-			  case 'N' :
-				meNewPieceType = Piece::KNIGHT;
-				break;
-			  case 'B' :
-				meNewPieceType = Piece::BISHOP;
-				break;
-			  case 'Q' :
-				meNewPieceType = Piece::QUEEN;
-				break;
-			  case 'K' :
-				meNewPieceType = Piece::KING;
-				break;
-			  case 'P' :
-				meNewPieceType = Piece::PAWN;
-				break;
-				break;
-			  case '*' :
-				meNewPieceType = Piece::NONE;
-				break;
-			  default :
-				DisplayMessage("Unknown piece type");
-				break;
-			}
+Entry InterfaceConsole::eGetSelectionPieceEntry(string strEntry)
+{
+	if(strEntry.length() < 0)
+		throw exception("Malformated entry");
 
-			if(toupper(strEntry[0]) == strEntry[0])
-				meNewPieceColor = Piece::PC_WHITE;
-			else
-				meNewPieceColor = Piece::PC_BLACK;
-		}
-		else if(bIsCoordinates(strEntry))
-			return EditionEntry(strEntry, meNewPieceType, meNewPieceColor);
-		else if(bIsCommand(strEntry))
-			if(strEntry[0] == 'h')
-				DisplayEditionCommands();
-			else
-			{
-				bAlreadyEntered = false;
-				return EditionEntry(strEntry);
-			}
+	if(strEntry.length() == 1)
+		if(strEntry[0] != 'P'
+		&& strEntry[0] != 'p')
+			throw exception("Malformated entry");
 		else
-		{
-			DisplayMessage("Invalid command");
-			DisplayEditionCommands();
-		}
-	}
-}
+			return Entry(Piece::PT_NONE, Piece::PC_WHITE);
 
-void InterfaceConsole::DisplaySelectedPiece()
-{
-	cout << "Selected piece : ";
-	if(meNewPieceType == Piece::NONE)
+	if(strEntry.length() == 2)
+		strEntry = string("P") + strEntry;
+
+	if(strEntry[0] != 'P'
+	&& strEntry[1] != 'p')
+		throw exception("Malformated entry");
+
+	Piece::PIECE_COLOR eColor;
+	Piece::PIECE_TYPE eType;
+
+	switch(strEntry[1])
 	{
-		cout << "Empty square" << endl;
-		return;
-	}
-
-	string strSelected = (meNewPieceColor == Piece::PC_WHITE ? "White " : "Black ");
-
-	switch(meNewPieceType)
-	{
-	  case Piece::ROOK :
-		strSelected += "rook";
+	  case 'B' :
+	  case 'b' :
+		eColor = Piece::PC_BLACK;
 		break;
-	  case Piece::KNIGHT :
-		strSelected += "knight";
-		break;
-	  case Piece::BISHOP :
-		strSelected += "bishop";
-		break;
-	  case Piece::QUEEN :
-		strSelected += "queen";
-		break;
-	  case Piece::KING :
-		strSelected += "king";
-		break;
-	  case Piece::PAWN :
-		strSelected += "pawn";
+	  case 'W' :
+	  case 'w' :
+		eColor = Piece::PC_WHITE;
 		break;
 	  default :
-	    string strSelected = "Unknown piece type";
+		throw exception("Unknow specified color");
 		break;
 	}
 
-	cout << strSelected << endl;
-}
-
-bool InterfaceConsole::bIsCommand(string strEntry)
-{
-	return (strEntry.size() == 1 && (string("xX12").find(strEntry[0]) != -1));
-}
-
-bool InterfaceConsole::bIsCoordinates(string strEntry)
-{
-	if(strEntry.size() != 2
-	|| !isdigit(strEntry[0])
-	|| !isdigit(strEntry[1]))
-		return false;
-
-	return true;
-}
-
-bool InterfaceConsole::bIsPieceSelection(string strEntry)
-{
-	return (strEntry.size() == 1 && (string("RNBQKPrnbqkp*").find(strEntry[0]) != -1));
-}
-
-void InterfaceConsole::DisplayEditionCommands()
-{
-	cout << "Commands : " << endl;
-	cout << "\tR/r : White/Black rook" << endl;
-	cout << "\tN/n : White/Black knight" << endl;
-	cout << "\tB/b : White/Black bishop" << endl;
-	cout << "\tQ/q : White/Black queen" << endl;
-	cout << "\tK/k : White/Black king" << endl;
-	cout << "\tP/p : White/Black pawn" << endl;
-	cout << "\t* : Empty square" << endl;
-	cout << "\tXY : coordinates to place the selected piece" << endl;
-	cout << "\tx : Exit" << endl;
-	cout << "\t1 : Play game in one player mode" << endl;
-	cout << "\t2 : Play game in two player mode" << endl;
-	cout << "\th : Display this help" << endl;
-}
-
-std::string InterfaceConsole::strGetIPEntry()
-{
-	cout << "Server IP : " << flush;
-
-	string strIP;
-	bool bIPOk = false;
-
-	while(!bIPOk)
+	switch(strEntry[2])
 	{
-		cin >> strIP;
-
-		try
-		{
-			if(strIP.size() < 7
-			|| strIP.size() > 15)
-				throw exception("Invalid IP format");
-			
-			unsigned int iDigitCount = 0;
-			for(unsigned int i = 0; i < strIP.size(); ++i)
-			{
-				if(!isdigit(strIP[i]) && strIP[i] != '.')
-					throw exception("Invalid IP format");
-
-				if(strIP[i] == '.')
-				{
-					if(iDigitCount == 0 || iDigitCount > 3)
-						throw exception("Invalid IP format");
-					else
-						iDigitCount = 0;
-				}
-				else
-					++iDigitCount;
-			}
-
-			if(iDigitCount > 3)
-				throw exception("Invalid IP format");
-
-			bIPOk = true;
-		}
-		catch(exception & e)
-		{
-			cout << endl;
-			DisplayMessage(e.what());
-		}
+	  case 'R' :
+	  case 'r' :
+		eType = Piece::PT_ROOK;
+		break;
+	  case 'N' :
+	  case 'n' :
+		eType = Piece::PT_KNIGHT;
+		break;
+	  case 'B' :
+	  case 'b' :
+		eType = Piece::PT_BISHOP;
+		break;
+	  case 'Q' :
+	  case 'q' :
+		eType = Piece::PT_QUEEN;
+		break;
+	  case 'K' :
+	  case 'k' :
+		eType = Piece::PT_KING;
+		break;
+	  case 'P' :
+	  case 'p' :
+		eType = Piece::PT_PAWN;
+		break;
 	}
 
-	return strIP;
+	return Entry(eType, eColor);
 }
-
-void InterfaceConsole::Pause()
-{
-	string strEmpty;
-	cin >> strEmpty;
-}
-
-std::string InterfaceConsole::strGetPortEntry()
-{
-	cout << "Port number : " << flush;
-
-	string strPort;
-	int iPort;
-
-	cin >> strPort;
-	iPort = atoi(strPort.c_str());
-	while(!iPort || iPort > 65535 || iPort < 1)
-	{
-		DisplayMessage("Invalid port");
-		cin >> strPort;
-	}
-
-	return strPort;
-}
-
-void InterfaceConsole::AddMessage(string strMessage)
-{
-	DisplayMessage(strMessage);
-}
-
-void InterfaceConsole::DisplayMessage(string strMessage)
-{
-	cout << strMessage << endl;
-}
-
-string InterfaceConsole::strGetEntry()
-{
-	string strCommand;
-	cin >> strCommand;
-
-	return strCommand;
-}
-
-void InterfaceConsole::DisplayPossibilities(vector<Position> oPossibilities)
-{
-	cout << "Possibilities : " << endl;
-
-	for(unsigned int i = 0; i < oPossibilities.size(); ++i)
-		cout << "\t" << oPossibilities[i].mX << oPossibilities[i].mY << endl;
-
-	cout << endl;
-}
-
-char InterfaceConsole::cGetNewPieceType(Piece::PIECE_COLOR)
-{
-	char cNewType = ' ';
-
-	// While the user didn't enter a valid entry
-	while(1)
-	{
-		cout << "Enter the type of the new piece : " << endl;
-		cout << "\tR = Rook" << endl;
-		cout << "\tN = Knight" << endl;
-		cout << "\tB = Bishop" << endl;
-		cout << "\tQ = Queen" << endl;
-
-		cin >> cNewType;
-
-		if(string("RNBQrnbq").find(toupper(cNewType) != string::npos))
-			return toupper(cNewType);
-
-		cout << "Invalid entry" << endl;
-	}
-}
-
-char InterfaceConsole::cGetPlayerColorChoice()
-{
-	cout << "Which color would you like to play ?" << endl;
-	cout << "\tW : White" << endl;
-	cout << "\tB : Black" << endl;
-
-	char cColor = ' ';
-	cin >> cColor;
-
-	/* While the user doesn't entry W or B * /
-	while(cColor != 'W' && cColor != 'B')
-	{
-		cout << "Your answer has to be W (White) or B (Black)" << endl;
-		cin >> cColor;
-	}
-
-	return cColor;
-}
-*/

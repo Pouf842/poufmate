@@ -14,8 +14,10 @@
 
 class GameEdition : public Module
 {
+	Board moBoard;						/// Board
+	Piece::PIECE_TYPE meSelectedPieceType;
+	Piece::PIECE_COLOR meSelectedPieceColor;
 	Position moKingAlreadyThere[2];		/// The position of kings
-	bool CanPutAKing(const Position & oPos) const;
 
   public :
 	/**
@@ -33,6 +35,8 @@ class GameEdition : public Module
 	 * Run the edition mode
 	 */
 	virtual Entry::ENTRY_COMMAND Run();
+	Piece::PIECE_TYPE eGetSelectedPieceType();
+	Piece::PIECE_COLOR eGetSelectedPieceColor();
 	void Initialize();
 };
 

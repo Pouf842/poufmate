@@ -194,10 +194,6 @@
 				Name="Interface"
 				>
 				<File
-					RelativePath="..\..\src\Core\Interface\edition_entry.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\Core\Interface\entry.h"
 					>
 				</File>

@@ -89,6 +89,13 @@ class Game : public Module
 	 */
 	virtual void MovePiece(Position oPos1, Position oPos2);
 	virtual void Initialize();
+	
+	/**
+	 * Set the selected position
+	 */
+	void SetSelectedPosition(Position);
+
+	void RefreshCheckBooleans();
 
   public :
 
@@ -102,7 +109,7 @@ class Game : public Module
 	 * Throw exception if there is more or less
 	 * than 1 king for each player
 	 */
-	Game(const Board &, Interface * poInterface = NULL);
+	Game(const Board &, Interface * poInterface = NULL, Module::MODULE_TYPE = Module::MT_NONE);
 
 	/**
 	 * Check if the given position is a valid selection. Throw an exception otherwise
@@ -128,9 +135,11 @@ class Game : public Module
 	bool bIsPlayerInCheck(Piece::PIECE_COLOR) const;
     bool bIsPlayerCheckMate(Piece::PIECE_COLOR) const;
 	bool bIsStaleMate() const;
-
+	
+	/**
+	 * Get the previously selected position
+	 */
 	Position * poGetSelectedPosition() const;
-	void SetSelectedPosition(Position);
 };
 
 #endif

@@ -21,5 +21,15 @@ Module::MODULE_TYPE Module::eGetType() const
 
 bool Module::bIsGame() const
 {
-	return (meType == Module::MT_ONE_PLAYER_GAME || meType == Module::MT_TWO_PLAYER_GAME);
+	return (meType == Module::MT_GAME);
+}
+
+Piece::PIECE_TYPE Module::eGetSelectedPieceType() const
+{
+	return meSelectedPieceType;
+}
+
+Piece::PIECE_COLOR Module::eGetSelectedPieceColor() const
+{
+	return meSelectedPieceColor;
 }
