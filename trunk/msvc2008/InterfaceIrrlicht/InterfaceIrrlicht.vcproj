@@ -58,7 +58,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="&quot;$(SolutionDir)..\Release\SDK Interfaces\Core.lib&quot;"
+				AdditionalDependencies="&quot;$(SolutionDir)..\Release\SDK Interfaces\Core.lib&quot; &quot;irrlicht.lib&quot;"
 				OutputFile="$(SolutionDir)..\bin\$(ProjectName).dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories=""
