@@ -5,7 +5,9 @@
 #include "Interface\interface.h"
 #include "Modules\module.h"
 
-#include "Modules\two_players_game.h"
+#include "Modules/one_player_game.h"
+#include "Modules/two_players_game.h"
+#include "Modules/game_edition.h"
 //#include "Modules\include_modules.h"
 
 using namespace std;
@@ -55,16 +57,16 @@ int main(int argc, char * argv[])
 
 					switch(iMenuEntry)
 					{
-					  /*case 1 :
+					  case 1 :
 						poChoosenModule = new OnePlayerGame;
-						break;*/
+						break;
 					  case 2 :
 						poChoosenModule = new TwoPlayersGame;
 						break;
-					  /*case 3 :
+					  case 3 :
 						poChoosenModule = new GameEdition;
 						break;
-					  case 4 :
+					  /*case 4 :
 						poChoosenModule = new LanGame;
 						break;
                       case 5 :

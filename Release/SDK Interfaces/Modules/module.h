@@ -19,14 +19,15 @@ class Module
 	enum MODULE_TYPE
 	{
 		MT_NONE=0,
-		MT_ONE_PLAYER_GAME,
-		MT_TWO_PLAYER_GAME,
+		MT_GAME,
 		MT_EDITION,
 	};
   protected :
 	Board moBoard;					// The board of the game
 	MODULE_TYPE meType;
 	Interface * mpoInterface;
+	Piece::PIECE_TYPE meSelectedPieceType; // (usefull only for edition)
+	Piece::PIECE_COLOR meSelectedPieceColor; // (usefull only for edition)
   public :
 
     /**
@@ -44,6 +45,8 @@ class Module
 	virtual Board & oGetBoard() const;
 	virtual MODULE_TYPE eGetType() const;
 	virtual bool bIsGame() const;
+	Piece::PIECE_TYPE eGetSelectedPieceType() const;
+	Piece::PIECE_COLOR eGetSelectedPieceColor() const;
 };
 
 #endif

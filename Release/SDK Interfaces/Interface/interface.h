@@ -60,18 +60,32 @@ public :
 	/**
 	 * Return a type of piece (for pawn promotion)
 	 */
-	virtual Piece::PIECE_TYPE cGetNewPieceType(const Piece::PIECE_COLOR) = 0;
+	virtual Piece::PIECE_TYPE eGetNewPieceType(const Piece::PIECE_COLOR) = 0;
 	
 	/**
 	 * Returns a piece color
 	 */
-	virtual Piece::PIECE_COLOR cGetPlayerColorChoice() = 0;
+	virtual Piece::PIECE_COLOR eGetPlayerColorChoice() = 0;
 
 	/**
 	 * Game is over ! Act consequently, please,
 	 * and return a command, but EC_CANCEL_MOVE
 	 */
 	virtual Entry::ENTRY_COMMAND GameOver(std::string strMessage) = 0;
+
+	/**
+	 * Set the interface in a busy state
+	 * The interface should make the player know that
+	 * the game is working, and that he should wait
+	 * until it's finished.
+	 */
+	virtual void SetBusy() = 0;
+
+	/**
+	 * Set the progress of the computer work
+	 * Not mandatory to a new percent value
+	 */
+	virtual void SetProgress(unsigned int) {}
 
 	virtual ~Interface() {};
 };

@@ -29,32 +29,6 @@ Promotion::Promotion(Position oPos1, Position oPos2, Piece::PIECE_TYPE eNewPiece
 	}	
 }
 
-Promotion::Promotion(Position oPos1, Position oPos2, char cType) : Movement(oPos1, oPos2)
-{
-	switch(cType)
-	{
-	  case 'R' :
-	  case 'r' :
-		mpoNewPiece = new Rook(eGetPlayerColor());
-		break;
-	  case 'N' :
-	  case 'n' :
-		mpoNewPiece = new Knight(eGetPlayerColor());
-		break;
-	  case 'B' :
-	  case 'b' :
-		mpoNewPiece = new Bishop(eGetPlayerColor());
-		break;
-	  case 'Q' :
-	  case 'q' :
-		mpoNewPiece = new Queen(eGetPlayerColor());
-		break;
-	  default :
-		throw exception((string("Unknown type of piece") + cType).c_str());
-		break;
-	}	
-}
-
 void Promotion::CancelMovement()
 {
 	Movement::CancelMovement();

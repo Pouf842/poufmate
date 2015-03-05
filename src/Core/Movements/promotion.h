@@ -26,20 +26,6 @@ class Promotion : public Movement
 	Promotion(Position, Position, Piece::PIECE_TYPE);
 
 	/**
-	 * Constructor. Same as that of Movement, but takes a char
-	 * representing the type of the new piece
-	 * and create it to replace the pawn.
-	 * The char can be one of the following :
-	 * 'R' or 'r' for a rook
-	 * 'N' or 'n' for a knight
-	 * 'B' or 'b' for a bishop
-	 * 'Q' or 'q' for a queen
-	 * Note that in case of a pawn type, no new piece
-	 * is created
-	 */
-	Promotion(Position oPos1, Position oPos2, char cType);
-
-	/**
 	 * Overload of Movement::CancelMovement(Board &)
 	 * Same as Movement::CancelMovement(Board &),
 	 * but also delete the replacement piece (moNewPiece)

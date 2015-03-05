@@ -1,9 +1,10 @@
 #include "game.h"
+#include <sstream>
 #include "Movements\include_movements.h"
 
 using namespace std;
 
-Game::Game(Interface * poInterface, Module::MODULE_TYPE eType)
+Game::Game(Interface * poInterface, Module::MODULE_TYPE eType) : mpoSelectedPosition(NULL)
 {
 	meType = eType;
 	SetInterface(poInterface);
@@ -33,10 +34,11 @@ void Game::Initialize()
 	Movement::SetBoard(&moBoard);	// Set the board for movements (@see Movement::spoBoard)
 }
 
-Game::Game(const Board & oBoard, Interface * poInterface)
+Game::Game(const Board & oBoard, Interface * poInterface, Module::MODULE_TYPE eType) : mpoSelectedPosition(NULL)
 {
 	SetInterface(poInterface);
 
+	meType = eType;
 	moBoard = oBoard;
 
 	Position oWhiteKing;
@@ -45,6 +47,8 @@ Game::Game(const Board & oBoard, Interface * poInterface)
 	/* Searching for the two kings to initialize moKings */
 	bool bWhiteFounded = false;
 	bool bBlackFounded = false;
+
+	Movement::SetBoard(&moBoard);
 
 	/* For each line */
 	for(unsigned int i = 0; i < 8 && (!bWhiteFounded || !bBlackFounded); ++i)
@@ -83,14 +87,25 @@ Game::Game(const Board & oBoard, Interface * poInterface)
 		throw exception("You can't play a party without a king for each player");
 
 	meCurrentPlayer = Piece::PC_WHITE;	// White moves first
-	mbIsOver = false;
-	mbIsWhiteCheckMate = false;
-	mbIsBlackCheckMate = false;
-	mbIsStaleMate = false;
-	mbIsWhiteInCheck = false;
-	mbIsBlackInCheck = false;
+	RefreshCheckBooleans();
 
-	Movement::SetBoard(&moBoard);
+	if(abs(moKings[Piece::PC_WHITE].mX - moKings[Piece::PC_BLACK].mX) <= 1
+	&& abs(moKings[Piece::PC_WHITE].mY - moKings[Piece::PC_BLACK].mY) <= 1)	// Kings are 1 square away
+		throw exception("The kings must be more than 1 square away from each other. This game is impossible");
+
+	if(mbIsOver)
+	{
+		ostringstream strOver;
+
+		if(mbIsWhiteCheckMate)
+			strOver << "White player is checkmate !" << endl;
+		else if(mbIsBlackCheckMate)
+			strOver << "Black player is checkmate !" << endl;
+		else if(mbIsStaleMate)
+			strOver << "It's a stale !" << endl;
+
+		throw exception(strOver.str().c_str());
+	}
 }
 
 void Game::SwitchPlayer()
@@ -439,4 +454,15 @@ void Game::SetSelectedPosition(Position oPos)
 		delete mpoSelectedPosition;
 
 	mpoSelectedPosition = new Position(oPos);
+}
+
+void Game::RefreshCheckBooleans()
+{
+	mbIsWhiteInCheck = bIsInCheck(Piece::PC_WHITE);
+	mbIsBlackInCheck = bIsInCheck(Piece::PC_BLACK);
+	mbIsWhiteCheckMate = bIsCheckMate(Piece::PC_WHITE);
+	mbIsBlackCheckMate = bIsCheckMate(Piece::PC_BLACK);
+	mbIsStaleMate = bIsGameInStaleMate();
+
+	mbIsOver = mbIsWhiteCheckMate || mbIsBlackCheckMate || mbIsStaleMate;
 }

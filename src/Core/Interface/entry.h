@@ -27,6 +27,10 @@ class Entry
 		EC_STOP_GAME,
 		EC_QUIT_GAME,
 
+		/** Edition only **/
+		EC_ONE_PLAYER_GAME,
+		EC_TWO_PLAYERS_GAME,
+
 		EC_NONE,
 	};
 
@@ -48,12 +52,18 @@ class Entry
 	virtual ~Entry();
 
 	bool bIsCommand() const;
+	bool bIsPiece() const;
 	Position oGetPos() const;
 	ENTRY_COMMAND eGetCommand() const;
+	Piece::PIECE_TYPE  eGetPieceType() const;
+	Piece::PIECE_COLOR eGetPieceColor() const;
 
   protected :
 	Position moPos;
+	Piece::PIECE_TYPE mePieceType;
+	Piece::PIECE_COLOR mePieceColor;
 	bool mbIsCommand;
+	bool mbIsPiece;
 	ENTRY_COMMAND meCommand;
 };
 
