@@ -20,9 +20,9 @@ int main(int argc, char * argv[])
 {
 	try
 	{
+		strInterfaceDLLs.push_back("InterfaceIrrlicht.dll");
 		strInterfaceDLLs.push_back("InterfaceConsole.dll");
 		strInterfaceDLLs.push_back("InterfaceSDL.dll");
-		strInterfaceDLLs.push_back("InterfaceIrrlicht.dll");
 		vector<string>::iterator iCurrentIDLL = strInterfaceDLLs.begin();
 
 		HINSTANCE hIConsoleDLLHandle = LoadLibrary(iCurrentIDLL->c_str());
