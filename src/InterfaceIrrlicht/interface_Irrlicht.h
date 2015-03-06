@@ -7,6 +7,7 @@
 class InterfaceIrrlicht : public Interface, public irr::IEventReceiver
 {
   protected :
+	bool mbExit;
 	irr::IrrlichtDevice * mpoDevice;
 	irr::video::IVideoDriver * mpoVideoDriver;
 	irr::gui::IGUIEnvironment * mpoGUI;

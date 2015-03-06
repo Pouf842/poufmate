@@ -58,7 +58,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="&quot;$(SolutionDir)..\Release\SDK Interfaces\Core.lib&quot; &quot;irrlicht.lib&quot;"
+				AdditionalDependencies="&quot;$(SolutionDir)..\Release\SDK Interfaces\Core.lib&quot; &quot;Irrlicht.lib&quot;"
 				OutputFile="$(SolutionDir)..\bin\$(ProjectName).dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories=""
@@ -172,6 +172,18 @@
 				RelativePath="..\..\src\InterfaceIrrlicht\interface_Irrlicht.cpp"
 				>
 			</File>
+			<Filter
+				Name="Intro"
+				>
+				<File
+					RelativePath="..\..\src\InterfaceIrrlicht\Intro.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\InterfaceIrrlicht\IntroAnimator.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Fichiers d&apos;en-tête"
@@ -182,6 +194,18 @@
 				RelativePath="..\..\src\InterfaceIrrlicht\interface_Irrlicht.h"
 				>
 			</File>
+			<Filter
+				Name="Intro"
+				>
+				<File
+					RelativePath="..\..\src\InterfaceIrrlicht\Intro.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\InterfaceIrrlicht\IntroAnimator.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
