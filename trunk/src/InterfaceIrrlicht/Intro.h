@@ -5,6 +5,7 @@
 
 class Intro
 {
+	irr::scene::ISceneManager * mpoSceneManager;
 };
 
 #endif
