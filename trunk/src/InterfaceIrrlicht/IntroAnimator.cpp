@@ -11,7 +11,13 @@ IntroAnimator::IntroAnimator(vector3df oStartPosition, vector3df oEndPosition, u
 																									 moStartPos(oStartPosition),
 																									 moEndPos(oEndPosition),
 																									 muTranslationTime(uTranslateTime),
-																									 mbDone(false)
+																									 mpoCallbackObject(NULL),
+																									 mpfCallbackMethod(NULL),
+																									 mbCallBacked(false)
+{
+}
+
+IntroAnimator::~IntroAnimator()
 {
 }
 
@@ -28,7 +34,7 @@ void IntroAnimator::animateNode(ISceneNode * poNode, u32 uTime)
 	if(fFactor > 1)
 		fFactor = 1;
 
-	if(mbDone || fTotalElapsedTime < muTranslationTime * 1.5)
+	if(fTotalElapsedTime < muTranslationTime * 1.5)
 	{
 		fFactor = sin(fFactor * PI / 2);
 
@@ -47,20 +53,18 @@ void IntroAnimator::animateNode(ISceneNode * poNode, u32 uTime)
 			poNode->setPosition(moEndPos);
 		
 		poNode->setRotation(poNode->getRotation() + oRotationSpeed * 0.05 * fLastElapsedTime / 10);
+
+		if(!mbCallBacked)
+		{
+			if(mpoCallbackObject && mpfCallbackMethod)
+				(mpoCallbackObject->*mpfCallbackMethod)();
+		}
 	}
 
 	muLastCall = uTime;
-
-	if(!mbDone)
-		mbDone = fTotalElapsedTime >= muTranslationTime;
 }
 
 ISceneNodeAnimator * IntroAnimator::createClone(ISceneNode *, ISceneManager *)
 {
 	return NULL;
-}
-
-bool IntroAnimator::bIsDone()
-{
-	return mbDone;
 }

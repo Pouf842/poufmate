@@ -44,7 +44,7 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				WarningLevel="3"
+				WarningLevel="1"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -173,16 +173,28 @@
 				>
 			</File>
 			<Filter
-				Name="Intro"
+				Name="States"
 				>
 				<File
-					RelativePath="..\..\src\InterfaceIrrlicht\Intro.cpp"
+					RelativePath="..\..\src\InterfaceIrrlicht\State.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\InterfaceIrrlicht\IntroAnimator.cpp"
+					RelativePath="..\..\src\InterfaceIrrlicht\TestState.cpp"
 					>
 				</File>
+				<Filter
+					Name="Intro"
+					>
+					<File
+						RelativePath="..\..\src\InterfaceIrrlicht\IntroAnimator.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\InterfaceIrrlicht\IntroState.cpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
@@ -195,16 +207,28 @@
 				>
 			</File>
 			<Filter
-				Name="Intro"
+				Name="States"
 				>
 				<File
-					RelativePath="..\..\src\InterfaceIrrlicht\Intro.h"
+					RelativePath="..\..\src\InterfaceIrrlicht\State.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\InterfaceIrrlicht\IntroAnimator.h"
+					RelativePath="..\..\src\InterfaceIrrlicht\TestState.h"
 					>
 				</File>
+				<Filter
+					Name="Intro"
+					>
+					<File
+						RelativePath="..\..\src\InterfaceIrrlicht\IntroAnimator.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\InterfaceIrrlicht\IntroState.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>

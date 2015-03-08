@@ -1,9 +1,9 @@
 #include "interface_Irrlicht.h"
 #include "Pieces/Piece.h"
-#include "Intro.h"
+#include "IntroState.h"
+#include "TestState.h"
 
 #include <iostream>
-#include <map>
 
 using namespace std;
 using namespace irr;
@@ -19,7 +19,7 @@ extern "C" __declspec(dllexport) Interface * poGetInterface()
     return poInterface;
 }
 
-InterfaceIrrlicht::InterfaceIrrlicht() : mbExit(false)
+InterfaceIrrlicht::InterfaceIrrlicht() : mpoCurrentState(NULL)
 {
 	mpoDevice = createDevice(EDT_OPENGL, dimension2d<u32>(800, 600), 32, false, true, false, this);
 	mpoVideoDriver = mpoDevice->getVideoDriver();
@@ -28,23 +28,61 @@ InterfaceIrrlicht::InterfaceIrrlicht() : mbExit(false)
 
 	mpoSceneManager->setAmbientLight(SColorf(0.5, 0.5, 0.5));
 	mpoSceneManager->addLightSceneNode(0, vector3df(0, 10, 0), SColorf(0.2, 0.2, 0.2));
-	/*/ICameraSceneNode * poCamera = mpoSceneManager->addCameraSceneNodeFPS(0, 10, 0.01);
+
+	/**/ICameraSceneNode * poCamera = mpoSceneManager->addCameraSceneNodeFPS(0, 10, 0.01);
 	poCamera->setPosition(vector3df(0, 5, -10));
 	poCamera->setTarget(vector3df(0, 0, 0));/*/
 	mpoSceneManager->addCameraSceneNode(NULL, vector3df(0, 5, -10), vector3df(0, 0, 0));/**/
+
+	InitMeshs();
+
+	/*/ISceneNode * poPawn = mpoSceneManager->addMeshSceneNode(moPiecesMeshs[Piece::PT_PAWN]);
+	poPawn->setPosition(vector3df(-5, 0, 0));
+	poPawn->setMaterialFlag(EMF_LIGHTING, true);
+	ISceneNode * poRook = mpoSceneManager->addMeshSceneNode(moPiecesMeshs[Piece::PT_ROOK]);
+	poRook->setPosition(vector3df(5, 0, 0));
+	poRook->setMaterialFlag(EMF_LIGHTING, true);/*/
+	//SetState(new IntroState(this));
+	SetState(new TestState(this));
+}
+
+void InterfaceIrrlicht::InitMeshs()
+{
+	moPiecesMeshs[Piece::PT_ROOK]   = NULL;
+	moPiecesMeshs[Piece::PT_KNIGHT] = NULL;
+	moPiecesMeshs[Piece::PT_BISHOP] = NULL;
+	moPiecesMeshs[Piece::PT_QUEEN]  = NULL;
+	moPiecesMeshs[Piece::PT_KING]   = NULL;
+	moPiecesMeshs[Piece::PT_PAWN]   = NULL;
+
+	mpoBoardMesh = mpoSceneManager->getGeometryCreator()->createCubeMesh(vector3df(8, 1, 8));
+	mpoBoardNode = mpoSceneManager->addMeshSceneNode(mpoBoardMesh);
+	mpoBoardNode->setMaterialFlag(EMF_LIGHTING, true);
+	ITexture * poBoardTexture = mpoVideoDriver->getTexture("Medias/Images/board.bmp");
+	mpoBoardNode->setMaterialTexture(0, poBoardTexture);
+	//mpoBoardNode->setID(0);
+
+	for(std::map<Piece::PIECE_TYPE, IMesh*>::iterator i = moPiecesMeshs.begin(); i != moPiecesMeshs.end(); ++i)
+	{
+		irr::core::string<char> strMeshFile = "Medias/";
+		switch(i->first)
+		{
+		  case Piece::PT_ROOK :
+			strMeshFile += /*/"rook.3ds";/*/"rook.obj";/**/
+			break;
+		  case Piece::PT_PAWN :
+		  default :
+			strMeshFile += /*/"pawn.3ds";/*/"pawn.obj";/**/
+			break;
+		}
+
+		i->second = mpoSceneManager->getMesh(strMeshFile);
+	}
 }
 
 int InterfaceIrrlicht::iGetMenuEntry(const std::vector<std::string> oMenu)
 {
-	mpoGUI->addStaticText(L"Faites un choix", rect<s32>(0, 0, 100, 100), true, true, NULL, -1, true);
-
-	while(mpoDevice->run() && !mbExit)
-	{
-		mpoVideoDriver->beginScene();
-		mpoSceneManager->drawAll();
-		mpoGUI->drawAll();
-		mpoVideoDriver->endScene();
-	}
+	//SetState(IIS_MENU);
 
 	return 6;
 }
@@ -91,14 +129,17 @@ void InterfaceIrrlicht::SetProgress(unsigned int)
 {
 }
 
-bool InterfaceIrrlicht::OnEvent(const irr::SEvent & oEvent)
+void InterfaceIrrlicht::SetState(State * poNewState)
 {
-	if(oEvent.EventType == EET_KEY_INPUT_EVENT
-	&& oEvent.KeyInput.Key == KEY_ESCAPE)
-	{
-		mbExit = true;
-		return true;
-	}
+	if(mpoCurrentState)
+		delete mpoCurrentState;
 
+	mpoCurrentState = poNewState;
+	mpoDevice->setEventReceiver(mpoCurrentState);
+	poNewState->run();
+}
+
+bool InterfaceIrrlicht::OnEvent(const SEvent &)
+{
 	return false;
 }
