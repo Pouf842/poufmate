@@ -1,19 +1,24 @@
 #ifndef __INTERFACE_IRRLICHT_H_
 #define __INTERFACE_IRRLICHT_H_
 
+#include <map>
 #include "Interface/interface.h"
 #include "irrlicht.h"
 
+class State;
+
 class InterfaceIrrlicht : public Interface, public irr::IEventReceiver
 {
-  protected :
-	bool mbExit;
+  public :
+	State * mpoCurrentState;
 	irr::IrrlichtDevice * mpoDevice;
 	irr::video::IVideoDriver * mpoVideoDriver;
 	irr::gui::IGUIEnvironment * mpoGUI;
 	irr::scene::ISceneManager * mpoSceneManager;
-	void Intro();
-  public :
+	irr::scene::ISceneNode * mpoBoardNode;
+	irr::scene::IMesh * mpoBoardMesh;
+	std::map<Piece::PIECE_TYPE, irr::scene::IMesh*> moPiecesMeshs;
+
 	InterfaceIrrlicht();
 	virtual int iGetMenuEntry(const std::vector<std::string> oMenu);
 	virtual Entry oGetEntry();
@@ -28,6 +33,8 @@ class InterfaceIrrlicht : public Interface, public irr::IEventReceiver
 	virtual bool OnEvent(const irr::SEvent &);
 
   protected :
+	void InitMeshs();
+	void SetState(State *);
 };
 
 #endif

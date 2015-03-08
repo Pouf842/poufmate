@@ -1,0 +1,11 @@
+# Blender MTL File: 'rook.blend'
+# Material Count: 1
+
+newmtl Mat?riau
+Ns 1000.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.202186 0.185734 0.168402
+Ks 0.085714 0.085714 0.085714
+Ni 1.000000
+d 1.000000
+illum 2
