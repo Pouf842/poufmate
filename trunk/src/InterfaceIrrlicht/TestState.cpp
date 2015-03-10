@@ -10,36 +10,10 @@ using namespace video;
 using namespace std;
 
 #define ID_PIECE 1
+extern s32 ID_BOARD;
 
-TestState::TestState(InterfaceIrrlicht * poInterface) : State(poInterface), mpoHighlightedPiece(NULL)
+TestState::TestState(InterfaceIrrlicht * poInterface) : State(poInterface), mpoHighlightedPiece(NULL), mbIsDragging(false)
 {
-	// White pawn
-	IMeshSceneNode * poPawn = mpoInterface->mpoSceneManager->addMeshSceneNode(mpoInterface->moPiecesMeshs[Piece::PT_PAWN], mpoInterface->mpoBoardNode);
-	poPawn->setPosition(vector3df(-3, 0.45, 3));
-	poPawn->setMaterialFlag(EMF_NORMALIZE_NORMALS, true);
-	poPawn->setScale(vector3df(0.3, 0.3, 0.3));
-	poPawn->getMaterial(0).AmbientColor.set(255, 255, 255, 255);
-
-	// Black pawn
-	poPawn = mpoInterface->mpoSceneManager->addMeshSceneNode(mpoInterface->moPiecesMeshs[Piece::PT_PAWN], mpoInterface->mpoBoardNode);
-	poPawn->setPosition(vector3df(3, 0.45, 3));
-	poPawn->setMaterialFlag(EMF_NORMALIZE_NORMALS, true);
-	poPawn->setScale(vector3df(0.3, 0.3, 0.3));
-	poPawn->getMaterial(0).AmbientColor.set(255, 10, 10, 10);
-
-	// White rook
-	IMeshSceneNode * poRook = mpoInterface->mpoSceneManager->addMeshSceneNode(mpoInterface->moPiecesMeshs[Piece::PT_ROOK], mpoInterface->mpoBoardNode);
-	poRook->setPosition(vector3df(-3, 0.45, -3));
-	poRook->setMaterialFlag(EMF_NORMALIZE_NORMALS, true);
-	poRook->setScale(vector3df(0.5, 0.5, 0.5));
-	poRook->getMaterial(0).AmbientColor.set(255, 255, 255, 255);
-
-	// Black rook
-	poRook = mpoInterface->mpoSceneManager->addMeshSceneNode(mpoInterface->moPiecesMeshs[Piece::PT_ROOK], mpoInterface->mpoBoardNode);
-	poRook->setPosition(vector3df(3, 0.45, -3));
-	poRook->setMaterialFlag(EMF_NORMALIZE_NORMALS, true);
-	poRook->setScale(vector3df(0.5, 0.5, 0.5));
-	poRook->getMaterial(0).AmbientColor.set(255, 10, 10, 10);
 }
 
 void TestState::run()
@@ -55,18 +29,20 @@ void TestState::run()
 			poVideoDriver->beginScene();
 			poSceneManager->drawAll();
 
-			vector2d<s32> oMousePos = poDevice->getCursorControl()->getPosition();
-			ISceneNode * poHighlightedPiece = mpoInterface->mpoSceneManager->getSceneCollisionManager()->getSceneNodeFromScreenCoordinatesBB(oMousePos, 0, false, mpoInterface->mpoBoardNode);
-
-			if(poHighlightedPiece)
+			if(!mbIsDragging)
 			{
-				if(mpoHighlightedPiece)
-				{
-					mpoHighlightedPiece->getMaterial(0);
-				}
+				vector2d<s32> oMousePos = poDevice->getCursorControl()->getPosition();
+				ISceneNode * poHighlightedPiece = mpoInterface->mpoSceneManager->getSceneCollisionManager()->getSceneNodeFromScreenCoordinatesBB(oMousePos, 0, false, mpoInterface->mpoBoardNode);
 
-				mpoHighlightedPiece = poHighlightedPiece;
-				mpoHighlightedPiece->getMaterial(0);
+				if(poHighlightedPiece != mpoHighlightedPiece)
+					if(mpoHighlightedPiece)
+						mpoHighlightedPiece->getMaterial(0).EmissiveColor = SColor(255, 0, 0, 0);
+
+				if(poHighlightedPiece)
+				{
+					mpoHighlightedPiece = poHighlightedPiece;
+					mpoHighlightedPiece->getMaterial(0).EmissiveColor = SColor(255, 255, 0, 0);
+				}
 			}
 
 			poVideoDriver->endScene();
@@ -79,12 +55,43 @@ void TestState::run()
 bool TestState::OnEvent(const SEvent & oEvent)
 {
 	if(oEvent.EventType == EET_KEY_INPUT_EVENT)
+	{
 		if(!oEvent.KeyInput.PressedDown)
+		{
 			if(oEvent.KeyInput.Key == KEY_ESCAPE)
 			{
 				mbStop = true;
 				return true;
 			}
+			else if(oEvent.KeyInput.Key == KEY_SPACE)
+				mpoInterface->SwitchCameraType();
+		}
+	}
+
+	if(oEvent.EventType == EET_MOUSE_INPUT_EVENT)
+		if(oEvent.MouseInput.isLeftPressed())
+		{
+			if(mpoHighlightedPiece)
+			{
+				mbIsDragging = true;
+
+				vector2d<s32> vMousePos(oEvent.MouseInput.X, oEvent.MouseInput.Y);
+				line3df ray = mpoInterface->mpoSceneManager->getSceneCollisionManager()->getRayFromScreenCoordinates(vMousePos);
+				vector3df oCollisionPoint;
+				triangle3df oTriangle;
+
+				ISceneNode * poNode = mpoInterface->mpoSceneManager->getSceneCollisionManager()->getSceneNodeAndCollisionPointFromRay(ray, oCollisionPoint, oTriangle);
+				
+				if(poNode)
+					mpoHighlightedPiece->setPosition(oCollisionPoint + (0, 0.5, 0));
+				else
+					cout <<" Node : NULL" << endl;
+
+				return true;
+			}
+		}
+		else
+			mbIsDragging = false;
 
 	return false;
 }

@@ -12,6 +12,8 @@ using namespace scene;
 using namespace video;
 using namespace gui;
 
+s32 ID_BOARD = 1;
+
 extern "C" __declspec(dllexport) Interface * poGetInterface()
 {
     Interface * poInterface = new InterfaceIrrlicht();
@@ -19,20 +21,21 @@ extern "C" __declspec(dllexport) Interface * poGetInterface()
     return poInterface;
 }
 
-InterfaceIrrlicht::InterfaceIrrlicht() : mpoCurrentState(NULL)
+InterfaceIrrlicht::InterfaceIrrlicht() : mpoCurrentState(NULL), mpoCameraFPS(NULL), mpoCamera(NULL), mpoCurrentCamera(NULL)
 {
 	mpoDevice = createDevice(EDT_OPENGL, dimension2d<u32>(800, 600), 32, false, true, false, this);
 	mpoVideoDriver = mpoDevice->getVideoDriver();
 	mpoGUI = mpoDevice->getGUIEnvironment();
 	mpoSceneManager = mpoDevice->getSceneManager();
 
-	mpoSceneManager->setAmbientLight(SColorf(0.5, 0.5, 0.5));
-	mpoSceneManager->addLightSceneNode(0, vector3df(0, 10, 0), SColorf(0.2, 0.2, 0.2));
+	mpoSceneManager->setAmbientLight(SColorf(0.8, 0.8, 0.8));
+	mpoSceneManager->addLightSceneNode(0, vector3df(0, 10, 0), SColorf(0.2, 0.2, 0.2), 10);
 
-	/**/ICameraSceneNode * poCamera = mpoSceneManager->addCameraSceneNodeFPS(0, 10, 0.01);
-	poCamera->setPosition(vector3df(0, 5, -10));
-	poCamera->setTarget(vector3df(0, 0, 0));/*/
-	mpoSceneManager->addCameraSceneNode(NULL, vector3df(0, 5, -10), vector3df(0, 0, 0));/**/
+	mpoCameraFPS = mpoSceneManager->addCameraSceneNodeFPS(0, 10, 0.01);
+	mpoCameraFPS->setPosition(vector3df(0, 5, -10));
+	mpoCameraFPS->setTarget(vector3df(0, 0, 0));
+
+	mpoCamera = mpoSceneManager->addCameraSceneNode(NULL, vector3df(0, 5, -10), vector3df(0, 0, 0));
 
 	InitMeshs();
 
@@ -42,7 +45,7 @@ InterfaceIrrlicht::InterfaceIrrlicht() : mpoCurrentState(NULL)
 	ISceneNode * poRook = mpoSceneManager->addMeshSceneNode(moPiecesMeshs[Piece::PT_ROOK]);
 	poRook->setPosition(vector3df(5, 0, 0));
 	poRook->setMaterialFlag(EMF_LIGHTING, true);/*/
-	//SetState(new IntroState(this));
+	SetState(new IntroState(this));
 	SetState(new TestState(this));
 }
 
@@ -57,6 +60,7 @@ void InterfaceIrrlicht::InitMeshs()
 
 	mpoBoardMesh = mpoSceneManager->getGeometryCreator()->createCubeMesh(vector3df(8, 1, 8));
 	mpoBoardNode = mpoSceneManager->addMeshSceneNode(mpoBoardMesh);
+	mpoBoardNode->setTriangleSelector(mpoSceneManager->createTriangleSelector(mpoBoardMesh, mpoBoardNode));
 	mpoBoardNode->setMaterialFlag(EMF_LIGHTING, true);
 	ITexture * poBoardTexture = mpoVideoDriver->getTexture("Medias/Images/board.bmp");
 	mpoBoardNode->setMaterialTexture(0, poBoardTexture);
@@ -68,11 +72,11 @@ void InterfaceIrrlicht::InitMeshs()
 		switch(i->first)
 		{
 		  case Piece::PT_ROOK :
-			strMeshFile += /*/"rook.3ds";/*/"rook.obj";/**/
+			strMeshFile += /*/"rook.3ds";/*/"rook.b3d";/**/
 			break;
 		  case Piece::PT_PAWN :
 		  default :
-			strMeshFile += /*/"pawn.3ds";/*/"pawn.obj";/**/
+			strMeshFile += /*/"pawn.3ds";/*/"pawn.b3d";/**/
 			break;
 		}
 
@@ -142,4 +146,9 @@ void InterfaceIrrlicht::SetState(State * poNewState)
 bool InterfaceIrrlicht::OnEvent(const SEvent &)
 {
 	return false;
+}
+
+void InterfaceIrrlicht::SwitchCameraType()
+{
+	mpoSceneManager->setActiveCamera(mpoCurrentCamera == mpoCameraFPS ? mpoCamera : mpoCameraFPS);
 }

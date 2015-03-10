@@ -31,10 +31,14 @@ class InterfaceIrrlicht : public Interface, public irr::IEventReceiver
 	virtual void SetBusy();
 	virtual void SetProgress(unsigned int);
 	virtual bool OnEvent(const irr::SEvent &);
+	virtual void SwitchCameraType();
 
   protected :
 	void InitMeshs();
 	void SetState(State *);
+	irr::scene::ICameraSceneNode * mpoCameraFPS;
+	irr::scene::ICameraSceneNode * mpoCamera;
+	irr::scene::ICameraSceneNode * mpoCurrentCamera;
 };
 
 #endif
