@@ -7,6 +7,7 @@ class TestState : public State
 {
 protected :
 	irr::scene::ISceneNode * mpoHighlightedPiece;
+	bool mbIsDragging;
 public :
 	TestState(InterfaceIrrlicht *);
 	virtual void run();
