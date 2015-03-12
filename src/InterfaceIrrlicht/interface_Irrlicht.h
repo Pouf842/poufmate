@@ -34,7 +34,7 @@ class InterfaceIrrlicht : public Interface, public irr::IEventReceiver
 	virtual void SwitchCameraType();
 
   protected :
-	void InitMeshs();
+	void InitDatas();
 	void SetState(State *);
 	irr::scene::ICameraSceneNode * mpoCameraFPS;
 	irr::scene::ICameraSceneNode * mpoCamera;
