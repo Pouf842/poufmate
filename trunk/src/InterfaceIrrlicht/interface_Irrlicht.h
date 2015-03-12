@@ -6,11 +6,12 @@
 #include "irrlicht.h"
 
 class State;
+class MenuState;
+class GameState;
 
 class InterfaceIrrlicht : public Interface, public irr::IEventReceiver
 {
   public :
-	State * mpoCurrentState;
 	irr::IrrlichtDevice * mpoDevice;
 	irr::video::IVideoDriver * mpoVideoDriver;
 	irr::gui::IGUIEnvironment * mpoGUI;
@@ -34,8 +35,11 @@ class InterfaceIrrlicht : public Interface, public irr::IEventReceiver
 	virtual void SwitchCameraType();
 
   protected :
+	State * mpoCurrentState;
 	void InitDatas();
 	void SetState(State *);
+	MenuState * mpoMenuState;
+	GameState * mpoGameState;
 	irr::scene::ICameraSceneNode * mpoCameraFPS;
 	irr::scene::ICameraSceneNode * mpoCamera;
 	irr::scene::ICameraSceneNode * mpoCurrentCamera;

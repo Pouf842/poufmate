@@ -15,7 +15,6 @@ protected :
 	bool mbIsDragging;
 public :
 	TestState(InterfaceIrrlicht *);
-	virtual void run();
 	virtual bool OnEvent(const irr::SEvent &);
 };
 

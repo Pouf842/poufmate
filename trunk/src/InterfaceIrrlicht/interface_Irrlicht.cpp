@@ -3,6 +3,7 @@
 #include "IntroState.h"
 #include "TestState.h"
 #include "MenuState.h"
+#include "GameState.h"
 
 #include <iostream>
 
@@ -42,7 +43,15 @@ InterfaceIrrlicht::InterfaceIrrlicht() : mpoCurrentState(NULL), mpoCameraFPS(NUL
 	InitDatas();
 
 	SetState(new IntroState(this));
+	delete mpoCurrentState;
+	mpoCurrentState = NULL;
 	SetState(new TestState(this));
+	delete mpoCurrentState;
+	mpoCurrentState = NULL;
+
+	
+	mpoMenuState = new MenuState(this);
+	mpoGameState = new GameState(this);
 }
 
 void InterfaceIrrlicht::InitDatas()
@@ -128,10 +137,10 @@ void InterfaceIrrlicht::InitDatas()
 
 int InterfaceIrrlicht::iGetMenuEntry(const std::vector<std::string> oMenu)
 {
-	MenuState oMenuState(this, oMenu);
-	SetState(&oMenuState);
+	mpoMenuState->SetMenu(oMenu);
+	SetState(mpoMenuState);
 
-	return oMenuState.sGetChoice();
+	return mpoMenuState->sGetChoice();
 }
 
 Entry InterfaceIrrlicht::oGetEntry()
@@ -179,13 +188,13 @@ void InterfaceIrrlicht::SetProgress(unsigned int)
 void InterfaceIrrlicht::SetState(State * poNewState)
 {
 	if(mpoCurrentState)
-		delete mpoCurrentState;
+		mpoCurrentState->Stop();
 
 	mpoCurrentState = poNewState;
 	mpoDevice->setEventReceiver(mpoCurrentState);
 
 	if(poNewState)
-		poNewState->run();
+		poNewState->Run();
 }
 
 bool InterfaceIrrlicht::OnEvent(const SEvent &)

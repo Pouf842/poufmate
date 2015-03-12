@@ -4,7 +4,7 @@ State::State(InterfaceIrrlicht * poInterface) : mpoInterface(poInterface), mbSto
 {
 }
 
-void State::run()
+void State::Run()
 {
 	while(mpoInterface->mpoDevice->run() && !mbStop)
 	{
@@ -23,4 +23,9 @@ void State::run()
 bool State::OnEvent(const irr::SEvent &)
 {
 	return false;
+}
+
+void State::Stop()
+{
+	mbStop = true;
 }

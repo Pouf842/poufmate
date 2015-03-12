@@ -180,6 +180,10 @@
 				Name="States"
 				>
 				<File
+					RelativePath="..\..\src\InterfaceIrrlicht\GameState.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\InterfaceIrrlicht\State.cpp"
 					>
 				</File>
@@ -206,6 +210,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath="..\..\src\InterfaceIrrlicht\GameState.h"
+				>
+			</File>
 			<File
 				RelativePath="..\..\src\InterfaceIrrlicht\interface_Irrlicht.h"
 				>
