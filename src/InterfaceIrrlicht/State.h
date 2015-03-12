@@ -12,7 +12,8 @@ protected :
 public :
 	State(InterfaceIrrlicht * poInterface);
 	virtual bool OnEvent(const irr::SEvent &);
-	virtual void run();
+	virtual void Run();
+	virtual void Stop();
 };
 
 #endif

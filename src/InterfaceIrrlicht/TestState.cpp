@@ -26,45 +26,6 @@ TestState::TestState(InterfaceIrrlicht * poInterface) : State(poInterface), mpoH
 	mpoCollisionManager = mpoSceneManager->getSceneCollisionManager();
 }
 
-void TestState::run()
-{
-	while(mpoDevice->run() && !mbStop)
-	{
-		if(mpoDevice->isWindowActive())
-		{
-			mpoVideoDriver->beginScene();
-			mpoSceneManager->drawAll();
-
-			/*if(!mbIsDragging)
-			{
-				/** /vector2d<s32> vMousePos = mpoDevice->getCursorControl()->getPosition();
-				line3df ray = mpoCollisionManager->getRayFromScreenCoordinates(vMousePos);
-				vector3df oCollisionPoint;
-
-				ISceneNode * poHighlightedPiece = mpoCollisionManager->getSceneNodeAndCollisionPointFromRay(ray, oCollisionPoint, triangle3df(), ID_PIECE);/* /
-
-				vector2d<s32> oMousePos = mpoDevice->getCursorControl()->getPosition();
-				ISceneNode * poHighlightedPiece = mpoCollisionManager->getSceneNodeFromScreenCoordinatesBB(oMousePos, ID_PIECE, false, mpoInterface->mpoBoardNode);/** /
-
-				if(poHighlightedPiece != mpoHighlightedPiece)
-					if(mpoHighlightedPiece)
-						mpoHighlightedPiece->getMaterial(0).EmissiveColor = SColor(0, 0, 0, 0);
-
-				if(poHighlightedPiece)
-				{
-					moRelColl = oCollisionPoint - poHighlightedPiece->getAbsolutePosition();
-					mpoHighlightedPiece = poHighlightedPiece;
-					mpoHighlightedPiece->getMaterial(0).EmissiveColor = SColor(255, 255, 0, 0);
-				}
-			}*/
-
-			mpoVideoDriver->endScene();
-		}
-		else
-			mpoDevice->yield();
-	}
-}
-
 bool TestState::OnEvent(const SEvent & oEvent)
 {
 	if(oEvent.EventType == EET_KEY_INPUT_EVENT)
