@@ -2,6 +2,7 @@
 #include "Pieces/Piece.h"
 #include "IntroState.h"
 #include "TestState.h"
+#include "MenuState.h"
 
 #include <iostream>
 
@@ -13,6 +14,7 @@ using namespace video;
 using namespace gui;
 
 s32 ID_BOARD = 1;
+s32 ID_PIECE = 2;
 
 extern "C" __declspec(dllexport) Interface * poGetInterface()
 {
@@ -37,19 +39,13 @@ InterfaceIrrlicht::InterfaceIrrlicht() : mpoCurrentState(NULL), mpoCameraFPS(NUL
 
 	mpoCamera = mpoSceneManager->addCameraSceneNode(NULL, vector3df(0, 5, -10), vector3df(0, 0, 0));
 
-	InitMeshs();
+	InitDatas();
 
-	/*/ISceneNode * poPawn = mpoSceneManager->addMeshSceneNode(moPiecesMeshs[Piece::PT_PAWN]);
-	poPawn->setPosition(vector3df(-5, 0, 0));
-	poPawn->setMaterialFlag(EMF_LIGHTING, true);
-	ISceneNode * poRook = mpoSceneManager->addMeshSceneNode(moPiecesMeshs[Piece::PT_ROOK]);
-	poRook->setPosition(vector3df(5, 0, 0));
-	poRook->setMaterialFlag(EMF_LIGHTING, true);/*/
 	SetState(new IntroState(this));
 	SetState(new TestState(this));
 }
 
-void InterfaceIrrlicht::InitMeshs()
+void InterfaceIrrlicht::InitDatas()
 {
 	moPiecesMeshs[Piece::PT_ROOK]   = NULL;
 	moPiecesMeshs[Piece::PT_KNIGHT] = NULL;
@@ -59,7 +55,8 @@ void InterfaceIrrlicht::InitMeshs()
 	moPiecesMeshs[Piece::PT_PAWN]   = NULL;
 
 	mpoBoardMesh = mpoSceneManager->getGeometryCreator()->createCubeMesh(vector3df(8, 1, 8));
-	mpoBoardNode = mpoSceneManager->addMeshSceneNode(mpoBoardMesh);
+	mpoBoardNode = mpoSceneManager->addMeshSceneNode(mpoBoardMesh, NULL, ID_BOARD);
+	mpoBoardNode->setName("Board");
 	mpoBoardNode->setTriangleSelector(mpoSceneManager->createTriangleSelector(mpoBoardMesh, mpoBoardNode));
 	mpoBoardNode->setMaterialFlag(EMF_LIGHTING, true);
 	ITexture * poBoardTexture = mpoVideoDriver->getTexture("Medias/Images/board.bmp");
@@ -82,13 +79,59 @@ void InterfaceIrrlicht::InitMeshs()
 
 		i->second = mpoSceneManager->getMesh(strMeshFile);
 	}
+	
+	ISceneNode * poNode;
+	/**/for(unsigned int i = 0; i < 8; ++i)/*/unsigned int i = 0;/**/
+	{
+		// Pawns
+		poNode = mpoSceneManager->addMeshSceneNode(moPiecesMeshs[Piece::PT_PAWN], mpoBoardNode, ID_PIECE, vector3df(-3.5 + i, 0.5, -2.5));
+		poNode->setScale(vector3df(0.5, 0.5, 0.5));
+		poNode->setMaterialFlag(EMF_NORMALIZE_NORMALS, true);
+		poNode->getMaterial(0).AmbientColor  = SColor(255, 220, 220, 220);
+		poNode->getMaterial(0).SpecularColor = SColor(255, 255, 255, 255);
+		poNode->setTriangleSelector(mpoSceneManager->createTriangleSelector(moPiecesMeshs[Piece::PT_PAWN], poNode));
+		std::string str("White pawn n°");
+		str += (i + '0');
+		poNode->setName(str.c_str());
+
+		poNode = mpoSceneManager->addMeshSceneNode(moPiecesMeshs[Piece::PT_PAWN], mpoBoardNode, ID_PIECE, vector3df(-3.5 + i, 0.5, +2.5));
+		poNode->setScale(vector3df(0.5, 0.5, 0.5));
+		poNode->setMaterialFlag(EMF_NORMALIZE_NORMALS, true);
+		poNode->getMaterial(0).AmbientColor = SColor(255, 0, 0, 0);
+		poNode->getMaterial(0).DiffuseColor = SColor(255, 0, 0, 0);
+		poNode->setTriangleSelector(mpoSceneManager->createTriangleSelector(moPiecesMeshs[Piece::PT_PAWN], poNode));
+		str = "Black pawn n°";
+		str += (i + '0');
+		poNode->setName(str.c_str());
+		
+		// Rooks
+		poNode = mpoSceneManager->addMeshSceneNode(moPiecesMeshs[Piece::PT_ROOK], mpoBoardNode, ID_PIECE, vector3df(-3.5 + i, 0.5, -3.5));
+		poNode->setScale(vector3df(0.5, 0.5, 0.5));
+		poNode->setMaterialFlag(EMF_NORMALIZE_NORMALS, true);
+		poNode->getMaterial(0).AmbientColor = SColor(255, 220, 220, 220);
+		poNode->setTriangleSelector(mpoSceneManager->createTriangleSelector(moPiecesMeshs[Piece::PT_ROOK], poNode));
+		str = "White rook n°";
+		str += (i + '0');
+		poNode->setName(str.c_str());
+
+		poNode = mpoSceneManager->addMeshSceneNode(moPiecesMeshs[Piece::PT_ROOK], mpoBoardNode, ID_PIECE, vector3df(-3.5 + i, 0.5, +3.5));
+		poNode->setScale(vector3df(0.5, 0.5, 0.5));
+		poNode->setMaterialFlag(EMF_NORMALIZE_NORMALS, true);
+		poNode->getMaterial(0).AmbientColor = SColor(255, 0, 0, 0);
+		poNode->getMaterial(0).DiffuseColor = SColor(255, 0, 0, 0);
+		poNode->setTriangleSelector(mpoSceneManager->createTriangleSelector(moPiecesMeshs[Piece::PT_ROOK], poNode));
+		str = "Black rook n°";
+		str += (i + '0');
+		poNode->setName(str.c_str());
+	}
 }
 
 int InterfaceIrrlicht::iGetMenuEntry(const std::vector<std::string> oMenu)
 {
-	//SetState(IIS_MENU);
+	MenuState oMenuState(this, oMenu);
+	SetState(&oMenuState);
 
-	return 6;
+	return oMenuState.sGetChoice();
 }
 
 Entry InterfaceIrrlicht::oGetEntry()
@@ -140,7 +183,9 @@ void InterfaceIrrlicht::SetState(State * poNewState)
 
 	mpoCurrentState = poNewState;
 	mpoDevice->setEventReceiver(mpoCurrentState);
-	poNewState->run();
+
+	if(poNewState)
+		poNewState->run();
 }
 
 bool InterfaceIrrlicht::OnEvent(const SEvent &)
@@ -150,5 +195,6 @@ bool InterfaceIrrlicht::OnEvent(const SEvent &)
 
 void InterfaceIrrlicht::SwitchCameraType()
 {
-	mpoSceneManager->setActiveCamera(mpoCurrentCamera == mpoCameraFPS ? mpoCamera : mpoCameraFPS);
+	mpoCurrentCamera = mpoCurrentCamera == mpoCameraFPS ? mpoCamera : mpoCameraFPS;
+	mpoSceneManager->setActiveCamera(mpoCurrentCamera);
 }

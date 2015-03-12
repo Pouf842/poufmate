@@ -172,6 +172,10 @@
 				RelativePath="..\..\src\InterfaceIrrlicht\interface_Irrlicht.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\InterfaceIrrlicht\MenuState.cpp"
+				>
+			</File>
 			<Filter
 				Name="States"
 				>
@@ -204,6 +208,10 @@
 			>
 			<File
 				RelativePath="..\..\src\InterfaceIrrlicht\interface_Irrlicht.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\InterfaceIrrlicht\MenuState.h"
 				>
 			</File>
 			<Filter

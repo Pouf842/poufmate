@@ -9,46 +9,59 @@ using namespace video;
 
 using namespace std;
 
-#define ID_PIECE 1
 extern s32 ID_BOARD;
+extern s32 ID_PIECE;
 
-TestState::TestState(InterfaceIrrlicht * poInterface) : State(poInterface), mpoHighlightedPiece(NULL), mbIsDragging(false)
+ostream & operator<<(ostream & out, const vector3df & oVec)
 {
+	out << "(" << oVec.X << " ; " << oVec.Y << " ; " << oVec.Z << ")";
+	return out;
+}
+
+TestState::TestState(InterfaceIrrlicht * poInterface) : State(poInterface), mpoHighlightedPiece(NULL), mbIsDragging(false), moRelColl(0, 0, 0)
+{
+	mpoDevice			= mpoInterface->mpoDevice;
+	mpoSceneManager		= mpoInterface->mpoSceneManager;
+	mpoVideoDriver		= mpoInterface->mpoVideoDriver;
+	mpoCollisionManager = mpoSceneManager->getSceneCollisionManager();
 }
 
 void TestState::run()
 {
-	IrrlichtDevice * poDevice		= mpoInterface->mpoDevice;
-	ISceneManager  * poSceneManager = mpoInterface->mpoSceneManager;
-	IVideoDriver   * poVideoDriver  = mpoInterface->mpoVideoDriver;
-
-	while(poDevice->run() && !mbStop)
+	while(mpoDevice->run() && !mbStop)
 	{
-		if(poDevice->isWindowActive())
+		if(mpoDevice->isWindowActive())
 		{
-			poVideoDriver->beginScene();
-			poSceneManager->drawAll();
+			mpoVideoDriver->beginScene();
+			mpoSceneManager->drawAll();
 
-			if(!mbIsDragging)
+			/*if(!mbIsDragging)
 			{
-				vector2d<s32> oMousePos = poDevice->getCursorControl()->getPosition();
-				ISceneNode * poHighlightedPiece = mpoInterface->mpoSceneManager->getSceneCollisionManager()->getSceneNodeFromScreenCoordinatesBB(oMousePos, 0, false, mpoInterface->mpoBoardNode);
+				/** /vector2d<s32> vMousePos = mpoDevice->getCursorControl()->getPosition();
+				line3df ray = mpoCollisionManager->getRayFromScreenCoordinates(vMousePos);
+				vector3df oCollisionPoint;
+
+				ISceneNode * poHighlightedPiece = mpoCollisionManager->getSceneNodeAndCollisionPointFromRay(ray, oCollisionPoint, triangle3df(), ID_PIECE);/* /
+
+				vector2d<s32> oMousePos = mpoDevice->getCursorControl()->getPosition();
+				ISceneNode * poHighlightedPiece = mpoCollisionManager->getSceneNodeFromScreenCoordinatesBB(oMousePos, ID_PIECE, false, mpoInterface->mpoBoardNode);/** /
 
 				if(poHighlightedPiece != mpoHighlightedPiece)
 					if(mpoHighlightedPiece)
-						mpoHighlightedPiece->getMaterial(0).EmissiveColor = SColor(255, 0, 0, 0);
+						mpoHighlightedPiece->getMaterial(0).EmissiveColor = SColor(0, 0, 0, 0);
 
 				if(poHighlightedPiece)
 				{
+					moRelColl = oCollisionPoint - poHighlightedPiece->getAbsolutePosition();
 					mpoHighlightedPiece = poHighlightedPiece;
 					mpoHighlightedPiece->getMaterial(0).EmissiveColor = SColor(255, 255, 0, 0);
 				}
-			}
+			}*/
 
-			poVideoDriver->endScene();
+			mpoVideoDriver->endScene();
 		}
 		else
-			poDevice->yield();
+			mpoDevice->yield();
 	}
 }
 
@@ -76,22 +89,54 @@ bool TestState::OnEvent(const SEvent & oEvent)
 				mbIsDragging = true;
 
 				vector2d<s32> vMousePos(oEvent.MouseInput.X, oEvent.MouseInput.Y);
-				line3df ray = mpoInterface->mpoSceneManager->getSceneCollisionManager()->getRayFromScreenCoordinates(vMousePos);
+				line3df ray = mpoCollisionManager->getRayFromScreenCoordinates(vMousePos);
 				vector3df oCollisionPoint;
 				triangle3df oTriangle;
 
-				ISceneNode * poNode = mpoInterface->mpoSceneManager->getSceneCollisionManager()->getSceneNodeAndCollisionPointFromRay(ray, oCollisionPoint, oTriangle);
+				ISceneNode * poNode = mpoCollisionManager->getSceneNodeAndCollisionPointFromRay(ray, oCollisionPoint, oTriangle, ID_BOARD);
 				
 				if(poNode)
-					mpoHighlightedPiece->setPosition(oCollisionPoint + (0, 0.5, 0));
-				else
-					cout <<" Node : NULL" << endl;
+				{
+					vector3df oCameraPos = mpoSceneManager->getActiveCamera()->getPosition();
+					vector3df v = oCameraPos - oCollisionPoint;
+					v.Y = 0;
+
+					float a = (moRelColl.Y - oCollisionPoint.Y) * v.getLength();
+					a /= oCameraPos.Y - oCollisionPoint.Y;
+
+					v.normalize() * a;
+
+					mpoHighlightedPiece->setPosition(oCollisionPoint + v);
+				}
 
 				return true;
 			}
 		}
 		else
+		{
 			mbIsDragging = false;
+				
+			/**/vector2d<s32> vMousePos = mpoDevice->getCursorControl()->getPosition();
+			line3df ray = mpoCollisionManager->getRayFromScreenCoordinates(vMousePos);
+			vector3df oCollisionPoint;
+
+			ISceneNode * poHighlightedPiece = mpoCollisionManager->getSceneNodeAndCollisionPointFromRay(ray, oCollisionPoint, triangle3df(), ID_PIECE);/*/
+
+			vector2d<s32> oMousePos = mpoDevice->getCursorControl()->getPosition();
+			ISceneNode * poHighlightedPiece = mpoCollisionManager->getSceneNodeFromScreenCoordinatesBB(oMousePos, ID_PIECE, false, mpoInterface->mpoBoardNode);/**/
+
+			if(poHighlightedPiece != mpoHighlightedPiece)
+				if(mpoHighlightedPiece)
+					mpoHighlightedPiece->getMaterial(0).EmissiveColor = SColor(0, 0, 0, 0);
+
+			if(poHighlightedPiece)
+			{
+				moRelColl = oCollisionPoint - poHighlightedPiece->getAbsolutePosition();
+				cout << moRelColl.Y << endl;
+				mpoHighlightedPiece = poHighlightedPiece;
+				mpoHighlightedPiece->getMaterial(0).EmissiveColor = SColor(255, 255, 0, 0);
+			}
+		}
 
 	return false;
 }
