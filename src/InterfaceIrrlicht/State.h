@@ -2,7 +2,7 @@
 #define __STATE_H_
 
 #include "irrlicht.h"
-#include "interface_Irrlicht.h"
+#include "InterfaceIrrlicht.h"
 
 class State : public irr::IEventReceiver
 {
@@ -13,6 +13,7 @@ public :
 	State(InterfaceIrrlicht * poInterface);
 	virtual bool OnEvent(const irr::SEvent &);
 	virtual void Run();
+	virtual bool bIsRunning();
 	virtual void Stop();
 };
 

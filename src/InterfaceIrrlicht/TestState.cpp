@@ -43,6 +43,7 @@ bool TestState::OnEvent(const SEvent & oEvent)
 	}
 
 	if(oEvent.EventType == EET_MOUSE_INPUT_EVENT)
+	{
 		if(oEvent.MouseInput.isLeftPressed())
 		{
 			if(mpoHighlightedPiece)
@@ -98,6 +99,7 @@ bool TestState::OnEvent(const SEvent & oEvent)
 				mpoHighlightedPiece->getMaterial(0).EmissiveColor = SColor(255, 255, 0, 0);
 			}
 		}
+	}
 
 	return false;
 }

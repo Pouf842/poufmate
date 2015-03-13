@@ -6,6 +6,8 @@ State::State(InterfaceIrrlicht * poInterface) : mpoInterface(poInterface), mbSto
 
 void State::Run()
 {
+	mbStop = false;
+
 	while(mpoInterface->mpoDevice->run() && !mbStop)
 	{
 		if(mpoInterface->mpoDevice->isWindowActive())
@@ -23,6 +25,11 @@ void State::Run()
 bool State::OnEvent(const irr::SEvent &)
 {
 	return false;
+}
+
+bool State::bIsRunning()
+{
+	return !mbStop;
 }
 
 void State::Stop()
