@@ -1,4 +1,4 @@
-#include "interface_Irrlicht.h"
+#include "InterfaceIrrlicht.h"
 #include "Pieces/Piece.h"
 #include "IntroState.h"
 #include "TestState.h"
@@ -45,11 +45,7 @@ InterfaceIrrlicht::InterfaceIrrlicht() : mpoCurrentState(NULL), mpoCameraFPS(NUL
 	SetState(new IntroState(this));
 	delete mpoCurrentState;
 	mpoCurrentState = NULL;
-	SetState(new TestState(this));
-	delete mpoCurrentState;
-	mpoCurrentState = NULL;
 
-	
 	mpoMenuState = new MenuState(this);
 	mpoGameState = new GameState(this);
 }
@@ -145,7 +141,9 @@ int InterfaceIrrlicht::iGetMenuEntry(const std::vector<std::string> oMenu)
 
 Entry InterfaceIrrlicht::oGetEntry()
 {
-	return Entry(Entry::EC_NONE);
+	SetState(mpoGameState);
+
+	return mpoGameState->oGetLastEntry();
 }
 
 void InterfaceIrrlicht::DisplayMessage(const std::string strMessage)

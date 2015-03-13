@@ -2,7 +2,7 @@
 #define __INTRO_ANIMATOR_H_
 
 #include "irrlicht.h"
-#include "interface_Irrlicht.h"
+#include "InterfaceIrrlicht.h"
 
 class IntroAnimator : public irr::scene::ISceneNodeAnimator
 {

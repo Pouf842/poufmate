@@ -169,7 +169,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\src\InterfaceIrrlicht\interface_Irrlicht.cpp"
+				RelativePath="..\..\src\InterfaceIrrlicht\InterfaceIrrlicht.cpp"
 				>
 			</File>
 			<File
@@ -179,10 +179,6 @@
 			<Filter
 				Name="States"
 				>
-				<File
-					RelativePath="..\..\src\InterfaceIrrlicht\GameState.cpp"
-					>
-				</File>
 				<File
 					RelativePath="..\..\src\InterfaceIrrlicht\State.cpp"
 					>
@@ -203,6 +199,18 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="Game"
+					>
+					<File
+						RelativePath="..\..\src\InterfaceIrrlicht\GameState.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\InterfaceIrrlicht\PieceNode.cpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
@@ -211,11 +219,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\src\InterfaceIrrlicht\GameState.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\InterfaceIrrlicht\interface_Irrlicht.h"
+				RelativePath="..\..\src\InterfaceIrrlicht\InterfaceIrrlicht.h"
 				>
 			</File>
 			<File
@@ -242,6 +246,18 @@
 					</File>
 					<File
 						RelativePath="..\..\src\InterfaceIrrlicht\IntroState.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Game"
+					>
+					<File
+						RelativePath="..\..\src\InterfaceIrrlicht\GameState.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\InterfaceIrrlicht\PieceNode.h"
 						>
 					</File>
 				</Filter>
