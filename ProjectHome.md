@@ -1,0 +1,1 @@
+PoufMate is a chess game in C++ I'm developping to train myself in object conception and graphic libraries.
