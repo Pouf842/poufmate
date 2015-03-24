@@ -1,5 +1,6 @@
 #include "GameState.h"
 
+using namespace std;
 using namespace irr;
 using namespace scene;
 using namespace core;
@@ -11,10 +12,6 @@ extern s32 ID_PIECE;
 
 GameState::GameState(InterfaceIrrlicht * poInterface) : State(poInterface), mpoHighlightedPiece(NULL), mbIsDragging(false), moRelColl(0, 0, 0)
 {
-	mpoDevice			= mpoInterface->mpoDevice;
-	mpoSceneManager		= mpoInterface->mpoSceneManager;
-	mpoVideoDriver		= mpoInterface->mpoVideoDriver;
-	mpoCollisionManager = mpoSceneManager->getSceneCollisionManager();
 }
 
 bool GameState::OnEvent(const SEvent & oEvent)
@@ -23,13 +20,17 @@ bool GameState::OnEvent(const SEvent & oEvent)
 	{
 		if(!oEvent.KeyInput.PressedDown)
 		{
-			if(oEvent.KeyInput.Key == KEY_ESCAPE)
+			if(oEvent.KeyInput.Key == KEY_SPACE)
 			{
+				mpoInterface->SwitchCameraType();
+				return true;
+			}
+			else if(oEvent.KeyInput.Key == KEY_ESCAPE)
+			{
+				moLastEntry = Entry(Entry::EC_STOP_GAME);
 				mbStop = true;
 				return true;
 			}
-			else if(oEvent.KeyInput.Key == KEY_SPACE)
-				mpoInterface->SwitchCameraType();
 		}
 	}
 
@@ -39,35 +40,67 @@ bool GameState::OnEvent(const SEvent & oEvent)
 		{
 			if(mpoHighlightedPiece)
 			{
+				if(!mbIsDragging)
+				{
+					vector3df oPos = mpoHighlightedPiece->getPosition();
+					moLastEntry = Entry(Position(round32(oPos.X + 0.5) - 0.5 + 4, 4 - (round32(oPos.Z + 0.5) - 0.5)));
+					cout << "Entry : " << moLastEntry.oGetPos().mX << " ; " << moLastEntry.oGetPos().mY << ")" << endl;
+					mbStop = true;
+				}
+
 				mbIsDragging = true;
 
 				vector2d<s32> vMousePos(oEvent.MouseInput.X, oEvent.MouseInput.Y);
 				line3df ray = mpoCollisionManager->getRayFromScreenCoordinates(vMousePos);
-				vector3df oCollisionPoint;
+				vector3df oBoardCollisionPoint;
 				triangle3df oTriangle;
 
-				ISceneNode * poNode = mpoCollisionManager->getSceneNodeAndCollisionPointFromRay(ray, oCollisionPoint, oTriangle, ID_BOARD);
+				ISceneNode * poNode = mpoCollisionManager->getSceneNodeAndCollisionPointFromRay(ray, oBoardCollisionPoint, oTriangle, ID_BOARD);
 				
 				if(poNode)
 				{
 					vector3df oCameraPos = mpoSceneManager->getActiveCamera()->getPosition();
-					vector3df v = oCameraPos - oCollisionPoint;
+					/*/vector3df oPieceCollisionPoint = mpoHighlightedPiece->getAbsolutePosition() + moRelColl.Y;
+					vector3df v1 = oPieceCollisionPoint - oBoardCollisionPoint;
+					vector3df v2 = oCameraPos - oBoardCollisionPoint;
+					v2.Y = 0;
+					vector3df vNewPos = v2 * (v1.dotProduct(v2) / v2.getLengthSQ());
+
+					mpoHighlightedPiece->setPosition(oBoardCollisionPoint + vNewPos);/*/
+					vector3df v = oCameraPos - oBoardCollisionPoint;
 					v.Y = 0;
 
-					float a = (moRelColl.Y - oCollisionPoint.Y) * v.getLength();
-					a /= oCameraPos.Y - oCollisionPoint.Y;
+					float a = (moRelColl.Y - oBoardCollisionPoint.Y) * v.getLength();
+					a /= oCameraPos.Y - oBoardCollisionPoint.Y;
 
 					v.normalize() * a;
 
-					mpoHighlightedPiece->setPosition(oCollisionPoint + v);
-				}
+					vector3df oPos(oBoardCollisionPoint + v);
 
-				return true;
+					if(oPos.X < -4)
+						oPos.X = -4;
+
+					if(oPos.Z < -4)
+						oPos.Z = -4;
+
+					oPos.Y = 0.5;
+					mpoHighlightedPiece->setPosition(oPos);/**/
+				}
 			}
 		}
 		else
 		{
-			mbIsDragging = false;
+			if(mbIsDragging)
+			{
+				vector3df oPos(mpoHighlightedPiece->getPosition());
+				oPos.X = round32(oPos.X + 0.5) - 0.5;
+				oPos.Z = round32(oPos.Z + 0.5) - 0.5;
+				mpoHighlightedPiece->setPosition(oPos);
+				mbIsDragging = false;
+
+				moLastEntry = Entry(Position(oPos.X + 4, 4 - oPos.Z));
+				mbStop = true;
+			}
 				
 			/**/vector2d<s32> vMousePos = mpoDevice->getCursorControl()->getPosition();
 			line3df ray = mpoCollisionManager->getRayFromScreenCoordinates(vMousePos);
@@ -89,9 +122,11 @@ bool GameState::OnEvent(const SEvent & oEvent)
 				mpoHighlightedPiece->getMaterial(0).EmissiveColor = SColor(255, 255, 0, 0);
 			}
 		}
+
+		return true;
 	}
 
-	return false;
+	return State::OnEvent(oEvent);
 }
 
 Entry GameState::oGetLastEntry() const

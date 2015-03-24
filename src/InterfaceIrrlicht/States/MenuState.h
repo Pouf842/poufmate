@@ -2,7 +2,7 @@
 #define __MENU_STATE_H_
 
 #include "State.h"
-#include "InterfaceIrrlicht.h"
+#include "../InterfaceIrrlicht.h"
 
 class MenuState : public State
 {

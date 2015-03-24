@@ -1,8 +1,8 @@
 #ifndef __INTRO_STATE_H_
 #define __INTRO_STATE_H_
 
-#include "InterfaceIrrlicht.h"
-#include "State.h"
+#include "../../InterfaceIrrlicht.h"
+#include "../State.h"
 
 class IntroState : public State
 {
@@ -11,8 +11,6 @@ protected :
 public :
 	virtual ~IntroState();
 	IntroState(InterfaceIrrlicht *);
-
-	virtual bool OnEvent(const irr::SEvent &);
 };
 
 #endif

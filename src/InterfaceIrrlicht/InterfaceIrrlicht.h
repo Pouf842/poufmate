@@ -9,6 +9,8 @@ class State;
 class MenuState;
 class GameState;
 
+std::ostream & operator<<(std::ostream & out, const irr::core::vector3df & oVec);
+
 class InterfaceIrrlicht : public Interface, public irr::IEventReceiver
 {
   public :
@@ -21,6 +23,7 @@ class InterfaceIrrlicht : public Interface, public irr::IEventReceiver
 	std::map<Piece::PIECE_TYPE, irr::scene::IMesh*> moPiecesMeshs;
 
 	InterfaceIrrlicht();
+	virtual ~InterfaceIrrlicht();
 	virtual int iGetMenuEntry(const std::vector<std::string> oMenu);
 	virtual Entry oGetEntry();
 	virtual void DisplayMessage(const std::string strMessage);
@@ -37,9 +40,11 @@ class InterfaceIrrlicht : public Interface, public irr::IEventReceiver
   protected :
 	State * mpoCurrentState;
 	void InitDatas();
+	void PlacePieces();
 	void SetState(State *);
 	MenuState * mpoMenuState;
 	GameState * mpoGameState;
+	State * mpoPieceViewerState;
 	irr::scene::ICameraSceneNode * mpoCameraFPS;
 	irr::scene::ICameraSceneNode * mpoCamera;
 	irr::scene::ICameraSceneNode * mpoCurrentCamera;

@@ -19,18 +19,3 @@ IntroState::~IntroState()
 	mpoInterface->mpoBoardNode->removeAnimator(mpoAnimator);
 	delete mpoAnimator;
 }
-
-bool IntroState::OnEvent(const irr::SEvent & oEvent)
-{
-	if(oEvent.EventType == EET_KEY_INPUT_EVENT)
-		if(!oEvent.KeyInput.PressedDown)
-		{
-			if(oEvent.KeyInput.Key == KEY_ESCAPE)
-			{
-				mbStop = true;
-				return true;
-			}
-		}
-
-	return false;
-}

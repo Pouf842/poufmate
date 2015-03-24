@@ -172,30 +172,30 @@
 				RelativePath="..\..\src\InterfaceIrrlicht\InterfaceIrrlicht.cpp"
 				>
 			</File>
-			<File
-				RelativePath="..\..\src\InterfaceIrrlicht\MenuState.cpp"
-				>
-			</File>
 			<Filter
 				Name="States"
 				>
 				<File
-					RelativePath="..\..\src\InterfaceIrrlicht\State.cpp"
+					RelativePath="..\..\src\InterfaceIrrlicht\States\MenuState.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\InterfaceIrrlicht\TestState.cpp"
+					RelativePath="..\..\src\InterfaceIrrlicht\States\State.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\InterfaceIrrlicht\States\TestState.cpp"
 					>
 				</File>
 				<Filter
 					Name="Intro"
 					>
 					<File
-						RelativePath="..\..\src\InterfaceIrrlicht\IntroAnimator.cpp"
+						RelativePath="..\..\src\InterfaceIrrlicht\States\Intro\IntroAnimator.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\InterfaceIrrlicht\IntroState.cpp"
+						RelativePath="..\..\src\InterfaceIrrlicht\States\Intro\IntroState.cpp"
 						>
 					</File>
 				</Filter>
@@ -203,11 +203,23 @@
 					Name="Game"
 					>
 					<File
-						RelativePath="..\..\src\InterfaceIrrlicht\GameState.cpp"
+						RelativePath="..\..\src\InterfaceIrrlicht\States\Game\GameState.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\InterfaceIrrlicht\PieceNode.cpp"
+						RelativePath="..\..\src\InterfaceIrrlicht\States\Game\PieceNode.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="PieceViewer"
+					>
+					<File
+						RelativePath="..\..\src\InterfaceIrrlicht\States\PieceViewer\PieceViewerAnimator.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\InterfaceIrrlicht\States\PieceViewer\PieceViewerState.cpp"
 						>
 					</File>
 				</Filter>
@@ -223,29 +235,37 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\InterfaceIrrlicht\MenuState.h"
+				RelativePath="..\..\src\InterfaceIrrlicht\Tools.h"
 				>
 			</File>
 			<Filter
 				Name="States"
 				>
 				<File
-					RelativePath="..\..\src\InterfaceIrrlicht\State.h"
+					RelativePath="..\..\src\InterfaceIrrlicht\States\IncludeStates.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\InterfaceIrrlicht\TestState.h"
+					RelativePath="..\..\src\InterfaceIrrlicht\States\MenuState.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\InterfaceIrrlicht\States\State.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\InterfaceIrrlicht\States\TestState.h"
 					>
 				</File>
 				<Filter
 					Name="Intro"
 					>
 					<File
-						RelativePath="..\..\src\InterfaceIrrlicht\IntroAnimator.h"
+						RelativePath="..\..\src\InterfaceIrrlicht\States\Intro\IntroAnimator.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\InterfaceIrrlicht\IntroState.h"
+						RelativePath="..\..\src\InterfaceIrrlicht\States\Intro\IntroState.h"
 						>
 					</File>
 				</Filter>
@@ -253,11 +273,23 @@
 					Name="Game"
 					>
 					<File
-						RelativePath="..\..\src\InterfaceIrrlicht\GameState.h"
+						RelativePath="..\..\src\InterfaceIrrlicht\States\Game\GameState.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\InterfaceIrrlicht\PieceNode.h"
+						RelativePath="..\..\src\InterfaceIrrlicht\States\Game\PieceNode.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="PieceViewer"
+					>
+					<File
+						RelativePath="..\..\src\InterfaceIrrlicht\States\PieceViewer\PieceViewerAnimator.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\InterfaceIrrlicht\States\PieceViewer\PieceViewerState.h"
 						>
 					</File>
 				</Filter>

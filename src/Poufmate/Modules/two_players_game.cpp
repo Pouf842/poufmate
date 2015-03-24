@@ -35,7 +35,7 @@ Entry::ENTRY_COMMAND TwoPlayersGame::Run()
 		{
 			/* Select a piece or execute a command */
 			Entry oEntry = mpoInterface->oGetEntry();
-cout << "Entry : " << oEntry.eGetPieceColor() << endl;
+
 			if(oEntry.bIsCommand())
 			{
 				eCommand = oEntry.eGetCommand();

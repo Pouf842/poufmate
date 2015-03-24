@@ -2,7 +2,7 @@
 #define __INTRO_ANIMATOR_H_
 
 #include "irrlicht.h"
-#include "InterfaceIrrlicht.h"
+#include "../../InterfaceIrrlicht.h"
 
 class IntroAnimator : public irr::scene::ISceneNodeAnimator
 {
@@ -19,7 +19,7 @@ public :
 	IntroAnimator(irr::core::vector3df oStartPosition, irr::core::vector3df oEndPosition, irr::u32 uTranslateTime);
 	virtual ~IntroAnimator();
 	void SetCallback(InterfaceIrrlicht*, void (InterfaceIrrlicht::*)());
-	virtual void animateNode(irr::scene::ISceneNode *,irr::u32);
+	virtual void animateNode(irr::scene::ISceneNode *, irr::u32);
 	virtual irr::scene::ISceneNodeAnimator * createClone(irr::scene::ISceneNode *, irr::scene::ISceneManager *);
 };
 
