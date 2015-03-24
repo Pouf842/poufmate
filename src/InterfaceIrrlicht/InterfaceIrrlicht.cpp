@@ -282,6 +282,7 @@ Entry InterfaceIrrlicht::oGetEntry()
 
 void InterfaceIrrlicht::DisplayMessage(const std::string strMessage)
 {
+	cout << strMessage << endl;
 }
 
 std::string InterfaceIrrlicht::strGetIPEntry()

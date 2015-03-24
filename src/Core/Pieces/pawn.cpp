@@ -28,7 +28,7 @@ bool Pawn::bIsMovementCorrect(Position oPos1, Position oPos2, const Board & oBoa
 	 */
 	int iFactor = (eGetColor() == Piece::PC_WHITE ? -1 : 1);
 
-	if((X2 - X1) * iFactor == 2 && Y2 == Y1)	// If the movement is of two sqaure forward, and none on sides
+	if((X2 - X1) * iFactor == 2 && Y2 == Y1)	// If the movement is of two square forward, and none on sides
 	{
 		if(bHasAlreadyMoved())	// If the pawn has already moved (it's not his first move)
 			return false;		// The movement is not possible
