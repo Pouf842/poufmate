@@ -8,8 +8,6 @@ using namespace video;
 
 #include <iostream>
 
-using namespace std;
-
 extern s32 ID_BOARD;
 extern s32 ID_PIECE;
 
@@ -20,8 +18,8 @@ TestState::TestState(InterfaceIrrlicht * poInterface) : State(poInterface)
 	for(list<ISceneNode *>::Iterator i = oChildren.begin(); i != oChildren.end(); ++i)
 		(*i)->setVisible(false);
 
-	ISceneNode * poPiece1 = mpoSceneManager->addMeshSceneNode(mpoInterface->moPiecesMeshs[Piece::PT_PAWN]);
-	ISceneNode * poPiece2 = mpoSceneManager->addMeshSceneNode(mpoInterface->moPiecesMeshs[Piece::PT_PAWN]);
+	ISceneNode * poPiece1 = mpoSceneManager->addMeshSceneNode(mpoInterface->moPiecesMeshes[Piece::PT_PAWN]);
+	ISceneNode * poPiece2 = mpoSceneManager->addMeshSceneNode(mpoInterface->moPiecesMeshes[Piece::PT_PAWN]);
 
 	poPiece1->setPosition(vector3df(-1, 0.5, -4));
 

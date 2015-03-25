@@ -2,10 +2,10 @@
 #include "Pieces/Piece.h"
 #include "States/IncludeStates.h"
 #include "Tools.h"
+#include "PieceNode/PieceNode.h"
 
 #include <iostream>
 
-using namespace std;
 using namespace irr;
 using namespace core;
 using namespace scene;
@@ -39,6 +39,7 @@ InterfaceIrrlicht::InterfaceIrrlicht() : mpoCurrentState(NULL), mpoCameraFPS(NUL
 	mpoCamera = mpoSceneManager->addCameraSceneNode(NULL, vector3df(0, 5, -10), vector3df(0, 0, 0));
 
 	InitDatas();
+	PieceNode::SetMeshes(&moPiecesMeshes);
 
 	/**/SetState(new IntroState(this));
 	delete mpoCurrentState;
@@ -63,12 +64,12 @@ void InterfaceIrrlicht::InitDatas()
 {
 	ITriangleSelector * poTriangleSelector;
 
-	moPiecesMeshs[Piece::PT_ROOK]   = NULL;
-	moPiecesMeshs[Piece::PT_KNIGHT] = NULL;
-	moPiecesMeshs[Piece::PT_BISHOP] = NULL;
-	moPiecesMeshs[Piece::PT_QUEEN]  = NULL;
-	moPiecesMeshs[Piece::PT_KING]   = NULL;
-	moPiecesMeshs[Piece::PT_PAWN]   = NULL;
+	moPiecesMeshes[Piece::PT_ROOK]   = NULL;
+	moPiecesMeshes[Piece::PT_KNIGHT] = NULL;
+	moPiecesMeshes[Piece::PT_BISHOP] = NULL;
+	moPiecesMeshes[Piece::PT_QUEEN]  = NULL;
+	moPiecesMeshes[Piece::PT_KING]   = NULL;
+	moPiecesMeshes[Piece::PT_PAWN]   = NULL;
 
 	mpoBoardMesh = mpoSceneManager->getGeometryCreator()->createCubeMesh(vector3df(8, 1, 8));
 	mpoBoardNode = mpoSceneManager->addMeshSceneNode(mpoBoardMesh, NULL, ID_BOARD);
@@ -79,12 +80,11 @@ void InterfaceIrrlicht::InitDatas()
 	mpoBoardNode->setMaterialFlag(EMF_LIGHTING, true);
 	ITexture * poBoardTexture = mpoVideoDriver->getTexture("Medias/Images/board.bmp");
 	mpoBoardNode->setMaterialTexture(0, poBoardTexture);
-	//mpoBoardNode->setID(0);
 
-	for(std::map<Piece::PIECE_TYPE, IMesh*>::iterator i = moPiecesMeshs.begin(); i != moPiecesMeshs.end(); ++i)
+	for(map<Piece::PIECE_TYPE, IAnimatedMesh*>::Iterator i = moPiecesMeshes.getIterator(); !i.atEnd(); i++)
 	{
 		irr::core::string<char> strMeshFile = "Medias/";
-		switch(i->first)
+		switch(i->getKey())
 		{
 		  case Piece::PT_ROOK :
 			strMeshFile += "rook.b3d";
@@ -107,10 +107,10 @@ void InterfaceIrrlicht::InitDatas()
 			break;
 		}
 
-		i->second = mpoSceneManager->getMesh(strMeshFile);
+		i->setValue(mpoSceneManager->getMesh(strMeshFile));
 
-		if(!i->second)
-			i->second = mpoSceneManager->getMesh("Medias/pawn.b3d");
+		if(!i->getValue())
+			i->setValue(mpoSceneManager->getMesh("Medias/pawn.b3d"));
 	}
 	
 	PlacePieces();
@@ -118,17 +118,17 @@ void InterfaceIrrlicht::InitDatas()
 
 void InterfaceIrrlicht::PlacePieces()
 {
-	vector<IMesh *> oMeshes;
-	vector<vector3df> oPositions;
-	vector<std::string> oNames;
-	vector<Piece::PIECE_COLOR> oColors;
+	array<IMesh *> oMeshes;
+	array<vector3df> oPositions;
+	array<string<char> > oNames;
+	array<Piece::PIECE_COLOR> oColors;
 
 	// White pawns
 	for(s32 i = 0; i < 8; ++i)
 	{
-		oMeshes.push_back(moPiecesMeshs[Piece::PT_PAWN]);
+		oMeshes.push_back(moPiecesMeshes[Piece::PT_PAWN]);
 		oPositions.push_back(vector3df(-3.5 + i, 0.5, -2.5));
-		std::string str("White pawn n°");
+		string<char> str("White pawn n°");
 		str += '0' + i;
 		oNames.push_back(str);
 		oColors.push_back(Piece::PC_WHITE);
@@ -137,32 +137,32 @@ void InterfaceIrrlicht::PlacePieces()
 	// Black pawns
 	for(s32 i = 0; i < 8; ++i)
 	{
-		oMeshes.push_back(moPiecesMeshs[Piece::PT_PAWN]);
+		oMeshes.push_back(moPiecesMeshes[Piece::PT_PAWN]);
 		oPositions.push_back(vector3df(-3.5 + i, 0.5, 2.5));
-		std::string str("Black pawn n°");
+		string<char> str("Black pawn n°");
 		str += '0' + i;
 		oNames.push_back(str);
 		oColors.push_back(Piece::PC_BLACK);
 	}
 
 	// Kings
-	oMeshes.push_back(moPiecesMeshs[Piece::PT_KING]);
+	oMeshes.push_back(moPiecesMeshes[Piece::PT_KING]);
 	oPositions.push_back(vector3df(0.5, 0.5, -3.5));
 	oNames.push_back("White king");
 	oColors.push_back(Piece::PC_WHITE);
 
-	oMeshes.push_back(moPiecesMeshs[Piece::PT_KING]);
+	oMeshes.push_back(moPiecesMeshes[Piece::PT_KING]);
 	oPositions.push_back(vector3df(0.5, 0.5, 3.5));
 	oNames.push_back("Black king");
 	oColors.push_back(Piece::PC_BLACK);
 
 	// Queens
-	oMeshes.push_back(moPiecesMeshs[Piece::PT_QUEEN]);
+	oMeshes.push_back(moPiecesMeshes[Piece::PT_QUEEN]);
 	oPositions.push_back(vector3df(-0.5, 0.5, -3.5));
 	oNames.push_back("White queen");
 	oColors.push_back(Piece::PC_WHITE);
 
-	oMeshes.push_back(moPiecesMeshs[Piece::PT_QUEEN]);
+	oMeshes.push_back(moPiecesMeshes[Piece::PT_QUEEN]);
 	oPositions.push_back(vector3df(-0.5, 0.5, 3.5));
 	oNames.push_back("Black queen");
 	oColors.push_back(Piece::PC_BLACK);
@@ -170,9 +170,9 @@ void InterfaceIrrlicht::PlacePieces()
 	// Bishops
 	for(s32 i = 0; i < 2; ++i)
 	{
-		oMeshes.push_back(moPiecesMeshs[Piece::PT_BISHOP]);
+		oMeshes.push_back(moPiecesMeshes[Piece::PT_BISHOP]);
 		oPositions.push_back(vector3df(-1.5 + i * 3, 0.5, -3.5));
-		std::string str("White bishop n°");
+		string<char> str("White bishop n°");
 		str += '0' + i;
 		oNames.push_back(str);
 		oColors.push_back(Piece::PC_WHITE);
@@ -180,9 +180,9 @@ void InterfaceIrrlicht::PlacePieces()
 
 	for(s32 i = 0; i < 2; ++i)
 	{
-		oMeshes.push_back(moPiecesMeshs[Piece::PT_BISHOP]);
+		oMeshes.push_back(moPiecesMeshes[Piece::PT_BISHOP]);
 		oPositions.push_back(vector3df(-1.5 + i * 3, 0.5, 3.5));
-		std::string str("Black bishop n°");
+		string<char> str("Black bishop n°");
 		str += '0' + i;
 		oNames.push_back(str);
 		oColors.push_back(Piece::PC_BLACK);
@@ -191,9 +191,9 @@ void InterfaceIrrlicht::PlacePieces()
 	// Knights
 	for(s32 i = 0; i < 2; ++i)
 	{
-		oMeshes.push_back(moPiecesMeshs[Piece::PT_KNIGHT]);
+		oMeshes.push_back(moPiecesMeshes[Piece::PT_KNIGHT]);
 		oPositions.push_back(vector3df(-2.5 + i * 5, 0.5, -3.5));
-		std::string str("White knight n°");
+		string<char> str("White knight n°");
 		str += '0' + i;
 		oNames.push_back(str);
 		oColors.push_back(Piece::PC_WHITE);
@@ -201,9 +201,9 @@ void InterfaceIrrlicht::PlacePieces()
 
 	for(s32 i = 0; i < 2; ++i)
 	{
-		oMeshes.push_back(moPiecesMeshs[Piece::PT_KNIGHT]);
+		oMeshes.push_back(moPiecesMeshes[Piece::PT_KNIGHT]);
 		oPositions.push_back(vector3df(-2.5 + i * 5, 0.5, 3.5));
-		std::string str("Black knight n°");
+		string<char> str("Black knight n°");
 		str += '0' + i;
 		oNames.push_back(str);
 		oColors.push_back(Piece::PC_BLACK);
@@ -212,9 +212,9 @@ void InterfaceIrrlicht::PlacePieces()
 	// Rooks
 	for(s32 i = 0; i < 2; ++i)
 	{
-		oMeshes.push_back(moPiecesMeshs[Piece::PT_ROOK]);
+		oMeshes.push_back(moPiecesMeshes[Piece::PT_ROOK]);
 		oPositions.push_back(vector3df(-3.5 + i * 7, 0.5, -3.5));
-		std::string str("White rook n°");
+		string<char> str("White rook n°");
 		str += '0' + i;
 		oNames.push_back(str);
 		oColors.push_back(Piece::PC_WHITE);
@@ -222,9 +222,9 @@ void InterfaceIrrlicht::PlacePieces()
 
 	for(s32 i = 0; i < 2; ++i)
 	{
-		oMeshes.push_back(moPiecesMeshs[Piece::PT_ROOK]);
+		oMeshes.push_back(moPiecesMeshes[Piece::PT_ROOK]);
 		oPositions.push_back(vector3df(-3.5 + i * 7, 0.5, 3.5));
-		std::string str("Black rook n°");
+		string<char> str("Black rook n°");
 		str += '0' + i;
 		oNames.push_back(str);
 		oColors.push_back(Piece::PC_BLACK);
@@ -259,14 +259,18 @@ void InterfaceIrrlicht::PlacePieces()
 
 int InterfaceIrrlicht::iGetMenuEntry(const std::vector<std::string> oMenu)
 {
-	mpoMenuState->SetMenu(oMenu);
+	array<irr::core::string<wchar_t> > oArrayMenu;
+
+	for(s32 i = 0; i < oMenu.size(); ++i)
+		oArrayMenu.push_back(oMenu[i].c_str());
+
+	mpoMenuState->SetMenu(oArrayMenu);
 	SetState(mpoMenuState);
 
 	while(mpoMenuState->sGetChoice() > oMenu.size())
 	{
 		SetState(mpoPieceViewerState);
 		mpoCurrentState = NULL;
-		mpoMenuState->SetMenu(oMenu);
 		SetState(mpoMenuState);
 	}
 	
@@ -282,7 +286,7 @@ Entry InterfaceIrrlicht::oGetEntry()
 
 void InterfaceIrrlicht::DisplayMessage(const std::string strMessage)
 {
-	cout << strMessage << endl;
+	std::cout << strMessage << std::endl;
 }
 
 std::string InterfaceIrrlicht::strGetIPEntry()

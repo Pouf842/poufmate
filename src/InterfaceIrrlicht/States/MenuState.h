@@ -8,12 +8,13 @@ class MenuState : public State
 {
 protected :
 	irr::s32 msChoice;
-	std::vector<irr::gui::IGUIButton *> moButtons;
+	irr::core::array<irr::gui::IGUIButton *> moButtons;
 public :
 	MenuState(InterfaceIrrlicht *);
 
 	virtual bool OnEvent(const irr::SEvent &);
-	void SetMenu(const std::vector<std::string> &);
+	void SetMenu(const irr::core::array<irr::core::string<wchar_t> > &);
+	virtual void Run();
 	virtual void Stop();
 	irr::s32 sGetChoice();
 };

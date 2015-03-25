@@ -1,15 +1,13 @@
 #ifndef __INTERFACE_IRRLICHT_H_
 #define __INTERFACE_IRRLICHT_H_
 
-#include <map>
 #include "Interface/interface.h"
 #include "irrlicht.h"
+#include "PieceNode/PieceNodeFactory.h"
 
 class State;
 class MenuState;
 class GameState;
-
-std::ostream & operator<<(std::ostream & out, const irr::core::vector3df & oVec);
 
 class InterfaceIrrlicht : public Interface, public irr::IEventReceiver
 {
@@ -20,7 +18,7 @@ class InterfaceIrrlicht : public Interface, public irr::IEventReceiver
 	irr::scene::ISceneManager * mpoSceneManager;
 	irr::scene::ISceneNode * mpoBoardNode;
 	irr::scene::IMesh * mpoBoardMesh;
-	std::map<Piece::PIECE_TYPE, irr::scene::IMesh*> moPiecesMeshs;
+	irr::core::map<Piece::PIECE_TYPE, irr::scene::IAnimatedMesh*> moPiecesMeshes;
 
 	InterfaceIrrlicht();
 	virtual ~InterfaceIrrlicht();
@@ -38,6 +36,7 @@ class InterfaceIrrlicht : public Interface, public irr::IEventReceiver
 	virtual void SwitchCameraType();
 
   protected :
+    PieceNodeFactory moPieceNodeFactory;
 	State * mpoCurrentState;
 	void InitDatas();
 	void PlacePieces();

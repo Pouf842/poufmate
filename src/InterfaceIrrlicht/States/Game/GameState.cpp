@@ -1,6 +1,5 @@
 #include "GameState.h"
 
-using namespace std;
 using namespace irr;
 using namespace scene;
 using namespace core;
@@ -44,7 +43,6 @@ bool GameState::OnEvent(const SEvent & oEvent)
 				{
 					vector3df oPos = mpoHighlightedPiece->getPosition();
 					moLastEntry = Entry(Position(4 - (round32(oPos.Z + 0.5) - 0.5), round32(oPos.X + 0.5) - 0.5 + 4));
-					cout << "Entry : " << moLastEntry.oGetPos().mX << " ; " << moLastEntry.oGetPos().mY << ")" << endl;
 					mbStop = true;
 				}
 

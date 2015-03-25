@@ -14,7 +14,7 @@ bool MenuState::OnEvent(const SEvent & oEvent)
 	&& oEvent.KeyInput.Key == KEY_ESCAPE
 	&& !oEvent.KeyInput.PressedDown)
 	{
-		msChoice = (*(moButtons.rbegin() + 1))->getID();
+		msChoice = moButtons[moButtons.size() - 2]->getID();
 		mbStop = true;
 		return true;
 	}
@@ -34,7 +34,15 @@ s32 MenuState::sGetChoice()
 	return msChoice;
 }
 
-void MenuState::SetMenu(const std::vector<std::string> & oMenu)
+void MenuState::Run()
+{
+	for(s32 i = 0; i < moButtons.size(); ++i)
+		moButtons[i]->setVisible(true);
+
+	State::Run();
+}
+
+void MenuState::SetMenu(const array<string<wchar_t> > & oMenu)
 {
 	IGUIEnvironment * poGUI = mpoDevice->getGUIEnvironment();
 
@@ -45,7 +53,7 @@ void MenuState::SetMenu(const std::vector<std::string> & oMenu)
 
 	s32 sMenuSize = oMenu.size();
 	for(s32 s = 0; s < sMenuSize; ++s)
-		moButtons.push_back(poGUI->addButton(rect<s32>(0, 600 / (sMenuSize + 1) * s, 800, 600 / (sMenuSize + 1) * (s + 1)), NULL, s + 1, std::wstring().assign(oMenu[s].begin(), oMenu[s].end()).c_str(), L"Tooltip"));
+		moButtons.push_back(poGUI->addButton(rect<s32>(0, 600 / (sMenuSize + 1) * s, 800, 600 / (sMenuSize + 1) * (s + 1)), NULL, s + 1, string<wchar_t>(oMenu[s]).c_str(), L"Tooltip"));
 
 	moButtons.push_back(poGUI->addButton(rect<s32>(0, 600 / (sMenuSize + 1) * sMenuSize, 800, 600), NULL, sMenuSize + 1, L"Piece viewer"));
 }

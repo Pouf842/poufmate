@@ -3,7 +3,6 @@
 
 #include <iostream>
 
-using namespace std;
 using namespace irr;
 using namespace video;
 using namespace scene;
@@ -95,7 +94,7 @@ void PieceViewerState::NextPiece(Piece::PIECE_TYPE eType, bool bLeft)
 
 	ICameraSceneNode * poCamera = mpoSceneManager->getActiveCamera();
 
-	ISceneNode * poNewPiece = mpoSceneManager->addMeshSceneNode(mpoInterface->moPiecesMeshs[eType], poCamera, -1);
+	ISceneNode * poNewPiece = mpoSceneManager->addMeshSceneNode(mpoInterface->moPiecesMeshes[eType], poCamera, -1);
 	s32 sPieceHeight = poNewPiece->getBoundingBox().MaxEdge.Y - poNewPiece->getBoundingBox().MinEdge.Y;
 	vector3df oPosBase(-7 / 2 * sLeft, -sPieceHeight / 2, 0);
 	vector3df oPos(oPosBase);

@@ -1,7 +1,6 @@
 #include "PieceViewerAnimator.h"
 #include "../../Tools.h"
 
-using namespace std;
 using namespace irr;
 using namespace core;
 using namespace scene;
