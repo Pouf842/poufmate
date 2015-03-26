@@ -36,75 +36,83 @@ void Game::Initialize()
 
 Game::Game(const Board & oBoard, Interface * poInterface, Module::MODULE_TYPE eType) : mpoSelectedPosition(NULL)
 {
-	SetInterface(poInterface);
-
-	meType = eType;
-	moBoard = oBoard;
-
-	Position oWhiteKing;
-	Position oBlackKing;
-
-	/* Searching for the two kings to initialize moKings */
-	bool bWhiteFounded = false;
-	bool bBlackFounded = false;
-
-	Movement::SetBoard(&moBoard);
-
-	/* For each line */
-	for(unsigned int i = 0; i < 8 && (!bWhiteFounded || !bBlackFounded); ++i)
+	try
 	{
-		/* For each column */
-		for(unsigned int j = 0; j < 8 && (!bWhiteFounded || !bBlackFounded); ++j)
-		{
-			if(!moBoard.bIsSquareEmpty(i, j))
-			{
-				Piece * poCurrentPiece = moBoard.poGetPiece(i, j);
+		SetInterface(poInterface);
 
-				if(poCurrentPiece->eGetType() == Piece::PT_KING)
+		meType = eType;
+		moBoard = oBoard;
+
+		Position oWhiteKing;
+		Position oBlackKing;
+
+		/* Searching for the two kings to initialize moKings */
+		bool bWhiteFounded = false;
+		bool bBlackFounded = false;
+
+		Movement::SetBoard(&moBoard);
+
+		/* For each line */
+		for(unsigned int i = 0; i < 8 && (!bWhiteFounded || !bBlackFounded); ++i)
+		{
+			/* For each column */
+			for(unsigned int j = 0; j < 8 && (!bWhiteFounded || !bBlackFounded); ++j)
+			{
+				if(!moBoard.bIsSquareEmpty(i, j))
 				{
-					if(poCurrentPiece->eGetColor() == Piece::PC_WHITE)
+					Piece * poCurrentPiece = moBoard.poGetPiece(i, j);
+
+					if(poCurrentPiece->eGetType() == Piece::PT_KING)
 					{
-						if(bWhiteFounded)
-							throw exception("You can't play a party with more than one king for each player");
+						if(poCurrentPiece->eGetColor() == Piece::PC_WHITE)
+						{
+							if(bWhiteFounded)
+								throw exception("You can't play a party with more than one king for each player");
+							else
+								bWhiteFounded = true;
+						}
 						else
-							bWhiteFounded = true;
+						{
+							if(bBlackFounded)
+								throw exception("You can't play a party with more than one king for each player");
+							else
+								bBlackFounded = true;
+						}
+						
+						moKings[poCurrentPiece->eGetColor()] = Position(i, j);	// Initialize moKings for the color
 					}
-					else
-					{
-						if(bBlackFounded)
-							throw exception("You can't play a party with more than one king for each player");
-						else
-							bBlackFounded = true;
-					}
-					
-					moKings[poCurrentPiece->eGetColor()] = Position(i, j);	// Initialize moKings for the color
 				}
 			}
 		}
+
+		if(!bWhiteFounded || !bBlackFounded)
+			throw exception("You can't play a party without a king for each player");
+
+		meCurrentPlayer = Piece::PC_WHITE;	// White moves first
+		RefreshCheckBooleans();
+
+		if(abs(moKings[Piece::PC_WHITE].mX - moKings[Piece::PC_BLACK].mX) <= 1
+		&& abs(moKings[Piece::PC_WHITE].mY - moKings[Piece::PC_BLACK].mY) <= 1)	// Kings are 1 square away
+			throw exception("The kings must be more than 1 square away from each other. This game is impossible");
+
+		if(mbIsOver)
+		{
+			ostringstream strOver;
+
+			if(mbIsWhiteCheckMate)
+				strOver << "White player is checkmate !" << endl;
+			else if(mbIsBlackCheckMate)
+				strOver << "Black player is checkmate !" << endl;
+			else if(mbIsStaleMate)
+				strOver << "It's a stale !" << endl;
+
+			throw exception(strOver.str().c_str());
+		}
 	}
-
-	if(!bWhiteFounded || !bBlackFounded)
-		throw exception("You can't play a party without a king for each player");
-
-	meCurrentPlayer = Piece::PC_WHITE;	// White moves first
-	RefreshCheckBooleans();
-
-	if(abs(moKings[Piece::PC_WHITE].mX - moKings[Piece::PC_BLACK].mX) <= 1
-	&& abs(moKings[Piece::PC_WHITE].mY - moKings[Piece::PC_BLACK].mY) <= 1)	// Kings are 1 square away
-		throw exception("The kings must be more than 1 square away from each other. This game is impossible");
-
-	if(mbIsOver)
+	catch(exception & e)
 	{
-		ostringstream strOver;
-
-		if(mbIsWhiteCheckMate)
-			strOver << "White player is checkmate !" << endl;
-		else if(mbIsBlackCheckMate)
-			strOver << "Black player is checkmate !" << endl;
-		else if(mbIsStaleMate)
-			strOver << "It's a stale !" << endl;
-
-		throw exception(strOver.str().c_str());
+		cout << __FILE__ << ":" << __LINE__ << endl;
+		throw e;
 	}
 }
 
@@ -184,56 +192,64 @@ vector<Position> Game::oGetPossibilities(unsigned int i, unsigned int j)
 
 vector<Position> Game::oGetPossibilities(Position oPos)
 {
-	vector<Position> oPossibilites;
-
-//	oPossibilites.push_back(oPos);	// The square itself is a possibility
-
-	/* For each squares of the board */
-	for(unsigned int i = 0; i < 8; ++i)
+	try
 	{
-		for(unsigned int j = 0; j < 8; ++j)
+		vector<Position> oPossibilites;
+
+	//	oPossibilites.push_back(oPos);	// The square itself is a possibility
+
+		/* For each squares of the board */
+		for(unsigned int i = 0; i < 8; ++i)
 		{
-			Position oPos2(i, j);
-
-			if(bIsMovementCorrect(oPos, oPos2))	// If the movement is correct
+			for(unsigned int j = 0; j < 8; ++j)
 			{
-				try
-				{
-					/* Determining the type of the movement */
-					Movement * poMove = NULL;
+				Position oPos2(i, j);
 
-					if(bIsCastling(oPos, oPos2))
+				if(bIsMovementCorrect(oPos, oPos2))	// If the movement is correct
+				{
+					try
 					{
-						if(!bIsCastlingPathOk(oPos, oPos2))
-							throw exception("Your king would be in check during castling");
-						if(bIsInCheck(moBoard.eGetSquareColor(oPos)))
-							throw exception("Castling is not allowed if you're in check");
+						/* Determining the type of the movement */
+						Movement * poMove = NULL;
 
-						poMove = new CastlingMove(oPos, oPos2);
+						if(bIsCastling(oPos, oPos2))
+						{
+							if(!bIsCastlingPathOk(oPos, oPos2))
+								throw exception("Your king would be in check during castling");
+							if(bIsInCheck(moBoard.eGetSquareColor(oPos)))
+								throw exception("Castling is not allowed if you're in check");
+
+							poMove = new CastlingMove(oPos, oPos2);
+						}
+						else if(moBoard.poGetPiece(oPos)->bIsFirstMove())
+							poMove = new FirstMove(oPos, oPos2);
+						else if(bIsEnPassantOk(oPos, oPos2))
+							poMove = new EnPassant(oPos, oPos2, (*moHistory.rbegin()));
+						else
+							poMove = new Movement(oPos, oPos2);
+
+						/* Executing the movement */
+						ExecuteMovement(poMove);
+
+						if(!bIsInCheck(moBoard.eGetSquareColor(oPos2)))	// If the player is not in check, the movement is possible
+							oPossibilites.push_back(oPos2);
+
+						CancelLastMove();	// Cancel the movement
 					}
-					else if(moBoard.poGetPiece(oPos)->bIsFirstMove())
-						poMove = new FirstMove(oPos, oPos2);
-					else if(bIsEnPassantOk(oPos, oPos2))
-						poMove = new EnPassant(oPos, oPos2, (*moHistory.rbegin()));
-					else
-						poMove = new Movement(oPos, oPos2);
-
-					/* Executing the movement */
-					ExecuteMovement(poMove);
-
-					if(!bIsInCheck(moBoard.eGetSquareColor(oPos2)))	// If the player is not in check, the movement is possible
-						oPossibilites.push_back(oPos2);
-
-					CancelLastMove();	// Cancel the movement
-				}
-				catch(exception &)	// Catching exception for impossible movements
-				{
+					catch(exception &)	// Catching exception for impossible movements
+					{
+					}
 				}
 			}
 		}
-	}
 
-	return oPossibilites;
+		return oPossibilites;
+	}
+	catch(exception & e)
+	{
+		cout << __FILE__ << ":" << __LINE__ << endl;
+		throw e;
+	}
 }
 
 bool Game::bIsInCheck(Piece::PIECE_COLOR eColor) const
@@ -261,81 +277,97 @@ bool Game::bIsInCheck(Piece::PIECE_COLOR eColor) const
 
 bool Game::bIsCheckMate(Piece::PIECE_COLOR ePlayer)
 {
-	if(!bIsInCheck(ePlayer))	// If the player is not in check, he can't be checkmate
-		return false;
-
-	/* For each squares of the board */
-	for(unsigned int i = 0; i < 8; ++i)
+	try
 	{
-		for(unsigned int j = 0; j < 8; ++j)
+		if(!bIsInCheck(ePlayer))	// If the player is not in check, he can't be checkmate
+			return false;
+
+		/* For each squares of the board */
+		for(unsigned int i = 0; i < 8; ++i)
 		{
-			Position oPos1(i, j);
-
-			/* If the square contains a piece of the player */
-			if(!moBoard.bIsSquareEmpty(oPos1) && moBoard.eGetSquareColor(oPos1) == ePlayer)
+			for(unsigned int j = 0; j < 8; ++j)
 			{
-				/* For each squares of the board */
-				for(unsigned int k = 0; k < 8; ++k)
+				Position oPos1(i, j);
+
+				/* If the square contains a piece of the player */
+				if(!moBoard.bIsSquareEmpty(oPos1) && moBoard.eGetSquareColor(oPos1) == ePlayer)
 				{
-					for(unsigned int l = 0; l < 8; ++l)
+					/* For each squares of the board */
+					for(unsigned int k = 0; k < 8; ++k)
 					{
-						Position oPos2(k, l);
-
-						/* If the piece can go from the first square to the second */
-						if(bIsMovementCorrect(oPos1, oPos2))
+						for(unsigned int l = 0; l < 8; ++l)
 						{
-							try
+							Position oPos2(k, l);
+
+							/* If the piece can go from the first square to the second */
+							if(bIsMovementCorrect(oPos1, oPos2))
 							{
-								/* Determining the type of the movement */
-								Movement * poMove = NULL;
-								
-								if(bIsCastling(oPos1, oPos2))
+								try
 								{
-									if(bIsInCheck(ePlayer))
-										throw exception("Castling is not allowed if you're in check");
+									/* Determining the type of the movement */
+									Movement * poMove = NULL;
+									
+									if(bIsCastling(oPos1, oPos2))
+									{
+										if(bIsInCheck(ePlayer))
+											throw exception("Castling is not allowed if you're in check");
 
-									if(!bIsCastlingPathOk(oPos1, oPos2))
-										throw exception("Your king would be in check during castling");
+										if(!bIsCastlingPathOk(oPos1, oPos2))
+											throw exception("Your king would be in check during castling");
 
-									poMove = new CastlingMove(oPos1, oPos2);
+										poMove = new CastlingMove(oPos1, oPos2);
+									}
+									else if(moBoard.poGetPiece(oPos1)->bIsFirstMove())
+										poMove = new FirstMove(oPos1, oPos2);
+									else if(bIsEnPassantOk(oPos1, oPos2))
+										poMove = new EnPassant(oPos1, oPos2, (*moHistory.rbegin()));
+									else
+										poMove = new Movement(oPos1, oPos2);
+
+									ExecuteMovement(poMove);	// Move the piece
+
+									if(!bIsInCheck(ePlayer))	// Check if the player is still in check
+									{
+										CancelLastMove();		// If not, cancel the move, and return that the player is not in check
+										return false;
+									}
+
+									CancelLastMove();	// Cancel the move anyway
 								}
-								else if(moBoard.poGetPiece(oPos1)->bIsFirstMove())
-									poMove = new FirstMove(oPos1, oPos2);
-								else if(bIsEnPassantOk(oPos1, oPos2))
-									poMove = new EnPassant(oPos1, oPos2, (*moHistory.rbegin()));
-								else
-									poMove = new Movement(oPos1, oPos2);
-
-								ExecuteMovement(poMove);	// Move the piece
-
-								if(!bIsInCheck(ePlayer))	// Check if the player is still in check
+								catch(exception &)	// Catch the exception for impossible moves
 								{
-									CancelLastMove();		// If not, cancel the move, and return that the player is not in check
-									return false;
 								}
-
-								CancelLastMove();	// Cancel the move anyway
-							}
-							catch(exception &)	// Catch the exception for impossible moves
-							{
 							}
 						}
 					}
 				}
 			}
 		}
-	}
 
-	return true;	// If no moves turn the player in a non-in-check state, the player is checkmate
+		return true;	// If no moves turn the player in a non-in-check state, the player is checkmate
+	}
+	catch(exception & e)
+	{
+		cout << __FILE__ << ":" << __LINE__ << endl;
+		throw e;
+	}
 }
 
 void Game::CheckSelectionCoords(Position oPos) const
 {	
-	if(moBoard.bIsSquareEmpty(oPos))
-		throw exception("There is no piece on this square");
+	try
+	{
+		if(moBoard.bIsSquareEmpty(oPos))
+			throw exception("There is no piece on this square");
 
-	if(moBoard.eGetSquareColor(oPos) != meCurrentPlayer)
-		throw exception("This piece does not belong to you");
+		if(moBoard.eGetSquareColor(oPos) != meCurrentPlayer)
+			throw exception("This piece does not belong to you");
+	}
+	catch(exception & e)
+	{
+		cout << __FILE__ << ":" << __LINE__ << endl;
+		throw e;
+	}
 }
 
 bool Game::bIsMovementCorrect(Position oPos1, Position oPos2) const
@@ -356,18 +388,26 @@ bool Game::bIsOver() const
 
 void Game::CancelLastMove()
 {
-	if(moHistory.size() == 0)
-		throw exception("Empty history");
+	try
+	{
+		if(moHistory.size() == 0)
+			throw exception("Empty history");
 
-	Movement * oLastMovement = moHistory.back();	// Getting the last move
-	oLastMovement->CancelMovement();				// Cancel it
+		Movement * oLastMovement = moHistory.back();	// Getting the last move
+		oLastMovement->CancelMovement();				// Cancel it
 
-	/* Update the kings position if necessary */
-	if(oLastMovement->poGetMovingPiece()->eGetType() == Piece::PT_KING)
-		moKings[oLastMovement->eGetPlayerColor()] = oLastMovement->oGetCoords1();
+		/* Update the kings position if necessary */
+		if(oLastMovement->poGetMovingPiece()->eGetType() == Piece::PT_KING)
+			moKings[oLastMovement->eGetPlayerColor()] = oLastMovement->oGetCoords1();
 
-	delete moHistory.back();	// Destroy the last move
-	moHistory.pop_back();		// Supress the pointer from the list
+		delete moHistory.back();	// Destroy the last move
+		moHistory.pop_back();		// Supress the pointer from the list
+	}
+	catch(exception & e)
+	{
+		cout << __FILE__ << ":" << __LINE__ << endl;
+		throw e;
+	}
 }
 
 void Game::ExecuteMovement(Movement * poMove)

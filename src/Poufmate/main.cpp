@@ -131,12 +131,15 @@ int main(int argc, char * argv[])
 	}
 	catch(exception & e)
 	{
+		cout << __FILE__ << ":" << __LINE__ << endl;
 		cout << "Uncatched exception : " << e.what() << endl;
         getchar();
 	}
 	catch(...)
 	{
+		cout << __FILE__ << ":" << __LINE__ << endl;
 		cout << "Unknow uncatched exception" << endl;
+        getchar();
 	}
 
 	return 0;

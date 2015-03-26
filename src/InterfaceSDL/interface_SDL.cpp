@@ -21,65 +21,73 @@ extern "C" __declspec(dllexport) Interface * poGetInstance(struct Interface::stE
 
 InterfaceSDL::InterfaceSDL(struct stExportedMethods exportedMethods)
 {
-    mExportedMethods = exportedMethods;
-
-	if(SDL_Init(SDL_INIT_VIDEO) == -1)
-		throw exception("SDL initialisation failed");
-
-	if(!(mpoGame[SCREEN] = SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32, /*SDL_FULLSCREEN |*/ SDL_HWSURFACE | SDL_DOUBLEBUF)))
-		throw exception("SDL video mode initialisation failed");
-
-	SDL_FillRect(mpoGame[SCREEN], NULL, SDL_MapRGB(mpoGame[SCREEN]->format, 200, 200, 200));
-
-	if(TTF_Init() == -1)
-		throw exception("SDL ttf module could not be loaded");
-
-	mpoMenuFont = TTF_OpenFont("angelina.ttf", 65);
-	mpoMessagesFont = TTF_OpenFont("angelina.ttf", 20);
-
-	if(!mpoMenuFont || !mpoMessagesFont)
-		throw exception("Font couldn't be loaded");
-
-	SDL_WM_SetCaption("PoufMate", NULL);
-	mpoGame[MESSAGEBOARD] = SDL_CreateRGBSurface(SDL_HWSURFACE, SIDE_BOARD_WIDTH, 8 * SQUARE_HEIGHT, 32, 0, 0, 0, 0);
-
-	SDL_FillRect(mpoGame[MESSAGEBOARD], NULL, SDL_MapRGB(mpoGame[MESSAGEBOARD]->format, 200, 200, 200));
-
-	SDL_Rect position;
-	position.x = 8 * SQUARE_WIDTH;
-	position.y = 0;
-
-	SDL_BlitSurface(mpoGame[MESSAGEBOARD], NULL, mpoGame[SCREEN], &position);
-
-	mpoGame[BOARD] = SDL_LoadBMP("Images/Echiquier.bmp");
-
-	mpoGame[SELECTION] = SDL_LoadBMP("Images/Selection.bmp");
-	mpoGame[CHESS] = SDL_LoadBMP("Images/Echec.bmp");
-	mpoGame[POSSIBLE] = SDL_LoadBMP("Images/Possible.bmp");
-
-	mpoPieces[Piece::PC_WHITE][Piece::PT_PAWN] = SDL_LoadBMP("Images/Pion blanc.bmp");
-	mpoPieces[Piece::PC_WHITE][Piece::PT_ROOK] = SDL_LoadBMP("Images/Tour blanche.bmp");
-	mpoPieces[Piece::PC_WHITE][Piece::PT_KNIGHT] = SDL_LoadBMP("Images/Cavalier blanc.bmp");
-	mpoPieces[Piece::PC_WHITE][Piece::PT_BISHOP] = SDL_LoadBMP("Images/Fou blanc.bmp");
-	mpoPieces[Piece::PC_WHITE][Piece::PT_QUEEN] = SDL_LoadBMP("Images/Reine blanche.bmp");
-	mpoPieces[Piece::PC_WHITE][Piece::PT_KING] = SDL_LoadBMP("Images/Roi blanc.bmp");
-
-	mpoPieces[Piece::PC_BLACK][Piece::PT_PAWN] = SDL_LoadBMP("Images/Pion noir.bmp");
-	mpoPieces[Piece::PC_BLACK][Piece::PT_ROOK] = SDL_LoadBMP("Images/Tour noire.bmp");
-	mpoPieces[Piece::PC_BLACK][Piece::PT_KNIGHT] = SDL_LoadBMP("Images/Cavalier noir.bmp");
-	mpoPieces[Piece::PC_BLACK][Piece::PT_BISHOP] = SDL_LoadBMP("Images/Fou noir.bmp");
-	mpoPieces[Piece::PC_BLACK][Piece::PT_QUEEN] = SDL_LoadBMP("Images/Reine noire.bmp");
-	mpoPieces[Piece::PC_BLACK][Piece::PT_KING] = SDL_LoadBMP("Images/Roi noir.bmp");
-
-	for(unsigned int i = 0; i < 6; ++i)	
-		SDL_SetColorKey(mpoGame[i], SDL_SRCCOLORKEY, SDL_MapRGB(mpoGame[i]->format, 255, 0, 0));
-
-	SDL_SetColorKey(mpoGame[CHESS], SDL_SRCCOLORKEY, SDL_MapRGB(mpoGame[CHESS]->format, 0, 255, 0));
-
-	for(unsigned int i = 0; i < 6; ++i)
+	try
 	{
-		SDL_SetColorKey(mpoPieces[Piece::PC_WHITE][i], SDL_SRCCOLORKEY, SDL_MapRGB(mpoPieces[Piece::PC_WHITE][i]->format, 255, 0, 0));
-		SDL_SetColorKey(mpoPieces[Piece::PC_BLACK][i], SDL_SRCCOLORKEY, SDL_MapRGB(mpoPieces[Piece::PC_BLACK][i]->format, 255, 0, 0));
+		mExportedMethods = exportedMethods;
+
+		if(SDL_Init(SDL_INIT_VIDEO) == -1)
+			throw exception("SDL initialisation failed");
+
+		if(!(mpoGame[SCREEN] = SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32, /*SDL_FULLSCREEN |*/ SDL_HWSURFACE | SDL_DOUBLEBUF)))
+			throw exception("SDL video mode initialisation failed");
+
+		SDL_FillRect(mpoGame[SCREEN], NULL, SDL_MapRGB(mpoGame[SCREEN]->format, 200, 200, 200));
+
+		if(TTF_Init() == -1)
+			throw exception("SDL ttf module could not be loaded");
+
+		mpoMenuFont = TTF_OpenFont("angelina.ttf", 65);
+		mpoMessagesFont = TTF_OpenFont("angelina.ttf", 20);
+
+		if(!mpoMenuFont || !mpoMessagesFont)
+			throw exception("Font couldn't be loaded");
+
+		SDL_WM_SetCaption("PoufMate", NULL);
+		mpoGame[MESSAGEBOARD] = SDL_CreateRGBSurface(SDL_HWSURFACE, SIDE_BOARD_WIDTH, 8 * SQUARE_HEIGHT, 32, 0, 0, 0, 0);
+
+		SDL_FillRect(mpoGame[MESSAGEBOARD], NULL, SDL_MapRGB(mpoGame[MESSAGEBOARD]->format, 200, 200, 200));
+
+		SDL_Rect position;
+		position.x = 8 * SQUARE_WIDTH;
+		position.y = 0;
+
+		SDL_BlitSurface(mpoGame[MESSAGEBOARD], NULL, mpoGame[SCREEN], &position);
+
+		mpoGame[BOARD] = SDL_LoadBMP("Images/Echiquier.bmp");
+
+		mpoGame[SELECTION] = SDL_LoadBMP("Images/Selection.bmp");
+		mpoGame[CHESS] = SDL_LoadBMP("Images/Echec.bmp");
+		mpoGame[POSSIBLE] = SDL_LoadBMP("Images/Possible.bmp");
+
+		mpoPieces[Piece::PC_WHITE][Piece::PT_PAWN] = SDL_LoadBMP("Images/Pion blanc.bmp");
+		mpoPieces[Piece::PC_WHITE][Piece::PT_ROOK] = SDL_LoadBMP("Images/Tour blanche.bmp");
+		mpoPieces[Piece::PC_WHITE][Piece::PT_KNIGHT] = SDL_LoadBMP("Images/Cavalier blanc.bmp");
+		mpoPieces[Piece::PC_WHITE][Piece::PT_BISHOP] = SDL_LoadBMP("Images/Fou blanc.bmp");
+		mpoPieces[Piece::PC_WHITE][Piece::PT_QUEEN] = SDL_LoadBMP("Images/Reine blanche.bmp");
+		mpoPieces[Piece::PC_WHITE][Piece::PT_KING] = SDL_LoadBMP("Images/Roi blanc.bmp");
+
+		mpoPieces[Piece::PC_BLACK][Piece::PT_PAWN] = SDL_LoadBMP("Images/Pion noir.bmp");
+		mpoPieces[Piece::PC_BLACK][Piece::PT_ROOK] = SDL_LoadBMP("Images/Tour noire.bmp");
+		mpoPieces[Piece::PC_BLACK][Piece::PT_KNIGHT] = SDL_LoadBMP("Images/Cavalier noir.bmp");
+		mpoPieces[Piece::PC_BLACK][Piece::PT_BISHOP] = SDL_LoadBMP("Images/Fou noir.bmp");
+		mpoPieces[Piece::PC_BLACK][Piece::PT_QUEEN] = SDL_LoadBMP("Images/Reine noire.bmp");
+		mpoPieces[Piece::PC_BLACK][Piece::PT_KING] = SDL_LoadBMP("Images/Roi noir.bmp");
+
+		for(unsigned int i = 0; i < 6; ++i)	
+			SDL_SetColorKey(mpoGame[i], SDL_SRCCOLORKEY, SDL_MapRGB(mpoGame[i]->format, 255, 0, 0));
+
+		SDL_SetColorKey(mpoGame[CHESS], SDL_SRCCOLORKEY, SDL_MapRGB(mpoGame[CHESS]->format, 0, 255, 0));
+
+		for(unsigned int i = 0; i < 6; ++i)
+		{
+			SDL_SetColorKey(mpoPieces[Piece::PC_WHITE][i], SDL_SRCCOLORKEY, SDL_MapRGB(mpoPieces[Piece::PC_WHITE][i]->format, 255, 0, 0));
+			SDL_SetColorKey(mpoPieces[Piece::PC_BLACK][i], SDL_SRCCOLORKEY, SDL_MapRGB(mpoPieces[Piece::PC_BLACK][i]->format, 255, 0, 0));
+		}
+	}
+	catch(exception & e)
+	{
+		cout << "interface_SDL.cpp:InterfaceSDL" << endl;
+		throw e;
 	}
 }
 

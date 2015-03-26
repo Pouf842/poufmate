@@ -2,7 +2,6 @@
 #include "Pieces/Piece.h"
 #include "States/IncludeStates.h"
 #include "Tools.h"
-#include "PieceNode/PieceNode.h"
 
 #include <iostream>
 
@@ -39,7 +38,6 @@ InterfaceIrrlicht::InterfaceIrrlicht() : mpoCurrentState(NULL), mpoCameraFPS(NUL
 	mpoCamera = mpoSceneManager->addCameraSceneNode(NULL, vector3df(0, 5, -10), vector3df(0, 0, 0));
 
 	InitDatas();
-	PieceNode::SetMeshes(&moPiecesMeshes);
 
 	/**/SetState(new IntroState(this));
 	delete mpoCurrentState;
@@ -343,4 +341,17 @@ void InterfaceIrrlicht::SwitchCameraType()
 {
 	mpoCurrentCamera = mpoCurrentCamera == mpoCameraFPS ? mpoCamera : mpoCameraFPS;
 	mpoSceneManager->setActiveCamera(mpoCurrentCamera);
+}
+
+void InterfaceIrrlicht::addPieceNode(Piece * poPiece, const Position & oPos)
+{
+}
+
+void InterfaceIrrlicht::addPieceNode(Piece::PIECE_TYPE eType, Piece::PIECE_COLOR eColor, const Position & oPos)
+{
+}
+
+Position oGetBoardPosition(const irr::core::vector3df & oNodePos)
+{
+	return Position();
 }

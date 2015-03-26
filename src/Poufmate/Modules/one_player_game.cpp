@@ -22,126 +22,135 @@ OnePlayerGame::~OnePlayerGame()
 
 Entry::ENTRY_COMMAND OnePlayerGame::Run()
 {
-	if(!mpoInterface)
-		throw exception("The interface is not defined");
-
-	Piece::PIECE_COLOR ePlayerColor = mpoInterface->eGetPlayerColorChoice();
-
-	Movement * poNextMove = NULL;
-	Entry::ENTRY_COMMAND eCommand;
-
-	while(!bIsOver())
+	try
 	{
-		try
+		if(!mpoInterface)
+			throw exception("The interface is not defined");
+
+		Piece::PIECE_COLOR ePlayerColor = mpoInterface->eGetPlayerColorChoice();
+
+		Movement * poNextMove = NULL;
+		Entry::ENTRY_COMMAND eCommand;
+
+		while(!bIsOver())
 		{
-			if(meCurrentPlayer == ePlayerColor)
+			try
 			{
-				Entry oEntry = mpoInterface->oGetEntry();	// Getting the next command
-			
-				if(oEntry.bIsCommand())			// Do nothing
+				if(meCurrentPlayer == ePlayerColor)
 				{
-					eCommand = oEntry.eGetCommand();
-
-					if(eCommand == Entry::EC_NONE);
-					/* Cancel last move */
-					else if(eCommand == Entry::EC_CANCEL_MOVE)
+					Entry oEntry = mpoInterface->oGetEntry();	// Getting the next command
+				
+					if(oEntry.bIsCommand())			// Do nothing
 					{
-						CancelLastMove();
-						CancelLastMove();
-					}
-					else
-						return eCommand;
-				}
-				/* Select a piece or make a move */
-				else
-				{
-					if(!poGetSelectedPosition())
-					{
-						Position oPos(oEntry.oGetPos());
+						eCommand = oEntry.eGetCommand();
 
-						if(moBoard.bIsSquareEmpty(oPos))
-							throw exception("That square is empty !");
-						else if(moBoard.eGetSquareColor(oPos) != meCurrentPlayer)
-							throw exception("That piece does not belong to you !");
-
-						SetSelectedPosition(oPos);
-					}
-					else
-					{
-						Position oPos1(*poGetSelectedPosition());
-						Position oPos2(oEntry.oGetPos());
-
-						/* Determinate the movement's type and update poNextMove */
-						if(bIsCastling(oPos1, oPos2))	// Castling
-						{
-							if(bIsInCheck(meCurrentPlayer))
-								throw exception("Castling is not allowed if you're in check");
-
-							if(!bIsCastlingPathOk(oPos1, oPos2))
-								throw exception("Your king would be in check during castling");
-
-							poNextMove = new CastlingMove(oPos1, oPos2);
-						}
-						else if(bIsPromotion(oPos1, oPos2))	// Promotion
-							poNextMove = new Promotion(oPos1, oPos2, mpoInterface->eGetNewPieceType(meCurrentPlayer));
-						else if(moBoard.poGetPiece(oPos1)->bIsFirstMove())	// First move
-							poNextMove = new FirstMove(oPos1, oPos2);
-						else if(bIsEnPassantOk(oPos1, oPos2))
-							poNextMove = new EnPassant(oPos1, oPos2, (*moHistory.rbegin()));
-						else
-							poNextMove = new Movement(oPos1, oPos2);	// Other move
-
-						/* Execute the move */
-						ExecuteMovement(poNextMove);
-
-						/* Update the king position if necessary */
-						if(moBoard.eGetSquareType(oPos2) == Piece::PT_KING)
-							moKings[moBoard.eGetSquareColor(oPos2)] = oPos2;
-
-						/* If the move puts the player in check, it is not valid */
-						if(bIsInCheck(meCurrentPlayer))
+						if(eCommand == Entry::EC_NONE);
+						/* Cancel last move */
+						else if(eCommand == Entry::EC_CANCEL_MOVE)
 						{
 							CancelLastMove();
-							throw exception("That move puts you in check");
+							CancelLastMove();
 						}
+						else
+							return eCommand;
+					}
+					/* Select a piece or make a move */
+					else
+					{
+						if(!poGetSelectedPosition())
+						{
+							Position oPos(oEntry.oGetPos());
 
-						RefreshCheckBooleans();
+							if(moBoard.bIsSquareEmpty(oPos))
+								throw exception("That square is empty !");
+							else if(moBoard.eGetSquareColor(oPos) != meCurrentPlayer)
+								throw exception("That piece does not belong to you !");
 
-						mpoSelectedPosition = NULL;
-						SwitchPlayer();	// Next player
+							SetSelectedPosition(oPos);
+						}
+						else
+						{
+							Position oPos1(*poGetSelectedPosition());
+							Position oPos2(oEntry.oGetPos());
+
+							/* Determinate the movement's type and update poNextMove */
+							if(bIsCastling(oPos1, oPos2))	// Castling
+							{
+								if(bIsInCheck(meCurrentPlayer))
+									throw exception("Castling is not allowed if you're in check");
+
+								if(!bIsCastlingPathOk(oPos1, oPos2))
+									throw exception("Your king would be in check during castling");
+
+								poNextMove = new CastlingMove(oPos1, oPos2);
+							}
+							else if(bIsPromotion(oPos1, oPos2))	// Promotion
+								poNextMove = new Promotion(oPos1, oPos2, mpoInterface->eGetNewPieceType(meCurrentPlayer));
+							else if(moBoard.poGetPiece(oPos1)->bIsFirstMove())	// First move
+								poNextMove = new FirstMove(oPos1, oPos2);
+							else if(bIsEnPassantOk(oPos1, oPos2))
+								poNextMove = new EnPassant(oPos1, oPos2, (*moHistory.rbegin()));
+							else
+								poNextMove = new Movement(oPos1, oPos2);	// Other move
+
+							/* Execute the move */
+							ExecuteMovement(poNextMove);
+
+							/* Update the king position if necessary */
+							if(moBoard.eGetSquareType(oPos2) == Piece::PT_KING)
+								moKings[moBoard.eGetSquareColor(oPos2)] = oPos2;
+
+							/* If the move puts the player in check, it is not valid */
+							if(bIsInCheck(meCurrentPlayer))
+							{
+								CancelLastMove();
+								throw exception("That move puts you in check");
+							}
+
+							RefreshCheckBooleans();
+
+							mpoSelectedPosition = NULL;
+							SwitchPlayer();	// Next player
+						}
 					}
 				}
+				else
+				{
+					PlayComputerMove(5);
+					SwitchPlayer();
+				}
+
+				/* If the player is checkmate, display a message and stop the game */
+				if(bIsCheckMate(meCurrentPlayer))
+					(meCurrentPlayer == Piece::PC_WHITE ? mbIsWhiteCheckMate : mbIsBlackCheckMate) = true;
+				else if(bIsGameInStaleMate())
+					mbIsStaleMate = true;
+				else if(bIsInCheck(meCurrentPlayer))	// Display the current player as in check
+					(meCurrentPlayer == Piece::PC_WHITE ? mbIsWhiteInCheck : mbIsBlackInCheck) = true;
 			}
-			else
+			catch(exception & e)
 			{
-				PlayComputerMove(5);
-				SwitchPlayer();
+				cout << __FILE__ << ":" << __LINE__ << endl;
+				mpoInterface->DisplayMessage(e.what());
 			}
-
-			/* If the player is checkmate, display a message and stop the game */
-			if(bIsCheckMate(meCurrentPlayer))
-				(meCurrentPlayer == Piece::PC_WHITE ? mbIsWhiteCheckMate : mbIsBlackCheckMate) = true;
-			else if(bIsGameInStaleMate())
-				mbIsStaleMate = true;
-			else if(bIsInCheck(meCurrentPlayer))	// Display the current player as in check
-				(meCurrentPlayer == Piece::PC_WHITE ? mbIsWhiteInCheck : mbIsBlackInCheck) = true;
 		}
-		catch(exception & e)
+
+		if(mbIsBlackCheckMate || mbIsWhiteCheckMate)
 		{
-			mpoInterface->DisplayMessage(e.what());
+			string strGameOver = mbIsBlackCheckMate ? "Black" : "White";
+			strGameOver += " player is check mate ! Game over.";
+			eCommand = mpoInterface->GameOver(strGameOver);
 		}
-	}
+		else if(mbIsStaleMate)
+			eCommand = mpoInterface->GameOver("It's a stale !");
 
-	if(mbIsBlackCheckMate || mbIsWhiteCheckMate)
+		return eCommand;
+	}		
+	catch(exception & e)
 	{
-		string strGameOver = mbIsBlackCheckMate ? "Black" : "White";
-		strGameOver += " player is check mate ! Game over.";
-		eCommand = mpoInterface->GameOver(strGameOver);
+		cout << __FILE__ << ":" << __LINE__ << endl;
+		throw e;
 	}
-	else if(mbIsStaleMate)
-		eCommand = mpoInterface->GameOver("It's a stale !");
-
-	return eCommand;
 }
 
 void OnePlayerGame::PlayComputerMove(unsigned int iDepth)

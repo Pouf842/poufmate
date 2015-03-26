@@ -1,5 +1,7 @@
 #include "entry.h"
 
+#include <iostream>
+
 using namespace std;
 
 Entry::Entry() : mbIsCommand(true), meCommand(EC_NONE), mbIsPiece(false), mePieceType(Piece::PT_NONE), mePieceColor(Piece::PC_WHITE)
@@ -35,18 +37,34 @@ bool Entry::bIsPiece() const
 
 Position Entry::oGetPos() const
 {
-	if(bIsCommand())
-		throw exception("This entry is a command");
+	try
+	{
+		if(bIsCommand())
+			throw exception("This entry is a command");
 
-	return moPos;
+		return moPos;
+	}
+	catch(exception & e)
+	{
+		cout << __FILE__ << ":" << __LINE__ << endl;
+		throw e;
+	}
 }
 
 Entry::ENTRY_COMMAND Entry::eGetCommand() const
 {
-	if(!bIsCommand())
-		throw exception("This entry is not a command");
+	try
+	{
+		if(!bIsCommand())
+			throw exception("This entry is not a command");
 
-	return meCommand;
+		return meCommand;
+	}
+	catch(exception & e)
+	{
+		cout << __FILE__ << ":" << __LINE__ << endl;
+		throw e;
+	}
 }
 
 Piece::PIECE_TYPE  Entry::eGetPieceType() const

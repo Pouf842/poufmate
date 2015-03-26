@@ -7,23 +7,31 @@ Board * Movement::spoBoard = NULL;
 
 Movement::Movement(Position oPos1, Position oPos2) : moPos1(oPos1), moPos2(oPos2)
 {
-	if(!spoBoard)
-		throw exception("Board is not defined. Call SetBoard before");
+	try
+	{
+		if(!spoBoard)
+			throw exception("Board is not defined. Call SetBoard before");
 
-	if(oPos1 == oPos2)
-		throw exception("No movement");
+		if(oPos1 == oPos2)
+			throw exception("No movement");
 
-	if(spoBoard->bIsSquareEmpty(oPos1))
-		throw exception("There is no piece on the starting square");
+		if(spoBoard->bIsSquareEmpty(oPos1))
+			throw exception("There is no piece on the starting square");
 
-	if(!spoBoard->bIsSquareEmpty(oPos2) && spoBoard->eGetSquareColor(oPos1) == spoBoard->eGetSquareColor(oPos2))
-		throw exception("The two pieces are on the same side");
+		if(!spoBoard->bIsSquareEmpty(oPos2) && spoBoard->eGetSquareColor(oPos1) == spoBoard->eGetSquareColor(oPos2))
+			throw exception("The two pieces are on the same side");
 
-	if(!spoBoard->poGetPiece(oPos1)->bIsMovementCorrect(oPos1, oPos2, *spoBoard))
-		throw exception("Invalid move");
+		if(!spoBoard->poGetPiece(oPos1)->bIsMovementCorrect(oPos1, oPos2, *spoBoard))
+			throw exception("Invalid move");
 
-	mpoMovingPiece = spoBoard->poGetPiece(moPos1);
-	mpoCapturedPiece = spoBoard->poGetPiece(moPos2);
+		mpoMovingPiece = spoBoard->poGetPiece(moPos1);
+		mpoCapturedPiece = spoBoard->poGetPiece(moPos2);
+	}
+	catch(exception & e)
+	{
+		cout << __FILE__ << ":" << __LINE__ << endl;
+		throw e;
+	}
 }
 
 void Movement::SetBoard(Board * oNewBoard)

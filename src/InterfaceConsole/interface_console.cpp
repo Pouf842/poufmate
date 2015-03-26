@@ -40,26 +40,42 @@ void InterfaceConsole::DisplayMessage(const std::string strMessage)
 
 void InterfaceConsole::DisplayCurrentPlayer()
 {
-	if(mpoModule->eGetType() != Module::MT_GAME)
-		throw exception("Cannot display in check player in a non-game module");
+	try
+	{
+		if(mpoModule->eGetType() != Module::MT_GAME)
+			throw exception("Cannot display in check player in a non-game module");
 
-	Piece::PIECE_COLOR eCurrentPlayer = ((Game*) mpoModule)->eGetCurrentPlayer();
+		Piece::PIECE_COLOR eCurrentPlayer = ((Game*) mpoModule)->eGetCurrentPlayer();
 
-	cout << (eCurrentPlayer == Piece::PC_WHITE ? "White" : "Black") << " player" << endl;
+		cout << (eCurrentPlayer == Piece::PC_WHITE ? "White" : "Black") << " player" << endl;
+	}		
+	catch(exception & e)
+	{
+		cout << __FILE__ << ":" << __LINE__ << endl;
+		throw e;
+	}
 }
 
 void InterfaceConsole::DisplayPlayerInCheck()
 {
-	if(mpoModule->eGetType() != Module::MT_GAME)
-		throw exception("Cannot display in check player in a non-game module");
+	try
+	{
+		if(mpoModule->eGetType() != Module::MT_GAME)
+			throw exception("Cannot display in check player in a non-game module");
 
-	bool bIsWhiteInCheck = ((Game*) mpoModule)->bIsPlayerInCheck(Piece::PC_WHITE);
-	bool bIsBlackInCheck = ((Game*) mpoModule)->bIsPlayerInCheck(Piece::PC_BLACK);
+		bool bIsWhiteInCheck = ((Game*) mpoModule)->bIsPlayerInCheck(Piece::PC_WHITE);
+		bool bIsBlackInCheck = ((Game*) mpoModule)->bIsPlayerInCheck(Piece::PC_BLACK);
 
-	if(bIsWhiteInCheck)
-		cout << "White player in check" << endl;
-	else if(bIsBlackInCheck)
-		cout << "Black player in check" << endl;
+		if(bIsWhiteInCheck)
+			cout << "White player in check" << endl;
+		else if(bIsBlackInCheck)
+			cout << "Black player in check" << endl;	
+	}		
+	catch(exception & e)
+	{
+		cout << __FILE__ << ":" << __LINE__ << endl;
+		throw e;
+	}
 }
 
 void InterfaceConsole::DisplayBoard(const Board & oBoard)
@@ -162,10 +178,10 @@ void InterfaceConsole::DisplayModule(const Module * oModule)
 		}
 		else if(oModule->eGetType() == Module::MT_EDITION)
 			DisplayEditionSelection();
-	}
+	}		
 	catch(exception & e)
 	{
-		DisplayMessage(e.what());
+		cout << __FILE__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }
@@ -247,42 +263,50 @@ std::string InterfaceConsole::strGetPortEntry()
 
 Piece::PIECE_TYPE InterfaceConsole::eGetNewPieceType(const Piece::PIECE_COLOR)
 {
-	cout << "Please choose a new piece type" << endl;
-
-	char cChoice = ' ';
-	string strChoices = "RKBQrkbq";
-
-	while(strChoices.find(cChoice) == -1)
+	try
 	{
-		cout << "Enter :" << endl;
-		cout << "\t'R' for Rook" << endl;
-		cout << "\t'K' for Knight" << endl;
-		cout << "\t'B' for Bishop" << endl;
-		cout << "\t'Q' for Queen" << endl;
-		cin >> cChoice;
-	}
+		cout << "Please choose a new piece type" << endl;
 
-	switch(cChoice)
+		char cChoice = ' ';
+		string strChoices = "RKBQrkbq";
+
+		while(strChoices.find(cChoice) == -1)
+		{
+			cout << "Enter :" << endl;
+			cout << "\t'R' for Rook" << endl;
+			cout << "\t'K' for Knight" << endl;
+			cout << "\t'B' for Bishop" << endl;
+			cout << "\t'Q' for Queen" << endl;
+			cin >> cChoice;
+		}
+
+		switch(cChoice)
+		{
+		  case 'R':
+		  case 'r':
+			return Piece::PT_ROOK;
+			break;
+		  case 'K':
+		  case 'k':
+			return Piece::PT_KNIGHT;
+			break;
+		  case 'B':
+		  case 'b':
+			return Piece::PT_BISHOP;
+			break;
+		  case 'Q':
+		  case 'q':
+			return Piece::PT_QUEEN;
+			break;
+		  default:
+			throw exception("Unknow choice of piece type");
+			break;
+		}
+	}		
+	catch(exception & e)
 	{
-	  case 'R':
-	  case 'r':
-		return Piece::PT_ROOK;
-		break;
-	  case 'K':
-	  case 'k':
-		return Piece::PT_KNIGHT;
-		break;
-	  case 'B':
-	  case 'b':
-		return Piece::PT_BISHOP;
-		break;
-	  case 'Q':
-	  case 'q':
-		return Piece::PT_QUEEN;
-		break;
-	  default:
-		throw exception("Unknow choice of piece type");
-		break;
+		cout << __FILE__ << ":" << __LINE__ << endl;
+		throw e;
 	}
 }
 
@@ -339,52 +363,60 @@ Entry::ENTRY_COMMAND InterfaceConsole::GameOver(std::string strMessage)
 
 void InterfaceConsole::DisplayEditionSelection()
 {
-	if(mpoModule->eGetType() != Module::MT_EDITION)
-		throw exception("Cannot display piece types in any other mode than edition");
-
-	Piece::PIECE_TYPE ePieceType;
-
-	ostringstream strPieces("");
-	ostringstream strSelection("");
-
-	for(unsigned int i = 0; i < 6; ++i)
+	try
 	{
-		switch(i)
+		if(mpoModule->eGetType() != Module::MT_EDITION)
+			throw exception("Cannot display piece types in any other mode than edition");
+
+		Piece::PIECE_TYPE ePieceType;
+
+		ostringstream strPieces("");
+		ostringstream strSelection("");
+
+		for(unsigned int i = 0; i < 6; ++i)
 		{
-		  case 0 :
-			strPieces << "R ";
-			ePieceType = Piece::PT_ROOK;
-			break;
-		  case 1 :
-			strPieces << "N ";
-			ePieceType = Piece::PT_KNIGHT;
-			break;
-		  case 2 :
-			strPieces << "B ";
-			ePieceType = Piece::PT_BISHOP;
-			break;
-		  case 3 :
-			strPieces << "Q ";
-			ePieceType = Piece::PT_QUEEN;
-			break;
-		  case 4 :
-			strPieces << "K ";
-			ePieceType = Piece::PT_KING;
-			break;
-		  case 5 :
-			strPieces << "P ";
-			ePieceType = Piece::PT_PAWN;
-			break;
+			switch(i)
+			{
+			  case 0 :
+				strPieces << "R ";
+				ePieceType = Piece::PT_ROOK;
+				break;
+			  case 1 :
+				strPieces << "N ";
+				ePieceType = Piece::PT_KNIGHT;
+				break;
+			  case 2 :
+				strPieces << "B ";
+				ePieceType = Piece::PT_BISHOP;
+				break;
+			  case 3 :
+				strPieces << "Q ";
+				ePieceType = Piece::PT_QUEEN;
+				break;
+			  case 4 :
+				strPieces << "K ";
+				ePieceType = Piece::PT_KING;
+				break;
+			  case 5 :
+				strPieces << "P ";
+				ePieceType = Piece::PT_PAWN;
+				break;
+			}
+
+			if(ePieceType == mpoModule->eGetSelectedPieceType())
+				strSelection << (mpoModule->eGetSelectedPieceColor() == Piece::PC_WHITE ? "W" : "B") << " ";
+			else
+				strSelection << "  ";
 		}
 
-		if(ePieceType == mpoModule->eGetSelectedPieceType())
-			strSelection << (mpoModule->eGetSelectedPieceColor() == Piece::PC_WHITE ? "W" : "B") << " ";
-		else
-			strSelection << "  ";
+		cout << strPieces.str() << endl;
+		cout << strSelection.str() << endl;
+	}		
+	catch(exception & e)
+	{
+		cout << __FILE__ << ":" << __LINE__ << endl;
+		throw e;
 	}
-
-	cout << strPieces.str() << endl;
-	cout << strSelection.str() << endl;
 }
 
 void InterfaceConsole::DisplayHelp()
@@ -425,80 +457,96 @@ void InterfaceConsole::SetBusy()
 
 void InterfaceConsole::SetProgress(unsigned int uPercent)
 {
-	if(uPercent < 0 || uPercent > 100)
-		throw exception("Error : Percentage must be between 0 and 100");
-
-	if(uPercent / 5 > muLastPercent)
+	try
 	{
-		cout << "*" << flush;
-		muLastPercent++;
+		if(uPercent < 0 || uPercent > 100)
+			throw exception("Error : Percentage must be between 0 and 100");
+
+		if(uPercent / 5 > muLastPercent)
+		{
+			cout << "*" << flush;
+			muLastPercent++;
+		}
+	}		
+	catch(exception & e)
+	{
+		cout << __FILE__ << ":" << __LINE__ << endl;
+		throw e;
 	}
 }
 
 Entry InterfaceConsole::eGetSelectionPieceEntry(string strEntry)
 {
-	if(strEntry.length() < 0)
-		throw exception("Malformated entry");
-
-	if(strEntry.length() == 1)
-		if(strEntry[0] != 'P'
-		&& strEntry[0] != 'p')
+	try
+	{
+		if(strEntry.length() < 0)
 			throw exception("Malformated entry");
-		else
-			return Entry(Piece::PT_NONE, Piece::PC_WHITE);
 
-	if(strEntry.length() == 2)
-		strEntry = string("P") + strEntry;
+		if(strEntry.length() == 1)
+			if(strEntry[0] != 'P'
+			&& strEntry[0] != 'p')
+				throw exception("Malformated entry");
+			else
+				return Entry(Piece::PT_NONE, Piece::PC_WHITE);
 
-	if(strEntry[0] != 'P'
-	&& strEntry[1] != 'p')
-		throw exception("Malformated entry");
+		if(strEntry.length() == 2)
+			strEntry = string("P") + strEntry;
 
-	Piece::PIECE_COLOR eColor;
-	Piece::PIECE_TYPE eType;
+		if(strEntry[0] != 'P'
+		&& strEntry[1] != 'p')
+			throw exception("Malformated entry");
 
-	switch(strEntry[1])
+		Piece::PIECE_COLOR eColor;
+		Piece::PIECE_TYPE eType;
+
+		switch(strEntry[1])
+		{
+		  case 'B' :
+		  case 'b' :
+			eColor = Piece::PC_BLACK;
+			break;
+		  case 'W' :
+		  case 'w' :
+			eColor = Piece::PC_WHITE;
+			break;
+		  default :
+			throw exception("Unknow specified color");
+			break;
+		}
+
+		switch(strEntry[2])
+		{
+		  case 'R' :
+		  case 'r' :
+			eType = Piece::PT_ROOK;
+			break;
+		  case 'N' :
+		  case 'n' :
+			eType = Piece::PT_KNIGHT;
+			break;
+		  case 'B' :
+		  case 'b' :
+			eType = Piece::PT_BISHOP;
+			break;
+		  case 'Q' :
+		  case 'q' :
+			eType = Piece::PT_QUEEN;
+			break;
+		  case 'K' :
+		  case 'k' :
+			eType = Piece::PT_KING;
+			break;
+		  case 'P' :
+		  case 'p' :
+			eType = Piece::PT_PAWN;
+			break;
+		}
+
+		return Entry(eType, eColor);
+	}		
+	catch(exception & e)
 	{
-	  case 'B' :
-	  case 'b' :
-		eColor = Piece::PC_BLACK;
-		break;
-	  case 'W' :
-	  case 'w' :
-		eColor = Piece::PC_WHITE;
-		break;
-	  default :
-		throw exception("Unknow specified color");
-		break;
+		cout << __FILE__ << ":" << __LINE__ << endl;
+		throw e;
 	}
-
-	switch(strEntry[2])
-	{
-	  case 'R' :
-	  case 'r' :
-		eType = Piece::PT_ROOK;
-		break;
-	  case 'N' :
-	  case 'n' :
-		eType = Piece::PT_KNIGHT;
-		break;
-	  case 'B' :
-	  case 'b' :
-		eType = Piece::PT_BISHOP;
-		break;
-	  case 'Q' :
-	  case 'q' :
-		eType = Piece::PT_QUEEN;
-		break;
-	  case 'K' :
-	  case 'k' :
-		eType = Piece::PT_KING;
-		break;
-	  case 'P' :
-	  case 'p' :
-		eType = Piece::PT_PAWN;
-		break;
-	}
-
-	return Entry(eType, eColor);
 }

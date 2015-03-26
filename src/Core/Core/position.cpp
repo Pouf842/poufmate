@@ -1,5 +1,7 @@
 #include "Core\position.h"
+
 #include <exception>
+#include <iostream>
 
 using namespace std;
 
@@ -10,8 +12,16 @@ Position::Position()
 
 Position::Position(unsigned int X, unsigned int Y) : mX(X), mY(Y), mbEmpty(false)
 {
-	if(mX > 7 || mY > 7)
-		throw exception("Invalid Position");
+	try
+	{
+		if(mX > 7 || mY > 7)
+			throw exception("Invalid Position");
+	}		
+	catch(exception & e)
+	{
+		cout << __FILE__ << ":" << __LINE__ << endl;
+		throw e;
+	}
 }
 
 Position::Position(std::string strCoords)
@@ -37,20 +47,28 @@ void Position::Empty()
 
 Position & Position::operator=(std::string strCoords)
 {
-	if(strCoords.size() < 2
-	|| !isdigit(strCoords[0])
-	|| !isdigit(strCoords[1]))
-		throw exception(("Invalid Position string : " + strCoords).c_str());
+	try
+	{
+		if(strCoords.size() < 2
+		|| !isdigit(strCoords[0])
+		|| !isdigit(strCoords[1]))
+			throw exception(("Invalid Position string : " + strCoords).c_str());
 
-	mX = strCoords[0] - '0';	// Convert a character to a digit
-	mY = strCoords[1] - '0';
+		mX = strCoords[0] - '0';	// Convert a character to a digit
+		mY = strCoords[1] - '0';
 
-	if(mX > 7 || mY > 7)
-		throw exception(("Invalid Position : " + strCoords).c_str());
+		if(mX > 7 || mY > 7)
+			throw exception(("Invalid Position : " + strCoords).c_str());
 
-	mbEmpty = false;
+		mbEmpty = false;
 
-	return *this;
+		return *this;
+	}
+	catch(exception & e)
+	{
+		cout << __FILE__ << ":" << __LINE__ << endl;
+		throw e;
+	}
 }
 
 bool Position::operator==(const Position & oPos) const

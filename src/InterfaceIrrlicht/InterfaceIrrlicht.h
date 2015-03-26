@@ -3,7 +3,6 @@
 
 #include "Interface/interface.h"
 #include "irrlicht.h"
-#include "PieceNode/PieceNodeFactory.h"
 
 class State;
 class MenuState;
@@ -34,9 +33,11 @@ class InterfaceIrrlicht : public Interface, public irr::IEventReceiver
 	virtual void SetProgress(unsigned int);
 	virtual bool OnEvent(const irr::SEvent &);
 	virtual void SwitchCameraType();
+	virtual void addPieceNode(Piece *, const Position &);
+	virtual void addPieceNode(Piece::PIECE_TYPE, Piece::PIECE_COLOR, const Position &);
+	Position oGetBoardPosition(const irr::core::vector3df &);
 
   protected :
-    PieceNodeFactory moPieceNodeFactory;
 	State * mpoCurrentState;
 	void InitDatas();
 	void PlacePieces();

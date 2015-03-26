@@ -220,18 +220,6 @@
 					</File>
 				</Filter>
 			</Filter>
-			<Filter
-				Name="PieceNode"
-				>
-				<File
-					RelativePath="..\..\src\InterfaceIrrlicht\PieceNode\PieceNode.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\InterfaceIrrlicht\PieceNode\PieceNodeFactory.cpp"
-					>
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="Fichiers d&apos;en-tête"
@@ -297,18 +285,6 @@
 						>
 					</File>
 				</Filter>
-			</Filter>
-			<Filter
-				Name="PieceNode"
-				>
-				<File
-					RelativePath="..\..\src\InterfaceIrrlicht\PieceNode\PieceNode.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\InterfaceIrrlicht\PieceNode\PieceNodeFactory.h"
-					>
-				</File>
 			</Filter>
 		</Filter>
 	</Files>

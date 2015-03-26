@@ -1,5 +1,7 @@
 #include "square.h"
+
 #include <exception>
+#include <iostream>
 
 using namespace std;
 
@@ -19,18 +21,34 @@ void Square::SetPiece(Piece * poNewPiece)
 
 Piece::PIECE_COLOR Square::eGetPieceColor() const
 {
-	if(!bIsEmpty())
-		return mpoPiece->eGetColor();
-	else
-		throw exception("Empty square");
+	try
+	{
+		if(!bIsEmpty())
+			return mpoPiece->eGetColor();
+		else
+			throw exception("Empty square");
+	}
+	catch(exception & e)
+	{
+		cout << __FILE__ << ":" << __LINE__ << endl;
+		throw e;
+	}
 }
 
 Piece::PIECE_TYPE Square::eGetPieceType() const
 {
-	if(!bIsEmpty())
-		return mpoPiece->eGetType();
-	else
-		throw exception("Empty square");
+	try
+	{
+		if(!bIsEmpty())
+			return mpoPiece->eGetType();
+		else
+			throw exception("Empty square");
+	}
+	catch(exception & e)
+	{
+		cout << __FILE__ << ":" << __LINE__ << endl;
+		throw e;
+	}
 }
 
 Piece * Square::poGetPiece() const
