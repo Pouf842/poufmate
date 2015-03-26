@@ -351,7 +351,12 @@ void InterfaceIrrlicht::addPieceNode(Piece::PIECE_TYPE eType, Piece::PIECE_COLOR
 {
 }
 
-Position oGetBoardPosition(const irr::core::vector3df & oNodePos)
+Position InterfaceIrrlicht::oGetBoardPosition(const irr::core::vector3df & vNodePosition)
 {
-	return Position();
+	return Position(4 - (round32(vNodePosition.Z + 0.5) - 0.5), round32(vNodePosition.X + 0.5) - 0.5 + 4);
+}
+
+vector3df InterfaceIrrlicht::oGetNodePosition(const Position & oPos)
+{
+	return vector3df(oPos.mY - 3.5, 0.5, oPos.mX + 3.5);
 }

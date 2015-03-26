@@ -36,6 +36,7 @@ class InterfaceIrrlicht : public Interface, public irr::IEventReceiver
 	virtual void addPieceNode(Piece *, const Position &);
 	virtual void addPieceNode(Piece::PIECE_TYPE, Piece::PIECE_COLOR, const Position &);
 	Position oGetBoardPosition(const irr::core::vector3df &);
+	irr::core::vector3df oGetNodePosition(const Position &);
 
   protected :
 	State * mpoCurrentState;

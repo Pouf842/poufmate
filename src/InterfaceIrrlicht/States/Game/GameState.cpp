@@ -42,7 +42,7 @@ bool GameState::OnEvent(const SEvent & oEvent)
 				if(!mbIsDragging)
 				{
 					vector3df oPos = mpoHighlightedPiece->getPosition();
-					moLastEntry = Entry(Position(4 - (round32(oPos.Z + 0.5) - 0.5), round32(oPos.X + 0.5) - 0.5 + 4));
+					moLastEntry = Entry(mpoInterface->oGetBoardPosition(mpoHighlightedPiece->getPosition()));
 					mbStop = true;
 				}
 
@@ -96,7 +96,7 @@ bool GameState::OnEvent(const SEvent & oEvent)
 				mpoHighlightedPiece->setPosition(oPos);
 				mbIsDragging = false;
 
-				moLastEntry = Entry(Position(4 - (round32(oPos.Z + 0.5) - 0.5), round32(oPos.X + 0.5) - 0.5 + 4));
+				moLastEntry = Entry(mpoInterface->oGetBoardPosition(mpoHighlightedPiece->getPosition()));
 				mbStop = true;
 			}
 				
