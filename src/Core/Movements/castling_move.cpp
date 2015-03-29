@@ -52,7 +52,7 @@ CastlingMove::CastlingMove(Position oPos1, Position oPos2) : Movement(oPos1, oPo
 	}
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }

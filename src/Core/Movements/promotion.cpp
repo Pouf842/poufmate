@@ -32,7 +32,7 @@ Promotion::Promotion(Position oPos1, Position oPos2, Piece::PIECE_TYPE eNewPiece
 	}
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }

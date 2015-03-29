@@ -46,7 +46,7 @@ Position Entry::oGetPos() const
 	}
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }
@@ -62,7 +62,7 @@ Entry::ENTRY_COMMAND Entry::eGetCommand() const
 	}
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }

@@ -26,7 +26,7 @@ EnPassant::EnPassant(Position oPos1, Position oPos2, Movement * poLastMovement) 
 	}
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }

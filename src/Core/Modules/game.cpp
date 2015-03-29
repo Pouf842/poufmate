@@ -111,7 +111,7 @@ Game::Game(const Board & oBoard, Interface * poInterface, Module::MODULE_TYPE eT
 	}
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }
@@ -247,7 +247,7 @@ vector<Position> Game::oGetPossibilities(Position oPos)
 	}
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }
@@ -348,7 +348,7 @@ bool Game::bIsCheckMate(Piece::PIECE_COLOR ePlayer)
 	}
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }
@@ -365,7 +365,7 @@ void Game::CheckSelectionCoords(Position oPos) const
 	}
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }
@@ -405,7 +405,7 @@ void Game::CancelLastMove()
 	}
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }
@@ -494,6 +494,8 @@ void Game::SetSelectedPosition(Position oPos)
 		delete mpoSelectedPosition;
 
 	mpoSelectedPosition = new Position(oPos);
+	meSelectedPieceType  = moBoard.eGetSquareType(oPos);
+	meSelectedPieceColor = moBoard.eGetSquareColor(oPos);
 }
 
 void Game::RefreshCheckBooleans()

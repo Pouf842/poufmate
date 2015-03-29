@@ -51,7 +51,7 @@ void InterfaceConsole::DisplayCurrentPlayer()
 	}		
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }
@@ -73,7 +73,7 @@ void InterfaceConsole::DisplayPlayerInCheck()
 	}		
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }
@@ -181,7 +181,7 @@ void InterfaceConsole::DisplayModule(const Module * oModule)
 	}		
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }
@@ -305,7 +305,7 @@ Piece::PIECE_TYPE InterfaceConsole::eGetNewPieceType(const Piece::PIECE_COLOR)
 	}		
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }
@@ -414,7 +414,7 @@ void InterfaceConsole::DisplayEditionSelection()
 	}		
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }
@@ -470,7 +470,7 @@ void InterfaceConsole::SetProgress(unsigned int uPercent)
 	}		
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }
@@ -546,7 +546,7 @@ Entry InterfaceConsole::eGetSelectionPieceEntry(string strEntry)
 	}		
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }

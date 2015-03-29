@@ -1,4 +1,5 @@
 #include "GameState.h"
+#include "../../Tools.h"
 
 using namespace irr;
 using namespace scene;
@@ -42,47 +43,50 @@ bool GameState::OnEvent(const SEvent & oEvent)
 				if(!mbIsDragging)
 				{
 					vector3df oPos = mpoHighlightedPiece->getPosition();
-					moLastEntry = Entry(mpoInterface->oGetBoardPosition(mpoHighlightedPiece->getPosition()));
+					moLastEntry = Entry(oGetBoardPosition(oPos));
+					std::cout << moLastEntry.oGetPos().mX << " ; " << moLastEntry.oGetPos().mY << std::endl;
 					mbStop = true;
+
+					mbIsDragging = true;
 				}
-
-				mbIsDragging = true;
-
-				vector2d<s32> vMousePos(oEvent.MouseInput.X, oEvent.MouseInput.Y);
-				line3df ray = mpoCollisionManager->getRayFromScreenCoordinates(vMousePos);
-				vector3df oBoardCollisionPoint;
-				triangle3df oTriangle;
-
-				ISceneNode * poNode = mpoCollisionManager->getSceneNodeAndCollisionPointFromRay(ray, oBoardCollisionPoint, oTriangle, ID_BOARD);
-				
-				if(poNode)
+				else
 				{
-					vector3df oCameraPos = mpoSceneManager->getActiveCamera()->getPosition();
-					/*/vector3df oPieceCollisionPoint = mpoHighlightedPiece->getAbsolutePosition() + moRelColl.Y;
-					vector3df v1 = oPieceCollisionPoint - oBoardCollisionPoint;
-					vector3df v2 = oCameraPos - oBoardCollisionPoint;
-					v2.Y = 0;
-					vector3df vNewPos = v2 * (v1.dotProduct(v2) / v2.getLengthSQ());
+					vector2d<s32> vMousePos(oEvent.MouseInput.X, oEvent.MouseInput.Y);
+					line3df ray = mpoCollisionManager->getRayFromScreenCoordinates(vMousePos);
+					vector3df oBoardCollisionPoint;
+					triangle3df oTriangle;
 
-					mpoHighlightedPiece->setPosition(oBoardCollisionPoint + vNewPos);/*/
-					vector3df v = oCameraPos - oBoardCollisionPoint;
-					v.Y = 0;
+					ISceneNode * poNode = mpoCollisionManager->getSceneNodeAndCollisionPointFromRay(ray, oBoardCollisionPoint, oTriangle, ID_BOARD);
+					
+					if(poNode)
+					{
+						vector3df oCameraPos = mpoSceneManager->getActiveCamera()->getPosition();
+						/*/vector3df oPieceCollisionPoint = mpoHighlightedPiece->getAbsolutePosition() + moRelColl.Y;
+						vector3df v1 = oPieceCollisionPoint - oBoardCollisionPoint;
+						vector3df v2 = oCameraPos - oBoardCollisionPoint;
+						v2.Y = 0;
+						vector3df vNewPos = v2 * (v1.dotProduct(v2) / v2.getLengthSQ());
 
-					float a = (moRelColl.Y - oBoardCollisionPoint.Y) * v.getLength();
-					a /= oCameraPos.Y - oBoardCollisionPoint.Y;
+						mpoHighlightedPiece->setPosition(oBoardCollisionPoint + vNewPos);/*/
+						vector3df v = oCameraPos - oBoardCollisionPoint;
+						v.Y = 0;
 
-					v.normalize() * a;
+						float a = (moRelColl.Y - oBoardCollisionPoint.Y) * v.getLength();
+						a /= oCameraPos.Y - oBoardCollisionPoint.Y;
 
-					vector3df oPos(oBoardCollisionPoint + v);
+						v.normalize() * a;
 
-					if(oPos.X < -4)
-						oPos.X = -4;
+						vector3df oPos(oBoardCollisionPoint + v);
 
-					if(oPos.Z < -4)
-						oPos.Z = -4;
+						if(oPos.X < -4)
+							oPos.X = -4;
 
-					oPos.Y = 0.5;
-					mpoHighlightedPiece->setPosition(oPos);/**/
+						if(oPos.Z < -4)
+							oPos.Z = -4;
+
+						oPos.Y = 0.5;
+						mpoHighlightedPiece->setPosition(oPos);/**/
+					}
 				}
 			}
 		}
@@ -96,7 +100,8 @@ bool GameState::OnEvent(const SEvent & oEvent)
 				mpoHighlightedPiece->setPosition(oPos);
 				mbIsDragging = false;
 
-				moLastEntry = Entry(mpoInterface->oGetBoardPosition(mpoHighlightedPiece->getPosition()));
+				moLastEntry = Entry(oGetBoardPosition(oPos));
+				std::cout << moLastEntry.oGetPos().mX << " ; " << moLastEntry.oGetPos().mY << std::endl;
 				mbStop = true;
 			}
 				
@@ -134,8 +139,63 @@ Entry GameState::oGetLastEntry() const
 
 void GameState::Run()
 {
+	UpdateBoard();
+
 	State::Run();
 
 	if(!mbStop) // If we quit without having set mbStop to true, that's because the window was closed
 		moLastEntry = Entry(Entry::EC_QUIT_GAME);
+}
+
+void GameState::UpdateBoard()
+{
+	if(!mbIsDragging
+	|| mpoInterface->poGetModule()->eGetSelectedPieceType() == Piece::PT_NONE)
+	{
+		if(mpoHighlightedPiece)
+			mpoHighlightedPiece->getMaterial(0).EmissiveColor = SColor(0, 0, 0, 0);
+
+		mpoHighlightedPiece = NULL;
+		mbIsDragging = false;
+	}
+
+	Board oBoard = mpoInterface->poGetModule()->oGetBoard();
+
+	Position oCurrentPos;
+	Piece * poCurrentPiece;
+	ISceneNode * poCurrentNode;
+
+	array<Piece*> oPresentPieces;
+
+	for(s32 i = 0; i < 8; ++i)
+		for(s32 j = 0; j < 8; ++j)
+		{
+			oCurrentPos.mX = i;
+			oCurrentPos.mY = j;
+
+			poCurrentPiece = oBoard.poGetPiece(i, j);
+			oPresentPieces.push_back(poCurrentPiece);
+
+			if(poCurrentPiece)
+			{
+				if(!moPieces.find(poCurrentPiece))
+					moPieces[poCurrentPiece] = mpoInterface->addPieceNode(poCurrentPiece, oCurrentPos);
+
+				poCurrentNode = moPieces[poCurrentPiece];
+
+				if(oGetBoardPosition(poCurrentNode->getPosition()) != Position(i, j))
+					poCurrentNode->setPosition(vGetNodePosition(i, j));
+			}
+		}
+
+	map<Piece *, ISceneNode *> oToRemove;
+	for(map<Piece*, ISceneNode *>::Iterator i = moPieces.getIterator(); !i.atEnd(); i++)
+		if(oPresentPieces.binary_search((*i).getKey()) == -1)
+			oToRemove[i->getKey()] = i->getValue();
+
+	for(map<Piece*, ISceneNode *>::Iterator i = oToRemove.getIterator(); !i.atEnd(); i++)
+	{
+		i->getValue()->remove();
+		moPieces.remove(i->getKey());
+	}
 }

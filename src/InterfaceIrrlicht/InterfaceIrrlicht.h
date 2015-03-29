@@ -33,10 +33,11 @@ class InterfaceIrrlicht : public Interface, public irr::IEventReceiver
 	virtual void SetProgress(unsigned int);
 	virtual bool OnEvent(const irr::SEvent &);
 	virtual void SwitchCameraType();
-	virtual void addPieceNode(Piece *, const Position &);
-	virtual void addPieceNode(Piece::PIECE_TYPE, Piece::PIECE_COLOR, const Position &);
-	Position oGetBoardPosition(const irr::core::vector3df &);
-	irr::core::vector3df oGetNodePosition(const Position &);
+	virtual irr::scene::ISceneNode * addPieceNode(Piece *, const Position &, irr::core::string<char> strName = "");
+	virtual irr::scene::ISceneNode * addPieceNode(Piece::PIECE_TYPE, Piece::PIECE_COLOR, const Position &, irr::core::string<char> strName = "");
+	virtual const Module * poGetModule() const;
+	virtual void RotateCamera(float, float, float);
+	virtual void RevolveCamera(const irr::core::vector3df &, float, float = 1000.0);
 
   protected :
 	State * mpoCurrentState;

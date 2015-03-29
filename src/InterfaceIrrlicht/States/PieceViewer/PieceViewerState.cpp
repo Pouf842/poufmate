@@ -47,45 +47,6 @@ bool PieceViewerState::OnEvent(const SEvent & oEvent)
 	return State::OnEvent(oEvent);
 }
 
-void PieceViewerState::RotateCamera(float fYDegrees)
-{
-	ICameraSceneNode * poCamera = mpoSceneManager->getActiveCamera();
-	vector3df oCameraToTarget = poCamera->getTarget() - poCamera->getAbsolutePosition();
-
-	vector3df oBaseRotation(oCameraToTarget.getHorizontalAngle());
-
-	poCamera->bindTargetAndRotation(true);
-
-	u32 uStartTime = mpoDevice->getTimer()->getTime();
-
-	const float TOTAL_ROT_TIME = 1000.0;
-	bool bOver = false;
-
-	while(mpoDevice->run() && !bOver)
-	{
-		if(mpoDevice->isWindowActive())
-		{
-			mpoVideoDriver->beginScene();
-			mpoSceneManager->drawAll();
-			mpoGUI->drawAll();
-			mpoVideoDriver->endScene();
-
-			u32 uNow = mpoDevice->getTimer()->getTime();
-			float fYRotation = ((uNow - uStartTime) / TOTAL_ROT_TIME) * fYDegrees;
-
-			if(uNow - uStartTime > TOTAL_ROT_TIME)
-			{
-				fYRotation = fYDegrees;
-				bOver = true;
-			}
-			
-			poCamera->setRotation(oBaseRotation + vector3df(0, fYRotation, 0));
-		}
-		else
-			mpoDevice->yield();
-	}
-}
-
 void PieceViewerState::NextPiece(Piece::PIECE_TYPE eType, bool bLeft)
 {
 	mbPresentingPieces = true;
@@ -224,10 +185,10 @@ void PieceViewerState::Run()
 {
 	mbStop = false;
 
-	RotateCamera(90);
+	mpoInterface->RotateCamera(0, 90, 0);
 	mpoLight->setVisible(true);
 	PresentPieces();
-	RotateCamera(-90);
+	mpoInterface->RotateCamera(0, -90, 0);
 	mpoLight->setVisible(false);
 
 	mpoCurrentPiece->remove();

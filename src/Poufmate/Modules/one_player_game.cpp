@@ -130,7 +130,7 @@ Entry::ENTRY_COMMAND OnePlayerGame::Run()
 			}
 			catch(exception & e)
 			{
-				cout << __FILE__ << ":" << __LINE__ << endl;
+				cout << __FUNCTION__ << ":" << __LINE__ << endl;
 				mpoInterface->DisplayMessage(e.what());
 			}
 		}
@@ -148,7 +148,7 @@ Entry::ENTRY_COMMAND OnePlayerGame::Run()
 	}		
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }

@@ -29,7 +29,7 @@ Movement::Movement(Position oPos1, Position oPos2) : moPos1(oPos1), moPos2(oPos2
 	}
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }

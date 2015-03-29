@@ -30,7 +30,7 @@ Piece::PIECE_COLOR Square::eGetPieceColor() const
 	}
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }
@@ -46,7 +46,7 @@ Piece::PIECE_TYPE Square::eGetPieceType() const
 	}
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }

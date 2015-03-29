@@ -18,7 +18,6 @@ protected :
 	bool mbChangingColor;
 
 	bool mbPresentingPieces;
-	void RotateCamera(float);
 	void PresentPieces();
 	void NextPiece(Piece::PIECE_TYPE, bool = false);
 public :

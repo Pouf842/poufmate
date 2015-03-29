@@ -2,12 +2,28 @@
 #define __TOOLS_H_
 
 #include "irrlicht.h"
+#include "Core/Position.h"
 #include <iostream>
 
 inline std::ostream & operator<<(std::ostream & out, const irr::core::vector3df & oVec)
 {
 	out << "(" << oVec.X << " ; " << oVec.Y << " ; " << oVec.Z << ")";
 	return out;
+}
+
+inline Position oGetBoardPosition(const irr::core::vector3df & oNodePos)
+{
+	return Position(irr::core::round32(-oNodePos.Z - 0.6) + 4, irr::core::round32(oNodePos.X - 0.6) + 4);
+}
+
+inline irr::core::vector3df vGetNodePosition(int X, int Y)
+{
+	return irr::core::vector3df(Y - 3.5, 0.5, 3.5 - X);
+}
+
+inline irr::core::vector3df vGetNodePosition(const Position & oPos)
+{
+	return vGetNodePosition(oPos.mX, oPos.mY);
 }
 
 //inline void moveNodeInLocalSpace(irr::scene::ISceneNode* node, const irr::core::vector3df& distVect)

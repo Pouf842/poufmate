@@ -19,7 +19,7 @@ Position::Position(unsigned int X, unsigned int Y) : mX(X), mY(Y), mbEmpty(false
 	}		
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }
@@ -66,7 +66,7 @@ Position & Position::operator=(std::string strCoords)
 	}
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }

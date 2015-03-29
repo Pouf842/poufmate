@@ -47,7 +47,10 @@ Entry::ENTRY_COMMAND TwoPlayersGame::Run()
 					else if(eCommand == Entry::EC_CANCEL_MOVE)
 					{
 						if(mpoSelectedPosition)
+						{
 							mpoSelectedPosition = NULL;
+							meSelectedPieceType = Piece::PT_NONE;
+						}
 						else
 						{
 							CancelLastMove();
@@ -80,7 +83,10 @@ Entry::ENTRY_COMMAND TwoPlayersGame::Run()
 						Position oPos2(oEntry.oGetPos());
 
 						if(oPos1 == oPos2)
+						{
 							mpoSelectedPosition = NULL;
+							meSelectedPieceType = Piece::PT_NONE;
+						}
 						else
 						{
 							/* Determinate the movement's type and update poNextMove */
@@ -114,6 +120,7 @@ Entry::ENTRY_COMMAND TwoPlayersGame::Run()
 							}
 
 							mpoSelectedPosition = NULL;
+							meSelectedPieceType = Piece::PT_NONE;
 							SwitchPlayer();	// Next player
 
 							/* If the player is checkmate, display a message and stop the game */
@@ -139,6 +146,7 @@ Entry::ENTRY_COMMAND TwoPlayersGame::Run()
 			{
 				mpoInterface->DisplayMessage(e.what());	// Display the error message
 				mpoSelectedPosition = NULL;
+				meSelectedPieceType = Piece::PT_NONE;
 			}
 		}
 
@@ -155,7 +163,7 @@ Entry::ENTRY_COMMAND TwoPlayersGame::Run()
 	}		
 	catch(exception & e)
 	{
-		cout << __FILE__ << ":" << __LINE__ << endl;
+		cout << __FUNCTION__ << ":" << __LINE__ << endl;
 		throw e;
 	}
 }
