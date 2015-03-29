@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Fichiers sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Fichiers de ressources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\States">
+      <UniqueIdentifier>{7f787e29-a5c7-43f9-821f-9bafb9d5746a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\States">
+      <UniqueIdentifier>{5f5e68fe-fae7-4750-91c5-065685e76b10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\States\Game">
+      <UniqueIdentifier>{33edbd3b-6edd-477c-8a02-42eb29a4a4c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\States\Intro">
+      <UniqueIdentifier>{8afef6ed-3c18-40b3-896c-aee96b9f51cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\States\PieceViewer">
+      <UniqueIdentifier>{ac5d5a7d-0350-4ba5-8c1a-2f98bc13288c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\States\Game">
+      <UniqueIdentifier>{7f39393e-9430-4eb7-b481-b21535d3934b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\States\Intro">
+      <UniqueIdentifier>{af64fdfa-958f-47e2-a113-9429d47f4656}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\States\PieceViewer">
+      <UniqueIdentifier>{d40207d2-4aec-4502-983f-87b645074aba}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\InterfaceIrrlicht\InterfaceIrrlicht.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\InterfaceIrrlicht\States\MenuState.cpp">
+      <Filter>Fichiers sources\States</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\InterfaceIrrlicht\States\State.cpp">
+      <Filter>Fichiers sources\States</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\InterfaceIrrlicht\States\TestState.cpp">
+      <Filter>Fichiers sources\States</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\InterfaceIrrlicht\States\Game\GameState.cpp">
+      <Filter>Fichiers sources\States\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\InterfaceIrrlicht\States\Intro\IntroAnimator.cpp">
+      <Filter>Fichiers sources\States\Intro</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\InterfaceIrrlicht\States\Intro\IntroState.cpp">
+      <Filter>Fichiers sources\States\Intro</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\InterfaceIrrlicht\States\PieceViewer\PieceViewerAnimator.cpp">
+      <Filter>Fichiers sources\States\PieceViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\InterfaceIrrlicht\States\PieceViewer\PieceViewerState.cpp">
+      <Filter>Fichiers sources\States\PieceViewer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\InterfaceIrrlicht\InterfaceIrrlicht.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\InterfaceIrrlicht\Tools.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\InterfaceIrrlicht\States\IncludeStates.h">
+      <Filter>Fichiers d%27en-tête\States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\InterfaceIrrlicht\States\MenuState.h">
+      <Filter>Fichiers d%27en-tête\States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\InterfaceIrrlicht\States\State.h">
+      <Filter>Fichiers d%27en-tête\States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\InterfaceIrrlicht\States\TestState.h">
+      <Filter>Fichiers d%27en-tête\States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\InterfaceIrrlicht\States\Game\GameState.h">
+      <Filter>Fichiers d%27en-tête\States\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\InterfaceIrrlicht\States\Intro\IntroAnimator.h">
+      <Filter>Fichiers d%27en-tête\States\Intro</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\InterfaceIrrlicht\States\Intro\IntroState.h">
+      <Filter>Fichiers d%27en-tête\States\Intro</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\InterfaceIrrlicht\States\PieceViewer\PieceViewerAnimator.h">
+      <Filter>Fichiers d%27en-tête\States\PieceViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\InterfaceIrrlicht\States\PieceViewer\PieceViewerState.h">
+      <Filter>Fichiers d%27en-tête\States\PieceViewer</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

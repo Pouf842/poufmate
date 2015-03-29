@@ -154,6 +154,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\Core\Modules\game_edition.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\Core\Modules\include_modules.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\Core\Modules\module.h"
 					>
 				</File>

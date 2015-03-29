@@ -41,7 +41,6 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;$(SolutionDir)..\src\Core&quot;"
-				PreprocessorDefinitions="__SDL_"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -189,18 +188,22 @@
 		<Filter
 			Name="Fichier en-tête"
 			>
-			<File
-				RelativePath="..\..\src\Poufmate\Modules\game_edition.h"
+			<Filter
+				Name="Modules"
 				>
-			</File>
-			<File
-				RelativePath="..\..\src\Poufmate\Modules\one_player_game.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\Poufmate\Modules\two_players_game.h"
-				>
-			</File>
+				<File
+					RelativePath="..\..\src\Poufmate\Modules\game_edition.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\Poufmate\Modules\one_player_game.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\Poufmate\Modules\two_players_game.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath="..\..\src\Poufmate\main.cpp"

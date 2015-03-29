@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Fichiers sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Core">
+      <UniqueIdentifier>{0f0d8fc1-8598-4cc5-b1a2-196b8741e9f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Interface">
+      <UniqueIdentifier>{d6911766-26f5-4aa0-ac5f-bd647731712d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Modules">
+      <UniqueIdentifier>{51804014-9cbb-46de-bf45-2a7bff6c47e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Movements">
+      <UniqueIdentifier>{283fbac3-2da7-4137-a73a-edf891058228}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Pieces">
+      <UniqueIdentifier>{e7e507bf-93c4-44c9-b459-40e59cc62b6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Core">
+      <UniqueIdentifier>{f6c63199-9dbb-4252-a56c-1902e7a61d70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Interface">
+      <UniqueIdentifier>{02afd3c0-92e9-49b7-81e8-0c4263d6bd86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Modules">
+      <UniqueIdentifier>{b69ce9cd-35f3-4652-aefb-eddeacf7867d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Movements">
+      <UniqueIdentifier>{50aa4123-9dd6-435b-993b-efd0e5d5e9ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Pieces">
+      <UniqueIdentifier>{7bfec243-a903-4169-b103-738fdcae3a61}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\Core\Core\square.cpp">
+      <Filter>Fichiers sources\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Core\Core\board.cpp">
+      <Filter>Fichiers sources\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Core\Core\position.cpp">
+      <Filter>Fichiers sources\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Core\Interface\interface.cpp">
+      <Filter>Fichiers sources\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Core\Interface\entry.cpp">
+      <Filter>Fichiers sources\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Core\Modules\game.cpp">
+      <Filter>Fichiers sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Core\Modules\module.cpp">
+      <Filter>Fichiers sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Core\Movements\castling_move.cpp">
+      <Filter>Fichiers sources\Movements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Core\Movements\en_passant.cpp">
+      <Filter>Fichiers sources\Movements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Core\Movements\first_move.cpp">
+      <Filter>Fichiers sources\Movements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Core\Movements\movement.cpp">
+      <Filter>Fichiers sources\Movements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Core\Movements\promotion.cpp">
+      <Filter>Fichiers sources\Movements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Core\Pieces\bishop.cpp">
+      <Filter>Fichiers sources\Pieces</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Core\Pieces\king.cpp">
+      <Filter>Fichiers sources\Pieces</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Core\Pieces\knight.cpp">
+      <Filter>Fichiers sources\Pieces</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Core\Pieces\pawn.cpp">
+      <Filter>Fichiers sources\Pieces</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Core\Pieces\piece.cpp">
+      <Filter>Fichiers sources\Pieces</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Core\Pieces\queen.cpp">
+      <Filter>Fichiers sources\Pieces</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Core\Pieces\rook.cpp">
+      <Filter>Fichiers sources\Pieces</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\Core\Core\square.h">
+      <Filter>Fichiers d%27en-tête\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Core\Core\board.h">
+      <Filter>Fichiers d%27en-tête\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Core\Core\position.h">
+      <Filter>Fichiers d%27en-tête\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Core\Interface\interface.h">
+      <Filter>Fichiers d%27en-tête\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Core\Interface\entry.h">
+      <Filter>Fichiers d%27en-tête\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Core\Modules\game.h">
+      <Filter>Fichiers d%27en-tête\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Core\Modules\game_edition.h">
+      <Filter>Fichiers d%27en-tête\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Core\Modules\include_modules.h">
+      <Filter>Fichiers d%27en-tête\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Core\Modules\module.h">
+      <Filter>Fichiers d%27en-tête\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Core\Movements\castling_move.h">
+      <Filter>Fichiers d%27en-tête\Movements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Core\Movements\en_passant.h">
+      <Filter>Fichiers d%27en-tête\Movements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Core\Movements\first_move.h">
+      <Filter>Fichiers d%27en-tête\Movements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Core\Movements\include_movements.h">
+      <Filter>Fichiers d%27en-tête\Movements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Core\Movements\movement.h">
+      <Filter>Fichiers d%27en-tête\Movements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Core\Movements\promotion.h">
+      <Filter>Fichiers d%27en-tête\Movements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Core\Pieces\bishop.h">
+      <Filter>Fichiers d%27en-tête\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Core\Pieces\king.h">
+      <Filter>Fichiers d%27en-tête\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Core\Pieces\knight.h">
+      <Filter>Fichiers d%27en-tête\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Core\Pieces\pawn.h">
+      <Filter>Fichiers d%27en-tête\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Core\Pieces\piece.h">
+      <Filter>Fichiers d%27en-tête\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Core\Pieces\queen.h">
+      <Filter>Fichiers d%27en-tête\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Core\Pieces\rook.h">
+      <Filter>Fichiers d%27en-tête\Pieces</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
