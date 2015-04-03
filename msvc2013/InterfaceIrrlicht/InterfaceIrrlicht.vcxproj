@@ -43,6 +43,7 @@
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(IrrlichtPath)\Include</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(IrrlichtPath)\lib\Win32-visualstudio\</LibraryPath>
+    <SourcePath>$(VC_SourcePath);$(IrrlichtPath)\Include</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
