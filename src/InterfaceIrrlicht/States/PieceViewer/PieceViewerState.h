@@ -15,16 +15,18 @@ protected :
 	PieceViewerAnimator * mpoAnimator;
 	Piece::PIECE_TYPE meCurrentType;
 	bool mbCurrentPieceWhite;
-	bool mbChangingColor;
+    bool mbChangingColor;
+    bool mbStop;
 
 	bool mbPresentingPieces;
 	void PresentPieces();
 	void NextPiece(Piece::PIECE_TYPE, bool = false);
 public :
 	PieceViewerState(InterfaceIrrlicht *);
-	~PieceViewerState();
+    ~PieceViewerState();
+    virtual void Show();
+    virtual void Hide();
 	virtual bool OnEvent(const irr::SEvent &);
-	virtual void Run();
 };
 
 #endif

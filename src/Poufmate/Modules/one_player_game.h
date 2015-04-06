@@ -45,12 +45,6 @@ class OnePlayerGame : public Game
 	 * Destructor
 	 */
 	virtual ~OnePlayerGame();
-
-	/**
-	 * Overload of Game::Run()
-	 * @see Game::Run()
-	 */
-	virtual Entry::ENTRY_COMMAND Run();
 };
 
 #endif

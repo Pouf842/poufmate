@@ -11,5 +11,6 @@ copy %copyPath%\Modules\game.h Modules\
 copy %copyPath%\Modules\game_edition.h Modules\
 copy %copyPath%\Modules\module.h Modules\
 copy %copyPath%\Pieces\piece.h Pieces\
+copy %copyPath%\Controller.h Controller.h
 
 pause

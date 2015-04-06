@@ -53,9 +53,6 @@
     <ClCompile Include="..\..\src\Core\Interface\interface.cpp">
       <Filter>Fichiers sources\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Core\Interface\entry.cpp">
-      <Filter>Fichiers sources\Interface</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\Core\Modules\game.cpp">
       <Filter>Fichiers sources\Modules</Filter>
     </ClCompile>
@@ -98,6 +95,9 @@
     <ClCompile Include="..\..\src\Core\Pieces\rook.cpp">
       <Filter>Fichiers sources\Pieces</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Core\Controller.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Core\Core\square.h">
@@ -110,9 +110,6 @@
       <Filter>Fichiers d%27en-tête\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Core\Interface\interface.h">
-      <Filter>Fichiers d%27en-tête\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Core\Interface\entry.h">
       <Filter>Fichiers d%27en-tête\Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Core\Modules\game.h">
@@ -165,6 +162,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\Core\Pieces\rook.h">
       <Filter>Fichiers d%27en-tête\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Core\Controller.h">
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

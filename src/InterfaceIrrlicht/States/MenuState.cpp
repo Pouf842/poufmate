@@ -4,7 +4,7 @@ using namespace irr;
 using namespace core;
 using namespace gui;
 
-MenuState::MenuState(InterfaceIrrlicht * poInterface) : State(poInterface), msChoice(-1)
+MenuState::MenuState(InterfaceIrrlicht * poInterface) : State(poInterface)
 {
 }
 
@@ -14,32 +14,34 @@ bool MenuState::OnEvent(const SEvent & oEvent)
 	&& oEvent.KeyInput.Key == KEY_ESCAPE
 	&& !oEvent.KeyInput.PressedDown)
 	{
-		msChoice = moButtons[moButtons.size() - 2]->getID();
-		mbStop = true;
+        mpoController->SetMenuChoice(moButtons[moButtons.size() - 2]->getID());
 		return true;
 	}
 	else if(oEvent.EventType == EET_GUI_EVENT
 	&& oEvent.GUIEvent.EventType == EGET_BUTTON_CLICKED)
 	{
-		msChoice = oEvent.GUIEvent.Caller->getID();
-		mbStop = true;
+        if(oEvent.GUIEvent.Caller == moButtons.getLast())
+        {
+            mpoInterface->SetPieceViewerState();
+        }
+
+		mpoController->SetMenuChoice(oEvent.GUIEvent.Caller->getID());
 		return true;
 	}
 
 	return State::OnEvent(oEvent);
 }
 
-s32 MenuState::sGetChoice()
+void MenuState::Show()
 {
-	return msChoice;
+    for(s32 i = 0; i < moButtons.size(); ++i)
+        moButtons[i]->setVisible(true);
 }
 
-void MenuState::Run()
+void MenuState::Hide()
 {
-	for(s32 i = 0; i < moButtons.size(); ++i)
-		moButtons[i]->setVisible(true);
-
-	State::Run();
+    for(s32 i = 0; i < moButtons.size(); ++i)
+        moButtons[i]->setVisible(false);
 }
 
 void MenuState::SetMenu(const array<string<wchar_t> > & oMenu)
@@ -58,10 +60,8 @@ void MenuState::SetMenu(const array<string<wchar_t> > & oMenu)
 	moButtons.push_back(poGUI->addButton(rect<s32>(0, 600 / (sMenuSize + 1) * sMenuSize, 800, 600), NULL, sMenuSize + 1, L"Piece viewer"));
 }
 
-void MenuState::Stop()
+/*void MenuState::Stop()
 {
 	for(s32 i = 0; i < moButtons.size(); ++i)
 		moButtons[i]->setVisible(false);
-
-	State::Stop();
-}
+}*/

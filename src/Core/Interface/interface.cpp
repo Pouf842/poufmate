@@ -1,6 +1,6 @@
 #include "interface.h"
 
-void Interface::setModule(const Module * poModule)
+void Interface::SetController(Controller * poController)
 {
-	mpoModule = poModule;
+    mpoController = poController;
 }

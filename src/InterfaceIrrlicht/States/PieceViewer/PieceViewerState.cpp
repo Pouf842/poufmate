@@ -9,14 +9,34 @@ using namespace scene;
 using namespace core;
 
 PieceViewerState::PieceViewerState(InterfaceIrrlicht * poInterface) : State(poInterface),
-																	  mbPresentingPieces(false),
-																	  mpoCurrentPiece(NULL),
-																	  mbCurrentPieceWhite(true),
-																	  mbChangingColor(false)
+                                                                      mbPresentingPieces(false),
+                                                                      mpoCurrentPiece(NULL),
+                                                                      mbCurrentPieceWhite(true),
+                                                                      mbChangingColor(false),
+                                                                      mbStop(false)
 {
 	mpoAnimator = new PieceViewerAnimator();
 	mpoLight = mpoSceneManager->addLightSceneNode(mpoSceneManager->getActiveCamera(), vector3df(0, 5, 0), SColorf(0.2, 0.2, 0.2), 10);
 	mpoLight->setVisible(false);
+}
+
+void PieceViewerState::Show()
+{
+    mbStop = false;
+
+    mpoInterface->RotateCamera(0, 90, 0);
+    mpoLight->setVisible(true);
+    PresentPieces();
+    mpoInterface->RotateCamera(0, -90, 0);
+    mpoLight->setVisible(false);
+
+    mpoCurrentPiece->remove();
+    mpoCurrentPiece = NULL;
+}
+
+void PieceViewerState::Hide()
+{
+    mbStop = true;
 }
 
 bool PieceViewerState::OnEvent(const SEvent & oEvent)
@@ -40,7 +60,14 @@ bool PieceViewerState::OnEvent(const SEvent & oEvent)
 				{
 					if(!mbChangingColor)
 						mbChangingColor = true;
+
+                    return true;
 				}
+                else if(oEvent.KeyInput.Key == KEY_ESCAPE)
+                {
+                    mbStop = true;
+                    return true;
+                }
 			}
 		}
 
@@ -179,18 +206,4 @@ PieceViewerState::~PieceViewerState()
 {
 	mpoLight->remove();
 	mpoAnimator->drop();
-}
-
-void PieceViewerState::Run()
-{
-	mbStop = false;
-
-	mpoInterface->RotateCamera(0, 90, 0);
-	mpoLight->setVisible(true);
-	PresentPieces();
-	mpoInterface->RotateCamera(0, -90, 0);
-	mpoLight->setVisible(false);
-
-	mpoCurrentPiece->remove();
-	mpoCurrentPiece = NULL;
 }

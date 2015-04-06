@@ -6,9 +6,9 @@
 #include "module.h"
 #include "Core\board.h"
 #include "Core\position.h"
-#include "Interface\interface.h"
 
 class Movement;
+class Controller;
 
 class Game : public Module
 {
@@ -16,7 +16,8 @@ class Game : public Module
 	std::vector<Movement*> moHistory;	// History of moves
 	Piece::PIECE_COLOR meCurrentPlayer;		// Current playing player
 	Position moKings[2];				// Positions of the two kings (usefull for check and checkmate verification)
-	Position * mpoSelectedPosition;		// Selected square
+	Position moSelectedPosition;		// Selected square
+    Controller * mpoController;
 
 	bool mbIsOver;					// true if the party is over
 	bool mbIsWhiteInCheck;
@@ -89,6 +90,7 @@ class Game : public Module
 	 */
 	virtual void MovePiece(Position oPos1, Position oPos2);
 	virtual void Initialize();
+
 	
 	/**
 	 * Set the selected position
@@ -102,14 +104,18 @@ class Game : public Module
 	/**
 	 * Basic constructor
 	 */
-	Game(Interface * poInterface = NULL, Module::MODULE_TYPE = Module::MT_NONE);
+	Game(Controller * poInterface = NULL, Module::MODULE_TYPE = Module::MT_NONE);
+
+    virtual void GrabPiece(const Position &);
+    virtual void DropPiece(const Position &);
+    virtual void SelectNewPiece();
 
 	/**
 	 * Constructor with a specified board
 	 * Throw exception if there is more or less
 	 * than 1 king for each player
 	 */
-	Game(const Board &, Interface * poInterface = NULL, Module::MODULE_TYPE = Module::MT_NONE);
+    Game(const Board &, Controller * poInterface = NULL, Module::MODULE_TYPE = Module::MT_NONE);
 
 	/**
 	 * Check if the given position is a valid selection. Throw an exception otherwise
@@ -126,6 +132,7 @@ class Game : public Module
 	 * @see oGetPossibilities(Position)
 	 */
 	virtual std::vector<Position> oGetPossibilities(unsigned int, unsigned int);
+
 	Piece::PIECE_COLOR eGetCurrentPlayer() const;
 	Position oGetKingPosition(Piece::PIECE_COLOR) const;
 	/**
@@ -139,7 +146,7 @@ class Game : public Module
 	/**
 	 * Get the previously selected position
 	 */
-	Position * poGetSelectedPosition() const;
+	Position oGetSelectedPosition() const;
 };
 
 #endif

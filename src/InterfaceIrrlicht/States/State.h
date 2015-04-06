@@ -6,20 +6,19 @@
 
 class State : public irr::IEventReceiver
 {
-protected :
+protected:
+    Controller                         * mpoController;
 	irr::IrrlichtDevice				   * mpoDevice;
 	irr::scene::ISceneManager		   * mpoSceneManager;
 	irr::scene::ISceneCollisionManager * mpoCollisionManager;
 	irr::video::IVideoDriver		   * mpoVideoDriver;
 	irr::gui::IGUIEnvironment		   * mpoGUI;
-	bool mbStop;
 	InterfaceIrrlicht * mpoInterface;
-public :
+public:
 	State(InterfaceIrrlicht * poInterface);
+    virtual void Show() = 0;
+    virtual void Hide() = 0;
 	virtual bool OnEvent(const irr::SEvent &);
-	virtual void Run();
-	virtual bool bIsRunning();
-	virtual void Stop();
 };
 
 #endif

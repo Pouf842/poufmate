@@ -27,10 +27,13 @@
     <ClCompile Include="..\..\src\Poufmate\Modules\game_edition.cpp">
       <Filter>Fichiers sources\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Poufmate\Modules\one_player_game.cpp">
+    <ClCompile Include="..\..\src\Poufmate\Modules\two_players_game.cpp">
       <Filter>Fichiers sources\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Poufmate\Modules\two_players_game.cpp">
+    <ClCompile Include="..\..\src\Poufmate\PoufMate.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Poufmate\Modules\one_player_game.cpp">
       <Filter>Fichiers sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
@@ -43,6 +46,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\Poufmate\Modules\two_players_game.h">
       <Filter>Fichiers d%27en-tête\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Poufmate\PoufMate.h">
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

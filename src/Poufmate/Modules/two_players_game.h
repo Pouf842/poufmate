@@ -12,9 +12,11 @@
 
 #include "Modules/game.h"
 
+class Controller;
+
 class TwoPlayersGame : public Game
 {
-  public :
+public :
 	/**
 	 * Destructor
 	 */
@@ -23,21 +25,13 @@ class TwoPlayersGame : public Game
 	/**
 	 * Constructor
 	 */
-	TwoPlayersGame(Interface * poInterface = NULL);
+	TwoPlayersGame(Controller * = NULL);
 
 	/**
 	 * Constructor to start a two player game with a specified board
 	 * Note that the board must contain one and only one king for each player
 	 */
-	TwoPlayersGame(const Board & oBoard, Interface * poInterface = NULL);
-
-	/**
-	 * Implement of Module::Run()
-	 * Launch the game, interact with the players via an interface,
-	 * controls their movements, and transmit them to the board
-	 * @see Module::Run()
-	 */
-	virtual Entry::ENTRY_COMMAND Run();
+    TwoPlayersGame(const Board & oBoard, Controller * = NULL);
 };
 
 #endif

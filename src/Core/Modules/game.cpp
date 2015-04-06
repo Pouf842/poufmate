@@ -1,13 +1,13 @@
 #include "game.h"
 #include <sstream>
 #include "Movements\include_movements.h"
+#include "Controller.h"
 
 using namespace std;
 
-Game::Game(Interface * poInterface, Module::MODULE_TYPE eType) : mpoSelectedPosition(NULL)
+Game::Game(Controller * poController, Module::MODULE_TYPE eType) : mpoController(poController)
 {
 	meType = eType;
-	SetInterface(poInterface);
 	Initialize();
 }
 
@@ -21,7 +21,7 @@ void Game::Initialize()
 	moKings[Piece::PC_BLACK] = Position(0, 4);
 
 	moBoard.Init();
-	mpoSelectedPosition = NULL;
+    moSelectedPosition.Empty();
 
 	meCurrentPlayer = Piece::PC_WHITE;	// White moves first
 	mbIsOver = false;
@@ -34,14 +34,13 @@ void Game::Initialize()
 	Movement::SetBoard(&moBoard);	// Set the board for movements (@see Movement::spoBoard)
 }
 
-Game::Game(const Board & oBoard, Interface * poInterface, Module::MODULE_TYPE eType) : mpoSelectedPosition(NULL)
+Game::Game(const Board & oBoard, Controller * poController, Module::MODULE_TYPE eType)
 {
 	try
 	{
-		SetInterface(poInterface);
-
 		meType = eType;
 		moBoard = oBoard;
+        moSelectedPosition.Empty();
 
 		Position oWhiteKing;
 		Position oBlackKing;
@@ -483,19 +482,14 @@ bool Game::bIsStaleMate() const
 	return mbIsStaleMate;
 }
 
-Position * Game::poGetSelectedPosition() const
+Position Game::oGetSelectedPosition() const
 {
-	return mpoSelectedPosition;
+	return moSelectedPosition;
 }
 
 void Game::SetSelectedPosition(Position oPos)
 {
-	if(mpoSelectedPosition)
-		delete mpoSelectedPosition;
-
-	mpoSelectedPosition = new Position(oPos);
-	meSelectedPieceType  = moBoard.eGetSquareType(oPos);
-	meSelectedPieceColor = moBoard.eGetSquareColor(oPos);
+	moSelectedPosition = oPos;
 }
 
 void Game::RefreshCheckBooleans()
@@ -507,4 +501,98 @@ void Game::RefreshCheckBooleans()
 	mbIsStaleMate = bIsGameInStaleMate();
 
 	mbIsOver = mbIsWhiteCheckMate || mbIsBlackCheckMate || mbIsStaleMate;
+}
+
+
+void Game::GrabPiece(const Position & oPiecePosition)
+{
+    try
+    {
+		if(moBoard.bIsSquareEmpty(oPiecePosition))
+			throw exception("That square is empty !");
+        else if(moBoard.eGetSquareColor(oPiecePosition) != meCurrentPlayer)
+			throw exception("That piece does not belong to you !");
+
+        moSelectedPosition = oPiecePosition;
+    }
+    catch(std::exception & e)
+    {
+        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << e.what() << std::endl;
+        throw e;
+    }
+}
+
+void Game::DropPiece(const Position & oDropPosition)
+{
+    try
+    {
+        if(moSelectedPosition.bIsEmpty())
+            throw exception("No piece selected");
+
+        if(oDropPosition == moSelectedPosition)
+            moSelectedPosition.Empty();
+        else
+        {
+            Movement * poNextMove;
+
+            /* Determinate the movement's type and update poNextMove */
+            if(bIsCastling(moSelectedPosition, oDropPosition))	// Castling
+            {
+            	if(bIsInCheck(meCurrentPlayer))
+            		throw exception("Castling is not allowed if you're in check");
+            
+            	if(!bIsCastlingPathOk(moSelectedPosition, oDropPosition))
+            		throw exception("Your king would be in check during castling");
+            
+            	poNextMove = new CastlingMove(moSelectedPosition, oDropPosition);
+            }
+            else if(bIsPromotion(moSelectedPosition, oDropPosition))	// Promotion
+            	poNextMove = new Promotion(moSelectedPosition, oDropPosition, mpoController->eGetNewPieceType());
+            else if(moBoard.poGetPiece(moSelectedPosition)->bIsFirstMove())	// First move
+            	poNextMove = new FirstMove(moSelectedPosition, oDropPosition);
+            else if(bIsEnPassantOk(moSelectedPosition, oDropPosition))
+            	poNextMove = new EnPassant(moSelectedPosition, oDropPosition, (*moHistory.rbegin()));
+            else
+            	poNextMove = new Movement(moSelectedPosition, oDropPosition);	// Other move
+            
+            /* Execute the move */
+            ExecuteMovement(poNextMove);
+            
+            /* If the move puts the player in check, it is not valid */
+            if(bIsInCheck(meCurrentPlayer))
+            {
+            	CancelLastMove();
+            	throw exception("That move puts you in check");
+            }
+            
+            moSelectedPosition.Empty();
+            SwitchPlayer();	// Next player
+            
+            /* If the player is checkmate, display a message and stop the game */
+            if(bIsCheckMate(meCurrentPlayer))
+            {
+            	(meCurrentPlayer == Piece::PC_WHITE ? mbIsWhiteCheckMate : mbIsBlackCheckMate) = true;
+            	mbIsOver = true;
+            }
+            else if(bIsGameInStaleMate())
+            {
+            	mbIsStaleMate = true;
+            	mbIsOver = true;
+            }
+            else if(bIsInCheck(meCurrentPlayer))	// Display the current player as in check
+            	(meCurrentPlayer == Piece::PC_WHITE ? mbIsWhiteInCheck : mbIsBlackInCheck) = true;
+            
+            RefreshCheckBooleans();
+        }
+    }
+    catch(std::exception & e)
+    {
+        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << e.what() << std::endl;
+        moSelectedPosition.Empty();
+        throw e;
+    }
+}
+
+void Game::SelectNewPiece()
+{
 }

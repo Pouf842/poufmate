@@ -7,10 +7,15 @@
 class IntroState : public State
 {
 protected :
-	irr::scene::ISceneNodeAnimator * mpoAnimator;
+    irr::scene::ISceneNodeAnimator * mpoAnimator;
+    bool mbStop;
 public :
-	virtual ~IntroState();
-	IntroState(InterfaceIrrlicht *);
+    IntroState(InterfaceIrrlicht *);
+    virtual ~IntroState();
+
+    virtual void Show();
+    virtual void Hide();
+    virtual bool OnEvent(const irr::SEvent &);
 };
 
 #endif

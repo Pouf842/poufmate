@@ -3,6 +3,7 @@
 #include "States/IncludeStates.h"
 #include "Tools.h"
 
+#include <vector>
 #include <iostream>
 
 using namespace irr;
@@ -14,15 +15,16 @@ using namespace gui;
 s32 ID_BOARD = 1;
 s32 ID_PIECE = 2;
 
-extern "C" __declspec(dllexport) Interface * poGetInterface()
+extern "C" __declspec(dllexport) Interface * poGetInterface(Controller * poController)
 {
-    Interface * poInterface = new InterfaceIrrlicht();
+    Interface * poInterface = new InterfaceIrrlicht(poController);
 
     return poInterface;
 }
 
-InterfaceIrrlicht::InterfaceIrrlicht() : mpoCurrentState(NULL), mpoCameraFPS(NULL), mpoCamera(NULL), mpoCurrentCamera(NULL)
+InterfaceIrrlicht::InterfaceIrrlicht(Controller * poController) : mpoCurrentState(NULL), mpoCameraFPS(NULL), mpoCamera(NULL), mpoCurrentCamera(NULL), mbStop(false)
 {
+    mpoController = poController;
 	mpoDevice = createDevice(EDT_OPENGL, dimension2d<u32>(800, 600), 32, false, true, false, this);
 	mpoVideoDriver = mpoDevice->getVideoDriver();
 	mpoGUI = mpoDevice->getGUIEnvironment();
@@ -39,15 +41,16 @@ InterfaceIrrlicht::InterfaceIrrlicht() : mpoCurrentState(NULL), mpoCameraFPS(NUL
 
 	InitDatas();
 
-	/**/SetState(new IntroState(this));
-	delete mpoCurrentState;
-	mpoCurrentState = NULL;/*/
-	SetState(new TestState(this));
+    IntroState oIntro(this);
+    oIntro.Show();
+
+	/*SetState(new TestState(this));
 	delete mpoCurrentState;
 	mpoCurrentState = NULL;/**/
 
-	mpoMenuState = new MenuState(this);
-	mpoGameState = new GameState(this);
+	mpoMenuState    = new MenuState(this);
+	mpoGameState    = new GameState(this);
+    //mpoEditionState = new EditionState(this);
 	mpoPieceViewerState = new PieceViewerState(this);
 }
 
@@ -70,14 +73,7 @@ void InterfaceIrrlicht::InitDatas()
 	moPiecesMeshes[Piece::PT_PAWN]   = NULL;
 
 	mpoBoardMesh = mpoSceneManager->getGeometryCreator()->createCubeMesh(vector3df(8, 1, 8));
-	mpoBoardNode = mpoSceneManager->addMeshSceneNode(mpoBoardMesh, NULL, ID_BOARD);
-	mpoBoardNode->setName("Board");
-	poTriangleSelector = mpoSceneManager->createTriangleSelector(mpoBoardMesh, mpoBoardNode);
-	mpoBoardNode->setTriangleSelector(poTriangleSelector);
-	poTriangleSelector->drop();
-	mpoBoardNode->setMaterialFlag(EMF_LIGHTING, true);
-	ITexture * poBoardTexture = mpoVideoDriver->getTexture("Medias/Images/board.bmp");
-	mpoBoardNode->setMaterialTexture(0, poBoardTexture);
+    mpoBoardNode = CreateBoardNode();
 
 	for(map<Piece::PIECE_TYPE, IAnimatedMesh*>::Iterator i = moPiecesMeshes.getIterator(); !i.atEnd(); i++)
 	{
@@ -112,6 +108,85 @@ void InterfaceIrrlicht::InitDatas()
 	}
 	
 	PlacePieces();
+}
+
+ISceneNode * InterfaceIrrlicht::CreateBoardNode()
+{
+    ISceneNode * poNode = mpoSceneManager->addMeshSceneNode(mpoBoardMesh, NULL, ID_BOARD);
+    poNode->setName("Board");
+    ITriangleSelector * poTriangleSelector = mpoSceneManager->createTriangleSelector(mpoBoardMesh, poNode);
+    poNode->setTriangleSelector(poTriangleSelector);
+    poTriangleSelector->drop();
+    poNode->setMaterialFlag(EMF_LIGHTING, true);
+    ITexture * poBoardTexture = mpoVideoDriver->getTexture("Medias/Images/board.bmp");
+    poNode->setMaterialTexture(0, poBoardTexture);
+
+    return poNode;
+}
+
+void InterfaceIrrlicht::SetMenuState(std::vector<std::string> const * poMenu)
+{
+    if(poMenu)
+    {
+        array<string<wchar_t> > oWMenu;
+
+        for each(std::string str in *poMenu)
+            oWMenu.push_back(string<wchar_t>(str.c_str()));
+
+        mpoMenuState->SetMenu(oWMenu);
+    }
+
+    SetState(mpoMenuState);
+}
+
+void InterfaceIrrlicht::SetGameState(const Board & oBoard)
+{
+    mpoGameState->InitBoard(oBoard);
+    SetState(mpoGameState);
+}
+
+void InterfaceIrrlicht::SetPieceViewerState()
+{
+    try
+    {
+        State * poLastState = mpoCurrentState;
+
+        SetState(mpoPieceViewerState);
+        SetState(poLastState);
+    }
+    catch(std::exception & e)
+    {
+        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << e.what() << std::endl;
+        throw e;
+    }
+}
+
+void InterfaceIrrlicht::Run()
+{
+    mbStop = false;
+
+    while(mpoDevice->run() && !mbStop)
+    {
+        if(mpoDevice->isWindowActive())
+        {
+            mpoVideoDriver->beginScene();
+            mpoSceneManager->drawAll();
+            mpoGUI->drawAll();
+            mpoVideoDriver->endScene();
+        }
+        else
+            mpoDevice->yield();
+    }
+}
+
+void InterfaceIrrlicht::Quit()
+{
+    mbStop = true;
+}
+
+Piece::PIECE_TYPE InterfaceIrrlicht::eGetPromotionNewPiece()
+{
+    return Piece::PT_PAWN;
 }
 
 void InterfaceIrrlicht::PlacePieces()
@@ -249,94 +324,21 @@ void InterfaceIrrlicht::PlacePieces()
 		addPieceNode(oTypes[i], oColors[i], oPositions[i], oNames[i]);
 }
 
-int InterfaceIrrlicht::iGetMenuEntry(const std::vector<std::string> oMenu)
-{
-	array<irr::core::string<wchar_t> > oArrayMenu;
 
-	for(s32 i = 0; i < oMenu.size(); ++i)
-		oArrayMenu.push_back(oMenu[i].c_str());
-
-	mpoMenuState->SetMenu(oArrayMenu);
-	SetState(mpoMenuState);
-
-	while(mpoMenuState->sGetChoice() > oMenu.size())
-	{
-		mpoMenuState->Stop();
-		SetState(mpoPieceViewerState);
-		mpoCurrentState = NULL;
-		SetState(mpoMenuState);
-	}
-	
-	return mpoMenuState->sGetChoice();
-}
-
-Entry InterfaceIrrlicht::oGetEntry()
-{
-	if(mpoCurrentState != mpoGameState)
-	{
-		mpoCurrentState->Stop();
-
-		list<ISceneNode*> oPieces = mpoBoardNode->getChildren();
-		for(list<ISceneNode*>::Iterator i = oPieces.begin(); i != oPieces.end(); ++i)
-			(*i)->remove();
-
-		mpoGameState->UpdateBoard();
-		RevolveCamera(vector3df(-1, 0, 0), -20, 500);
-	}
-
-	SetState(mpoGameState);
-
-	return mpoGameState->oGetLastEntry();
-}
-
-void InterfaceIrrlicht::DisplayMessage(const std::string strMessage)
+/*void InterfaceIrrlicht::DisplayMessage(const std::string strMessage)
 {
 	std::cout << strMessage << std::endl;
-}
-
-std::string InterfaceIrrlicht::strGetIPEntry()
-{
-	return "";
-}
-
-std::string InterfaceIrrlicht::strGetPortEntry()
-{
-	return "";
-}
-
-Piece::PIECE_TYPE InterfaceIrrlicht::eGetNewPieceType(const Piece::PIECE_COLOR)
-{
-	return Piece::PT_NONE;
-}
-
-Piece::PIECE_COLOR InterfaceIrrlicht::eGetPlayerColorChoice()
-{
-	return Piece::PC_BLACK;
-}
-
-Entry::ENTRY_COMMAND InterfaceIrrlicht::GameOver(std::string strMessage)
-{
-	return Entry::EC_NONE;
-}
-
-void InterfaceIrrlicht::SetBusy()
-{
-}
-
-void InterfaceIrrlicht::SetProgress(unsigned int)
-{
-}
+}*/
 
 void InterfaceIrrlicht::SetState(State * poNewState)
 {
-	/*if(mpoCurrentState)
-		mpoCurrentState->Stop();*/
+	if(mpoCurrentState)
+		mpoCurrentState->Hide();
 
 	mpoCurrentState = poNewState;
 	mpoDevice->setEventReceiver(mpoCurrentState);
 
-	if(poNewState)
-		poNewState->Run();
+    mpoCurrentState->Show();
 }
 
 bool InterfaceIrrlicht::OnEvent(const SEvent &)
@@ -350,14 +352,23 @@ void InterfaceIrrlicht::SwitchCameraType()
 	mpoSceneManager->setActiveCamera(mpoCurrentCamera);
 }
 
-ISceneNode * InterfaceIrrlicht::addPieceNode(Piece * poPiece, const Position & oPos, irr::core::string<char> strName)
+ISceneNode * InterfaceIrrlicht::addPieceNode(Piece * poPiece, const Position & oPos, irr::core::string<char> strName, ISceneNode * poParent)
 {
-	return addPieceNode(poPiece->eGetType(), poPiece->eGetColor(), oPos, strName);
+    try
+    {
+        if(poPiece)
+            return addPieceNode(poPiece->eGetType(), poPiece->eGetColor(), oPos, strName, poParent);
+    }
+    catch(std::exception & e)
+    {
+        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << e.what() << std::endl;
+        throw e;
+    }
 }
 
-ISceneNode * InterfaceIrrlicht::addPieceNode(Piece::PIECE_TYPE eType, Piece::PIECE_COLOR eColor, const Position & oPos, string<char> strName)
+ISceneNode * InterfaceIrrlicht::addPieceNode(Piece::PIECE_TYPE eType, Piece::PIECE_COLOR eColor, const Position & oPos, string<char> strName, ISceneNode * poParent)
 {
-	ISceneNode * poNode = mpoSceneManager->addMeshSceneNode(moPiecesMeshes[eType], mpoBoardNode, ID_PIECE, vGetNodePosition(oPos));
+	ISceneNode * poNode = mpoSceneManager->addMeshSceneNode(moPiecesMeshes[eType], poParent ? poParent : mpoBoardNode, ID_PIECE, vGetNodePosition(oPos));
 	poNode->setScale(vector3df(0.5, 0.5, 0.5));
 	poNode->setMaterialFlag(EMF_NORMALIZE_NORMALS, true);
 
@@ -379,11 +390,6 @@ ISceneNode * InterfaceIrrlicht::addPieceNode(Piece::PIECE_TYPE eType, Piece::PIE
 	poTriangleSelector->drop();
 
 	return poNode;
-}
-
-const Module * InterfaceIrrlicht::poGetModule() const
-{
-	return mpoModule;
 }
 
 void InterfaceIrrlicht::RotateCamera(float fXDegrees, float fYDegrees, float fZDegrees)
@@ -426,7 +432,7 @@ void InterfaceIrrlicht::RotateCamera(float fXDegrees, float fYDegrees, float fZD
 	}
 }
 
-void InterfaceIrrlicht::RevolveCamera(const vector3df & vAxis, float fDegrees, float fRevolveTime)
+/*void InterfaceIrrlicht::RevolveCamera(const vector3df & vAxis, float fDegrees, float fRevolveTime)
 {
 	ICameraSceneNode * poCamera = mpoSceneManager->getActiveCamera();
 	u32 uStartTime = mpoDevice->getTimer()->getTime();
@@ -465,4 +471,4 @@ void InterfaceIrrlicht::RevolveCamera(const vector3df & vAxis, float fDegrees, f
 		else
 			mpoDevice->yield();
 	}
-}
+}*/

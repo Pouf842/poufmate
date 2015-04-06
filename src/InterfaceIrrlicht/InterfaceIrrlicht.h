@@ -19,25 +19,23 @@ class InterfaceIrrlicht : public Interface, public irr::IEventReceiver
 	irr::scene::IMesh * mpoBoardMesh;
 	irr::core::map<Piece::PIECE_TYPE, irr::scene::IAnimatedMesh*> moPiecesMeshes;
 
-	InterfaceIrrlicht();
+	InterfaceIrrlicht(Controller *);
 	virtual ~InterfaceIrrlicht();
-	virtual int iGetMenuEntry(const std::vector<std::string> oMenu);
-	virtual Entry oGetEntry();
-	virtual void DisplayMessage(const std::string strMessage);
-	virtual std::string strGetIPEntry();
-	virtual std::string strGetPortEntry();
-	virtual Piece::PIECE_TYPE eGetNewPieceType(const Piece::PIECE_COLOR);
-	virtual Piece::PIECE_COLOR eGetPlayerColorChoice();
-	virtual Entry::ENTRY_COMMAND GameOver(std::string strMessage);
-	virtual void SetBusy();
-	virtual void SetProgress(unsigned int);
+
+    virtual void SetMenuState(std::vector<std::string> const * = NULL);
+    virtual void SetGameState(const Board &);
+    virtual void Run();
+    virtual void Quit();
+    virtual Piece::PIECE_TYPE eGetPromotionNewPiece();
+
+    void SetPieceViewerState();
 	virtual bool OnEvent(const irr::SEvent &);
 	virtual void SwitchCameraType();
-	virtual irr::scene::ISceneNode * addPieceNode(Piece *, const Position &, irr::core::string<char> strName = "");
-	virtual irr::scene::ISceneNode * addPieceNode(Piece::PIECE_TYPE, Piece::PIECE_COLOR, const Position &, irr::core::string<char> strName = "");
-	virtual const Module * poGetModule() const;
+    virtual irr::scene::ISceneNode * CreateBoardNode();
+	virtual irr::scene::ISceneNode * addPieceNode(Piece *, const Position &, irr::core::string<char> strName = "", irr::scene::ISceneNode * = NULL);
+    virtual irr::scene::ISceneNode * addPieceNode(Piece::PIECE_TYPE, Piece::PIECE_COLOR, const Position &, irr::core::string<char> strName = "", irr::scene::ISceneNode * = NULL);
 	virtual void RotateCamera(float, float, float);
-	virtual void RevolveCamera(const irr::core::vector3df &, float, float = 1000.0);
+	//virtual void RevolveCamera(const irr::core::vector3df &, float, float = 1000.0);
 
   protected :
 	State * mpoCurrentState;
@@ -50,6 +48,8 @@ class InterfaceIrrlicht : public Interface, public irr::IEventReceiver
 	irr::scene::ICameraSceneNode * mpoCameraFPS;
 	irr::scene::ICameraSceneNode * mpoCamera;
 	irr::scene::ICameraSceneNode * mpoCurrentCamera;
+
+    bool mbStop;
 };
 
 #endif

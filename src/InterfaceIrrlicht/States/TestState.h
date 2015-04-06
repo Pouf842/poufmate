@@ -8,7 +8,6 @@ class TestState : public State
 protected :
 public :
 	TestState(InterfaceIrrlicht *);
-	virtual void Run();
 	virtual bool OnEvent(const irr::SEvent &);
 };
 

@@ -70,10 +70,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\Core\Controller.cpp" />
     <ClCompile Include="..\..\src\Core\Core\board.cpp" />
     <ClCompile Include="..\..\src\Core\Core\position.cpp" />
     <ClCompile Include="..\..\src\Core\Core\square.cpp" />
-    <ClCompile Include="..\..\src\Core\Interface\entry.cpp" />
     <ClCompile Include="..\..\src\Core\Interface\interface.cpp" />
     <ClCompile Include="..\..\src\Core\Modules\game.cpp" />
     <ClCompile Include="..\..\src\Core\Modules\module.cpp" />
@@ -91,10 +91,10 @@
     <ClCompile Include="..\..\src\Core\Pieces\rook.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\Core\Controller.h" />
     <ClInclude Include="..\..\src\Core\Core\board.h" />
     <ClInclude Include="..\..\src\Core\Core\position.h" />
     <ClInclude Include="..\..\src\Core\Core\square.h" />
-    <ClInclude Include="..\..\src\Core\Interface\entry.h" />
     <ClInclude Include="..\..\src\Core\Interface\interface.h" />
     <ClInclude Include="..\..\src\Core\Modules\game.h" />
     <ClInclude Include="..\..\src\Core\Modules\game_edition.h" />

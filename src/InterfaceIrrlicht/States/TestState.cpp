@@ -27,31 +27,16 @@ TestState::TestState(InterfaceIrrlicht * poInterface) : State(poInterface)
 	poPiece2->setPosition(vector3df(+1, 0.5, -4));
 }
 
-void TestState::Run()
+/*void TestState::Update()
 {
-	mbStop = false;
+	vector3df XAxis[2] = {vector3df(-1000, 0, 0), vector3df(1000, 0, 0)};
+	vector3df YAxis[2] = {vector3df(0, -1000, 0), vector3df(0, 1000, 0)};
+	vector3df ZAxis[2] = {vector3df(0, 0, -1000), vector3df(0, 0, 1000)};
 
-	while(mpoDevice->run() && !mbStop)
-	{
-		if(mpoDevice->isWindowActive())
-		{
-			mpoVideoDriver->beginScene();
-			mpoSceneManager->drawAll();
-			vector3df XAxis[2] = {vector3df(-1000, 0, 0), vector3df(1000, 0, 0)};
-			vector3df YAxis[2] = {vector3df(0, -1000, 0), vector3df(0, 1000, 0)};
-			vector3df ZAxis[2] = {vector3df(0, 0, -1000), vector3df(0, 0, 1000)};
-
-			mpoVideoDriver->draw3DLine(XAxis[0], XAxis[1], SColor(255, 255, 0, 0));
-			mpoVideoDriver->draw3DLine(YAxis[0], YAxis[1], SColor(255, 0, 255, 0));
-			mpoVideoDriver->draw3DLine(ZAxis[0], ZAxis[1], SColor(255, 0, 0, 255));
-
-			mpoGUI->drawAll();
-			mpoVideoDriver->endScene();
-		}
-		else
-			mpoDevice->yield();
-	}
-}
+	mpoVideoDriver->draw3DLine(XAxis[0], XAxis[1], SColor(255, 255, 0, 0));
+	mpoVideoDriver->draw3DLine(YAxis[0], YAxis[1], SColor(255, 0, 255, 0));
+	mpoVideoDriver->draw3DLine(ZAxis[0], ZAxis[1], SColor(255, 0, 0, 255));
+}*/
 
 bool TestState::OnEvent(const SEvent & oEvent)
 {
