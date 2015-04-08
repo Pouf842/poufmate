@@ -517,7 +517,7 @@ void Game::GrabPiece(const Position & oPiecePosition)
     }
     catch(std::exception & e)
     {
-        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << e.what() << std::endl;
+        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << std::endl;
         throw e;
     }
 }
@@ -587,7 +587,7 @@ void Game::DropPiece(const Position & oDropPosition)
     }
     catch(std::exception & e)
     {
-        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << e.what() << std::endl;
+        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << std::endl;
         moSelectedPosition.Empty();
         throw e;
     }

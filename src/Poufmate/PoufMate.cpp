@@ -37,7 +37,7 @@ PoufMate::PoufMate()
     }
     catch(std::exception & e)
     {
-        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << e.what() << std::endl;
+        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << std::endl;
         throw e;
     }
 }
@@ -63,7 +63,7 @@ void PoufMate::Start()
     }
     catch(std::exception & e)
     {
-        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << e.what() << std::endl;
+        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << std::endl;
         cout << "Uncatched exception : " << e.what() << endl;
         getchar();
     }
@@ -81,24 +81,24 @@ void PoufMate::SetMenuChoice(unsigned short sChoiceIndex)
 
         switch(sChoiceIndex)
         {
-        case 1:
-        //mpoCurrentModule = new OnePlayerGame();
-        break;
-        case 2:
-        mpoCurrentModule = new TwoPlayersGame();
-        mpoCurrentInterface->SetGameState(mpoCurrentModule->oGetBoard());
-        break;
-        case 3:
-        //mpoCurrentModule = new GameEdition;
-        break;
-        case 6:
-        mpoCurrentInterface->Quit();
-        break;
+			case 1:
+				//mpoCurrentModule = new OnePlayerGame();
+				break;
+			case 2:
+				mpoCurrentModule = new TwoPlayersGame();
+				mpoCurrentInterface->SetGameState(mpoCurrentModule->oGetBoard());
+				break;
+			case 3:
+				//mpoCurrentModule = new GameEdition;
+				break;
+			case 6:
+				mpoCurrentInterface->Quit();
+				break;
         }
     }
     catch(std::exception & e)
     {
-        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << e.what() << std::endl;
+        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << std::endl;
         throw e;
     }
 }
@@ -111,7 +111,7 @@ void PoufMate::GrabPiece(const Position & oPiecePosition)
     }
     catch(std::exception & e)
     {
-        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << e.what() << std::endl;
+        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << std::endl;
         throw e;
     }
 }
@@ -124,7 +124,7 @@ void PoufMate::DropPiece(const Position & oDropPosition)
     }
     catch(std::exception & e)
     {
-        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << e.what() << std::endl;
+        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << std::endl;
         throw e;
     }
 }
@@ -136,7 +136,7 @@ void PoufMate::SelectNewPiece(Piece::PIECE_COLOR eColor, Piece::PIECE_TYPE eType
     }
     catch(std::exception & e)
     {
-        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << e.what() << std::endl;
+        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << std::endl;
         throw e;
     }
 }
@@ -146,11 +146,12 @@ void PoufMate::Escape()
     try
     {
         delete mpoCurrentModule;
+		mpoCurrentModule = NULL;
         mpoCurrentInterface->SetMenuState();
     }
     catch(std::exception & e)
     {
-        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << e.what() << std::endl;
+        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << std::endl;
         throw e;
     }
 }
@@ -168,7 +169,7 @@ Piece::PIECE_TYPE PoufMate::eGetNewPieceType()
     }
     catch(std::exception & e)
     {
-        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << e.what() << std::endl;
+        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << std::endl;
         throw e;
     }
 }

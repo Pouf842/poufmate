@@ -156,7 +156,7 @@ void InterfaceIrrlicht::SetPieceViewerState()
     }
     catch(std::exception & e)
     {
-        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << e.what() << std::endl;
+        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << std::endl;
         throw e;
     }
 }
@@ -324,7 +324,6 @@ void InterfaceIrrlicht::PlacePieces()
 		addPieceNode(oTypes[i], oColors[i], oPositions[i], oNames[i]);
 }
 
-
 /*void InterfaceIrrlicht::DisplayMessage(const std::string strMessage)
 {
 	std::cout << strMessage << std::endl;
@@ -361,7 +360,7 @@ ISceneNode * InterfaceIrrlicht::addPieceNode(Piece * poPiece, const Position & o
     }
     catch(std::exception & e)
     {
-        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << e.what() << std::endl;
+        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << std::endl;
         throw e;
     }
 }
@@ -431,44 +430,3 @@ void InterfaceIrrlicht::RotateCamera(float fXDegrees, float fYDegrees, float fZD
 			mpoDevice->yield();
 	}
 }
-
-/*void InterfaceIrrlicht::RevolveCamera(const vector3df & vAxis, float fDegrees, float fRevolveTime)
-{
-	ICameraSceneNode * poCamera = mpoSceneManager->getActiveCamera();
-	u32 uStartTime = mpoDevice->getTimer()->getTime();
-	const float TOTAL_ROT_TIME = fRevolveTime;
-	bool bOver = false;
-	vector3df vPos = poCamera->getPosition();
-
-	while(mpoDevice->run() && !bOver)
-	{
-		if(mpoDevice->isWindowActive())
-		{
-			mpoVideoDriver->beginScene();
-			mpoSceneManager->drawAll();
-			mpoGUI->drawAll();
-			mpoVideoDriver->endScene();
-
-			u32 uNow = mpoDevice->getTimer()->getTime();
-
-			float fRotAngle = fDegrees * ((uNow - uStartTime) / TOTAL_ROT_TIME);
-
-			if(uNow - uStartTime > TOTAL_ROT_TIME)
-			{
-				fRotAngle = fDegrees;
-				bOver = true;
-			}
-
-			fRotAngle = degToRad(fRotAngle);
-
-			quaternion qRotation;
-			qRotation.fromAngleAxis(fRotAngle, vAxis);
-			vector3df vNewPos(vPos);
-			qRotation.getMatrix().rotateVect(vNewPos);
-			
-			poCamera->setPosition(vNewPos);
-		}
-		else
-			mpoDevice->yield();
-	}
-}*/

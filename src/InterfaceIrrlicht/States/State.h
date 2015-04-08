@@ -7,6 +7,7 @@
 class State : public irr::IEventReceiver
 {
 protected:
+	irr::core::vector3df				 mvDraggedOriginPos;
     Controller                         * mpoController;
 	irr::IrrlichtDevice				   * mpoDevice;
 	irr::scene::ISceneManager		   * mpoSceneManager;
