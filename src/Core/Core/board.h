@@ -19,8 +19,8 @@ class Board
   public :
 	/**
 	 * Initializes the board. Creates and places the pieces on the squares
-	 */
-	void Init();
+	 * /
+	void Init();*/
 
 	/**
 	 * Return true if the specified square is empty.

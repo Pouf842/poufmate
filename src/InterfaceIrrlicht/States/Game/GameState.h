@@ -2,6 +2,7 @@
 #define __GAME_STATE_H_
 
 #include "../State.h"
+#include "Core/board.h"
 
 class GameState : public State
 {
@@ -11,6 +12,8 @@ protected :
 	bool mbIsDragging;
 	irr::core::map<Piece*, irr::scene::ISceneNode*> moPieces;
     irr::scene::ISceneNode * mpoBoardNode;
+
+    void PlaceCamera(bool bBack = false);
 
 public :
 	GameState(InterfaceIrrlicht *);

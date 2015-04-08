@@ -19,36 +19,111 @@
     <Filter Include="Fichiers sources\Modules">
       <UniqueIdentifier>{2c11db3e-7e45-4433-9231-b5415f0847fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\Movements">
+      <UniqueIdentifier>{8e6d9e38-3d31-4edf-a97e-54641ecb1814}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Movements">
+      <UniqueIdentifier>{131495c4-7169-4f2a-8b6e-17a95970269c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Pieces">
+      <UniqueIdentifier>{f76750cc-2000-4701-b291-ac78b885468f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Pieces">
+      <UniqueIdentifier>{4e5725f4-12c6-4e19-bd9e-07302ef3c4b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Poufmate\main.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Poufmate\Modules\game_edition.cpp">
-      <Filter>Fichiers sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Poufmate\Modules\two_players_game.cpp">
-      <Filter>Fichiers sources\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\Poufmate\PoufMate.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Poufmate\Modules\one_player_game.cpp">
+    <ClCompile Include="..\..\src\Poufmate\Modules\game.cpp">
+      <Filter>Fichiers sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Poufmate\Pieces\bishop.cpp">
+      <Filter>Fichiers sources\Pieces</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Poufmate\Pieces\king.cpp">
+      <Filter>Fichiers sources\Pieces</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Poufmate\Pieces\knight.cpp">
+      <Filter>Fichiers sources\Pieces</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Poufmate\Pieces\pawn.cpp">
+      <Filter>Fichiers sources\Pieces</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Poufmate\Pieces\queen.cpp">
+      <Filter>Fichiers sources\Pieces</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Poufmate\Pieces\rook.cpp">
+      <Filter>Fichiers sources\Pieces</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Poufmate\Movements\castling_move.cpp">
+      <Filter>Fichiers sources\Movements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Poufmate\Movements\en_passant.cpp">
+      <Filter>Fichiers sources\Movements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Poufmate\Movements\first_move.cpp">
+      <Filter>Fichiers sources\Movements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Poufmate\Movements\movement.cpp">
+      <Filter>Fichiers sources\Movements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Poufmate\Movements\promotion.cpp">
+      <Filter>Fichiers sources\Movements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Poufmate\Modules\module.cpp">
       <Filter>Fichiers sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\Poufmate\Modules\game_edition.h">
-      <Filter>Fichiers d%27en-tête\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Poufmate\Modules\one_player_game.h">
-      <Filter>Fichiers d%27en-tête\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Poufmate\Modules\two_players_game.h">
-      <Filter>Fichiers d%27en-tête\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\Poufmate\PoufMate.h">
       <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Poufmate\Modules\game.h">
+      <Filter>Fichiers d%27en-tête\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Poufmate\Pieces\rook.h">
+      <Filter>Fichiers d%27en-tête\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Poufmate\Pieces\bishop.h">
+      <Filter>Fichiers d%27en-tête\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Poufmate\Pieces\king.h">
+      <Filter>Fichiers d%27en-tête\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Poufmate\Pieces\knight.h">
+      <Filter>Fichiers d%27en-tête\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Poufmate\Pieces\pawn.h">
+      <Filter>Fichiers d%27en-tête\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Poufmate\Pieces\queen.h">
+      <Filter>Fichiers d%27en-tête\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Poufmate\Movements\castling_move.h">
+      <Filter>Fichiers d%27en-tête\Movements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Poufmate\Movements\en_passant.h">
+      <Filter>Fichiers d%27en-tête\Movements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Poufmate\Movements\include_movements.h">
+      <Filter>Fichiers d%27en-tête\Movements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Poufmate\Movements\movement.h">
+      <Filter>Fichiers d%27en-tête\Movements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Poufmate\Movements\promotion.h">
+      <Filter>Fichiers d%27en-tête\Movements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Poufmate\Modules\module.h">
+      <Filter>Fichiers d%27en-tête\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Poufmate\Pieces\includePieces.h">
+      <Filter>Fichiers d%27en-tête\Pieces</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

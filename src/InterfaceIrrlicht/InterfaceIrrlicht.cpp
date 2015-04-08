@@ -1,5 +1,5 @@
 #include "InterfaceIrrlicht.h"
-#include "Pieces/Piece.h"
+#include "piece.h"
 #include "States/IncludeStates.h"
 #include "Tools.h"
 

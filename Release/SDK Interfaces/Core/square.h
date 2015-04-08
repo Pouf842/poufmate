@@ -6,7 +6,7 @@
  * It may contains a piece
  */
 
-#include "Pieces\piece.h"
+#include "piece.h"
 
 class Square
 {

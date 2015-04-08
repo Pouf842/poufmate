@@ -1,5 +1,6 @@
 #include "GameState.h"
 #include "../../Tools.h"
+#include "Controller.h"
 
 using namespace irr;
 using namespace scene;
@@ -50,11 +51,49 @@ void GameState::Show()
     {
         mpoInterface->mpoBoardNode->setVisible(false);
         mpoBoardNode->setVisible(true);
+        PlaceCamera();
     }
     catch(std::exception & e)
     {
         std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << std::endl;
         throw e;
+    }
+}
+
+void GameState::PlaceCamera(bool bBack)
+{
+    bool bOver = false;
+    u32 uStart = mpoDevice->getTimer()->getTime();
+    const u32 TOTAL_PLACEMENT_TIME = 1000;
+    ICameraSceneNode * poCamera = mpoSceneManager->getActiveCamera();
+    vector3df oStartPos = poCamera->getAbsolutePosition();
+
+    while(mpoDevice->run() && !bOver)
+    {
+        u32 uElapsed = mpoDevice->getTimer()->getTime() - uStart;
+        float fFactor = ((float) uElapsed) / TOTAL_PLACEMENT_TIME;
+
+        if(uElapsed > TOTAL_PLACEMENT_TIME)
+        {
+            fFactor = 1.0;
+            bOver = true;
+        }
+
+        quaternion qRot;
+        qRot.fromAngleAxis(fFactor * PI / 6 * (bBack ? 1 : -1), vector3df(-1, 0, 0));
+
+        vector3df oNewPos = oStartPos;
+        qRot.getMatrix().rotateVect(oNewPos);
+        float fLengthFactor = (bBack ? 1 / 0.7 : 0.7);
+        fLengthFactor = 1 - ((1 - fLengthFactor) * fFactor);
+        oNewPos.setLength(oStartPos.getLength() * fLengthFactor);
+
+        poCamera->setPosition(oNewPos);
+        poCamera->setTarget(vector3df(0, 0, 0));
+
+        mpoVideoDriver->beginScene();
+        mpoSceneManager->drawAll();
+        mpoVideoDriver->endScene();
     }
 }
 
@@ -67,6 +106,8 @@ void GameState::Hide()
 
 		mbIsDragging = false;
 		mpoHighlightedPiece = NULL;
+
+        PlaceCamera(true);
 
         mpoInterface->mpoBoardNode->setVisible(true);
         mpoBoardNode->setVisible(false);

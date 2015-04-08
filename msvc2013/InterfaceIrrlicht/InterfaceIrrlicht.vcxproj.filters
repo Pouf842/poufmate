@@ -19,17 +19,11 @@
     <Filter Include="Fichiers sources\States">
       <UniqueIdentifier>{5f5e68fe-fae7-4750-91c5-065685e76b10}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers d%27en-tête\States\Game">
-      <UniqueIdentifier>{33edbd3b-6edd-477c-8a02-42eb29a4a4c7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Fichiers d%27en-tête\States\Intro">
       <UniqueIdentifier>{8afef6ed-3c18-40b3-896c-aee96b9f51cc}</UniqueIdentifier>
     </Filter>
     <Filter Include="Fichiers d%27en-tête\States\PieceViewer">
       <UniqueIdentifier>{ac5d5a7d-0350-4ba5-8c1a-2f98bc13288c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\States\Game">
-      <UniqueIdentifier>{7f39393e-9430-4eb7-b481-b21535d3934b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Fichiers sources\States\Intro">
       <UniqueIdentifier>{af64fdfa-958f-47e2-a113-9429d47f4656}</UniqueIdentifier>
@@ -51,9 +45,6 @@
     <ClCompile Include="..\..\src\InterfaceIrrlicht\States\TestState.cpp">
       <Filter>Fichiers sources\States</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\InterfaceIrrlicht\States\Game\GameState.cpp">
-      <Filter>Fichiers sources\States\Game</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\InterfaceIrrlicht\States\Intro\IntroAnimator.cpp">
       <Filter>Fichiers sources\States\Intro</Filter>
     </ClCompile>
@@ -65,6 +56,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\InterfaceIrrlicht\States\PieceViewer\PieceViewerState.cpp">
       <Filter>Fichiers sources\States\PieceViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\InterfaceIrrlicht\States\Game\GameState.cpp">
+      <Filter>Fichiers sources\States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -86,9 +80,6 @@
     <ClInclude Include="..\..\src\InterfaceIrrlicht\States\TestState.h">
       <Filter>Fichiers d%27en-tête\States</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\InterfaceIrrlicht\States\Game\GameState.h">
-      <Filter>Fichiers d%27en-tête\States\Game</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\InterfaceIrrlicht\States\Intro\IntroAnimator.h">
       <Filter>Fichiers d%27en-tête\States\Intro</Filter>
     </ClInclude>
@@ -100,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\InterfaceIrrlicht\States\PieceViewer\PieceViewerState.h">
       <Filter>Fichiers d%27en-tête\States\PieceViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\InterfaceIrrlicht\States\Game\GameState.h">
+      <Filter>Fichiers d%27en-tête\States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

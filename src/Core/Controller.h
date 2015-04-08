@@ -1,9 +1,13 @@
 #ifndef __CONTROLLER_H_
 #define __CONTROLLER_H_
 
-#include "Modules/module.h"
+#include "Core/Position.h"
+#include "piece.h"
 #include <vector>
 #include <exception>
+
+class Module;
+class Interface;
 
 class Controller
 {

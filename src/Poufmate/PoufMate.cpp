@@ -1,8 +1,9 @@
 #include "PoufMate.h"
 #include "windows.h"
-#include "Interface/interface.h"
-/*/#include "Modules/include_modules.h"
-/*/#include "Modules/two_players_game.h"/**/
+#include "interface.h"
+#include "Modules/game.h"
+
+#include <iostream>
 
 using namespace std;
 
@@ -82,10 +83,8 @@ void PoufMate::SetMenuChoice(unsigned short sChoiceIndex)
         switch(sChoiceIndex)
         {
 			case 1:
-				mpoCurrentModule = new OnePlayerGame();
-				break;
 			case 2:
-				mpoCurrentModule = new TwoPlayersGame();
+				mpoCurrentModule = new Game();
 				mpoCurrentInterface->SetGameState(mpoCurrentModule->oGetBoard());
 				break;
 			case 3:

@@ -1,7 +1,7 @@
 #ifndef __INTERFACE_IRRLICHT_H_
 #define __INTERFACE_IRRLICHT_H_
 
-#include "Interface/interface.h"
+#include "interface.h"
 #include "irrlicht.h"
 
 class State;

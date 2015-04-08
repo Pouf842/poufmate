@@ -1,50 +1,14 @@
 #include <iostream>
-#include "Core\board.h"
-#include "Core\position.h"
-#include "Pieces\rook.h"
-#include "Pieces\pawn.h"
-#include "Pieces\knight.h"
-#include "Pieces\bishop.h"
-#include "Pieces\queen.h"
-#include "Pieces\king.h"
+#include "Core/board.h"
+#include "Core/position.h"
+/*#include "Pieces/rook.h"
+#include "Pieces/pawn.h"
+#include "Pieces/knight.h"
+#include "Pieces/bishop.h"
+#include "Pieces/queen.h"
+#include "Pieces/king.h"*/
 
 using namespace std;
-
-void Board::Init()
-{
-	/* Creating pawns */
-	for(unsigned int i = 0; i < 8; ++i)
-	{
-		moSquares[1][i].SetPiece(new Pawn(Piece::PC_BLACK));
-		moSquares[6][i].SetPiece(new Pawn(Piece::PC_WHITE));
-	}
-
-	/* Creating rooks */
-	moSquares[0][0].SetPiece(new Rook(Piece::PC_BLACK));
-	moSquares[0][7].SetPiece(new Rook(Piece::PC_BLACK));
-	moSquares[7][0].SetPiece(new Rook(Piece::PC_WHITE));
-	moSquares[7][7].SetPiece(new Rook(Piece::PC_WHITE));
-
-	/* Creating knights */
-	moSquares[0][1].SetPiece(new Knight(Piece::PC_BLACK));
-	moSquares[0][6].SetPiece(new Knight(Piece::PC_BLACK));
-	moSquares[7][1].SetPiece(new Knight(Piece::PC_WHITE));
-	moSquares[7][6].SetPiece(new Knight(Piece::PC_WHITE));
-
-	/* Creating bishops */
-	moSquares[0][2].SetPiece(new Bishop(Piece::PC_BLACK));
-	moSquares[0][5].SetPiece(new Bishop(Piece::PC_BLACK));
-	moSquares[7][2].SetPiece(new Bishop(Piece::PC_WHITE));
-	moSquares[7][5].SetPiece(new Bishop(Piece::PC_WHITE));
-
-	/* Creating queens */
-	moSquares[0][3].SetPiece(new Queen(Piece::PC_BLACK));
-	moSquares[7][3].SetPiece(new Queen(Piece::PC_WHITE));
-
-	/* Creating kings */
-	moSquares[0][4].SetPiece(new King(Piece::PC_BLACK));
-	moSquares[7][4].SetPiece(new King(Piece::PC_WHITE));
-}
 
 bool Board::bIsSquareEmpty(unsigned int X, unsigned int Y) const
 {

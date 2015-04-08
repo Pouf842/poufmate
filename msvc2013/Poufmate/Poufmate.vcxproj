@@ -71,19 +71,36 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Poufmate\main.cpp" />
-    <ClCompile Include="..\..\src\Poufmate\Modules\game_edition.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Poufmate\Modules\one_player_game.cpp" />
-    <ClCompile Include="..\..\src\Poufmate\Modules\two_players_game.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="..\..\src\Poufmate\Modules\game.cpp" />
+    <ClCompile Include="..\..\src\Poufmate\Modules\module.cpp" />
+    <ClCompile Include="..\..\src\Poufmate\Movements\castling_move.cpp" />
+    <ClCompile Include="..\..\src\Poufmate\Movements\en_passant.cpp" />
+    <ClCompile Include="..\..\src\Poufmate\Movements\first_move.cpp" />
+    <ClCompile Include="..\..\src\Poufmate\Movements\movement.cpp" />
+    <ClCompile Include="..\..\src\Poufmate\Movements\promotion.cpp" />
+    <ClCompile Include="..\..\src\Poufmate\Pieces\bishop.cpp" />
+    <ClCompile Include="..\..\src\Poufmate\Pieces\king.cpp" />
+    <ClCompile Include="..\..\src\Poufmate\Pieces\knight.cpp" />
+    <ClCompile Include="..\..\src\Poufmate\Pieces\pawn.cpp" />
+    <ClCompile Include="..\..\src\Poufmate\Pieces\queen.cpp" />
+    <ClCompile Include="..\..\src\Poufmate\Pieces\rook.cpp" />
     <ClCompile Include="..\..\src\Poufmate\PoufMate.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\Poufmate\Modules\game_edition.h" />
-    <ClInclude Include="..\..\src\Poufmate\Modules\one_player_game.h" />
-    <ClInclude Include="..\..\src\Poufmate\Modules\two_players_game.h" />
+    <ClInclude Include="..\..\src\Poufmate\Modules\game.h" />
+    <ClInclude Include="..\..\src\Poufmate\Modules\module.h" />
+    <ClInclude Include="..\..\src\Poufmate\Movements\castling_move.h" />
+    <ClInclude Include="..\..\src\Poufmate\Movements\en_passant.h" />
+    <ClInclude Include="..\..\src\Poufmate\Movements\include_movements.h" />
+    <ClInclude Include="..\..\src\Poufmate\Movements\movement.h" />
+    <ClInclude Include="..\..\src\Poufmate\Movements\promotion.h" />
+    <ClInclude Include="..\..\src\Poufmate\Pieces\bishop.h" />
+    <ClInclude Include="..\..\src\Poufmate\Pieces\includePieces.h" />
+    <ClInclude Include="..\..\src\Poufmate\Pieces\king.h" />
+    <ClInclude Include="..\..\src\Poufmate\Pieces\knight.h" />
+    <ClInclude Include="..\..\src\Poufmate\Pieces\pawn.h" />
+    <ClInclude Include="..\..\src\Poufmate\Pieces\queen.h" />
+    <ClInclude Include="..\..\src\Poufmate\Pieces\rook.h" />
     <ClInclude Include="..\..\src\Poufmate\PoufMate.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

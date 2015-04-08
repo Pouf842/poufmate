@@ -1,4 +1,5 @@
 #include "MenuState.h"
+#include "Controller.h"
 
 using namespace irr;
 using namespace core;
