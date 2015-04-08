@@ -82,7 +82,7 @@ void PoufMate::SetMenuChoice(unsigned short sChoiceIndex)
         switch(sChoiceIndex)
         {
 			case 1:
-				//mpoCurrentModule = new OnePlayerGame();
+				mpoCurrentModule = new OnePlayerGame();
 				break;
 			case 2:
 				mpoCurrentModule = new TwoPlayersGame();

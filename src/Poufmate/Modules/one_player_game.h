@@ -33,13 +33,13 @@ class OnePlayerGame : public Game
     /**
 	 * Constructor
 	 */
-	OnePlayerGame(Interface * poInterface = NULL);
+	OnePlayerGame(Controller * = NULL);
 
 	/**
 	 * Constructor to start a game
 	 * with a predefined board
 	 */
-	OnePlayerGame(const Board &, Interface * poInterface = NULL);
+	OnePlayerGame(const Board &, Controller * = NULL);
 
 	/**
 	 * Destructor

@@ -123,7 +123,7 @@ void Game::SwitchPlayer()
 void Game::MovePiece(Position oPos1, Position oPos2)
 {
 	moBoard.SetPiece(oPos2, moBoard.poGetPiece(oPos1));
-	moBoard.SetPiece(oPos1, 0);
+	moBoard.SetPiece(oPos1, NULL);
 }
 
 bool Game::bIsCastlingPathOk(Position oPos1, Position oPos2)

@@ -1,25 +1,25 @@
-//#include "one_player_game.h"
-//
-//#include "Core/board.h"
-//#include "Pieces/piece.h"
-//#include "Movements/include_movements.h"
-//#include "Interface/interface.h"
-//#include <time.h>
-//
-//using namespace std;
-//
-//OnePlayerGame::OnePlayerGame(Interface * poInterface) : Game(poInterface, Module::MT_GAME)
-//{
-//}
-//
-//OnePlayerGame::OnePlayerGame(const Board & oBoard, Interface * poInterface) : Game(oBoard, poInterface)
-//{
-//}
-//
-//OnePlayerGame::~OnePlayerGame()
-//{
-//}
-//
+#include "one_player_game.h"
+
+#include "Core/board.h"
+#include "Pieces/piece.h"
+#include "Controller.h"
+#include "Movements/include_movements.h"
+#include <time.h>
+
+using namespace std;
+
+OnePlayerGame::OnePlayerGame(Controller * poController) : Game(poController, Module::MT_GAME)
+{
+}
+
+OnePlayerGame::OnePlayerGame(const Board & oBoard, Controller * poController) : Game(oBoard, poController)
+{
+}
+
+OnePlayerGame::~OnePlayerGame()
+{
+}
+
 ////Entry::ENTRY_COMMAND OnePlayerGame::Run()
 ////{
 ////	try
