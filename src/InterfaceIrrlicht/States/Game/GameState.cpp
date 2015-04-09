@@ -177,13 +177,6 @@ bool GameState::OnEvent(const SEvent & oEvent)
 					if(poNode)
 					{
 						vector3df oCameraPos = mpoSceneManager->getActiveCamera()->getPosition();
-						/*/vector3df oPieceCollisionPoint = mpoHighlightedPiece->getAbsolutePosition() + moRelColl.Y;
-						vector3df v1 = oPieceCollisionPoint - oBoardCollisionPoint;
-						vector3df v2 = oCameraPos - oBoardCollisionPoint;
-						v2.Y = 0;
-						vector3df vNewPos = v2 * (v1.dotProduct(v2) / v2.getLengthSQ());
-
-						mpoHighlightedPiece->setPosition(oBoardCollisionPoint + vNewPos);/*/
 						vector3df v = oCameraPos - oBoardCollisionPoint;
 						v.Y = 0;
 
@@ -201,7 +194,7 @@ bool GameState::OnEvent(const SEvent & oEvent)
 							oPos.Z = -4;
 
 						oPos.Y = 0.5;
-						mpoHighlightedPiece->setPosition(oPos);/**/
+						mpoHighlightedPiece->setPosition(oPos);
 					}
 				}
 				else
@@ -210,11 +203,8 @@ bool GameState::OnEvent(const SEvent & oEvent)
 					line3df ray = mpoCollisionManager->getRayFromScreenCoordinates(vMousePos);
 					vector3df oCollisionPoint;
 
-					ISceneNode * poHighlightedPiece = mpoCollisionManager->getSceneNodeAndCollisionPointFromRay(ray, oCollisionPoint, triangle3df(), ID_PIECE);/*/
-
-					vector2d<s32> oMousePos = mpoDevice->getCursorControl()->getPosition();
-					ISceneNode * poHighlightedPiece = mpoCollisionManager->getSceneNodeFromScreenCoordinatesBB(oMousePos, ID_PIECE, false, mpoInterface->mpoBoardNode);/**/
-
+					ISceneNode * poHighlightedPiece = mpoCollisionManager->getSceneNodeAndCollisionPointFromRay(ray, oCollisionPoint, triangle3df(), ID_PIECE);
+std::cout << poHighlightedPiece << std::endl;
 					if(poHighlightedPiece != mpoHighlightedPiece)
 						if(mpoHighlightedPiece)
 							mpoHighlightedPiece->getMaterial(0).EmissiveColor = SColor(0, 0, 0, 0);
@@ -224,94 +214,11 @@ bool GameState::OnEvent(const SEvent & oEvent)
 					if(mpoHighlightedPiece)
 					{
 						moRelColl = oCollisionPoint - mpoHighlightedPiece->getAbsolutePosition();
+						std::cout << "Changing color" << std::endl;
 						mpoHighlightedPiece->getMaterial(0).EmissiveColor = SColor(255, 255, 0, 0);
 					}
 				}
 			}
-            //if(oEvent.MouseInput.isLeftPressed())
-            //{
-            //    if(mpoHighlightedPiece)
-            //    {
-            //        if(!mbIsDragging)   // Grab piece
-            //        {
-            //            vector3df oPos = mpoHighlightedPiece->getPosition();
-            //            mpoController->GrabPiece(oGetBoardPosition(oPos));
-            //            mbIsDragging = true;
-            //        }
-            //        else
-            //        {
-            //            vector2d<s32> vMousePos(oEvent.MouseInput.X, oEvent.MouseInput.Y);
-            //            line3df ray = mpoCollisionManager->getRayFromScreenCoordinates(vMousePos);
-            //            vector3df oBoardCollisionPoint;
-            //            triangle3df oTriangle;
-
-            //            ISceneNode * poNode = mpoCollisionManager->getSceneNodeAndCollisionPointFromRay(ray, oBoardCollisionPoint, oTriangle, ID_BOARD);
-
-            //            if(poNode)
-            //            {
-            //                vector3df oCameraPos = mpoSceneManager->getActiveCamera()->getPosition();
-            //                /*/vector3df oPieceCollisionPoint = mpoHighlightedPiece->getAbsolutePosition() + moRelColl.Y;
-            //                vector3df v1 = oPieceCollisionPoint - oBoardCollisionPoint;
-            //                vector3df v2 = oCameraPos - oBoardCollisionPoint;
-            //                v2.Y = 0;
-            //                vector3df vNewPos = v2 * (v1.dotProduct(v2) / v2.getLengthSQ());
-
-            //                mpoHighlightedPiece->setPosition(oBoardCollisionPoint + vNewPos);/*/
-            //                vector3df v = oCameraPos - oBoardCollisionPoint;
-            //                v.Y = 0;
-
-            //                float a = (moRelColl.Y - oBoardCollisionPoint.Y) * v.getLength();
-            //                a /= oCameraPos.Y - oBoardCollisionPoint.Y;
-
-            //                v.normalize() * a;
-
-            //                vector3df oPos(oBoardCollisionPoint + v);
-
-            //                if(oPos.X < -4)
-            //                    oPos.X = -4;
-
-            //                if(oPos.Z < -4)
-            //                    oPos.Z = -4;
-
-            //                oPos.Y = 0.5;
-            //                mpoHighlightedPiece->setPosition(oPos);/**/
-            //            }
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    if(mbIsDragging)    // Drop piece
-            //    {
-            //        vector3df oPos(mpoHighlightedPiece->getPosition());
-            //        mpoController->DropPiece(oGetBoardPosition(oPos));
-
-            //        oPos.X = round32(oPos.X + 0.5) - 0.5;
-            //        oPos.Z = round32(oPos.Z + 0.5) - 0.5;
-            //        mpoHighlightedPiece->setPosition(oPos);
-            //        mbIsDragging = false;
-            //    }
-
-            //    /**/vector2d<s32> vMousePos = mpoDevice->getCursorControl()->getPosition();
-            //    line3df ray = mpoCollisionManager->getRayFromScreenCoordinates(vMousePos);
-            //    vector3df oCollisionPoint;
-
-            //    ISceneNode * poHighlightedPiece = mpoCollisionManager->getSceneNodeAndCollisionPointFromRay(ray, oCollisionPoint, triangle3df(), ID_PIECE);/*/
-
-            //    vector2d<s32> oMousePos = mpoDevice->getCursorControl()->getPosition();
-            //    ISceneNode * poHighlightedPiece = mpoCollisionManager->getSceneNodeFromScreenCoordinatesBB(oMousePos, ID_PIECE, false, mpoInterface->mpoBoardNode);/**/
-
-            //    if(poHighlightedPiece != mpoHighlightedPiece)
-            //        if(mpoHighlightedPiece)
-            //            mpoHighlightedPiece->getMaterial(0).EmissiveColor = SColor(0, 0, 0, 0);
-
-            //    if(poHighlightedPiece)
-            //    {
-            //        moRelColl = oCollisionPoint - poHighlightedPiece->getAbsolutePosition();
-            //        mpoHighlightedPiece = poHighlightedPiece;
-            //        mpoHighlightedPiece->getMaterial(0).EmissiveColor = SColor(255, 255, 0, 0);
-            //    }
-            //}
 
             return true;
         }
