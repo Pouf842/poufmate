@@ -5,7 +5,6 @@ using namespace gui;
 
 State::State(InterfaceIrrlicht * poInterface) : mpoInterface(poInterface)
 {
-    mpoController       = mpoInterface->mpoController;
 	mpoDevice			= mpoInterface->mpoDevice;
 	mpoSceneManager		= mpoInterface->mpoSceneManager;
 	mpoGUI				= mpoSceneManager->getGUIEnvironment();

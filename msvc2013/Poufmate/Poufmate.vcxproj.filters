@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Fichiers d%27en-tête\Modules">
-      <UniqueIdentifier>{7521ff89-0b44-43b9-bc65-a4f2573304bf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\Modules">
-      <UniqueIdentifier>{2c11db3e-7e45-4433-9231-b5415f0847fc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Fichiers d%27en-tête\Movements">
       <UniqueIdentifier>{8e6d9e38-3d31-4edf-a97e-54641ecb1814}</UniqueIdentifier>
     </Filter>
@@ -38,9 +32,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\Poufmate\PoufMate.cpp">
       <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Poufmate\Modules\game.cpp">
-      <Filter>Fichiers sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\Poufmate\Pieces\bishop.cpp">
       <Filter>Fichiers sources\Pieces</Filter>
@@ -75,16 +66,13 @@
     <ClCompile Include="..\..\src\Poufmate\Movements\promotion.cpp">
       <Filter>Fichiers sources\Movements</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Poufmate\Modules\module.cpp">
-      <Filter>Fichiers sources\Modules</Filter>
+    <ClCompile Include="..\..\src\Poufmate\game.cpp">
+      <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Poufmate\PoufMate.h">
       <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Poufmate\Modules\game.h">
-      <Filter>Fichiers d%27en-tête\Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Poufmate\Pieces\rook.h">
       <Filter>Fichiers d%27en-tête\Pieces</Filter>
@@ -119,11 +107,11 @@
     <ClInclude Include="..\..\src\Poufmate\Movements\promotion.h">
       <Filter>Fichiers d%27en-tête\Movements</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Poufmate\Modules\module.h">
-      <Filter>Fichiers d%27en-tête\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\Poufmate\Pieces\includePieces.h">
       <Filter>Fichiers d%27en-tête\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Poufmate\game.h">
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

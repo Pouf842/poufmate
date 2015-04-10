@@ -1,14 +1,13 @@
 #include "game.h"
 #include <sstream>
-#include "../Movements/include_movements.h"
-#include "Controller.h"
-#include "../Pieces/includePieces.h"
+#include "Movements/include_movements.h"
+#include "Pieces/includePieces.h"
+#include "interface.h"
 
 using namespace std;
 
-Game::Game(Controller * poController, Module::MODULE_TYPE eType) : mpoController(poController)
+Game::Game(Controller * poBack) : mpoBackController(poBack)
 {
-	meType = eType;
 	Initialize();
 }
 
@@ -35,11 +34,10 @@ void Game::Initialize()
 	Movement::SetBoard(&moBoard);	// Set the board for movements (@see Movement::spoBoard)
 }
 
-Game::Game(const Board & oBoard, Controller * poController, Module::MODULE_TYPE eType)
+Game::Game(const Board & oBoard)
 {
 	try
 	{
-		meType = eType;
 		moBoard = oBoard;
         moSelectedPosition.Empty();
 
@@ -169,6 +167,8 @@ void Game::MovePiece(Position oPos1, Position oPos2)
 {
 	moBoard.SetPiece(oPos2, moBoard.poGetPiece(oPos1));
 	moBoard.SetPiece(oPos1, NULL);
+
+    //mpoInterface->MovePiece(oPos1, oPos2);
 }
 
 bool Game::bIsCastlingPathOk(Position oPos1, Position oPos2)
@@ -548,8 +548,7 @@ void Game::RefreshCheckBooleans()
 	mbIsOver = mbIsWhiteCheckMate || mbIsBlackCheckMate || mbIsStaleMate;
 }
 
-
-void Game::GrabPiece(const Position & oPiecePosition)
+void Game::GrabPiece(const Position & oPiecePosition) throw(std::exception)
 {
     try
     {
@@ -592,7 +591,7 @@ void Game::DropPiece(const Position & oDropPosition)
             	poNextMove = new CastlingMove(moSelectedPosition, oDropPosition);
             }
             else if(bIsPromotion(moSelectedPosition, oDropPosition))	// Promotion
-            	poNextMove = new Promotion(moSelectedPosition, oDropPosition, mpoController->eGetNewPieceType());
+                poNextMove = new Promotion(moSelectedPosition, oDropPosition, mpoInterface->eGetPromotionNewPiece());
             else if(moBoard.poGetPiece(moSelectedPosition)->bIsFirstMove())	// First move
             	poNextMove = new FirstMove(moSelectedPosition, oDropPosition);
             else if(bIsEnPassantOk(moSelectedPosition, oDropPosition))
@@ -640,4 +639,9 @@ void Game::DropPiece(const Position & oDropPosition)
 
 void Game::SelectNewPiece()
 {
+}
+
+Board & Game::oGetBoard()
+{
+    return moBoard;
 }

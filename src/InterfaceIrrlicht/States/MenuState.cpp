@@ -15,7 +15,7 @@ bool MenuState::OnEvent(const SEvent & oEvent)
 	&& oEvent.KeyInput.Key == KEY_ESCAPE
 	&& !oEvent.KeyInput.PressedDown)
 	{
-        mpoController->SetMenuChoice(moButtons[moButtons.size() - 2]->getID());
+        mpoInterface->mpoController->SetMenuChoice(moButtons[moButtons.size() - 2]->getID());
 		return true;
 	}
 	else if(oEvent.EventType == EET_GUI_EVENT
@@ -26,7 +26,7 @@ bool MenuState::OnEvent(const SEvent & oEvent)
             mpoInterface->SetPieceViewerState();
         }
 
-		mpoController->SetMenuChoice(oEvent.GUIEvent.Caller->getID());
+        mpoInterface->mpoController->SetMenuChoice(oEvent.GUIEvent.Caller->getID());
 		return true;
 	}
 

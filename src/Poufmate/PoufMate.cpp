@@ -1,7 +1,7 @@
 #include "PoufMate.h"
 #include "windows.h"
 #include "interface.h"
-#include "Modules/game.h"
+#include "game.h"
 
 #include <iostream>
 
@@ -34,7 +34,7 @@ PoufMate::PoufMate()
         if(error)
             throw exception("Erreur : La fonction "GET_INTERFACE_FUNCTION" n'a pas été trouvée");
 
-        mpoCurrentInterface = poGetIInstance(this);
+        mpoInterface = poGetIInstance(this);
     }
     catch(std::exception & e)
     {
@@ -59,8 +59,8 @@ void PoufMate::Start()
         oMenu.push_back("5.Change interface");
         oMenu.push_back("6.Quit");
 
-        mpoCurrentInterface->SetMenuState(&oMenu);
-        mpoCurrentInterface->Run();
+        mpoInterface->SetMenuState(&oMenu);
+        mpoInterface->Run();
     }
     catch(std::exception & e)
     {
@@ -74,25 +74,22 @@ void PoufMate::SetMenuChoice(unsigned short sChoiceIndex)
 {
     try
     {
-        if(mpoCurrentModule)
-        {
-            delete mpoCurrentModule;
-            mpoCurrentModule = NULL;
-        }
-
+        Game * poGame;
+        //GameEdition * poGameEdition;
         switch(sChoiceIndex)
         {
-			case 1:
-			case 2:
-				mpoCurrentModule = new Game();
-				mpoCurrentInterface->SetGameState(mpoCurrentModule->oGetBoard());
-				break;
-			case 3:
-				//mpoCurrentModule = new GameEdition;
-				break;
-			case 6:
-				mpoCurrentInterface->Quit();
-				break;
+		    case 1:
+		    case 2:
+                poGame = new Game(this);
+                mpoInterface->SetController(poGame);
+                mpoInterface->SetGameState(poGame->oGetBoard());
+			    break;
+		    case 3:
+			    //mpoCurrentModule = new GameEdition;
+			    break;
+		    case 6:
+                mpoInterface->Quit();
+			    break;
         }
     }
     catch(std::exception & e)
@@ -102,69 +99,11 @@ void PoufMate::SetMenuChoice(unsigned short sChoiceIndex)
     }
 }
 
-void PoufMate::GrabPiece(const Position & oPiecePosition)
+void PoufMate::Quit()
 {
     try
     {
-        mpoCurrentModule->GrabPiece(oPiecePosition);
-    }
-    catch(std::exception & e)
-    {
-        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << std::endl;
-        throw e;
-    }
-}
-
-void PoufMate::DropPiece(const Position & oDropPosition)
-{
-    try
-    {
-        mpoCurrentModule->DropPiece(oDropPosition);
-    }
-    catch(std::exception & e)
-    {
-        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << std::endl;
-        throw e;
-    }
-}
-
-void PoufMate::SelectNewPiece(Piece::PIECE_COLOR eColor, Piece::PIECE_TYPE eType)
-{
-    try
-    {
-    }
-    catch(std::exception & e)
-    {
-        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << std::endl;
-        throw e;
-    }
-}
-
-void PoufMate::Escape()
-{
-    try
-    {
-        delete mpoCurrentModule;
-		mpoCurrentModule = NULL;
-        mpoCurrentInterface->SetMenuState();
-    }
-    catch(std::exception & e)
-    {
-        std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << std::endl;
-        throw e;
-    }
-}
-
-vector<Position> PoufMate::oGetPossibleMoves(const Position & oPiecePosition) const
-{
-    return vector<Position>();
-}
-
-Piece::PIECE_TYPE PoufMate::eGetNewPieceType()
-{
-    try
-    {
-        mpoCurrentInterface->eGetPromotionNewPiece();
+        mpoInterface->Quit();
     }
     catch(std::exception & e)
     {

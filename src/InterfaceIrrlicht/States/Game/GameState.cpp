@@ -134,7 +134,12 @@ bool GameState::OnEvent(const SEvent & oEvent)
                 }
                 else if(oEvent.KeyInput.Key == KEY_ESCAPE)
                 {
-                    mpoController->Escape();
+                    mpoInterface->mpoController->Quit();
+                    return true;
+                }
+                else if(oEvent.KeyInput.Key == KEY_KEY_C)
+                {
+                    mpoInterface->mpoController->CancelLastMove();
                     return true;
                 }
             }
@@ -146,7 +151,7 @@ bool GameState::OnEvent(const SEvent & oEvent)
 				if(mpoHighlightedPiece)
 				{
 					mvDraggedOriginPos = mpoHighlightedPiece->getPosition();
-					mpoController->GrabPiece(oGetBoardPosition(mvDraggedOriginPos));
+					mpoInterface->mpoController->GrabPiece(oGetBoardPosition(mvDraggedOriginPos));
 					mbIsDragging = true;
 				}
 			}
@@ -155,7 +160,7 @@ bool GameState::OnEvent(const SEvent & oEvent)
 				if(mbIsDragging)
 				{
 					vector3df oPos(mpoHighlightedPiece->getPosition());
-					mpoController->DropPiece(oGetBoardPosition(oPos));
+                    mpoInterface->mpoController->DropPiece(oGetBoardPosition(oPos));
 
 					oPos.X = round32(oPos.X + 0.5) - 0.5;
 					oPos.Z = round32(oPos.Z + 0.5) - 0.5;
@@ -170,9 +175,8 @@ bool GameState::OnEvent(const SEvent & oEvent)
 					vector2d<s32> vMousePos(oEvent.MouseInput.X, oEvent.MouseInput.Y);
 					line3df ray = mpoCollisionManager->getRayFromScreenCoordinates(vMousePos);
 					vector3df oBoardCollisionPoint;
-					triangle3df oTriangle;
 
-					ISceneNode * poNode = mpoCollisionManager->getSceneNodeAndCollisionPointFromRay(ray, oBoardCollisionPoint, oTriangle, ID_BOARD);
+					ISceneNode * poNode = mpoCollisionManager->getSceneNodeAndCollisionPointFromRay(ray, oBoardCollisionPoint, triangle3df(), ID_BOARD);
 
 					if(poNode)
 					{
@@ -181,9 +185,9 @@ bool GameState::OnEvent(const SEvent & oEvent)
 						v.Y = 0;
 
 						float a = (moRelColl.Y - oBoardCollisionPoint.Y) * v.getLength();
-						a /= oCameraPos.Y - oBoardCollisionPoint.Y;
+						a /= (oCameraPos.Y - oBoardCollisionPoint.Y);
 
-						v.normalize() * a;
+						v = v.normalize() * a;
 
 						vector3df oPos(oBoardCollisionPoint + v);
 
@@ -203,7 +207,7 @@ bool GameState::OnEvent(const SEvent & oEvent)
 					line3df ray = mpoCollisionManager->getRayFromScreenCoordinates(vMousePos);
 					vector3df oCollisionPoint;
 
-					ISceneNode * poHighlightedPiece = mpoCollisionManager->getSceneNodeAndCollisionPointFromRay(ray, oCollisionPoint, moTriangle, ID_PIECE, mpoBoardNode);
+					ISceneNode * poHighlightedPiece = mpoCollisionManager->getSceneNodeAndCollisionPointFromRay(ray, oCollisionPoint, triangle3df(), ID_PIECE, mpoBoardNode);
 
 					if(poHighlightedPiece != mpoHighlightedPiece)
 						if(mpoHighlightedPiece)

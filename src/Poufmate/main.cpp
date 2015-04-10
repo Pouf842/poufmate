@@ -7,8 +7,8 @@ int main(int arg, char * argv[])
 {
     try
     {
-        PoufMate oController;
-        oController.Start();
+        PoufMate oApplication;
+        oApplication.Start();
     }
     catch(...)
     {

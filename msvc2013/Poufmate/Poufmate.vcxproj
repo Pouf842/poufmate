@@ -70,9 +70,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\Poufmate\game.cpp" />
     <ClCompile Include="..\..\src\Poufmate\main.cpp" />
-    <ClCompile Include="..\..\src\Poufmate\Modules\game.cpp" />
-    <ClCompile Include="..\..\src\Poufmate\Modules\module.cpp" />
     <ClCompile Include="..\..\src\Poufmate\Movements\castling_move.cpp" />
     <ClCompile Include="..\..\src\Poufmate\Movements\en_passant.cpp" />
     <ClCompile Include="..\..\src\Poufmate\Movements\first_move.cpp" />
@@ -87,8 +86,7 @@
     <ClCompile Include="..\..\src\Poufmate\PoufMate.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\Poufmate\Modules\game.h" />
-    <ClInclude Include="..\..\src\Poufmate\Modules\module.h" />
+    <ClInclude Include="..\..\src\Poufmate\game.h" />
     <ClInclude Include="..\..\src\Poufmate\Movements\castling_move.h" />
     <ClInclude Include="..\..\src\Poufmate\Movements\en_passant.h" />
     <ClInclude Include="..\..\src\Poufmate\Movements\include_movements.h" />

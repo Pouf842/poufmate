@@ -6,34 +6,25 @@
 #include <vector>
 #include <exception>
 
-class Module;
 class Interface;
 
 class Controller
 {
 protected:
-    Module *    mpoCurrentModule;
-    Interface * mpoCurrentInterface;
+    Interface * mpoInterface;
 public:
     Controller();
     ~Controller();
 
-    virtual void Start() = 0;
-
-    /**
-     * View to Controller
-     */
-    virtual void SetMenuChoice(unsigned short sChoiceIndex) throw(std::exception) = 0;
-    virtual void DropPiece(const Position & oDropPosition) throw(std::exception) = 0;
-    virtual void GrabPiece(const Position & oPiecePosition) throw(std::exception) = 0;
-    virtual void SelectNewPiece(Piece::PIECE_COLOR eColor, Piece::PIECE_TYPE eType) throw(std::exception) = 0;
-    virtual void Escape() = 0;
-    virtual std::vector<Position> oGetPossibleMoves(const Position & oPiecePosition) const throw(std::exception) = 0;
-
-    /*
-     * Model to Controller
-     */
-    virtual Piece::PIECE_TYPE eGetNewPieceType() = 0;
+    virtual void Start();
+    virtual void Quit();
+    virtual void SetMenuChoice(unsigned short) throw(std::exception);
+    virtual void DropPiece(const Position &) throw(std::exception);
+    virtual void GrabPiece(const Position &) throw(std::exception);
+    virtual void SelectNewPiece(Piece::PIECE_COLOR, Piece::PIECE_TYPE) throw(std::exception);
+    virtual void CancelLastMove();
+    virtual std::vector<Position> oGetPossibleMoves(const Position &) const throw(std::exception);
+    virtual Piece::PIECE_TYPE eGetNewPieceType();
 };
 
 #endif

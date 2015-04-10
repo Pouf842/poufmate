@@ -3,20 +3,20 @@
 
 #include <vector>
 
-#include "module.h"
+#include "Controller.h"
 #include "Core/board.h"
 
 class Movement;
-class Controller;
 
-class Game : public Module
+class Game : public Controller
 {
   protected :
+    Board moBoard;
 	std::vector<Movement*> moHistory;	// History of moves
 	Piece::PIECE_COLOR meCurrentPlayer;		// Current playing player
 	Position moKings[2];				// Positions of the two kings (usefull for check and checkmate verification)
 	Position moSelectedPosition;		// Selected square
-    Controller * mpoController;
+    Controller * mpoBackController;
 
 	bool mbIsOver;					// true if the party is over
 	bool mbIsWhiteInCheck;
@@ -29,11 +29,6 @@ class Game : public Module
 	 * Change the current player
 	 */
 	virtual void SwitchPlayer();
-
-	/**
-	 * Cancel the last recorded move
-	 */
-	virtual void CancelLastMove();
 
 	/**
 	 * Check if the given movement (described by two position) is a castling move
@@ -103,18 +98,19 @@ class Game : public Module
 	/**
 	 * Basic constructor
 	 */
-	Game(Controller * poInterface = NULL, Module::MODULE_TYPE = Module::MT_NONE);
+	Game(Controller *);
 
-    virtual void GrabPiece(const Position &);
+    virtual void GrabPiece(const Position &) throw(std::exception);
     virtual void DropPiece(const Position &);
     virtual void SelectNewPiece();
+    virtual void CancelLastMove();
 
 	/**
 	 * Constructor with a specified board
 	 * Throw exception if there is more or less
 	 * than 1 king for each player
 	 */
-    Game(const Board &, Controller * poInterface = NULL, Module::MODULE_TYPE = Module::MT_NONE);
+    Game(const Board &);
 
 	/**
 	 * Check if the given position is a valid selection. Throw an exception otherwise
@@ -141,6 +137,7 @@ class Game : public Module
 	bool bIsPlayerInCheck(Piece::PIECE_COLOR) const;
     bool bIsPlayerCheckMate(Piece::PIECE_COLOR) const;
 	bool bIsStaleMate() const;
+    Board & oGetBoard();
 	
 	/**
 	 * Get the previously selected position
