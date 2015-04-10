@@ -203,8 +203,8 @@ bool GameState::OnEvent(const SEvent & oEvent)
 					line3df ray = mpoCollisionManager->getRayFromScreenCoordinates(vMousePos);
 					vector3df oCollisionPoint;
 
-					ISceneNode * poHighlightedPiece = mpoCollisionManager->getSceneNodeAndCollisionPointFromRay(ray, oCollisionPoint, triangle3df(), ID_PIECE);
-std::cout << poHighlightedPiece << std::endl;
+					ISceneNode * poHighlightedPiece = mpoCollisionManager->getSceneNodeAndCollisionPointFromRay(ray, oCollisionPoint, moTriangle, ID_PIECE, mpoBoardNode);
+
 					if(poHighlightedPiece != mpoHighlightedPiece)
 						if(mpoHighlightedPiece)
 							mpoHighlightedPiece->getMaterial(0).EmissiveColor = SColor(0, 0, 0, 0);
@@ -214,7 +214,6 @@ std::cout << poHighlightedPiece << std::endl;
 					if(mpoHighlightedPiece)
 					{
 						moRelColl = oCollisionPoint - mpoHighlightedPiece->getAbsolutePosition();
-						std::cout << "Changing color" << std::endl;
 						mpoHighlightedPiece->getMaterial(0).EmissiveColor = SColor(255, 255, 0, 0);
 					}
 				}

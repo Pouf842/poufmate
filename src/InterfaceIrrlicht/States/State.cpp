@@ -17,3 +17,7 @@ bool State::OnEvent(const SEvent &)
 {
     return false;
 }
+
+void State::Draw()
+{
+}

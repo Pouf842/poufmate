@@ -18,7 +18,8 @@ protected:
 public:
 	State(InterfaceIrrlicht * poInterface);
     virtual void Show() = 0;
-    virtual void Hide() = 0;
+	virtual void Hide() = 0;
+	virtual void Draw();
 	virtual bool OnEvent(const irr::SEvent &);
 };
 

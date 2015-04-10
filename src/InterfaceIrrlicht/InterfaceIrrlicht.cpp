@@ -170,6 +170,9 @@ void InterfaceIrrlicht::Run()
         if(mpoDevice->isWindowActive())
         {
             mpoVideoDriver->beginScene();
+
+			mpoCurrentState->Draw();
+
             mpoSceneManager->drawAll();
             mpoGUI->drawAll();
             mpoVideoDriver->endScene();

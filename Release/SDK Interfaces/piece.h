@@ -70,4 +70,5 @@ class Piece
 	PIECE_TYPE meType;	// The type of the piece
 };
 
+std::ostream & operator<<(std::ostream &, const Piece &);
 #endif
