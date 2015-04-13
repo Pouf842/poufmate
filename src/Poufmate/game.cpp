@@ -3,10 +3,11 @@
 #include "Movements/include_movements.h"
 #include "Pieces/includePieces.h"
 #include "interface.h"
+#include "PoufMate.h"
 
 using namespace std;
 
-Game::Game(Controller * poBack) : mpoBackController(poBack)
+Game::Game(Interface * poInterface, PoufMate * poBack) : Controller(poInterface), mpoMainMenu(poBack)
 {
 	Initialize();
 }
@@ -31,15 +32,17 @@ void Game::Initialize()
 	mbIsWhiteInCheck = false;
 	mbIsBlackInCheck = false;
 
-	Movement::SetBoard(&moBoard);	// Set the board for movements (@see Movement::spoBoard)
+    Movement::SetBoard(&moBoard);	// Set the board for movements (@see Movement::spoBoard)
+    moBoard.AddInterface(mpoInterface);
 }
 
-Game::Game(const Board & oBoard)
+Game::Game(Interface * poInterface, PoufMate * poPoufMate, const Board & oBoard) : Controller(poInterface), mpoMainMenu(poPoufMate)
 {
 	try
 	{
 		moBoard = oBoard;
         moSelectedPosition.Empty();
+        moBoard.AddInterface(mpoInterface);
 
 		Position oWhiteKing;
 		Position oBlackKing;
@@ -161,14 +164,7 @@ void Game::InitBoard()
 void Game::SwitchPlayer()
 {
 	meCurrentPlayer = (meCurrentPlayer == Piece::PC_WHITE ? Piece::PC_BLACK : Piece::PC_WHITE);
-}
-
-void Game::MovePiece(Position oPos1, Position oPos2)
-{
-	moBoard.SetPiece(oPos2, moBoard.poGetPiece(oPos1));
-	moBoard.SetPiece(oPos1, NULL);
-
-    //mpoInterface->MovePiece(oPos1, oPos2);
+    cout << "Current player is " << (meCurrentPlayer == Piece::PC_WHITE ? "white" : "black") << endl;
 }
 
 bool Game::bIsCastlingPathOk(Position oPos1, Position oPos2)
@@ -185,13 +181,13 @@ bool Game::bIsCastlingPathOk(Position oPos1, Position oPos2)
 
 		if(moBoard.bIsSquareEmpty(oPosInter))	// If the intermediate square is empty
 		{
-			MovePiece(moKings[eColor], oPosInter);	// Move the king to the intermediate square
+			moBoard.MovePiece(moKings[eColor], oPosInter);	// Move the king to the intermediate square
 			moKings[eColor] = oPosInter;	// Update the king position
 
 			if(bIsInCheck(eColor))	// If the king is in check, the castling is not possible
 			{
 				moBoard.poGetPiece(moKings[eColor])->SetFirstMove(bFirstMove);	// Restore the bFirstMove boolean of the king
-				MovePiece(moKings[eColor], oPos1);	// Return the king to its initial position
+				moBoard.MovePiece(moKings[eColor], oPos1);	// Return the king to its initial position
 				moKings[eColor] = oPos1;			// Restore the king's position
 				return false;
 			}
@@ -200,7 +196,7 @@ bool Game::bIsCastlingPathOk(Position oPos1, Position oPos2)
 			return false;	// If the square is not empty
 	}
 
-	MovePiece(moKings[eColor], oPos1);	// Return the king to its initial position
+    moBoard.MovePiece(moKings[eColor], oPos1);	// Return the king to its initial position
 	moKings[eColor] = oPos1;			// Restore the king's position
 
 	moBoard.poGetPiece(moKings[eColor])->SetFirstMove(bFirstMove);	// Restore the bFirstMove boolean of the king
@@ -229,12 +225,12 @@ bool Game::bIsCastling(Position oPos1, Position oPos2) const
 		return false;	// else, it isn't
 }
 
-vector<Position> Game::oGetPossibilities(unsigned int i, unsigned int j)
+/*vector<Position> Game::oGetPossibilities(unsigned int i, unsigned int j)
 {
 	return oGetPossibilities(Position(i, j));
-}
+}*/
 
-vector<Position> Game::oGetPossibilities(Position oPos)
+vector<Position> Game::oGetPossibleMoves(const Position & oPos) throw(std::exception)
 {
 	try
 	{
@@ -278,7 +274,7 @@ vector<Position> Game::oGetPossibilities(Position oPos)
 						if(!bIsInCheck(moBoard.eGetSquareColor(oPos2)))	// If the player is not in check, the movement is possible
 							oPossibilites.push_back(oPos2);
 
-						CancelLastMove();	// Cancel the movement
+						UndoLastMove();	// Cancel the movement
 					}
 					catch(exception &)	// Catching exception for impossible movements
 					{
@@ -372,11 +368,11 @@ bool Game::bIsCheckMate(Piece::PIECE_COLOR ePlayer)
 
 									if(!bIsInCheck(ePlayer))	// Check if the player is still in check
 									{
-										CancelLastMove();		// If not, cancel the move, and return that the player is not in check
+										UndoLastMove();		// If not, cancel the move, and return that the player is not in check
 										return false;
 									}
 
-									CancelLastMove();	// Cancel the move anyway
+									UndoLastMove();	// Cancel the move anyway
 								}
 								catch(exception &)	// Catch the exception for impossible moves
 								{
@@ -432,6 +428,12 @@ bool Game::bIsOver() const
 
 void Game::CancelLastMove()
 {
+    UndoLastMove();
+    SwitchPlayer();
+}
+
+void Game::UndoLastMove()
+{
 	try
 	{
 		if(moHistory.size() == 0)
@@ -474,7 +476,7 @@ bool Game::bIsGameInStaleMate()
 			Position oPos(i, j);
 
 			if(!moBoard.bIsSquareEmpty(oPos) && moBoard.eGetSquareColor(oPos) == meCurrentPlayer)
-				if(oGetPossibilities(oPos).size() != 0)	// If a move is possible for the current player
+				if(oGetPossibleMoves(oPos).size() != 0)	// If a move is possible for the current player
 					return false;
 		}
 
@@ -605,7 +607,7 @@ void Game::DropPiece(const Position & oDropPosition)
             /* If the move puts the player in check, it is not valid */
             if(bIsInCheck(meCurrentPlayer))
             {
-            	CancelLastMove();
+            	UndoLastMove();
             	throw exception("That move puts you in check");
             }
             
@@ -644,4 +646,9 @@ void Game::SelectNewPiece()
 Board & Game::oGetBoard()
 {
     return moBoard;
+}
+
+void Game::Quit()
+{
+    mpoMainMenu->Back();
 }

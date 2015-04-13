@@ -7,16 +7,18 @@
 #include "Core/board.h"
 
 class Movement;
+class PoufMate;
 
 class Game : public Controller
 {
+    friend Movement;
   protected :
     Board moBoard;
 	std::vector<Movement*> moHistory;	// History of moves
 	Piece::PIECE_COLOR meCurrentPlayer;		// Current playing player
 	Position moKings[2];				// Positions of the two kings (usefull for check and checkmate verification)
 	Position moSelectedPosition;		// Selected square
-    Controller * mpoBackController;
+    PoufMate * mpoMainMenu;
 
 	bool mbIsOver;					// true if the party is over
 	bool mbIsWhiteInCheck;
@@ -24,6 +26,8 @@ class Game : public Controller
 	bool mbIsWhiteCheckMate;
 	bool mbIsBlackCheckMate;
 	bool mbIsStaleMate;
+
+    virtual void UndoLastMove();
 
 	/**
 	 * Change the current player
@@ -79,12 +83,6 @@ class Game : public Controller
 	 */
 	virtual bool bIsCastlingPathOk(Position, Position);
 
-	/**
-	 * Move a piece from the first given position, to the second
-	 */
-	virtual void MovePiece(Position oPos1, Position oPos2);
-	virtual void Initialize();
-
     virtual void InitBoard();
 	/**
 	 * Set the selected position
@@ -98,19 +96,21 @@ class Game : public Controller
 	/**
 	 * Basic constructor
 	 */
-	Game(Controller *);
+    Game(Interface *, PoufMate *);
+    virtual void Initialize();
 
     virtual void GrabPiece(const Position &) throw(std::exception);
     virtual void DropPiece(const Position &);
     virtual void SelectNewPiece();
     virtual void CancelLastMove();
+    virtual void Quit();
 
 	/**
 	 * Constructor with a specified board
 	 * Throw exception if there is more or less
 	 * than 1 king for each player
 	 */
-    Game(const Board &);
+    Game(Interface *, PoufMate *, const Board &);
 
 	/**
 	 * Check if the given position is a valid selection. Throw an exception otherwise
@@ -120,13 +120,13 @@ class Game : public Controller
 	/**
 	 * Return all the possibilities of movement for the piece on the given square
 	 */
-	virtual std::vector<Position> oGetPossibilities(Position);
+    virtual std::vector<Position> oGetPossibleMoves(const Position &) throw(std::exception);
 
 	/**
 	 * Overload of oGetPossibilities(Position)
 	 * @see oGetPossibilities(Position)
-	 */
-	virtual std::vector<Position> oGetPossibilities(unsigned int, unsigned int);
+	 * /
+	virtual std::vector<Position> oGetPossibilities(unsigned int, unsigned int);*/
 
 	Piece::PIECE_COLOR eGetCurrentPlayer() const;
 	Position oGetKingPosition(Piece::PIECE_COLOR) const;

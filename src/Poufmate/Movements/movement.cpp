@@ -1,5 +1,5 @@
 #include "movement.h"
-#include "Core/board.h"
+#include "../game.h"
 
 using namespace std;
 
@@ -10,22 +10,22 @@ Movement::Movement(Position oPos1, Position oPos2) : moPos1(oPos1), moPos2(oPos2
 	try
 	{
 		if(!spoBoard)
-			throw exception("Board is not defined. Call SetBoard before");
+			throw exception("Board is not defined. Call SetGame before");
 
 		if(oPos1 == oPos2)
 			throw exception("No movement");
 
-		if(spoBoard->bIsSquareEmpty(oPos1))
+        if(spoBoard->bIsSquareEmpty(oPos1))
 			throw exception("There is no piece on the starting square");
 
-		if(!spoBoard->bIsSquareEmpty(oPos2) && spoBoard->eGetSquareColor(oPos1) == spoBoard->eGetSquareColor(oPos2))
+        if(!spoBoard->bIsSquareEmpty(oPos2) && spoBoard->eGetSquareColor(oPos1) == spoBoard->eGetSquareColor(oPos2))
 			throw exception("The two pieces are on the same side");
 
-		if(!spoBoard->poGetPiece(oPos1)->bIsMovementCorrect(oPos1, oPos2, *spoBoard))
+        if(!spoBoard->poGetPiece(oPos1)->bIsMovementCorrect(oPos1, oPos2, *spoBoard))
 			throw exception("Invalid move");
 
-		mpoMovingPiece = spoBoard->poGetPiece(moPos1);
-		mpoCapturedPiece = spoBoard->poGetPiece(moPos2);
+        mpoMovingPiece = spoBoard->poGetPiece(moPos1);
+        mpoCapturedPiece = spoBoard->poGetPiece(moPos2);
 	}
 	catch(exception & e)
 	{
@@ -34,9 +34,9 @@ Movement::Movement(Position oPos1, Position oPos2) : moPos1(oPos1), moPos2(oPos2
 	}
 }
 
-void Movement::SetBoard(Board * oNewBoard)
+void Movement::SetBoard(Board * poBoard)
 {
-	spoBoard = oNewBoard;
+    spoBoard = poBoard;
 }
 
 Position Movement::oGetCoords1() const
@@ -72,7 +72,7 @@ void Movement::CancelMovement()
 
 void Movement::Execute()
 {
-	spoBoard->MovePiece(oGetCoords1(), oGetCoords2());
+    spoBoard->MovePiece(oGetCoords1(), oGetCoords2());
 	poGetMovingPiece()->SetFirstMove(false);
 }
 

@@ -1,6 +1,7 @@
 #include <math.h>
 #include "en_passant.h"
 #include "../Pieces/pawn.h"
+#include "../Core/Core/board.h"
 
 using namespace std;
 

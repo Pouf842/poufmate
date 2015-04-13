@@ -35,6 +35,14 @@ PoufMate::PoufMate()
             throw exception("Erreur : La fonction "GET_INTERFACE_FUNCTION" n'a pas été trouvée");
 
         mpoInterface = poGetIInstance(this);
+        mpoGame = new Game(mpoInterface, this);
+
+        moMainMenu.push_back("1.One player game (human VS computer)");
+        moMainMenu.push_back("2.Two player game (human VS human)");
+        moMainMenu.push_back("3.Edition mode");
+        moMainMenu.push_back("4.Two player lan game");
+        moMainMenu.push_back("5.Change interface");
+        moMainMenu.push_back("6.Quit");
     }
     catch(std::exception & e)
     {
@@ -51,15 +59,7 @@ void PoufMate::Start()
 {
     try
     {
-        vector<string> oMenu;
-        oMenu.push_back("1.One player game (human VS computer)");
-        oMenu.push_back("2.Two player game (human VS human)");
-        oMenu.push_back("3.Edition mode");
-        oMenu.push_back("4.Two player lan game");
-        oMenu.push_back("5.Change interface");
-        oMenu.push_back("6.Quit");
-
-        mpoInterface->SetMenuState(&oMenu);
+        mpoInterface->SetMenuState(&moMainMenu);
         mpoInterface->Run();
     }
     catch(std::exception & e)
@@ -74,15 +74,14 @@ void PoufMate::SetMenuChoice(unsigned short sChoiceIndex)
 {
     try
     {
-        Game * poGame;
         //GameEdition * poGameEdition;
         switch(sChoiceIndex)
         {
 		    case 1:
 		    case 2:
-                poGame = new Game(this);
-                mpoInterface->SetController(poGame);
-                mpoInterface->SetGameState(poGame->oGetBoard());
+                mpoGame->Initialize();
+                mpoInterface->SetController(mpoGame);
+                mpoInterface->SetGameState(mpoGame->oGetBoard());
 			    break;
 		    case 3:
 			    //mpoCurrentModule = new GameEdition;
@@ -110,4 +109,10 @@ void PoufMate::Quit()
         std::cout << __FUNCTION__ << ":" << __LINE__ << " : " << std::endl;
         throw e;
     }
+}
+
+void PoufMate::Back()
+{
+    mpoInterface->SetController(this);
+    mpoInterface->SetMenuState(&moMainMenu);
 }

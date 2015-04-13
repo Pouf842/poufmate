@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Controller::Controller()
+Controller::Controller(Interface * poInterface) : mpoInterface(poInterface)
 {
 }
 
@@ -102,7 +102,7 @@ void Controller::CancelLastMove()
     }
 }
 
-vector<Position> Controller::oGetPossibleMoves(const Position & oPiecePosition) const throw(exception)
+vector<Position> Controller::oGetPossibleMoves(const Position & oPiecePosition) throw(exception)
 {
     try
     {
@@ -115,15 +115,14 @@ vector<Position> Controller::oGetPossibleMoves(const Position & oPiecePosition) 
     }
 }
 
-Piece::PIECE_TYPE Controller::eGetNewPieceType()
+void Controller::PieceMoved(const Position & oPos1, const Position & oPos2)
 {
-    try
-    {
-        throw exception("This method is not implemented for this Controller");
-    }
-    catch(exception & e)
-    {
-        cout << __FILE__ << ":" << __LINE__ << " : " << endl;
-        throw e;
-    }
+}
+
+void Controller::PieceRemoved(const Position & oPos1)
+{
+}
+
+void Controller::PieceAdded(const Position & oPos1, Piece *)
+{
 }

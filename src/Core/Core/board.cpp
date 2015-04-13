@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Core/board.h"
 #include "Core/position.h"
+#include "interface.h"
 /*#include "Pieces/rook.h"
 #include "Pieces/pawn.h"
 #include "Pieces/knight.h"
@@ -50,8 +51,19 @@ void Board::MovePiece(Position oPos1, Position oPos2)
 	Square & oPieceSquare = moSquares[X1][Y1];
 	Square & oDestSquare = moSquares[X2][Y2];
 
-	oDestSquare.SetPiece(oPieceSquare.poGetPiece());
+    Piece * poMovingPiece = oPieceSquare.poGetPiece();
+    Piece * poAtePiece = oDestSquare.poGetPiece();
+
+    oDestSquare.SetPiece(poMovingPiece);
 	oPieceSquare.SetPiece(NULL);
+
+    for each(Interface * poInterface in moInterfaces)
+    {
+        /*if(poAtePiece)
+            poInterface->PieceEatPiece(poMovingPiece, poAtePiece);
+        else
+            poInterface->PieceMoved(poMovingPiece, oPos2);*/
+    }
 }
 
 Piece * Board::poGetPiece(unsigned int i, unsigned int j) const
@@ -67,4 +79,10 @@ Piece * Board::poGetPiece(Position oPos) const
 void Board::SetPiece(Position oPos, Piece * poNewPiece)
 {
 	moSquares[oPos.mX][oPos.mY].SetPiece(poNewPiece);
+}
+
+void Board::AddInterface(Interface * poInterface)
+{
+    if(moInterfaces.find(poInterface) == moInterfaces.end())
+        moInterfaces.insert(poInterface);
 }

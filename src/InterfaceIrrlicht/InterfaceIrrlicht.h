@@ -7,9 +7,11 @@
 class State;
 class MenuState;
 class GameState;
+class TestState;
 
 class InterfaceIrrlicht : public Interface, public irr::IEventReceiver
 {
+    friend TestState;
   public :
 	irr::IrrlichtDevice * mpoDevice;
 	irr::video::IVideoDriver * mpoVideoDriver;
@@ -26,6 +28,11 @@ class InterfaceIrrlicht : public Interface, public irr::IEventReceiver
     virtual void SetGameState(const Board &);
     virtual void Run();
     virtual void Quit();
+    virtual void PieceMoved(Piece *, const Position &);
+    virtual void PieceAdded(Piece *, const Position &);
+    virtual void PieceRemoved(Piece *);
+    virtual void PieceEatPiece(Piece *, Piece *);
+    virtual void DisplayMessage(std::string);
     virtual Piece::PIECE_TYPE eGetPromotionNewPiece();
 
     void SetPieceViewerState();

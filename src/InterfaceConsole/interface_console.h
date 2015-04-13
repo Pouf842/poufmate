@@ -7,42 +7,48 @@
  * @see class Interface
  */
 
-#include "Interface/interface.h"
+#include "interface.h"
 #include <sstream>
 #include <vector>
 #include <string>
 
 class InterfaceConsole : public Interface
 {
-protected :
-	unsigned int muLastPercent;
+protected:
+    Board moBoard;
+    Position moSelectedPosition;
+    unsigned int muLastPercent;
+    bool mbStop;
+
+public :
+    InterfaceConsole(Controller *);
+    virtual ~InterfaceConsole();
 
 	/**
 	 * Implemented Interface::methods
 	 */
-	virtual int iGetMenuEntry(const std::vector<std::string> oMenu);
-	virtual void DisplayMessage(const std::string strMessage);
-	virtual Entry oGetEntry();
-	virtual std::string strGetIPEntry();
-	virtual std::string strGetPortEntry();
-	virtual Piece::PIECE_TYPE eGetNewPieceType(const Piece::PIECE_COLOR);
-	virtual Piece::PIECE_COLOR eGetPlayerColorChoice();
-	virtual Entry::ENTRY_COMMAND GameOver(std::string strMessage);
-	virtual void SetBusy();
-	virtual void SetProgress(unsigned int);
-	virtual ~InterfaceConsole();
+    virtual void Run();
+    virtual void SetMenuState(std::vector<std::string> const * = NULL);
+    virtual void SetGameState(const Board &);
+    virtual void PieceMoved(Piece *, const Position &);
+    virtual void PieceRemoved(Piece *);
+    virtual void PieceAdded(Piece *, const Position &);
+    virtual void PieceEatPiece(Piece *, Piece *);
+    virtual Piece::PIECE_TYPE eGetPromotionNewPiece();
+    virtual void DisplayMessage(std::string);
+    virtual void Quit();
 
 	/**
 	 * Specific methods
 	 */
 	std::string strGetEntry();
-	void DisplayModule(const Module * oModule);
-	void DisplayBoard(const Board & oBoard);
-	void DisplayCurrentPlayer();
-	void DisplayPlayerInCheck();
-	void DisplayEditionSelection();
+	//void DisplayModule(const Module * oModule);
+	void DisplayBoard();
+	//void DisplayCurrentPlayer();
+	//void DisplayPlayerInCheck();
+	//void DisplayEditionSelection();
 	void DisplayHelp();
-	Entry eGetSelectionPieceEntry(std::string);
+	//Entry eGetSelectionPieceEntry(std::string);*/
 };
 
 #endif

@@ -20,10 +20,18 @@ class Interface
 public:
     Controller * mpoController;
     void SetController(Controller *);
+
+    /* C to V*/
+    virtual void Run() = 0;
+
     virtual void SetMenuState(std::vector<std::string> const * = NULL) = 0;
     virtual void SetGameState(const Board &) = 0;
+    virtual void PieceMoved(Piece *, const Position &) = 0;
+    virtual void PieceRemoved(Piece *) = 0;
+    virtual void PieceAdded(Piece *, const Position &) = 0;
+    virtual void PieceEatPiece(Piece *, Piece *) = 0;
     virtual Piece::PIECE_TYPE eGetPromotionNewPiece() = 0;
-    virtual void Run() = 0;
+    virtual void DisplayMessage(std::string) = 0;
     virtual void Quit() = 0;
 
     virtual ~Interface()

@@ -17,6 +17,8 @@ GameState::GameState(InterfaceIrrlicht * poInterface) : State(poInterface), mpoH
     {
         mpoBoardNode = mpoInterface->CreateBoardNode();
         mpoBoardNode->setVisible(false);
+
+        mpoPossibleMoveTex = mpoVideoDriver->getTexture("Medias/Images/Possible.png");
     }
     catch(std::exception & e)
     {
@@ -35,8 +37,11 @@ void GameState::InitBoard(const Board & oNewBoard)
 
         for(s32 i = 0; i < 8; ++i)
             for(s32 j = 0; j < 8; ++j)
-                if(oNewBoard.poGetPiece(i, j))
-                    mpoInterface->addPieceNode(oNewBoard.poGetPiece(i, j), Position(i, j), "", mpoBoardNode);
+            {
+                Piece * poPiece = oNewBoard.poGetPiece(i, j);
+                if(poPiece)
+                    moPieces[poPiece] = mpoInterface->addPieceNode(poPiece, Position(i, j), "", mpoBoardNode);
+            }
     }
     catch(std::exception & e)
     {
@@ -159,15 +164,46 @@ bool GameState::OnEvent(const SEvent & oEvent)
 			{
 				if(mbIsDragging)
 				{
-					vector3df oPos(mpoHighlightedPiece->getPosition());
-                    mpoInterface->mpoController->DropPiece(oGetBoardPosition(oPos));
+					vector3df vPos(mpoHighlightedPiece->getPosition());
+                    if(oGetBoardPosition(vPos) == oGetBoardPosition(mvDraggedOriginPos))
+                        mpoHighlightedPiece->setPosition(mvDraggedOriginPos);
+                    else
+                        mpoInterface->mpoController->DropPiece(oGetBoardPosition(vPos));
 
-					oPos.X = round32(oPos.X + 0.5) - 0.5;
-					oPos.Z = round32(oPos.Z + 0.5) - 0.5;
-					mpoHighlightedPiece->setPosition(oPos);
 					mbIsDragging = false;
 				}
 			}
+            else if(oEvent.MouseInput.Event == EMIE_RMOUSE_PRESSED_DOWN)
+            {
+                if(mpoHighlightedPiece)
+                {
+                    std::vector<Position> oPossibleMoves = mpoInterface->mpoController->oGetPossibleMoves(oGetBoardPosition(mpoHighlightedPiece->getPosition()));
+                    vector3df vDelta1(-0.5, 0, -0.5);
+                    vector3df vDelta2(-0.5, 0,  0.5);
+                    vector3df vDelta3( 0.5, 0,  0.5);
+                    vector3df vDelta4( 0.5, 0, -0.5);
+
+                    ITexture * poTexture = mpoVideoDriver->getTexture("Medias/Images/Possible.png");
+                    for each(Position oPos in oPossibleMoves)
+                    {
+                        vector3df vSquareCenter = vGetNodePosition(oPos);
+                        vSquareCenter += vector3df(0, 0.0001, 0);
+
+                        ISceneNode * poPossibleMove = mpoSceneManager->addCubeSceneNode(1, NULL, -1, vSquareCenter, vector3df(0, 0, 0), vector3df(1, 0, 1));
+                        poPossibleMove->setMaterialTexture(0, poTexture);
+                        poPossibleMove->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL);
+
+                        moPossibleMoves.push_back(poPossibleMove);
+                    }
+                }
+            }
+            else if(oEvent.MouseInput.Event == EMIE_RMOUSE_LEFT_UP)
+            {
+                for each(ISceneNode * poNode in moPossibleMoves)
+                    poNode->remove();
+
+                moPossibleMoves.clear();
+            }
 			else if(oEvent.MouseInput.Event == EMIE_MOUSE_MOVED)
 			{
 				if(mbIsDragging)
@@ -236,5 +272,45 @@ bool GameState::OnEvent(const SEvent & oEvent)
 			mpoHighlightedPiece->setPosition(mvDraggedOriginPos);
 
         mbIsDragging = false;
+    }
+}
+
+void GameState::MovePiece(Piece * poPiece, const Position & oPos2)
+{
+    try
+    {
+        ISceneNode * poPieceNode = moPieces[poPiece];
+        poPieceNode->setPosition(vGetNodePosition(oPos2));
+    }
+    catch(std::exception & e)
+    {
+        std::cout << __FILE__ << ":" << __LINE__ << " : " << std::endl;
+        throw e;
+    }
+}
+
+void GameState::RemovePiece(Piece *)
+{
+}
+
+void GameState::AddPiece(Piece *, const Position & oPos2)
+{
+}
+
+void GameState::PieceEatPiece(Piece * poEatingPiece, Piece * poAtePiece)
+{
+    try
+    {
+        ISceneNode * poEatingPieceNode = moPieces[poEatingPiece];
+        ISceneNode * poAtePieceNode = moPieces[poAtePiece];
+        poEatingPieceNode->setPosition(poAtePieceNode->getPosition());
+        poAtePieceNode->remove();
+
+        moPieces.remove(poAtePiece);
+    }
+    catch(std::exception & e)
+    {
+        std::cout << __FILE__ << ":" << __LINE__ << " : " << std::endl;
+        throw e;
     }
 }

@@ -11,14 +11,16 @@
 
 #include "piece.h"
 #include "Core/position.h"
-#include "Core/board.h"
+
+class Game;
+class Board;
 
 class Movement
 {
   protected :
-    static Board * spoBoard;	// Static board, upon which the movements are executed
-	Position moPos1;			// The start position
-	Position moPos2;			// The landing position
+    static Board * spoBoard;    // Static board, upon which the movements are executed. It's the spoGame's board
+    Position moPos1;		    // The start position
+	Position moPos2;		    // The landing position
 
 	Piece * mpoMovingPiece;		// A pointer to the moving piece
 	Piece * mpoCapturedPiece;	// A pointer to the captured piece (0 if there isn't any)
@@ -38,7 +40,7 @@ class Movement
 	/**
 	 * Set the static board to the one given as argument
 	 */
-	static void SetBoard(Board * oNewBoard);
+	static void SetBoard(Board *);
 
 	/**
 	 * Return the Starting position

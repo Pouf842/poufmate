@@ -38,13 +38,14 @@ InterfaceIrrlicht::InterfaceIrrlicht(Controller * poController) : mpoCurrentStat
 	mpoCameraFPS->setTarget(vector3df(0, 0, 0));
 
 	mpoCamera = mpoSceneManager->addCameraSceneNode(NULL, vector3df(0, 5, -10), vector3df(0, 0, 0));
+    mpoCurrentCamera = mpoCamera;
 
 	InitDatas();
 
-    IntroState oIntro(this);
+    /**/IntroState oIntro(this);
     oIntro.Show();
 
-	/*SetState(new TestState(this));
+	/*/SetState(new TestState(this));
 	delete mpoCurrentState;
 	mpoCurrentState = NULL;/**/
 
@@ -327,10 +328,10 @@ void InterfaceIrrlicht::PlacePieces()
 		addPieceNode(oTypes[i], oColors[i], oPositions[i], oNames[i]);
 }
 
-/*void InterfaceIrrlicht::DisplayMessage(const std::string strMessage)
+void InterfaceIrrlicht::DisplayMessage(std::string strMessage)
 {
 	std::cout << strMessage << std::endl;
-}*/
+}
 
 void InterfaceIrrlicht::SetState(State * poNewState)
 {
@@ -432,4 +433,59 @@ void InterfaceIrrlicht::RotateCamera(float fXDegrees, float fYDegrees, float fZD
 		else
 			mpoDevice->yield();
 	}
+}
+
+void InterfaceIrrlicht::PieceMoved(Piece * poPiece, const Position & oPos2)
+{
+    try
+    {
+        if(mpoCurrentState != mpoGameState)
+            throw std::exception("Interface is not in Game state");
+
+        mpoGameState->MovePiece(poPiece, oPos2);
+    }
+    catch(std::exception & e)
+    {
+        std::cout << __FILE__ << ":" << __LINE__ << " : " << std::endl;
+        throw e;
+    }
+}
+
+void InterfaceIrrlicht::PieceAdded(Piece *, const Position &)
+{
+    try
+    {
+
+    }
+    catch(std::exception & e)
+    {
+        std::cout << __FILE__ << ":" << __LINE__ << " : " << std::endl;
+        throw e;
+    }
+}
+
+void InterfaceIrrlicht::PieceRemoved(Piece *)
+{
+    try
+    {
+
+    }
+    catch(std::exception & e)
+    {
+        std::cout << __FILE__ << ":" << __LINE__ << " : " << std::endl;
+        throw e;
+    }
+}
+
+void InterfaceIrrlicht::PieceEatPiece(Piece * poEatingPiece, Piece * poAtePiece)
+{
+    try
+    {
+        mpoGameState->PieceEatPiece(poEatingPiece, poAtePiece);
+    }
+    catch(std::exception & e)
+    {
+        std::cout << __FILE__ << ":" << __LINE__ << " : " << std::endl;
+        throw e;
+    }
 }

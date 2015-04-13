@@ -13,18 +13,7 @@ extern s32 ID_PIECE;
 
 TestState::TestState(InterfaceIrrlicht * poInterface) : State(poInterface)
 {
-	list<ISceneNode *> oChildren = mpoInterface->mpoBoardNode->getChildren();
-
-	for(list<ISceneNode *>::Iterator i = oChildren.begin(); i != oChildren.end(); ++i)
-		(*i)->setVisible(false);
-
-	ISceneNode * poPiece1 = mpoSceneManager->addMeshSceneNode(mpoInterface->moPiecesMeshes[Piece::PT_PAWN]);
-	ISceneNode * poPiece2 = mpoSceneManager->addMeshSceneNode(mpoInterface->moPiecesMeshes[Piece::PT_PAWN]);
-
-	poPiece1->setPosition(vector3df(-1, 0.5, -4));
-
-	poPiece2->setRotation(vector3df(45, 0, 0));
-	poPiece2->setPosition(vector3df(+1, 0.5, -4));
+    /*mpoPlane->getMaterial(0).ColorMask = 0x00FFFF;*/
 }
 
 /*void TestState::Update()
@@ -44,13 +33,37 @@ bool TestState::OnEvent(const SEvent & oEvent)
 	{
 		if(!oEvent.KeyInput.PressedDown)
 		{
-			if(oEvent.KeyInput.Key == KEY_SPACE)
-			{
-				mpoInterface->SwitchCameraType();
-				return true;
-			}
+            if(oEvent.KeyInput.Key == KEY_SPACE)
+            {
+                mpoInterface->SwitchCameraType();
+                return true;
+            }
+            else if(oEvent.KeyInput.Key == KEY_ESCAPE)
+                mbStop = true;
 		}
 	}
 
 	return State::OnEvent(oEvent);
+}
+
+void TestState::Show()
+{
+    mbStop = false;
+
+    while(mpoDevice->run() && !mbStop)
+    {
+        if(mpoDevice->isWindowActive())
+        {
+            mpoVideoDriver->beginScene();
+            mpoSceneManager->drawAll();
+            mpoGUI->drawAll();
+            mpoVideoDriver->endScene();
+        }
+        else
+            mpoDevice->yield();
+    }
+}
+
+void TestState::Hide()
+{
 }

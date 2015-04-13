@@ -8,14 +8,17 @@
  */
 
 #include <iostream>
+#include <set>
 #include "square.h"
 #include "position.h"
+
+class Interface;
 
 class Board
 {
   protected :
 	Square moSquares[8][8];	// The squares of the board
-
+    std::set<Interface*> moInterfaces;
   public :
 	/**
 	 * Initializes the board. Creates and places the pieces on the squares
@@ -77,6 +80,11 @@ class Board
 	 * by the specified piece
 	 */
 	void SetPiece(Position, Piece * poNewPiece);
+
+    /**
+     * Adds an interface to be notified when a piece is moved, removed or added
+     */
+    void AddInterface(Interface*);
 };
 
 #endif
